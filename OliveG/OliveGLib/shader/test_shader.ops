@@ -1,0 +1,19 @@
+
+#define CONST_DECLARE_IN_SHADER
+#include "OvMaterialConst.ops"
+#undef CONST_DECLARE_IN_SHADER
+
+sampler sDiffuse	: register(s0);
+sampler sSpecMask	: register(s1);
+
+float4 PS_Main(
+	float2 tex0 : TEXCOORD0 ,
+	float3 norm : TEXCOORD1 ,
+	float3 viewdir : TEXCOORD2):COLOR
+{
+	float kfSpec = dot(-viewdir,normalize(Float3_LightDirect +norm+norm));
+	float4 texColor0 = tex2D(sDiffuse,tex0);
+	float4 texColor1 = tex2D(sSpecMask,tex0);
+
+	return texColor0 + (pow(kfSpec,19) * texColor1);
+};

@@ -1,0 +1,30 @@
+<?xml version="1.0" ?>
+<Mesh>
+  <Count VertCount="6" FaceCount="8"/>
+  <Position>
+    <Pos index="0" x="0.0" y="0.0" z="24.7775"/>
+    <Pos index="1" x="17.5204" y="17.5204" z="0.0"/>
+    <Pos index="2" x="-17.5204" y="17.5204" z="0.0"/>
+    <Pos index="3" x="-17.5204" y="-17.5204" z="0.0"/>
+    <Pos index="4" x="17.5204" y="-17.5204" z="0.0"/>
+    <Pos index="5" x="0.0" y="0.0" z="-24.7775"/>
+  </Position>
+  <Normal>
+    <Norm index="0" x="0.816497" y="0.0" z="0.57735"/>
+    <Norm index="1" x="0.816497" y="0.0" z="0.57735"/>
+    <Norm index="2" x="0.0" y="0.816497" z="-0.57735"/>
+    <Norm index="3" x="-0.816497" y="0.0" z="0.57735"/>
+    <Norm index="4" x="0.816497" y="0.0" z="0.57735"/>
+    <Norm index="5" x="0.0" y="0.816497" z="-0.57735"/>
+  </Normal>
+  <FaceIndex>
+    <Face index="0" a="0.0" b="4.0" c="1.0"/>
+    <Face index="1" a="1.0" b="5.0" c="2.0"/>
+    <Face index="2" a="2.0" b="3.0" c="0.0"/>
+    <Face index="3" a="3.0" b="5.0" c="4.0"/>
+    <Face index="4" a="1.0" b="2.0" c="0.0"/>
+    <Face index="5" a="3.0" b="4.0" c="0.0"/>
+    <Face index="6" a="4.0" b="5.0" c="1.0"/>
+    <Face index="7" a="3.0" b="2.0" c="5.0"/>
+  </FaceIndex>
+</Mesh>

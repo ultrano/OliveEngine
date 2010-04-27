@@ -1,0 +1,37 @@
+
+#define CONST_DECLARE_IN_SHADER
+#include "OvMaterialConst.ovs"
+#undef CONST_DECLARE_IN_SHADER
+
+struct VS_INPUT
+{
+vector position : POSITION;
+float2 tex0		: TEXCOORD0;
+float3 norm		: NORMAL;
+};
+
+struct VS_OUTPUT
+{
+vector position : POSITION;
+float2 tex0		: TEXCOORD0;
+float3 norm		: TEXCOORD1;
+float3 viewdir	: TEXCOORD2;
+};
+
+
+VS_OUTPUT OvMaterialVS_NonSkinned(VS_INPUT input)
+{
+VS_OUTPUT output = (VS_OUTPUT)0;
+
+output.position = float4(mul(input.position,Float4x3_World),1.0);
+output.position = mul(input.position,Matrix_WorldViewProject);
+output.norm = float4(mul(input.norm,(float3x3)Float4x3_World),1.0);
+output.tex0 = input.tex0;
+output.viewdir = normalize(Float3_ViewPos - float3(Float4x3_World._41,Float4x3_World._42,Float4x3_World._43));
+return output;
+}
+
+VS_OUTPUT OvMaterialVS_EntryFunc( VS_INPUT input)
+{
+	return OvMaterialVS_NonSkinned(input);
+};
