@@ -25,6 +25,9 @@ private:
 
 };
 
+/*
+public:static void	RegisterProperties(); 를 구현 해야함
+*/
 #define OvPROP_BAG_DECL(_classname) private:static OvPropertyBag msh_OvPropertyBag;\
 	public:static OvPropertyBag* GetPropertyBag(){return &msh_OvPropertyBag;};\
 	public:static void	RegisterProperties();
