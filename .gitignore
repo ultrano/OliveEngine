@@ -1,0 +1,10 @@
+
+*.obj
+*.ncb
+*.htm
+*.idb
+*.pdb
+*.suo
+*.exe
+.svn
+.svn/*
