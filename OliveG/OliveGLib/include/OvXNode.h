@@ -1,5 +1,6 @@
 #pragma once
 #include "OvXObject.h"
+#include "OvObjectCollector.h"
 
 OvREF_POINTER(OvXNode);
 
@@ -24,9 +25,9 @@ public:
 	OvXObjectSPtr	GetChildeAt(int iIndex);
 
 private:
-	struct OvPimple;
-	OvAutoPtr<OvPimple> m_pPimple;
-	class OvProp_Pimple;
+
+	OvObjectCollector	m_clectrChildCollect;
+
 };
 
 template<typename Type_0>
