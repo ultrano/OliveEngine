@@ -5,27 +5,8 @@
 
 OvRTTI_IMPL(OvCamera,OvXObject);
 
-struct OvCamera::OvPimple : OvMemObject
+OvCamera::OvCamera()
 {
-	OvPoint3	mLookDirection;
-	OvPoint3	mUpDirection;
-	OvPoint3	mRightDirection;
-
-	OvMatrix	mViewMatrix;
-	OvMatrix	mProjectMatrix;
-
-	OvXObjectSPtr mLookTarget;
-
-	eCameraType	mType;
-	float		mFOV;
-	float		mNearClip;
-	float		mFarClip;
-};
-
-OvCamera::OvCamera():m_pPimple(OvNew OvPimple)
-{
-	memset(m_pPimple.GetRear(),0,sizeof(OvPimple));
-
 	SetNearClip(1.0f);
 	SetFarClip(5000.0f);
 	SetFOV((D3DX_PI*45.0f)/180.0f);
@@ -37,47 +18,47 @@ OvCamera::~OvCamera()
 
 const OvPoint3&	OvCamera::GetWorldLookDirection()
 {
-	return m_pPimple->mLookDirection;
+	return m_pt3LookDirection;
 }
 const OvPoint3&	OvCamera::GetWorldUpDirection()
 {
-	return m_pPimple->mUpDirection;
+	return m_pt3UpDirection;
 }
 const OvPoint3&	OvCamera::GetWorldRightDirection()
 {
-	return m_pPimple->mRightDirection;
+	return m_pt3RightDirection;
 }
 void			OvCamera::SetLookTarget(OvXObjectSPtr _pLookTarget)
 {
 	if(!_pLookTarget)
 		return ;
 
-	m_pPimple->mLookTarget = _pLookTarget;
+	m_spLookTarget = _pLookTarget;
 }
 
 OvXObjectSPtr		OvCamera::GetLookTarget()
 {
-	return m_pPimple->mLookTarget;
+	return m_spLookTarget;
 }
 
 const OvMatrix&	OvCamera::GetViewMatrix()
 {
-	return m_pPimple->mViewMatrix;
+	return m_mxViewMatrix;
 }
 const OvMatrix&	OvCamera::GetProjectMatrix()
 {
-	return m_pPimple->mProjectMatrix;
+	return m_mxProjectMatrix;
 }
 
 void			OvCamera::UpdateSubordinate(float _fElapse)
 {
 	const OvMatrix& kWorldMat = GetWorldTransform().BuildMatrix;
 
-	m_pPimple->mUpDirection = OvPoint3(kWorldMat._31,kWorldMat._32,kWorldMat._33).Normalize();
+	m_pt3UpDirection = OvPoint3(kWorldMat._31,kWorldMat._32,kWorldMat._33).Normalize();
 
-	m_pPimple->mLookDirection = -OvPoint3(kWorldMat._21,kWorldMat._22,kWorldMat._23).Normalize();
+	m_pt3LookDirection = -OvPoint3(kWorldMat._21,kWorldMat._22,kWorldMat._23).Normalize();
 
-	m_pPimple->mRightDirection = OvPoint3(kWorldMat._11,kWorldMat._12,kWorldMat._13).Normalize();
+	m_pt3RightDirection = OvPoint3(kWorldMat._11,kWorldMat._12,kWorldMat._13).Normalize();
 
 	UpdateProjection();
 	UpdateView();
@@ -87,46 +68,46 @@ void			OvCamera::UpdateSubordinate(float _fElapse)
 
 void					OvCamera::SetCameraType(OvCamera::eCameraType eType)
 {
-	m_pPimple->mType = eType;
+	m_eCameraType = eType;
 }
 OvCamera::eCameraType	OvCamera::GetCameraType()
 {
-	return m_pPimple->mType;
+	return m_eCameraType;
 }
 void			OvCamera::SetFOV(float fFOV)
 {
-	m_pPimple->mFOV = fFOV;
+	m_fFOV = fFOV;
 }
 float			OvCamera::GetFOV()
 {
-	return m_pPimple->mFOV;
+	return m_fFOV;
 }
 void			OvCamera::SetNearClip(float fDistance)
 {
-	m_pPimple->mNearClip = fDistance;
+	m_fNearClip = fDistance;
 }
 float			OvCamera::GetNearClip()
 {
-	return m_pPimple->mNearClip;
+	return m_fNearClip;
 }
 void			OvCamera::SetFarClip(float fDistance)
 {
-	m_pPimple->mFarClip = fDistance;
+	m_fFarClip = fDistance;
 }
 float			OvCamera::GetFarClip()
 {
-	return m_pPimple->mFarClip ;
+	return m_fFarClip ;
 }
 
 void			OvCamera::UpdateProjection()
 {
-	D3DXMatrixPerspectiveFovLH((D3DXMATRIX*)&(m_pPimple->mProjectMatrix),GetFOV(),800.0f/600.0f,GetNearClip(),GetFarClip());
+	D3DXMatrixPerspectiveFovLH((D3DXMATRIX*)&(m_mxProjectMatrix),GetFOV(),800.0f/600.0f,GetNearClip(),GetFarClip());
 }
 
 void			OvCamera::UpdateView()
 {
 
-	OvMatrix& krViewMat = m_pPimple->mViewMatrix;
+	OvMatrix& krViewMat = m_mxViewMatrix;
 
 	OvPoint3& krWorldPoint = (OvPoint3&)GetWorldTranslate();
 	OvPoint3& krLookDir		= (OvPoint3&)GetWorldLookDirection();

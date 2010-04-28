@@ -54,4 +54,20 @@ protected:
 private:
 	struct OvPimple;
 	OvAutoPtr< OvPimple> m_pPimple;
+
+	OvPoint3	m_pt3LookDirection;
+	OvPoint3	m_pt3UpDirection;
+	OvPoint3	m_pt3RightDirection;
+
+	OvMatrix	m_mxViewMatrix;
+	OvMatrix	m_mxProjectMatrix;
+
+	OvXObjectSPtr m_spLookTarget;
+
+	eCameraType	m_eCameraType;
+
+	float		m_fFOV;
+	float		m_fNearClip;
+	float		m_fFarClip;
+
 };
