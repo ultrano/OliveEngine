@@ -53,6 +53,8 @@ public:
 		m_pBaseClassRTTI[1] = &baseclass1;
 	};
 
+
+
 	inline const char*	TypeName(){return m_strClassName.data();};
 	inline OvPropertyBag* PropertyBag(){return m_pPropertyBag;};
 	const OvRTTI*		GetBaseRTTI(unsigned int uiIndex = 0){return m_pBaseClassRTTI[uiIndex];};
@@ -112,6 +114,8 @@ public:\
 	virtual const OvRTTI* QueryRTTI()const{return &msh_OvRTTI;};\
 	typedef classname __this_class;
 
+#define OvRTTI_OvRTTI(classname) (&(classname::msh_OvRTTI))
+
 #define	OvRTTI_IMPL_NOPARENT(classname) const OvRTTI classname::msh_OvRTTI(#classname);
 #define	OvRTTI_IMPL_NOPARENT_PROP(classname) const OvRTTI classname::msh_OvRTTI(#classname,&msh_OvPropertyBag);
 
@@ -121,7 +125,7 @@ public:\
 #define	OvRTTI_IMPL2(classname,parentname0,parentname1) const OvRTTI classname::msh_OvRTTI(#classname,parentname0::msh_OvRTTI,parentname1::msh_OvRTTI);
 #define	OvRTTI_IMPL2_PROP(classname,parentname0,parentname1) const OvRTTI classname::msh_OvRTTI(#classname,parentname0::msh_OvRTTI,parentname1::msh_OvRTTI,&msh_OvPropertyBag);
 
-#define OvRTTI_TypeName(classptr) (((OvRTTI*)classptr->QueryRTTI())->TypeName())
+#define OvRTTI_TypeName(classptr) ((const_cast<OvRTTI*>(classptr->QueryRTTI()))->TypeName())
 #define	OvRTTI_IsEqual(classptr1,classptr2) ((classptr1&&classptr2)? ((((classptr1)->QueryRTTI()))==(((classptr2)->QueryRTTI()))):0)
 #define	OvRTTI_IsClassOf(classtype,classptr1) ((classptr1)? ((&(classtype::msh_OvRTTI)) == (((classptr1)->QueryRTTI()))):0)
 #define OvRTTI_IsKindOf(classtype,classptr1) ((classptr1)? (IsStemFrom((&(classtype::msh_OvRTTI)),((classptr1)->QueryRTTI()))):0)

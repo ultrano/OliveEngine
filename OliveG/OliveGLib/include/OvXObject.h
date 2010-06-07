@@ -15,7 +15,7 @@ class OvQuaternion;
 class OvMatrix;
 class OvTransform;
 OvREF_POINTER(OvXNode);
-OvREF_POINTER(OvObjectController);
+OvREF_POINTER(OvXController);
 //
 
 OvREF_POINTER(OvXObject);
@@ -26,7 +26,7 @@ class OvXObject : public OvObject
 
 	friend class OvXNode;
 	friend class OvObjectFactory;
-	friend class OvObjectController;
+	friend class OvXController;
 
 public :
 
@@ -70,12 +70,12 @@ public :
 	//! Get Parent
 	OvXObjectSPtr			GetParent();
 
-	OvObjectControllerSPtr	GetHeaderObjectController();
+	OvXControllerSPtr	GetHeaderObjectController();
 
 protected:
 
 	//! Set Object Controller (Do not use in application)
-	void			PrependObjectController(OvObjectControllerSPtr _pController);
+	void			PrependObjectController(OvXControllerSPtr _pController);
 
 	//! Set Parent (Do not use in application)
 	void			SetParent(OvXNodeSPtr _pParentNode);
@@ -101,5 +101,5 @@ private:
 	OvTransform	m_tfLocalTransform;
 	OvTransform	m_tfWorldTransform;
 
-	OvObjectControllerSPtr	m_spHeaderObjectController;
+	OvXControllerSPtr	m_spHeaderObjectController;
 };

@@ -3,8 +3,9 @@
 #include "OvAutoPtr.h"
 #include "OvSmartPointer.h"
 #include "tinyxml.h"
+#include "OvObject.h"
 
-OvREF_POINTER(OvObject);
+class OvObjectStore;
 
 class OvStorage : public OvMemObject
 {
@@ -16,8 +17,16 @@ public:
 	void	Store(const char* pFile);
 	void	Restore(const char* pFile);
 
-	void	RegisterObject(OvObjectSPtr _pObj);
-	void	RemoveObject(OvObjectSPtr _pObj);
+//private:
+
+	void	StoreObject	 (OvObjectSPtr pObj);
+	void	RestoreObject(OvObjectStore& rStore);
+
+	bool	ExtractProperty	(OvObjectSPtr pObj,OvObjectStore& rStore);
+	bool	InjectProperty	(OvObjectSPtr pObj,OvObjectStore& rStore);
+
+	void	WriteProperty(OvObjectStore& rStore);
+	//void	ReadStore(OvObjectSPtr _pObj);
 
 	//OvObjectSPtr RestoreRelationshipTable();
 

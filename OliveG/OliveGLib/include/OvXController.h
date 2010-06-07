@@ -1,6 +1,7 @@
 #pragma once
 #include "OvRefBase.h"
 #include "OvAutoPtr.h"
+#include "OvObject.h"
 // class 선선언부
 OvREF_POINTER(OvXObject);
 //
@@ -12,14 +13,14 @@ OvREF_POINTER(OvXObject);
 virtual void	Update(float _fElapse) = 0;
 를 재정의 해서 쓰셈
 */
-OvREF_POINTER(OvObjectController);
-class OvObjectController : public OvRefBase
+OvREF_POINTER(OvXController);
+class OvXController : public OvObject
 {
-
+	OvRTTI_DECL(OvXController);
 public:
 
-	OvObjectController();
-	~OvObjectController();
+	OvXController();
+	~OvXController();
 
 	void					SetNextController(OvXObjectSPtr _pNextController);
 	OvXObjectSPtr			GetNextController();

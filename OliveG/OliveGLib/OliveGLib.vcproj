@@ -807,6 +807,10 @@
 					RelativePath=".\include\OvObject.h"
 					>
 				</File>
+				<File
+					RelativePath=".\include\OvObjectID.h"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="OvRefBase"
@@ -939,34 +943,6 @@
 				</File>
 			</Filter>
 			<Filter
-				Name="OvGateSystem"
-				>
-				<Filter
-					Name="OvGate"
-					>
-					<File
-						RelativePath=".\include\OvGate.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\include\OvGate.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="OvGateKey"
-					>
-					<File
-						RelativePath=".\source\OvGateKey.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\include\OvGateKey.h"
-						>
-					</File>
-				</Filter>
-			</Filter>
-			<Filter
 				Name="OvStringUtility"
 				>
 				<File
@@ -1022,14 +998,14 @@
 				Name="ObjectControllers"
 				>
 				<Filter
-					Name="OvObjectController"
+					Name="OvXController"
 					>
 					<File
-						RelativePath=".\source\OvObjectController.cpp"
+						RelativePath=".\source\OvXController.cpp"
 						>
 					</File>
 					<File
-						RelativePath=".\include\OvObjectController.h"
+						RelativePath=".\include\OvXController.h"
 						>
 					</File>
 				</Filter>
@@ -1150,34 +1126,6 @@
 				Name="StorageGroup"
 				>
 				<Filter
-					Name="OvStorage"
-					>
-					<File
-						RelativePath=".\source\OvStorage.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\include\OvStorage.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="OvObjectFactory"
-					>
-					<File
-						RelativePath=".\source\OvObjectFactory.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\include\OvObjectFactory.h"
-						>
-					</File>
-					<File
-						RelativePath=".\include\OvObjectFactory.inl"
-						>
-					</File>
-				</Filter>
-				<Filter
 					Name="OvLumpCollector"
 					>
 					<File
@@ -1286,10 +1234,6 @@
 				Name="ClassProperty"
 				>
 				<Filter
-					Name="OvPropertyProtector"
-					>
-				</Filter>
-				<Filter
 					Name="OvPropertyNode"
 					>
 					<File
@@ -1326,21 +1270,77 @@
 					</File>
 				</Filter>
 				<Filter
-					Name="OvPropertyCommon"
+					Name="OvRegisterableProperties"
 					>
 					<File
-						RelativePath=".\source\OvPropertyCommon.cpp"
+						RelativePath=".\source\OvRegisterableProperties.cpp"
 						>
 					</File>
 					<File
-						RelativePath=".\include\OvPropertyCommon.h"
+						RelativePath=".\include\OvRegisterableProperties.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="OvObjectStore"
+					>
+					<File
+						RelativePath=".\source\OvObjectStore.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\include\OvObjectStore.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="OvProxyLinker"
+					>
+					<File
+						RelativePath=".\source\OvProxyLinker.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\include\OvProxyLinker.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="OvStorage"
+					>
+					<File
+						RelativePath=".\source\OvStorage.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\include\OvStorage.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="StreamUtility"
+					>
+					<File
+						RelativePath=".\source\StreamUtility.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\include\StreamUtility.h"
 						>
 					</File>
 				</Filter>
 			</Filter>
 			<Filter
-				Name="NewFilter1"
+				Name="OvObjectFactory"
 				>
+				<File
+					RelativePath=".\source\OvObjectFactory.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\OvObjectFactory.h"
+					>
+				</File>
 			</Filter>
 		</Filter>
 		<Filter
@@ -1445,6 +1445,34 @@
 					RelativePath=".\include\OvTestStoreClass.h"
 					>
 				</File>
+			</Filter>
+			<Filter
+				Name="OvGateSystem"
+				>
+				<Filter
+					Name="OvGate"
+					>
+					<File
+						RelativePath=".\include\OvGate.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\include\OvGate.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="OvGateKey"
+					>
+					<File
+						RelativePath=".\source\OvGateKey.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\include\OvGateKey.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 		</Filter>
 		<Filter

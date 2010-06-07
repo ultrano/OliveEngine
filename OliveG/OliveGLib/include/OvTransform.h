@@ -4,7 +4,7 @@
 #include "OvMatrix.h"
 #include "OvMemObject.h"
 
-class OvTransform 
+class OvTransform : public OvMemObject
 {
 
 public:

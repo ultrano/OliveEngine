@@ -1,10 +1,10 @@
 #include "OvXObject.h"
 #include "OvXNode.h"
-#include "OvObjectController.h"
-#include "OvObjectFactory.h"
-#include "OvObjectController.h"
+#include "OvXController.h"
+#include "OvXController.h"
 #include "OvStringUtility.h"
 #include "OvProperty.h"
+#include "OvRegisterableProperties.h"
 
 OvRTTI_IMPL_PROP(OvXObject,OvObject);
 OvPROP_BAG_IMPL(OvXObject);
@@ -12,6 +12,23 @@ OvPROP_BAG_IMPL(OvXObject);
 
 void OvXObject::RegisterProperties()
 {
+	OvProperty* kpProp = NULL;
+
+	kpProp = new OvProp_float3;
+	kpProp->SetOffset(offsetof(__this_class,m_tfLocalTransform.Scale));
+	kpProp->SetPropertyName("m_tfLocalTransform.Scale");
+	GetPropertyBag()->RegisterProperty(kpProp);
+
+	kpProp = new OvProp_float3;
+	kpProp->SetOffset(offsetof(__this_class,m_tfLocalTransform.Position));
+	kpProp->SetPropertyName("m_tfLocalTransform.Position");
+	GetPropertyBag()->RegisterProperty(kpProp);
+
+	kpProp = new OvProp_float4;
+	kpProp->SetOffset(offsetof(__this_class,m_tfLocalTransform.Quaternion));
+	kpProp->SetPropertyName("m_tfLocalTransform.Quaternion");
+	GetPropertyBag()->RegisterProperty(kpProp);
+
 };
 OvXObject::OvXObject()
 {
@@ -42,7 +59,7 @@ void OvXObject::Update(float _fElapse)
 
 	krWorldTransform.ExtractTransformFromBuildMatrix();
 
-	OvObjectControllerSPtr	kpController = GetHeaderObjectController();
+	OvXControllerSPtr	kpController = GetHeaderObjectController();
 	for (;kpController;kpController = kpController->GetNextController())
 	{
 		kpController->Update(_fElapse);
@@ -188,12 +205,12 @@ OvXObjectSPtr	OvXObject::GetParent()
 }
 
 
-OvObjectControllerSPtr	OvXObject::GetHeaderObjectController()
+OvXControllerSPtr	OvXObject::GetHeaderObjectController()
 {
 	return m_spHeaderObjectController;
 };
 
-void	OvXObject::PrependObjectController(OvObjectControllerSPtr _pController)
+void	OvXObject::PrependObjectController(OvXControllerSPtr _pController)
 {
 	if(!_pController)
 		return ;

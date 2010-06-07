@@ -34,6 +34,3 @@ public:static void	RegisterProperties(); 를 구현 해야함
 
 #define OvPROP_BAG_IMPL(_classname) OvPropertyBag _classname::msh_OvPropertyBag(_classname::RegisterProperties);
 
-// #define OvPROP_BAG_REGISTER(_property_name,_value_name) \
-// 	GetPropertyBag()->RegisterProperty(static OvPropertyNode)
-	

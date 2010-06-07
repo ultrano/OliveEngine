@@ -1,4 +1,5 @@
 #include "OvProperty.h"
+OvRTTI_IMPL_NOPARENT(OvProperty);
 
 void*			OvProperty::Access(OvObject* pObj)
 {

@@ -1,31 +1,28 @@
 #pragma once
-#include "OvValueStream.h"
+#include "OvMemObject.h"
 #include "OvRefBase.h"
-#include "OvStorage.h"
 #include "OvSingleton.h"
 #include <map>
+#include <string>
+using namespace std;
 OvREF_POINTER(OvObject);
+
+class OvStorage;
+
 class OvObjectFactory : public OvMemObject
 {
 	OvSingletonEx_DECL(OvObjectFactory);
+
 public:
 
-	typedef OvObjectSPtr (*OvManufactureFunctor)(OvStorage&);
-
-	static OvObjectSPtr	RuntimeManufacture(const char* pClassName,OvStorage& cStorage);
-
-	template<typename Class_0>
-	static OvObjectSPtr	TemplateManufactureFunctor(OvStorage& cConstructDesc);
-
-	template<typename Class_0>
-	static void			RegisterClassManufacture(const char* pClassName);
+	OvObjectSPtr	CreateInstance(const string& rClass,OvStorage& rStorage);
 
 private:
 
-	map<string,OvManufactureFunctor>	m_mapManufactures;
+	typedef map<string,OvObjectSPtr (*)(OvStorage&)> tdFactoryCallback;
+	tdFactoryCallback	m_mapFactoryCallback;
 
 };
 
-#include "OvObjectFactory.inl"
 
-#define OvREGISTERRUNTIMECLASS(__class_name)	OvObjectFactory::RegisterClassManufacture<__class_name>(#__class_name);
+

@@ -1,22 +1,21 @@
 #include "OvObjectFactory.h"
-#include "OvObject.h"
 #include "OvXNode.h"
 
 OvSingletonEx_IMPL(OvObjectFactory);
-
-void	OvObjectFactory::Singleton_InitializeProcessing()
+void OvObjectFactory::Singleton_InitializeProcessing()
 {
+	m_mapFactoryCallback["OvXNode"] = OvXNode::FactoryCallback;
 }
-void	OvObjectFactory::Singleton_TerminateProcessing()
+void OvObjectFactory::Singleton_TerminateProcessing()
 {
 
 }
-
-OvObjectSPtr	OvObjectFactory::RuntimeManufacture(const char* pClassName,OvStorage& cStorage)
+OvObjectSPtr	OvObjectFactory::CreateInstance(const string& rClass,OvStorage& rStorage)
 {
-	if (GetInstance()->m_mapManufactures.find(pClassName) != GetInstance()->m_mapManufactures.end())
+	tdFactoryCallback::iterator kIter = m_mapFactoryCallback.find(rClass);
+	if (kIter != m_mapFactoryCallback.end())
 	{
-		return GetInstance()->m_mapManufactures[pClassName](cStorage);
+		return (kIter->second)(rStorage);
 	}
 	return NULL;
 }

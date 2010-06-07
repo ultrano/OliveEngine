@@ -20,5 +20,5 @@ class OvSingletonContextList
 
 	friend class OvSingletonPool;
 	OvSingletonContextList(){};
-	~OvSingletonContextList(){};
+	virtual ~OvSingletonContextList(){};
 };

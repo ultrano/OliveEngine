@@ -1,27 +1,30 @@
 #pragma once
 #include <string>
+#include "OvRTTI.h"
 
 class OvObject;
-class TiXmlElement;
+class OvObjectStore;
 class OvProperty
 {
+	OvRTTI_DECL(OvProperty);
 public:
 
-	virtual bool	Store(OvObject* pObj, TiXmlElement& rXml) = 0;
-	virtual bool	Restore(OvObject* pObj, TiXmlElement& rXml) = 0;
+	OvProperty(){};
+	virtual ~OvProperty(){};
+
+	virtual bool	Extract(OvObject* pObj, OvObjectStore& rXml) = 0;
+	virtual bool	Inject(OvObject* pObj, OvObjectStore& rXml) = 0;
 
 	void*			Access(OvObject* pObj);
 	unsigned int	GetOffset();
 	void			SetOffset(unsigned int uiOffset);
 
-	std::string&			GetPropertyName();
+	std::string&	GetPropertyName();
 	void			SetPropertyName(const std::string& strPropName);
 
 private:
 
-	std::string			m_strPropertyName;
+	std::string		m_strPropertyName;
 	unsigned int	m_uiOffset;
 
 };
-#define OvPROP_PROTECT_DECL class OvPropProtector;\
-	OvAutoPtr<OvPropProtector> m_pProtector;

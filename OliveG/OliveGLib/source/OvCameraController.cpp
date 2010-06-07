@@ -6,7 +6,7 @@
 #include "OvQuaternion.h"
 #include "OvObjectCollector.h"
 
-OvRTTI_IMPL(OvCameraController,OvObjectController)
+OvRTTI_IMPL(OvCameraController,OvXController)
 
 struct OvCameraController::OvPimple : OvMemObject
 {
