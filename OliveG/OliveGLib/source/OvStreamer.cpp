@@ -1,56 +1,64 @@
-#include "OvStorage.h"
+#include "OvStreamer.h"
+#include "OvObjectCollector.h"
 #include "OvStringUtility.h"
-#include "OvObjectProperties.h"
+#include "OvObjectData.h"
 #include "OvRTTI.h"
 #include "OvPropertyBag.h"
 #include "OvPropertyNode.h"
 #include "OvProperty.h"
 #include "OvObjectFactory.h"
 #include "tinyxml.h"
+using namespace std;
+struct OvStreamer::OvPimple : OvMemObject
+{
+	TiXmlDocument					m_xmlDoc;
+	OvObjectCollector				m_ocStoredObjects;
+	map<OvObjectID,OvObjectSPtr>	m_mapCreatedObjects;
+};
 
 
-
-OvStorage::OvStorage()
+OvStreamer::OvStreamer()
+:m_pPimple(OvNew OvStreamer::OvPimple)
 {
 
 }
-OvStorage::~OvStorage()
+OvStreamer::~OvStreamer()
 {
 
 }
-void	OvStorage::Store(const char* pFile)
+void	OvStreamer::Store(const char* pFile)
 {
 }
-void	OvStorage::Restore(const char* pFile)
+void	OvStreamer::Restore(const char* pFile)
 {
 }
-void	OvStorage::StoreObject(OvObjectSPtr pObj)
+void	OvStreamer::StoreObject(OvObjectSPtr pObj)
 {
-	OvObjectProperties rStore;
-	if (m_ocStoredObjects.IsCollected(pObj) == false && ExtractProperty(pObj,rStore))
+	OvObjectData rStore;
+	if (ExtractProperty(pObj,rStore))
 	{
 		WriteProperty(rStore);
-		m_ocStoredObjects.AddObject(pObj);
+		m_pPimple->m_ocStoredObjects.AddObject(pObj);
 
-		for (OvObject* kpSubObj = rStore.PopComponentObject()
+		for (OvObject* kpSubObj = rStore.PopAddedObject()
 			;kpSubObj != NULL
-			;kpSubObj = rStore.PopComponentObject())
+			;kpSubObj = rStore.PopAddedObject())
 		{
 			StoreObject(kpSubObj);
 		}
 	}
 }
-void	OvStorage::RestoreObject(OvObjectProperties& rStore)
+void	OvStreamer::RestoreObject(OvObjectData& rStore)
 {
 	OvObjectSPtr kpCreatedObj = OvObjectFactory::GetInstance()->CreateInstance(rStore.GetClass(),*this);
 	if (InjectProperty(kpCreatedObj,rStore))
 	{
-		m_mapCreatedObjects[rStore.GetObjectID()] = kpCreatedObj;
+		m_pPimple->m_mapCreatedObjects[rStore.GetObjectID()] = kpCreatedObj;
 	}
 }
-bool	OvStorage::ExtractProperty(OvObjectSPtr pObj,OvObjectProperties& rStore)
+bool	OvStreamer::ExtractProperty(OvObjectSPtr pObj,OvObjectData& rStore)
 {
-	if (pObj)
+	if (pObj && m_pPimple->m_ocStoredObjects.IsCollected(pObj) == false)
 	{
 		OvRTTI* kpRTTI = NULL;
 		for (kpRTTI = const_cast<OvRTTI*>(pObj->QueryRTTI())
@@ -79,7 +87,7 @@ bool	OvStorage::ExtractProperty(OvObjectSPtr pObj,OvObjectProperties& rStore)
 	}
 	return false;
 }
-bool	OvStorage::InjectProperty(OvObjectSPtr pObj,OvObjectProperties& rStore)
+bool	OvStreamer::InjectProperty(OvObjectSPtr pObj,OvObjectData& rStore)
 {
 	if (pObj)
 	{
@@ -109,7 +117,7 @@ bool	OvStorage::InjectProperty(OvObjectSPtr pObj,OvObjectProperties& rStore)
 	}
 	return false;
 }
-void	OvStorage::WriteProperty(OvObjectProperties& rStore)
+void	OvStreamer::WriteProperty(OvObjectData& rStore)
 {
 	TiXmlElement kObjNode(rStore.GetClass().data());
 	kObjNode.SetAttribute("id",OvFormatString("%d",rStore.GetObjectID()));
@@ -120,6 +128,6 @@ void	OvStorage::WriteProperty(OvObjectProperties& rStore)
 		kPropSection.InsertEndChild(TiXmlText(kstrValue.data()));
 		kObjNode.InsertEndChild(kPropSection);
 	}
-	m_xmlDoc.InsertEndChild(kObjNode);
-	m_xmlDoc.SaveFile("../../export/testprop.xml");
+	m_pPimple->m_xmlDoc.InsertEndChild(kObjNode);
+	m_pPimple->m_xmlDoc.SaveFile("../../export/testprop.xml");
 }

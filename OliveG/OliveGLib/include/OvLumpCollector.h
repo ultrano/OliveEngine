@@ -4,13 +4,13 @@
 #include "tinyxml.h"
 
 class OvLumpCollector;
-class OvObjectDataLump : public OvMemObject
+class OvObjectPropertiesLump : public OvMemObject
 {
 
 public:
 
-	OvObjectDataLump(OvLumpCollector* _pCollector);
-	~OvObjectDataLump();
+	OvObjectPropertiesLump(OvLumpCollector* _pCollector);
+	~OvObjectPropertiesLump();
 
 private:
 

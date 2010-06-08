@@ -24,7 +24,7 @@ public:
 	const char* GetName();
 
 	//! ID of Object
-	const OvObjectID		GetObjectID();
+	OvObjectID		GetObjectID();
 
 protected:
 

@@ -28,4 +28,4 @@
 
 #include "OvSingletonPool.h"
 #include "OvXNode.h"
-#include "OvObjectStore.h"
+#include "OvObjectProperties.h"

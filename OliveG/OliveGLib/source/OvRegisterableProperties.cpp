@@ -2,7 +2,7 @@
 #include <string>
 #include "tinyxml.h"
 #include "OvStringUtility.h"
-#include "OvObjectStore.h"
+#include "OvObjectProperties.h"
 #include "OvObject.h"
 #include "OvTransform.h"
 using namespace std;
@@ -12,7 +12,7 @@ using namespace std;
 ///////////////////////////				bool					/////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////
 OvRTTI_IMPL(OvProp_bool,OvProperty)
-bool	OvProp_bool::Extract(OvObject* pObj, OvObjectStore& rObjStore)
+bool	OvProp_bool::Extract(OvObject* pObj, OvObjectProperties& rObjStore)
 {
 	if (pObj)
 	{
@@ -26,7 +26,7 @@ bool	OvProp_bool::Extract(OvObject* pObj, OvObjectStore& rObjStore)
 	}
 	return false;
 }
-bool	OvProp_bool::Inject(OvObject* pObj, OvObjectStore& rObjStore)
+bool	OvProp_bool::Inject(OvObject* pObj, OvObjectProperties& rObjStore)
 {
 	if (pObj)
 	{
@@ -49,7 +49,7 @@ bool	OvProp_bool::Inject(OvObject* pObj, OvObjectStore& rObjStore)
 ///////////////////////////				Interger					/////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////
 OvRTTI_IMPL(OvProp_integer,OvProperty)
-bool	OvProp_integer::Extract(OvObject* pObj, OvObjectStore& rObjStore)
+bool	OvProp_integer::Extract(OvObject* pObj, OvObjectProperties& rObjStore)
 {
 	if (pObj)
 	{
@@ -64,7 +64,7 @@ bool	OvProp_integer::Extract(OvObject* pObj, OvObjectStore& rObjStore)
 	}
 	return false;
 }
-bool	OvProp_integer::Inject(OvObject* pObj, OvObjectStore& rObjStore)
+bool	OvProp_integer::Inject(OvObject* pObj, OvObjectProperties& rObjStore)
 {
 	if (pObj)
 	{
@@ -87,7 +87,7 @@ bool	OvProp_integer::Inject(OvObject* pObj, OvObjectStore& rObjStore)
 ///////////////////////////				stl::string					/////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////
 OvRTTI_IMPL(OvProp_STL_string,OvProperty)
-bool	OvProp_STL_string::Extract(OvObject* pObj, OvObjectStore& rObjStore)
+bool	OvProp_STL_string::Extract(OvObject* pObj, OvObjectProperties& rObjStore)
 {
 	if (pObj)
 	{
@@ -100,7 +100,7 @@ bool	OvProp_STL_string::Extract(OvObject* pObj, OvObjectStore& rObjStore)
 	}
 	return false;
 }
-bool	OvProp_STL_string::Inject(OvObject* pObj, OvObjectStore& rObjStore)
+bool	OvProp_STL_string::Inject(OvObject* pObj, OvObjectProperties& rObjStore)
 {
 	if (pObj)
 	{
@@ -118,19 +118,19 @@ bool	OvProp_STL_string::Inject(OvObject* pObj, OvObjectStore& rObjStore)
 ///////////////////////////				object					/////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////
 OvRTTI_IMPL(OvProp_ObjectPtr,OvProperty)
-bool	OvProp_ObjectPtr::Extract(OvObject* pObj, OvObjectStore& rObjStore)
+bool	OvProp_ObjectPtr::Extract(OvObject* pObj, OvObjectProperties& rObjStore)
 {
 	OvObject* kpProp = (OvObject*)Access(pObj);
 	if (kpProp)
 	{
 		string kstrValue = OvFormatString("%I64d",kpProp->GetObjectID());
 		rObjStore.PushValue(kstrValue);
-		rObjStore.PushObject(kpProp);
+		rObjStore.PushComponentObject(kpProp);
 		return true;
 	}
 	return false;
 }
-bool	OvProp_ObjectPtr::Inject(OvObject* pObj, OvObjectStore& rObjStore)
+bool	OvProp_ObjectPtr::Inject(OvObject* pObj, OvObjectProperties& rObjStore)
 {
 	return false;
 }
@@ -139,7 +139,7 @@ bool	OvProp_ObjectPtr::Inject(OvObject* pObj, OvObjectStore& rObjStore)
 ///////////////////////////				float					/////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////
 OvRTTI_IMPL(OvProp_float,OvProperty)
-bool	OvProp_float::Extract(OvObject* pObj, OvObjectStore& rObjStore)
+bool	OvProp_float::Extract(OvObject* pObj, OvObjectProperties& rObjStore)
 {
 	if (pObj)
 	{
@@ -154,7 +154,7 @@ bool	OvProp_float::Extract(OvObject* pObj, OvObjectStore& rObjStore)
 	}
 	return false;
 }
-bool	OvProp_float::Inject(OvObject* pObj, OvObjectStore& rObjStore)
+bool	OvProp_float::Inject(OvObject* pObj, OvObjectProperties& rObjStore)
 {
 	if (pObj)
 	{
@@ -181,7 +181,7 @@ bool	OvProp_float::Inject(OvObject* pObj, OvObjectStore& rObjStore)
 #define string_to_float2(_string,_float) (sscanf_s(_string.data(),"%f %f",&((_float)[0]),&((_float)[1])))
 
 OvRTTI_IMPL(OvProp_float2,OvProperty)
-bool	OvProp_float2::Extract(OvObject* pObj, OvObjectStore& rObjStore)
+bool	OvProp_float2::Extract(OvObject* pObj, OvObjectProperties& rObjStore)
 {
 	float* kpProp = (float*)Access(pObj);
 	if (kpProp)
@@ -193,7 +193,7 @@ bool	OvProp_float2::Extract(OvObject* pObj, OvObjectStore& rObjStore)
 	}
 	return false;
 }
-bool	OvProp_float2::Inject(OvObject* pObj, OvObjectStore& rObjStore)
+bool	OvProp_float2::Inject(OvObject* pObj, OvObjectProperties& rObjStore)
 {
 	float* kpProp = (float*)Access(pObj);
 	if (kpProp)
@@ -213,7 +213,7 @@ bool	OvProp_float2::Inject(OvObject* pObj, OvObjectStore& rObjStore)
 #define string_to_float3(_string,_float) (sscanf_s(_string.data(),"%f %f %f",&((_float)[0]),&((_float)[1]),&((_float)[2])))
 
 OvRTTI_IMPL(OvProp_float3,OvProperty)
-bool	OvProp_float3::Extract(OvObject* pObj, OvObjectStore& rObjStore)
+bool	OvProp_float3::Extract(OvObject* pObj, OvObjectProperties& rObjStore)
 {
 	float* kpProp = (float*)Access(pObj);
 	if (kpProp)
@@ -225,7 +225,7 @@ bool	OvProp_float3::Extract(OvObject* pObj, OvObjectStore& rObjStore)
 	}
 	return false;
 }
-bool	OvProp_float3::Inject(OvObject* pObj, OvObjectStore& rObjStore)
+bool	OvProp_float3::Inject(OvObject* pObj, OvObjectProperties& rObjStore)
 {
 	float* kpProp = (float*)Access(pObj);
 	if (kpProp)
@@ -245,7 +245,7 @@ bool	OvProp_float3::Inject(OvObject* pObj, OvObjectStore& rObjStore)
 #define string_to_float4(_string,_float) (sscanf_s(_string.data(),"%f %f %f %f",&((_float)[0]),&((_float)[1]),&((_float)[2]),&((_float)[3])))
 
 OvRTTI_IMPL(OvProp_float4,OvProperty)
-bool	OvProp_float4::Extract(OvObject* pObj, OvObjectStore& rObjStore)
+bool	OvProp_float4::Extract(OvObject* pObj, OvObjectProperties& rObjStore)
 {
 	float* kpProp = (float*)Access(pObj);
 	if (kpProp)
@@ -257,7 +257,7 @@ bool	OvProp_float4::Extract(OvObject* pObj, OvObjectStore& rObjStore)
 	}
 	return false;
 }
-bool	OvProp_float4::Inject(OvObject* pObj, OvObjectStore& rObjStore)
+bool	OvProp_float4::Inject(OvObject* pObj, OvObjectProperties& rObjStore)
 {
 	float* kpProp = (float*)Access(pObj);
 	if (kpProp)
@@ -275,7 +275,7 @@ bool	OvProp_float4::Inject(OvObject* pObj, OvObjectStore& rObjStore)
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
 OvRTTI_IMPL(OvProp_transform,OvProperty)
-bool	OvProp_transform::Extract(OvObject* pObj, OvObjectStore& rObjStore)
+bool	OvProp_transform::Extract(OvObject* pObj, OvObjectProperties& rObjStore)
 {
 	OvTransform* kpProp = (OvTransform*)Access(pObj);
 	if (kpProp)
@@ -295,7 +295,7 @@ bool	OvProp_transform::Extract(OvObject* pObj, OvObjectStore& rObjStore)
 	}
 	return false;
 }
-bool	OvProp_transform::Inject(OvObject* pObj, OvObjectStore& rObjStore)
+bool	OvProp_transform::Inject(OvObject* pObj, OvObjectProperties& rObjStore)
 {
 	OvTransform* kpProp = (OvTransform*)Access(pObj);
 	if (kpProp)

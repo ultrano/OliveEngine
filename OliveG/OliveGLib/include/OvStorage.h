@@ -4,8 +4,10 @@
 #include "OvSmartPointer.h"
 #include "tinyxml.h"
 #include "OvObject.h"
+#include "OvObjectCollector.h"
+#include <map>
 
-class OvObjectStore;
+class OvObjectProperties;
 
 class OvStorage : public OvMemObject
 {
@@ -20,19 +22,20 @@ public:
 //private:
 
 	void	StoreObject	 (OvObjectSPtr pObj);
-	void	RestoreObject(OvObjectStore& rStore);
+	void	RestoreObject(OvObjectProperties& rStore);
 
-	bool	ExtractProperty	(OvObjectSPtr pObj,OvObjectStore& rStore);
-	bool	InjectProperty	(OvObjectSPtr pObj,OvObjectStore& rStore);
+	bool	ExtractProperty	(OvObjectSPtr pObj,OvObjectProperties& rStore);
+	bool	InjectProperty	(OvObjectSPtr pObj,OvObjectProperties& rStore);
 
-	void	WriteProperty(OvObjectStore& rStore);
+	void	WriteProperty(OvObjectProperties& rStore);
 	//void	ReadStore(OvObjectSPtr _pObj);
 
 	//OvObjectSPtr RestoreRelationshipTable();
 
 private:
 
-	struct OvPimple;
-	OvAutoPtr< OvPimple> m_pPimple;
+	TiXmlDocument					m_xmlDoc;
+	OvObjectCollector				m_ocStoredObjects;
+	std::map<OvObjectID,OvObjectSPtr>	m_mapCreatedObjects;
 
 };

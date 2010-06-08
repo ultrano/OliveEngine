@@ -1,43 +1,43 @@
 #include "OvLumpCollector.h"
 
 
-OvObjectDataLump::OvObjectDataLump(OvLumpCollector* _pCollector)
+OvObjectPropertiesLump::OvObjectPropertiesLump(OvLumpCollector* _pCollector)
 :m_pCollector(_pCollector)
 ,m_tixmlStoreData("Data")
 {
 	m_tixmlStoreData.Clear();
 }
-OvObjectDataLump::~OvObjectDataLump()
+OvObjectPropertiesLump::~OvObjectPropertiesLump()
 {
 
 }
 
-void	OvObjectDataLump::SetObjectID(OvObjectID _cData)
+void	OvObjectPropertiesLump::SetObjectID(OvObjectID _cData)
 {
 	m_tixmlStoreData.SetAttribute("ObjectID",(int)_cData);
 }
-void	OvObjectDataLump::SetObjectName(const char* _cData)
+void	OvObjectPropertiesLump::SetObjectName(const char* _cData)
 {
 	m_tixmlStoreData.SetAttribute("ObjectName",_cData);
 }
-void	OvObjectDataLump::SetObjectType(const char* _cData)
+void	OvObjectPropertiesLump::SetObjectType(const char* _cData)
 {
 	m_tixmlStoreData.SetAttribute("ObjectType",_cData);
 }
 
-void	OvObjectDataLump::StoreInt(const char* _pKey,int _cData)
+void	OvObjectPropertiesLump::StoreInt(const char* _pKey,int _cData)
 {
 
 }
-void	OvObjectDataLump::StoreFloat(const char* _pKey,float _cData)
+void	OvObjectPropertiesLump::StoreFloat(const char* _pKey,float _cData)
 {
 
 }
-void	OvObjectDataLump::StoreString(const char* _pKey,const char* _cData)
+void	OvObjectPropertiesLump::StoreString(const char* _pKey,const char* _cData)
 {
 
 }
-void	OvObjectDataLump::StoreRelationship(const char* _pKey,OvObjectSPtr _cData)
+void	OvObjectPropertiesLump::StoreRelationship(const char* _pKey,OvObjectSPtr _cData)
 {
 // 	if (_cData)
 // 	{

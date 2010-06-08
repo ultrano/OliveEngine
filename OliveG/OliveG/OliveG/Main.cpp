@@ -16,7 +16,7 @@ int	APIENTRY	WinMain(HINSTANCE hi,HINSTANCE,LPSTR,int)
 
 		OvStorage kStorage;
 
-		OvObjectStore kObjStore;
+		OvObjectProperties kObjStore;
 		kStorage.ExtractProperty(kpNode,kObjStore);
 		kStorage.RestoreObject(kObjStore);
 

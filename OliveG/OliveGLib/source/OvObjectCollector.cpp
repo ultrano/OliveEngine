@@ -58,9 +58,9 @@ struct SKObjectFindFunctorByHandle
 	SKObjectFindFunctorByHandle(OvObjectID& dhHandle):m_dhHandle(dhHandle),m_pObj(NULL){};
 	void operator()(OvObjectSPtr pObj)
 	{
-		if(pObj && m_dhHandle == pObj->GetObjectID() ) m_pObj=pObj;
+		if(pObj && pObj->GetObjectID() == m_dhHandle ) m_pObj=pObj;
 	}
-	OvObjectID&		m_dhHandle;
+	OvObjectID		m_dhHandle;
 	OvObjectSPtr	m_pObj;
 };
 OvObjectSPtr	OvObjectCollector::GetByHandle(OvObjectID& dhHandle)
@@ -80,10 +80,6 @@ void			OvObjectCollector::Clear()
 }
 bool			OvObjectCollector::AddObject(OvObjectSPtr pObj)
 {
-	if ((pObj == NULL) || (OvSTL_Find(m_pPimple->m_tdObjArray,pObj) != m_pPimple->m_tdObjArray.end()))
-	{
-		return false;
-	}
 	m_pPimple->m_tdObjArray.push_back(pObj);
 	return true;
 }
@@ -99,23 +95,29 @@ bool			OvObjectCollector::AddObject(OvObjectCollector& pObjContainer)
 
 OvObjectSPtr	OvObjectCollector::RemoveObject(OvObjectSPtr pObj)
 {
-	tdObjectArray::iterator	kIter = OvSTL_Find(m_pPimple->m_tdObjArray,pObj);
-	if (kIter != m_pPimple->m_tdObjArray.end())
+	if (pObj)
 	{
-		m_pPimple->m_tdObjArray.erase(kIter);
-		return pObj;
+		tdObjectArray::iterator	kIter = OvSTL_Find(m_pPimple->m_tdObjArray,pObj);
+		if (kIter != m_pPimple->m_tdObjArray.end())
+		{
+			m_pPimple->m_tdObjArray.erase(kIter);
+			return pObj;
+		}
 	}
 	return NULL;
 }
 
 bool			OvObjectCollector::IsCollected(OvObjectSPtr pObj)
 {
-	for (int i=0;i<Count();++i)
+	if (pObj)
 	{
-		OvObjectSPtr kpTarget = GetByAt(i);
-		if (kpTarget == pObj)
+		for (int i=0;i<Count();++i)
 		{
-			return true;
+			OvObjectSPtr kpTarget = GetByAt(i);
+			if (kpTarget == pObj)
+			{
+				return true;
+			}
 		}
 	}
 	return false;

@@ -42,7 +42,7 @@ const char* OvObject::GetName()
 	return m_strObjectName.data();
 }
 
-const OvObjectID		OvObject::GetObjectID()
+OvObjectID		OvObject::GetObjectID()
 {
 	return m_idObjectID;
 }

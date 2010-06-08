@@ -808,6 +808,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\source\OvObjectID.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\include\OvObjectID.h"
 					>
 				</File>
@@ -1123,22 +1127,6 @@
 				</File>
 			</Filter>
 			<Filter
-				Name="StorageGroup"
-				>
-				<Filter
-					Name="OvLumpCollector"
-					>
-					<File
-						RelativePath=".\source\OvLumpCollector.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\include\OvLumpCollector.h"
-						>
-					</File>
-				</Filter>
-			</Filter>
-			<Filter
 				Name="SingletonGroup"
 				>
 				<File
@@ -1282,26 +1270,14 @@
 					</File>
 				</Filter>
 				<Filter
-					Name="OvObjectStore"
+					Name="OvObjectProperties"
 					>
 					<File
-						RelativePath=".\source\OvObjectStore.cpp"
+						RelativePath=".\source\OvObjectProperties.cpp"
 						>
 					</File>
 					<File
-						RelativePath=".\include\OvObjectStore.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="OvProxyLinker"
-					>
-					<File
-						RelativePath=".\source\OvProxyLinker.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\include\OvProxyLinker.h"
+						RelativePath=".\include\OvObjectProperties.h"
 						>
 					</File>
 				</Filter>

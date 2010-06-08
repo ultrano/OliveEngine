@@ -1,10 +1,11 @@
 #pragma once
 #include <string>
 #include "OvRTTI.h"
+#include "OvMemObject.h"
 
 class OvObject;
-class OvObjectStore;
-class OvProperty
+class OvObjectProperties;
+class OvProperty : public OvMemObject
 {
 	OvRTTI_DECL(OvProperty);
 public:
@@ -12,8 +13,8 @@ public:
 	OvProperty(){};
 	virtual ~OvProperty(){};
 
-	virtual bool	Extract(OvObject* pObj, OvObjectStore& rXml) = 0;
-	virtual bool	Inject(OvObject* pObj, OvObjectStore& rXml) = 0;
+	virtual bool	Extract(OvObject* pObj, OvObjectProperties& rXml) = 0;
+	virtual bool	Inject(OvObject* pObj, OvObjectProperties& rXml) = 0;
 
 	void*			Access(OvObject* pObj);
 	unsigned int	GetOffset();

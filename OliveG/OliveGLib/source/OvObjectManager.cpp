@@ -27,7 +27,7 @@ void	OvObjectManager::Singleton_TerminateProcessing()
 
 OvObjectID		OvObjectManager::AllocObjectID(OvObject* _pObject)
 {
-	++m_pPimple->m_hMaxHandle;
+	m_pPimple->m_hMaxHandle.core++;
 	m_pPimple->m_tblObjectTable[m_pPimple->m_hMaxHandle] = _pObject;
 	return m_pPimple->m_hMaxHandle;
 }
