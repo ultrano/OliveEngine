@@ -2,19 +2,21 @@
 
 OvObjectProperties	OvObjectProperties::INVALID;
 
-void	OvObjectProperties::SetClass(const string& rClass)
+void	OvObjectProperties::SetObjectType(const string& objType)
 {
-	m_strClass = rClass;
+	m_objectType = objType;
 }
-const string& OvObjectProperties::GetClass()
+
+const string& OvObjectProperties::GetObjectType()
 {
-	return m_strClass;
+	return m_objectType;
 }
 
 void	OvObjectProperties::SetObjectID(const OvObjectID& rObjID)
 {
 	m_idObjectID = rObjID;
 }
+
 const OvObjectID& OvObjectProperties::GetObjectID()
 {
 	return m_idObjectID;

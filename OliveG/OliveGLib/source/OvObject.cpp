@@ -46,7 +46,3 @@ OvObjectID		OvObject::GetObjectID()
 {
 	return m_idObjectID;
 }
-void	OvObject::CallByFactory(OvStorage& rStorage)
-{
-	rStorage;
-}

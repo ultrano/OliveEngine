@@ -8,6 +8,7 @@ using namespace std;
 OvREF_POINTER(OvObject);
 
 class OvStorage;
+class OvObjectID;
 
 class OvObjectFactory : public OvMemObject
 {
@@ -15,11 +16,11 @@ class OvObjectFactory : public OvMemObject
 
 public:
 
-	OvObjectSPtr	CreateInstance(const string& rClass,OvStorage& rStorage);
+	OvObjectSPtr	CreateInstance(const string& rClass,OvObjectID& objID);
 
 private:
 
-	typedef map<string,OvObjectSPtr (*)(OvStorage&)> tdFactoryCallback;
+	typedef map<string,OvObjectSPtr (*)(OvObjectID&)> tdFactoryCallback;
 	tdFactoryCallback	m_mapFactoryCallback;
 
 };

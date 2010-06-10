@@ -12,7 +12,7 @@ struct SComponentLinkInfo : OvMemObject
 {
 	SComponentLinkInfo():formerID(OvObjectID::INVALID),linkDestination(){};
 	OvObjectID	formerID;
-	OvObject*	linkDestination;
+	OvObject**	linkDestination;
 };
 
 class OvObjectProperties : public OvMemObject
@@ -21,8 +21,8 @@ public:
 	static OvObjectProperties	INVALID;
 public:
 
-	void	SetClass(const string& );
-	const string& GetClass();
+	void	SetObjectType(const string& );
+	const string& GetObjectType();
 
 	void	SetObjectID(const OvObjectID& rObjID);
 	const OvObjectID& GetObjectID();
@@ -40,6 +40,6 @@ private:
 	queue<string>				m_queValueQueue;
 	queue<OvObject*>			m_queObjects;
 	queue<SComponentLinkInfo>	m_linkInfoQueue;
-	string				m_strClass;
+	string				m_objectType;
 	OvObjectID			m_idObjectID;
 };

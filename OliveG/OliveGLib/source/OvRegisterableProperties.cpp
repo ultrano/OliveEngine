@@ -132,6 +132,21 @@ bool	OvProp_ObjectPtr::Extract(OvObject* pObj, OvObjectProperties& rObjStore)
 }
 bool	OvProp_ObjectPtr::Inject(OvObject* pObj, OvObjectProperties& rObjStore)
 {
+	OvObject** kpProp = (OvObject**)Access(pObj);
+	if (kpProp)
+	{
+		string kstrValue;
+		if (rObjStore.PopValue(kstrValue))
+		{
+			SComponentLinkInfo linkInfo;
+			sscanf_s(kstrValue.c_str(),"%I64d",&linkInfo.formerID);
+			linkInfo.linkDestination = kpProp;
+			rObjStore.PushComponentLinkInfo(linkInfo);
+
+			return true;
+		}
+	}
+
 	return false;
 }
 

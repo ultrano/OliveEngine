@@ -42,7 +42,8 @@ void	OvStorage::StoreObject(OvObjectSPtr pObj)
 }
 void	OvStorage::RestoreObject(OvObjectProperties& rStore)
 {
-	OvObjectSPtr kpCreatedObj = OvObjectFactory::GetInstance()->CreateInstance(rStore.GetClass(),*this);
+	OvObjectID	createdObjID;
+	OvObjectSPtr kpCreatedObj = OvObjectFactory::GetInstance()->CreateInstance(rStore.GetObjectType(),createdObjID);
 	if (InjectProperty(kpCreatedObj,rStore))
 	{
 		m_mapCreatedObjects[rStore.GetObjectID()] = kpCreatedObj;
@@ -73,7 +74,7 @@ bool	OvStorage::ExtractProperty(OvObjectSPtr pObj,OvObjectProperties& rStore)
 				}
 			}		
 		}
-		rStore.SetClass(OvRTTI_TypeName(pObj));
+		rStore.SetObjectType(OvRTTI_TypeName(pObj));
 		rStore.SetObjectID(pObj->GetObjectID());
 		return true;
 	}
@@ -111,7 +112,7 @@ bool	OvStorage::InjectProperty(OvObjectSPtr pObj,OvObjectProperties& rStore)
 }
 void	OvStorage::WriteProperty(OvObjectProperties& rStore)
 {
-	TiXmlElement kObjNode(rStore.GetClass().data());
+	TiXmlElement kObjNode(rStore.GetObjectType().data());
 	kObjNode.SetAttribute("id",OvFormatString("%d",rStore.GetObjectID()));
 	string kstrValue;
 	while (rStore.PopValue(kstrValue))

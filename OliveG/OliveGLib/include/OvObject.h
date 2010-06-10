@@ -26,10 +26,6 @@ public:
 	//! ID of Object
 	OvObjectID		GetObjectID();
 
-protected:
-
-	void	CallByFactory(OvStorage& rStorage);
-
 private:
 
 	string			m_strObjectName;
@@ -38,5 +34,5 @@ private:
 };
 
 #define OvFACTORY_MEMBER(__class_name) friend class OvObjectFactory;\
-__class_name(OvStorage& rStorage){CallByFactory(rStorage);};\
-static OvObjectSPtr	FactoryCallback(OvStorage& rStorage){return (new __class_name(rStorage));};
+__class_name(OvObjectID& objID){objID = GetObjectID();};\
+static OvObjectSPtr	FactoryCallback(OvObjectID& objID){return (new __class_name(objID));};
