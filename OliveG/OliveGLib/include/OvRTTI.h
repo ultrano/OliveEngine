@@ -15,29 +15,19 @@ public:
 		OvRTTI_MAX_PARENT_COUNT = 2
 	};
 
-	OvRTTI(const string & classname):m_strClassName(classname)
-	{
-		m_pBaseClassRTTI[0] = NULL;
-		m_pBaseClassRTTI[1] = NULL;
-	};
-	OvRTTI(const string & classname, const OvRTTI& baseclass):m_strClassName(classname)//,m_dwGeneration(baseclass.m_dwGeneration+1)
-	{
-		m_pBaseClassRTTI[0] = &baseclass;
-	};
-
-	OvRTTI(const string & classname,OvPropertyBag* pPropertyBag):m_strClassName(classname),m_pPropertyBag(pPropertyBag)
-	{
-		m_pBaseClassRTTI[0] = NULL;
-		m_pBaseClassRTTI[1] = NULL;
-	};
-
-	OvRTTI(const string & classname, const OvRTTI& baseclass,OvPropertyBag* pPropertyBag)
+	OvRTTI(const string & classname)
 		:m_strClassName(classname)
-		,m_pPropertyBag(pPropertyBag)
+		,m_pPropertyBag(NULL)
+	{
+		m_pBaseClassRTTI[0] = NULL;
+		m_pBaseClassRTTI[1] = NULL;
+	};
+	OvRTTI(const string & classname, const OvRTTI& baseclass)
+		:m_strClassName(classname)
+		,m_pPropertyBag(NULL)
 	{
 		m_pBaseClassRTTI[0] = &baseclass;
 	};
-
 
 	void					SetPropertyBag(OvPropertyBag* propBag){m_pPropertyBag = propBag;};
 	inline OvPropertyBag*	PropertyBag(){return m_pPropertyBag;};
@@ -84,28 +74,30 @@ inline bool IsStemFrom(const OvRTTI* _pBaseRTTI,const OvRTTI* _pCompareRTTI){
 
 
 #define	OvRTTI_DECL_ROOT(classname) \
-public:\
+private:\
 	static const OvRTTI msh_OvRTTI;\
+public:\
+	static const OvRTTI*	GetRTTI(){return &classname::msh_OvRTTI;};\
 	virtual const OvRTTI* QueryRTTI()const{return &msh_OvRTTI;};\
 	typedef classname __this_class;
 
 #define	OvRTTI_DECL(classname) \
-public:\
+private:\
 	static const OvRTTI msh_OvRTTI;\
-	virtual const OvRTTI* QueryRTTI()const{return &msh_OvRTTI;};\
-	static const OvRTTI&	_GetBaseRTTI(){return __super::msh_OvRTTI;};\
+public:\
+	static const OvRTTI*	GetRTTI(){return &classname::msh_OvRTTI;};\
+	static const OvRTTI*	GetBaseRTTI(){return __super::GetRTTI();};\
+	virtual const OvRTTI*	QueryRTTI()const{return &classname::msh_OvRTTI;};\
 	typedef classname __this_class;
 
-#define OvRTTI_OvRTTI(classname) (&(classname::msh_OvRTTI))
 
 #define	OvRTTI_IMPL_NOPARENT(classname) const OvRTTI classname::msh_OvRTTI(#classname);
-#define	OvRTTI_IMPL_NOPARENT_PROP(classname) const OvRTTI classname::msh_OvRTTI(#classname,&msh_OvPropertyBag);
 
-#define	OvRTTI_IMPL(classname) const OvRTTI classname::msh_OvRTTI(#classname,classname::_GetBaseRTTI());
-#define	OvRTTI_IMPL_PROP(classname) const OvRTTI classname::msh_OvRTTI(#classname,classname::_GetBaseRTTI(),&msh_OvPropertyBag);
+#define	OvRTTI_IMPL(classname) const OvRTTI classname::msh_OvRTTI(#classname,*(classname::GetBaseRTTI()));
 
 #define OvRTTI_TypeName(classptr) ((const_cast<OvRTTI*>(classptr->QueryRTTI()))->TypeName())
 #define	OvRTTI_IsEqual(classptr1,classptr2) ((classptr1&&classptr2)? ((((classptr1)->QueryRTTI()))==(((classptr2)->QueryRTTI()))):0)
-#define	OvRTTI_IsClassOf(classtype,classptr1) ((classptr1)? ((&(classtype::msh_OvRTTI)) == (((classptr1)->QueryRTTI()))):0)
-#define OvRTTI_IsKindOf(classtype,classptr1) ((classptr1)? (IsStemFrom((&(classtype::msh_OvRTTI)),((classptr1)->QueryRTTI()))):0)
+
+#define	OvRTTI_IsClassOf(classtype,classptr1) ((classptr1)? (((classtype::GetRTTI())) == (((classptr1)->QueryRTTI()))):0)
+#define OvRTTI_IsKindOf(classtype,classptr1) ((classptr1)? (IsStemFrom(((classtype::GetRTTI())),((classptr1)->QueryRTTI()))):0)
 

@@ -1,7 +1,7 @@
 #include "OvShaderConstantTable.h"
 #include "OvRenderer.h"
 #include "d3dx9.h"
-OvRTTI_IMPL(OvShaderConstantTable,OvRefBase);
+OvRTTI_IMPL(OvShaderConstantTable);
 struct OvShaderConstantTable::OvPimple : OvMemObject
 {
 	LPD3DXCONSTANTTABLE	m_pConstTable;

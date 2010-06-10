@@ -4,19 +4,17 @@
 #include "OvProperty.h"
 using namespace std;
 
-OvRTTI_IMPL_PROP(OvXNode,OvXObject);
-OvPROP_BAG_IMPL(OvXNode);
+OvRTTI_IMPL(OvXNode);
+
+OvPROPERTY_BAG_BEGIN(OvXNode);
+OvPROPERTY_BAG_END(OvXNode);
+
 
 
 OvXNode::OvXNode()
 {
 	
 }
-
-void OvXNode::RegisterProperties()
-{
-};
-
 
 OvXNode::~OvXNode()
 {

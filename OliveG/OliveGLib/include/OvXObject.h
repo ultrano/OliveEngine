@@ -22,7 +22,7 @@ OvREF_POINTER(OvXObject);
 class OvXObject : public OvObject
 {
 	OvRTTI_DECL(OvXObject);
-	OvPROP_BAG_DECL(OvXObject);
+	OvPROPERTY_BAG_DECL(OvXObject);
 
 	friend class OvXNode;
 	friend class OvObjectFactory;

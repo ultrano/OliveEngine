@@ -6,30 +6,14 @@
 #include "OvProperty.h"
 #include "OvRegisterableProperties.h"
 
-OvRTTI_IMPL_PROP(OvXObject);
-OvPROP_BAG_IMPL(OvXObject);
+OvRTTI_IMPL(OvXObject);
+OvPROPERTY_BAG_BEGIN(OvXObject);
+	OvDECLARE_PROPERTY( OvProp_float3,  m_tfLocalTransform.Scale);
+	OvDECLARE_PROPERTY( OvProp_float3,  m_tfLocalTransform.Position);
+	OvDECLARE_PROPERTY( OvProp_float4,  m_tfLocalTransform.Quaternion);
+OvPROPERTY_BAG_END(OvXObject);
 
 
-void OvXObject::RegisterProperties()
-{
-	OvProperty* kpProp = NULL;
-
-	kpProp = new OvProp_float3;
-	kpProp->SetOffset(offsetof(__this_class,m_tfLocalTransform.Scale));
-	kpProp->SetPropertyName("m_tfLocalTransform.Scale");
-	GetPropertyBag()->RegisterProperty(kpProp);
-
-	kpProp = new OvProp_float3;
-	kpProp->SetOffset(offsetof(__this_class,m_tfLocalTransform.Position));
-	kpProp->SetPropertyName("m_tfLocalTransform.Position");
-	GetPropertyBag()->RegisterProperty(kpProp);
-
-	kpProp = new OvProp_float4;
-	kpProp->SetOffset(offsetof(__this_class,m_tfLocalTransform.Quaternion));
-	kpProp->SetPropertyName("m_tfLocalTransform.Quaternion");
-	GetPropertyBag()->RegisterProperty(kpProp);
-
-};
 OvXObject::OvXObject()
 {
 	m_pParent = NULL;

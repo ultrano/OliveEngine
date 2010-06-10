@@ -2,7 +2,7 @@
 #include "OvRenderer.h"
 #include "OvShaderConstantTable.h"
 #include "d3dx9.h"
-OvRTTI_IMPL(OvShader,OvRefBase);
+OvRTTI_IMPL(OvShader);
 
 struct OvShader::OvPimple : OvMemObject
 {

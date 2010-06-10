@@ -7,18 +7,11 @@
 #include <string>
 using namespace std;
 
-OvRTTI_IMPL_PROP(OvObject);
-OvPROP_BAG_IMPL(OvObject);
+OvRTTI_IMPL(OvObject);
 
-void OvObject::RegisterProperties()
-{
-	OvProperty* kpProp = NULL;
-
-	kpProp = new OvProp_STL_string;
-	kpProp->SetOffset(offsetof(__this_class,m_strObjectName));
-	kpProp->SetPropertyName("m_strObjectName");
-	GetPropertyBag()->RegisterProperty(kpProp);
-};
+OvPROPERTY_BAG_BEGIN(OvObject);
+	OvDECLARE_PROPERTY( OvProp_STL_string,  m_strObjectName);
+OvPROPERTY_BAG_END(OvObject);
 
 OvObject::OvObject()
 {

@@ -11,7 +11,7 @@ OvREF_POINTER(OvObject);
 class OvObject : public OvRefBase
 {
 	OvRTTI_DECL(OvObject);
-	OvPROP_BAG_DECL(OvObject);
+	OvPROPERTY_BAG_DECL(OvObject);
 
 public:
 

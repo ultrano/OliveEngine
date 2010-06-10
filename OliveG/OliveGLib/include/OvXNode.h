@@ -7,7 +7,7 @@ class OvStorage;
 class OvXNode : public OvXObject
 {
 	OvRTTI_DECL(OvXNode);
-	OvPROP_BAG_DECL(OvXNode);
+	OvPROPERTY_BAG_DECL(OvXNode);
 	OvFACTORY_MEMBER(OvXNode);
 
 public:

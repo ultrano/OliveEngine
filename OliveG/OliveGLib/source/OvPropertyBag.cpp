@@ -18,11 +18,6 @@ OvPropertyBag::~OvPropertyBag()
 	}
 }
 
-OvPropertyBag::OvPropertyBag(tdRegisterPropertiesCallback pCallback)
-{
-	(pCallback) ? pCallback() : 0;
-};
-
 OvPropertyNode*	OvPropertyBag::BeginProperty()
 {
 	return m_pListBegin;
@@ -40,7 +35,7 @@ OvPropertyNode*	OvPropertyBag::EndProperty()
 	return kpListEnd;
 }
 
-OvPropertyNode*		OvPropertyBag::RegisterProperty(OvProperty* pProperty)
+OvPropertyNode*		OvPropertyBag::AddProperty(OvProperty* pProperty)
 {
 	OvPropertyNode* kpNewNode = 0;
 	if (pProperty)
