@@ -2,7 +2,7 @@
 #include "OvStoreData.h"
 #include <vector>
 
-OvRTTI_IMPL(OvStoreNode,OvStoreObject);
+OvRTTI_IMPL(OvStoreNode);
 
 struct OvStoreNode::OvPimple : OvMemObject
 {

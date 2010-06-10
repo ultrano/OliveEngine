@@ -10,7 +10,7 @@ class OvPoint2;
 OvREF_POINTER(OvMesh);
 class OvMesh : public OvObject
 {
-	OvRTTI_DECL(OvMesh);
+	OvRTTI_DECL_ROOT(OvMesh);
 
 public :
 

@@ -1,2 +1,2 @@
 #include "OvExtraSlot.h"
-OvRTTI_IMPL(OvExtraSlot,OvObject);
+OvRTTI_IMPL(OvExtraSlot);

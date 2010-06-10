@@ -7,7 +7,7 @@
 #include <string>
 using namespace std;
 
-OvRTTI_IMPL_PROP(OvObject,OvRefBase);
+OvRTTI_IMPL_PROP(OvObject);
 OvPROP_BAG_IMPL(OvObject);
 
 void OvObject::RegisterProperties()

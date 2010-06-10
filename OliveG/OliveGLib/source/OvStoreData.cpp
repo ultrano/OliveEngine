@@ -1,6 +1,6 @@
 #include "OvStoreData.h"
 
-OvRTTI_IMPL(OvStoreData,OvStoreObject);
+OvRTTI_IMPL(OvStoreData);
 struct OvStoreData::OvPimple : OvMemObject
 {
 	string	m_strDataString;

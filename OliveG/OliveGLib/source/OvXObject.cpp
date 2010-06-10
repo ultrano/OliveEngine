@@ -6,7 +6,7 @@
 #include "OvProperty.h"
 #include "OvRegisterableProperties.h"
 
-OvRTTI_IMPL_PROP(OvXObject,OvObject);
+OvRTTI_IMPL_PROP(OvXObject);
 OvPROP_BAG_IMPL(OvXObject);
 
 

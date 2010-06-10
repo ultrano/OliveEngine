@@ -1,6 +1,6 @@
 #include "OvXController.h"
 #include "OvXObject.h"
-OvRTTI_IMPL(OvXController,OvObject);
+OvRTTI_IMPL(OvXController);
 struct OvXController::OvPimple : OvMemObject
 {
 	OvXControllerSPtr		mNextLinkedController;

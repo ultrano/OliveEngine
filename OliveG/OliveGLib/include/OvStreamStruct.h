@@ -3,5 +3,5 @@
 //
 //class TiXmlElement : OvMemObject
 //{
-//	OvRTTI_DECL(TiXmlElement);
+//	OvRTTI_DECL_ROOT(TiXmlElement);
 //};

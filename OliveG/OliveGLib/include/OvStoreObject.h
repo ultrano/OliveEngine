@@ -10,7 +10,7 @@ class TiXmlElement;
 
 class OvStoreObject : public OvMemObject
 {
-	OvRTTI_DECL(OvStoreObject);
+	OvRTTI_DECL_ROOT(OvStoreObject);
 
 public:
 

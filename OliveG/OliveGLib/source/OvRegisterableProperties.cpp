@@ -11,7 +11,7 @@ using namespace std;
 ////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////				bool					/////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////
-OvRTTI_IMPL(OvProp_bool,OvProperty)
+OvRTTI_IMPL(OvProp_bool)
 bool	OvProp_bool::Extract(OvObject* pObj, OvObjectProperties& rObjStore)
 {
 	if (pObj)
@@ -48,7 +48,7 @@ bool	OvProp_bool::Inject(OvObject* pObj, OvObjectProperties& rObjStore)
 ////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////				Interger					/////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////
-OvRTTI_IMPL(OvProp_integer,OvProperty)
+OvRTTI_IMPL(OvProp_integer)
 bool	OvProp_integer::Extract(OvObject* pObj, OvObjectProperties& rObjStore)
 {
 	if (pObj)
@@ -86,7 +86,7 @@ bool	OvProp_integer::Inject(OvObject* pObj, OvObjectProperties& rObjStore)
 ////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////				stl::string					/////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////
-OvRTTI_IMPL(OvProp_STL_string,OvProperty)
+OvRTTI_IMPL(OvProp_STL_string)
 bool	OvProp_STL_string::Extract(OvObject* pObj, OvObjectProperties& rObjStore)
 {
 	if (pObj)
@@ -117,7 +117,7 @@ bool	OvProp_STL_string::Inject(OvObject* pObj, OvObjectProperties& rObjStore)
 ////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////				object					/////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////
-OvRTTI_IMPL(OvProp_ObjectPtr,OvProperty)
+OvRTTI_IMPL(OvProp_ObjectPtr)
 bool	OvProp_ObjectPtr::Extract(OvObject* pObj, OvObjectProperties& rObjStore)
 {
 	OvObject* kpProp = (OvObject*)Access(pObj);
@@ -153,7 +153,7 @@ bool	OvProp_ObjectPtr::Inject(OvObject* pObj, OvObjectProperties& rObjStore)
 ////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////				float					/////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////
-OvRTTI_IMPL(OvProp_float,OvProperty)
+OvRTTI_IMPL(OvProp_float)
 bool	OvProp_float::Extract(OvObject* pObj, OvObjectProperties& rObjStore)
 {
 	if (pObj)
@@ -195,7 +195,7 @@ bool	OvProp_float::Inject(OvObject* pObj, OvObjectProperties& rObjStore)
 #define float2_to_string(_float,_string) (_string = string(OvFormatString("%f %f",((_float)[0]),((_float)[1]))))
 #define string_to_float2(_string,_float) (sscanf_s(_string.data(),"%f %f",&((_float)[0]),&((_float)[1])))
 
-OvRTTI_IMPL(OvProp_float2,OvProperty)
+OvRTTI_IMPL(OvProp_float2)
 bool	OvProp_float2::Extract(OvObject* pObj, OvObjectProperties& rObjStore)
 {
 	float* kpProp = (float*)Access(pObj);
@@ -227,7 +227,7 @@ bool	OvProp_float2::Inject(OvObject* pObj, OvObjectProperties& rObjStore)
 #define float3_to_string(_float,_string) (_string = string(OvFormatString("%f %f %f",((_float)[0]),((_float)[1]),((_float)[2]))))
 #define string_to_float3(_string,_float) (sscanf_s(_string.data(),"%f %f %f",&((_float)[0]),&((_float)[1]),&((_float)[2])))
 
-OvRTTI_IMPL(OvProp_float3,OvProperty)
+OvRTTI_IMPL(OvProp_float3)
 bool	OvProp_float3::Extract(OvObject* pObj, OvObjectProperties& rObjStore)
 {
 	float* kpProp = (float*)Access(pObj);
@@ -259,7 +259,7 @@ bool	OvProp_float3::Inject(OvObject* pObj, OvObjectProperties& rObjStore)
 #define float4_to_string(_float,_string) (_string = string(OvFormatString("%f %f %f %f",((_float)[0]),((_float)[1]),((_float)[2]),((_float)[3]))))
 #define string_to_float4(_string,_float) (sscanf_s(_string.data(),"%f %f %f %f",&((_float)[0]),&((_float)[1]),&((_float)[2]),&((_float)[3])))
 
-OvRTTI_IMPL(OvProp_float4,OvProperty)
+OvRTTI_IMPL(OvProp_float4)
 bool	OvProp_float4::Extract(OvObject* pObj, OvObjectProperties& rObjStore)
 {
 	float* kpProp = (float*)Access(pObj);
@@ -289,7 +289,7 @@ bool	OvProp_float4::Inject(OvObject* pObj, OvObjectProperties& rObjStore)
 ///////////////////////////				transform					/////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
-OvRTTI_IMPL(OvProp_transform,OvProperty)
+OvRTTI_IMPL(OvProp_transform)
 bool	OvProp_transform::Extract(OvObject* pObj, OvObjectProperties& rObjStore)
 {
 	OvTransform* kpProp = (OvTransform*)Access(pObj);

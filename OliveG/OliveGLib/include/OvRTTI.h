@@ -25,14 +25,6 @@ public:
 		m_pBaseClassRTTI[0] = &baseclass;
 	};
 
-	OvRTTI(const string & classname, const OvRTTI& baseclass0, const OvRTTI& baseclass1):
-	m_strClassName(classname)/*,
-	m_dwGeneration(min(baseclass0.m_dwGeneration,baseclass1.m_dwGeneration) + 1)*/
-	{
-		m_pBaseClassRTTI[0] = &baseclass0;
-		m_pBaseClassRTTI[1] = &baseclass1;
-	};
-
 	OvRTTI(const string & classname,OvPropertyBag* pPropertyBag):m_strClassName(classname),m_pPropertyBag(pPropertyBag)
 	{
 		m_pBaseClassRTTI[0] = NULL;
@@ -45,18 +37,11 @@ public:
 	{
 		m_pBaseClassRTTI[0] = &baseclass;
 	};
-	OvRTTI(const string & classname, const OvRTTI& baseclass0, const OvRTTI& baseclass1,OvPropertyBag* pPropertyBag)
-		:m_strClassName(classname)
-		,m_pPropertyBag(pPropertyBag)
-	{
-		m_pBaseClassRTTI[0] = &baseclass0;
-		m_pBaseClassRTTI[1] = &baseclass1;
-	};
 
 
-
+	void					SetPropertyBag(OvPropertyBag* propBag){m_pPropertyBag = propBag;};
+	inline OvPropertyBag*	PropertyBag(){return m_pPropertyBag;};
 	inline const char*	TypeName(){return m_strClassName.data();};
-	inline OvPropertyBag* PropertyBag(){return m_pPropertyBag;};
 	const OvRTTI*		GetBaseRTTI(unsigned int uiIndex = 0){return m_pBaseClassRTTI[uiIndex];};
 
 private:
@@ -64,16 +49,6 @@ private:
 	const string					m_strClassName;
 
 	const OvRTTI*					m_pBaseClassRTTI[OvRTTI_MAX_PARENT_COUNT];
-
-	//! 파생된 클레스가 몇번째 세대인지를 이용해
-	//! RTTI 연산을 최적화 하려 했으나
-	//! RTTI는 정적타임(컴파일타임)에 정해지기 때문에
-	//! 제너럴변수에 옳바른 세대수가 들어오지 못한다
-	//! (정적 변수에 대한 초기화 순서는 컴파일에 의해 약속 받지 못한다)
-	//! 특히나 하위 클레스부터 순차적으로 초기화 되야하는 RTTI의 특성상
-	//! 이 몇번째 파생된 세대인지를 구해 내는것은 무리이다.
-	//! 다른 최적화 방법을 찾아보야 할것 같다.
-	//const DWORD						m_dwGeneration;
 
 	OvPropertyBag*					m_pPropertyBag;
 
@@ -108,10 +83,17 @@ inline bool IsStemFrom(const OvRTTI* _pBaseRTTI,const OvRTTI* _pCompareRTTI){
 
 
 
+#define	OvRTTI_DECL_ROOT(classname) \
+public:\
+	static const OvRTTI msh_OvRTTI;\
+	virtual const OvRTTI* QueryRTTI()const{return &msh_OvRTTI;};\
+	typedef classname __this_class;
+
 #define	OvRTTI_DECL(classname) \
 public:\
 	static const OvRTTI msh_OvRTTI;\
 	virtual const OvRTTI* QueryRTTI()const{return &msh_OvRTTI;};\
+	static const OvRTTI&	_GetBaseRTTI(){return __super::msh_OvRTTI;};\
 	typedef classname __this_class;
 
 #define OvRTTI_OvRTTI(classname) (&(classname::msh_OvRTTI))
@@ -119,11 +101,8 @@ public:\
 #define	OvRTTI_IMPL_NOPARENT(classname) const OvRTTI classname::msh_OvRTTI(#classname);
 #define	OvRTTI_IMPL_NOPARENT_PROP(classname) const OvRTTI classname::msh_OvRTTI(#classname,&msh_OvPropertyBag);
 
-#define	OvRTTI_IMPL(classname,parentname) const OvRTTI classname::msh_OvRTTI(#classname,parentname::msh_OvRTTI);
-#define	OvRTTI_IMPL_PROP(classname,parentname) const OvRTTI classname::msh_OvRTTI(#classname,parentname::msh_OvRTTI,&msh_OvPropertyBag);
-
-#define	OvRTTI_IMPL2(classname,parentname0,parentname1) const OvRTTI classname::msh_OvRTTI(#classname,parentname0::msh_OvRTTI,parentname1::msh_OvRTTI);
-#define	OvRTTI_IMPL2_PROP(classname,parentname0,parentname1) const OvRTTI classname::msh_OvRTTI(#classname,parentname0::msh_OvRTTI,parentname1::msh_OvRTTI,&msh_OvPropertyBag);
+#define	OvRTTI_IMPL(classname) const OvRTTI classname::msh_OvRTTI(#classname,classname::_GetBaseRTTI());
+#define	OvRTTI_IMPL_PROP(classname) const OvRTTI classname::msh_OvRTTI(#classname,classname::_GetBaseRTTI(),&msh_OvPropertyBag);
 
 #define OvRTTI_TypeName(classptr) ((const_cast<OvRTTI*>(classptr->QueryRTTI()))->TypeName())
 #define	OvRTTI_IsEqual(classptr1,classptr2) ((classptr1&&classptr2)? ((((classptr1)->QueryRTTI()))==(((classptr2)->QueryRTTI()))):0)

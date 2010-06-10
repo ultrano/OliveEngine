@@ -29,7 +29,7 @@
 //		인자값과같이 생명주기가 짧은곳에는 "클레스이름*"를 대신 사용해도 된다.
 class  OvRefBase : public OvMemObject
 {
-	OvRTTI_DECL(OvRefBase);
+	OvRTTI_DECL_ROOT(OvRefBase);
 public:
 	// 일단 생성되면서 카운티을 0으로 맞춘다.
 	OvRefBase();

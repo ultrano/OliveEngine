@@ -8,6 +8,8 @@ int	APIENTRY	WinMain(HINSTANCE hi,HINSTANCE,LPSTR,int)
 		OvXNodeSPtr kpNode = new OvXNode;
 		kpNode->SetName("써너버 비취");
 		
+		OvRTTI_IsKindOf(OvObject,kpNode);
+
 		string kstrName = kpNode->GetName();
 
 		kpNode->SetScale(5);

@@ -21,7 +21,7 @@ OvREF_POINTER(OvRenderTarget);
 
 class OvRenderer : public OvMemObject
 {
-	OvRTTI_DECL(OvRenderer);
+	OvRTTI_DECL_ROOT(OvRenderer);
 	OvSingletonEx_DECL(OvRenderer);
 public:
 

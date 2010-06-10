@@ -5,9 +5,9 @@
 
 class OvObject;
 class OvObjectProperties;
-class OvProperty : public OvMemObject
+class OvProperty
 {
-	OvRTTI_DECL(OvProperty);
+	OvRTTI_DECL_ROOT(OvProperty);
 public:
 
 	OvProperty(){};
