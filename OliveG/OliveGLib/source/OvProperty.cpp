@@ -1,5 +1,5 @@
 #include "OvProperty.h"
-OvRTTI_IMPL_NOPARENT(OvProperty);
+OvRTTI_IMPL_ROOT(OvProperty);
 
 void*			OvProperty::Access(OvObject* pObj)
 {

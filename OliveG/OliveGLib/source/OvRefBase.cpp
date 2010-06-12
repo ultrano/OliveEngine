@@ -1,6 +1,6 @@
 
 #include "OvRefBase.h"
-OvRTTI_IMPL_NOPARENT(OvRefBase);
+OvRTTI_IMPL_ROOT(OvRefBase);
 OvRefBase::OvRefBase():m_dReferenceCount(0)
 {
 	//OvInitSection(m_qSectionKey);

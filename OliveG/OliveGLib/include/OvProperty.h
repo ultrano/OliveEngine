@@ -1,6 +1,6 @@
 #pragma once
 #include <string>
-#include "OvRTTI.h"
+#include "OvUtility_RTTI.h"
 #include "OvMemObject.h"
 
 class OvObject;

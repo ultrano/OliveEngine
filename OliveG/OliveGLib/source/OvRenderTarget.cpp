@@ -31,7 +31,7 @@ OvRenderTarget::~OvRenderTarget()
 }
 void	OvRenderTarget::SetRenderTexture(OvTextureSPtr pTexture)
 {
-	if (OvRTTI_IsKindOf(OvTexture,pTexture))
+	if ( OvRTTI_Util::IsKindOf< OvTexture >( pTexture ) )
 	{
 		m_pPimple->mTargetTexture = pTexture;
 	}

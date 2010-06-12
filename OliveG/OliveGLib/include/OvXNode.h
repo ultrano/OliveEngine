@@ -37,7 +37,7 @@ OvXObjectSPtr FindLeafObject(OvXObjectSPtr pObject)
 {
 	if (pObject)
 	{
-		if (OvRTTI_IsKindOf(OvCamera,pObject))
+		if (OvRTTI_Util::IsKindOf<Type_0>(pObject))
 		{
 			return pObject;
 		}
@@ -48,7 +48,7 @@ OvXObjectSPtr FindLeafObject(OvXObjectSPtr pObject)
 			for (int i = 0 ; i < iChildCount ; ++i)
 			{
 				OvXObjectSPtr kpObj = kpParent->GetChildeAt(i);
-				if (kpObj&&OvRTTI_IsKindOf(Type_0,kpObj))
+				if ( kpObj && OvRTTI_Util::IsKindOf< Type_0 >( kpObj ) )
 				{
 					return kpObj;
 				}

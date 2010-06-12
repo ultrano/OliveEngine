@@ -11,7 +11,7 @@ using namespace OvStoreUtility;
 
 bool OSU::WriteInteger(OvStoreObject* pObj,const int& rInput)
 {
-	if (OvRTTI_IsClassOf(OvStoreData,pObj))
+	if (OvRTTI_Util::IsTypeOf< OvStoreData >( pObj ) )
 	{
 		try
 		{
@@ -30,7 +30,7 @@ bool OSU::WriteInteger(OvStoreObject* pObj,const int& rInput)
 }
 bool OSU::ReadInteger(OvStoreObject* pObj,int& rOutput)
 {
-	if (OvRTTI_IsClassOf(OvStoreData,pObj))
+	if (OvRTTI_Util::IsTypeOf< OvStoreData >( pObj ) )
 	{
 		try
 		{
@@ -52,7 +52,7 @@ bool OSU::ReadInteger(OvStoreObject* pObj,int& rOutput)
 }
 bool OSU::WriteFloat(OvStoreObject* pObj,const float& rInput)
 {
-	if (OvRTTI_IsClassOf(OvStoreData,pObj))
+	if (OvRTTI_Util::IsTypeOf< OvStoreData >( pObj ) )
 	{
 		try
 		{
@@ -71,7 +71,7 @@ bool OSU::WriteFloat(OvStoreObject* pObj,const float& rInput)
 }
 bool OSU::ReadFloat(OvStoreObject* pObj,float& rOutput)
 {
-	if (OvRTTI_IsClassOf(OvStoreData,pObj))
+	if (OvRTTI_Util::IsTypeOf< OvStoreData >( pObj ) )
 	{
 		try
 		{
@@ -94,7 +94,7 @@ bool OSU::ReadFloat(OvStoreObject* pObj,float& rOutput)
 
 bool OSU::WriteDouble(OvStoreObject* pObj,const double& rData)
 {
-	if (OvRTTI_IsClassOf(OvStoreData,pObj))
+	if ( OvRTTI_Util::IsTypeOf< OvStoreData >( pObj ) )
 	{
 		try
 		{
@@ -113,7 +113,7 @@ bool OSU::WriteDouble(OvStoreObject* pObj,const double& rData)
 }
 bool OSU::ReadFDouble(OvStoreObject* pObj,double& rData)
 {
-	if (OvRTTI_IsClassOf(OvStoreData,pObj))
+	if ( OvRTTI_Util::IsTypeOf< OvStoreData >( pObj ) )
 	{
 		try
 		{
@@ -135,7 +135,7 @@ bool OSU::ReadFDouble(OvStoreObject* pObj,double& rData)
 }
 bool OSU::WritePoint3(OvStoreObject* pObj,const OvPoint3& rInput)
 {
-	if (OvRTTI_IsClassOf(OvStoreData,pObj))
+	if ( OvRTTI_Util::IsTypeOf< OvStoreData >( pObj ) )
 	{
 		OvStoreData* kpData = (OvStoreData*)pObj;
 		kpData->SetDataType(STORE_TYPE_POINT3);
@@ -146,7 +146,7 @@ bool OSU::WritePoint3(OvStoreObject* pObj,const OvPoint3& rInput)
 }
 bool OSU::ReadPoint3(OvStoreObject* pObj,OvPoint3& rOutput)
 {
-	if (OvRTTI_IsClassOf(OvStoreData,pObj))
+	if ( OvRTTI_Util::IsTypeOf< OvStoreData >( pObj ) )
 	{
 		OvStoreData* kpData = (OvStoreData*)pObj;
 		sscanf_s(kpData->GetDataString(),"%f,%f,%f",&rOutput.x,&rOutput.y,&rOutput.z);

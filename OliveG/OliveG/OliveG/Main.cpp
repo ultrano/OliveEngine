@@ -6,9 +6,14 @@ int	APIENTRY	WinMain(HINSTANCE hi,HINSTANCE,LPSTR,int)
 	{
 
 		OvXNodeSPtr kpNode = new OvXNode;
+
+		bool checkRTTI = OvUtil::RTTI::IsKindOf<OvCamera>(kpNode);
+
+		const char* typeName = OvRTTI_Util::TypeName(kpNode);
+
 		kpNode->SetName("써너버 비취");
 		
-		OvRTTI_IsKindOf(OvObject,kpNode);
+		OvRTTI_Util::IsKindOf<OvObject>(kpNode);
 
 		string kstrName = kpNode->GetName();
 

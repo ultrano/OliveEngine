@@ -169,7 +169,7 @@ const OvTransform&	OvXObject::GetWorldTransform()
 
 bool OvXObject::IsNode()
 {
-	return OvRTTI_IsKindOf(OvXNode,this);
+	return OvRTTI_Util::IsKindOf< OvXNode >( this );
 }
 
 bool OvXObject::IsLeaf()

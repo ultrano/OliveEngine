@@ -1,6 +1,6 @@
 #pragma once
 #include "OvObject.h"
-#include "OvRTTI.h"
+#include "OvUtility_RTTI.h"
 #include "OvAutoPtr.h"
 #include "OvNSMeshDescription.h"
 

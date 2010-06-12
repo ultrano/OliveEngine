@@ -46,7 +46,7 @@ OvStoreObject*	OvStoreNode::FindChild(const char* pName)
 OvStoreObject*	OvStoreNode::FindDataChild(const char* pName)
 {
 	OvStoreObject* kpObj = FindChild(pName);
-	if (OvRTTI_IsClassOf(OvStoreData,kpObj))
+	if ( OvRTTI_Util::IsTypeOf< OvStoreData >( kpObj ) )
 	{
 		return kpObj;
 	}
@@ -55,7 +55,7 @@ OvStoreObject*	OvStoreNode::FindDataChild(const char* pName)
 OvStoreObject*	OvStoreNode::FindNodeChild(const char* pName)
 {
 	OvStoreObject* kpObj = FindChild(pName);
-	if (OvRTTI_IsClassOf(OvStoreNode,kpObj))
+	if (OvRTTI_Util::IsTypeOf< OvStoreNode >( kpObj ) )
 	{
 		return kpObj;
 	}
@@ -84,7 +84,7 @@ OvStoreObject*	OvStoreNode::MakeCopyInstance()
 }
 bool			OvStoreNode::CopyTo(OvStoreObject* pObj)
 {
-	if (OvRTTI_IsClassOf(OvStoreNode,pObj))
+	if (OvRTTI_Util::IsTypeOf< OvStoreNode >( pObj ) )
 	{
 		OvStoreNode* kpNode = (OvStoreNode*)pObj;
 		kpNode->m_pPimple->m_vecChildren.clear();

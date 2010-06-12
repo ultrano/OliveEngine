@@ -614,10 +614,6 @@
 					>
 				</File>
 				<File
-					RelativePath=".\include\OvRTTI.h"
-					>
-				</File>
-				<File
 					RelativePath=".\include\OvThreadSync.h"
 					>
 				</File>
@@ -625,6 +621,22 @@
 					RelativePath=".\include\OvUtility.h"
 					>
 				</File>
+				<Filter
+					Name="OvRTTI"
+					>
+					<File
+						RelativePath=".\include\OvRTTI.h"
+						>
+					</File>
+					<File
+						RelativePath=".\include\OvUtility_RTTI.h"
+						>
+					</File>
+					<File
+						RelativePath=".\include\OvUtility_RTTI_Impl.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 			<Filter
 				Name="OvAutoPtr"

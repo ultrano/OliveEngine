@@ -1,7 +1,7 @@
 #include "OvStorage.h"
 #include "OvStringUtility.h"
 #include "OvObjectProperties.h"
-#include "OvRTTI.h"
+#include "OvUtility_RTTI.h"
 #include "OvPropertyBag.h"
 #include "OvPropertyNode.h"
 #include "OvProperty.h"
@@ -74,7 +74,7 @@ bool	OvStorage::ExtractProperty(OvObjectSPtr pObj,OvObjectProperties& rStore)
 				}
 			}		
 		}
-		rStore.SetObjectType(OvRTTI_TypeName(pObj));
+		rStore.SetObjectType(OvRTTI_Util::TypeName(pObj));
 		rStore.SetObjectID(pObj->GetObjectID());
 		return true;
 	}

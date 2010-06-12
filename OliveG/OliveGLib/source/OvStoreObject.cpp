@@ -2,7 +2,7 @@
 #include "tinyxml.h"
 #include <string>
 
-OvRTTI_IMPL_NOPARENT(OvStoreObject);
+OvRTTI_IMPL_ROOT(OvStoreObject);
 
 struct OvStoreObject::OvPimple : OvMemObject
 {

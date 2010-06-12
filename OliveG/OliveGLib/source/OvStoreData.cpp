@@ -57,7 +57,7 @@ OvStoreObject*	OvStoreData::MakeCopyInstance()
 }
 bool			OvStoreData::CopyTo(OvStoreObject* pObj)
 {
-	if (OvRTTI_IsClassOf(OvStoreData,pObj))
+	if ( OvRTTI_Util::IsTypeOf< OvStoreData >( pObj ) )
 	{
 		OvStoreData* pData = (OvStoreData*)pObj;
 		pData->m_pPimple->m_strDataString	= m_pPimple->m_strDataString;

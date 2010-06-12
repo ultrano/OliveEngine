@@ -55,7 +55,7 @@ bool	SafeCopyToIndexBuffer(LPDIRECT3DINDEXBUFFER9 pIndexBuffer, size_t stFaceStr
 	return false;
 }
 
-OvRTTI_IMPL_NOPARENT(OvRenderer);
+OvRTTI_IMPL_ROOT(OvRenderer);
 OvSingletonEx_IMPL(OvRenderer);
 
 struct OvRenderer::OvPimple : OvMemObject
@@ -196,7 +196,7 @@ bool		OvRenderer::GenerateRenderer(HWND _hTargetWindowHangle)
 
 void			OvRenderer::DrawMesh(OvMeshSPtr pMesh)
 {
-	if (pMesh && OvRTTI_IsKindOf(OvMesh,pMesh))
+	if (pMesh && OvRTTI_Util::IsKindOf< OvMesh >( pMesh ))
 	{
 
 		LPDIRECT3DDEVICE9				kpDX9Device		= m_pPimple->mpDirect3DDevice;

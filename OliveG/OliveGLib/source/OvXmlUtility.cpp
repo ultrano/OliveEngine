@@ -24,11 +24,11 @@ bool	OXU::ConvertStoreObjectToElement(OvStoreObject* pObj, TiXmlNode* rXmlNode)
 	if (rXmlNode && pObj)
 	{
 		bool kbRet = false;
-		if (OvRTTI_IsClassOf(OvStoreData,pObj))
+		if ( OvRTTI_Util::IsTypeOf< OvStoreData >( pObj ) )
 		{
 			kbRet |= ConvertDataToElement(pObj,rXmlNode);
 		}
-		else if (OvRTTI_IsClassOf(OvStoreNode,pObj))
+		else if ( OvRTTI_Util::IsTypeOf< OvStoreNode >( pObj ) )
 		{
 			kbRet |= ConvertNodeToElement(pObj,rXmlNode);
 		}
@@ -39,7 +39,7 @@ bool	OXU::ConvertStoreObjectToElement(OvStoreObject* pObj, TiXmlNode* rXmlNode)
 
 bool	OXU::ConvertDataToElement(OvStoreObject* pObj, TiXmlNode* rXmlNode)
 {
-	if ((rXmlNode && pObj) && (OvRTTI_IsClassOf(OvStoreData,pObj) && rXmlNode->ToElement()))
+	if ( (rXmlNode && pObj) && (OvRTTI_Util::IsTypeOf< OvStoreData >( pObj ) && rXmlNode->ToElement()) )
 	{
 		TiXmlElement* pElement = rXmlNode->ToElement();
 		OvStoreData* pData = (OvStoreData*)pObj;
@@ -55,7 +55,7 @@ bool	OXU::ConvertDataToElement(OvStoreObject* pObj, TiXmlNode* rXmlNode)
 }
 bool	OXU::ConvertElementToData(TiXmlNode* rXmlNode, OvStoreObject* pObj)
 {
-	if ((rXmlNode && pObj) && (OvRTTI_IsClassOf(OvStoreData,pObj) && rXmlNode->ToElement()))
+	if ((rXmlNode && pObj) && (OvRTTI_Util::IsTypeOf< OvStoreData >( pObj ) && rXmlNode->ToElement()))
 	{
 		if (rXmlNode->Value() == "DATA")
 		{
@@ -72,7 +72,7 @@ bool	OXU::ConvertElementToData(TiXmlNode* rXmlNode, OvStoreObject* pObj)
 }
 bool	OXU::ConvertNodeToElement(OvStoreObject* pObj, TiXmlNode* rXmlNode)
 {
-	if ((rXmlNode && pObj) && (OvRTTI_IsClassOf(OvStoreNode,pObj) && rXmlNode->ToElement()))
+	if ((rXmlNode && pObj) && (OvRTTI_Util::IsTypeOf< OvStoreNode >( pObj ) && rXmlNode->ToElement()))
 	{
 		TiXmlElement* pElement = rXmlNode->ToElement();
 		OvStoreNode* pNode = (OvStoreNode*)pObj;
@@ -93,7 +93,7 @@ bool	OXU::ConvertNodeToElement(OvStoreObject* pObj, TiXmlNode* rXmlNode)
 }
 bool	OXU::ConvertElementToNode(TiXmlNode* rXmlNode, OvStoreObject* pObj)
 {
-// 	if ((rXmlNode && pObj) && (OvRTTI_IsClassOf(OvStoreNode,pObj) && rXmlNode->ToElement()))
+// 	if ((rXmlNode && pObj) && (OvRTTI_Util::IsTypeOf< OvStoreNode >( pObj ) && rXmlNode->ToElement()))
 // 	{
 // 		if (rXmlNode->Value() == "NODE")
 // 		{
@@ -113,7 +113,7 @@ bool InsertStoreData(TiXmlNode& rXmlNode, OvStoreObject* pObj);
 
 bool InsertStoreNode(TiXmlNode& rXmlNode, OvStoreObject* pObj)
 {
-	if (OvRTTI_IsClassOf(OvStoreNode,pObj))
+	if ( OvRTTI_Util::IsTypeOf< OvStoreNode >( pObj ) )
 	{
 		OvStoreNode* pNode = (OvStoreNode*)pObj;
 		
@@ -136,7 +136,7 @@ bool InsertStoreNode(TiXmlNode& rXmlNode, OvStoreObject* pObj)
 
 bool InsertStoreData(TiXmlNode& rXmlNode, OvStoreObject* pObj)
 {
-	if (OvRTTI_IsClassOf(OvStoreData,pObj))
+	if ( OvRTTI_Util::IsTypeOf< OvStoreData >( pObj ) )
 	{
 		OvStoreData* pData = (OvStoreData*)pObj;
 		TiXmlElement	kElement("DATA");
@@ -154,11 +154,11 @@ bool InsertStoreData(TiXmlNode& rXmlNode, OvStoreObject* pObj)
 
 bool InsertElement(TiXmlNode& rXmlNode, OvStoreObject* pObj)
 {
-	if (OvRTTI_IsClassOf(OvStoreData,pObj))
+	if ( OvRTTI_Util::IsTypeOf< OvStoreData >( pObj ) )
 	{
 		return InsertStoreData(rXmlNode,pObj);
 	}
-	else if (OvRTTI_IsClassOf(OvStoreNode,pObj))
+	else if ( OvRTTI_Util::IsTypeOf< OvStoreNode >( pObj ) )
 	{
 		return InsertStoreNode(rXmlNode,pObj);
 	}

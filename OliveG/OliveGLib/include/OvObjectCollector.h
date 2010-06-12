@@ -52,7 +52,7 @@ DWORD OvObjectCollector::CollectTreeObject(OvObjectSPtr	pObject)
 	}
 	else
 	{
-		if (OvRTTI_IsKindOf(Type_0,pObject))
+		if ( OvRTTI_Util::IsKindOf< Type_0 >( pObject ) )
 		{
 			AddObject(pObject);
 		}

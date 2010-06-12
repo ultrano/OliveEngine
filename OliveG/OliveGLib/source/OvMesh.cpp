@@ -8,7 +8,7 @@
 #include <vector>
 //
 
-OvRTTI_IMPL_NOPARENT(OvMesh);
+OvRTTI_IMPL_ROOT(OvMesh);
 struct STMeshVertexFormat
 {
 	OvPoint3	mPosition;

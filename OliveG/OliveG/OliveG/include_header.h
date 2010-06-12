@@ -28,4 +28,5 @@
 
 #include "OvSingletonPool.h"
 #include "OvXNode.h"
+#include "OvCamera.h"
 #include "OvObjectProperties.h"
