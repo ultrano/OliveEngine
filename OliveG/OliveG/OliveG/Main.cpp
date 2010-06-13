@@ -1,32 +1,33 @@
 #include "include_header.h"
 
-int	APIENTRY	WinMain(HINSTANCE hi,HINSTANCE,LPSTR,int)
+GL_TEST_CASE_FUNC( simple_testing )
 {
 	OvSingletonPool::StartUp();
-	{
+	{		
+	OvObjectSPtr objTest = new OvCamera;
+	objTest->SetName("써너버 비취");
 
-		OvXNodeSPtr kpNode = new OvXNode;
+	OvRTTI_Util::IsKindOf<OvObject>(objTest);
 
-		bool checkRTTI = OvUtil::RTTI::IsKindOf<OvCamera>(kpNode);
+	string kstrName = objTest->GetName();
 
-		const char* typeName = OvRTTI_Util::TypeName(kpNode);
+	OvStorage kStorage;
 
-		kpNode->SetName("써너버 비취");
-		
-		OvRTTI_Util::IsKindOf<OvObject>(kpNode);
-
-		string kstrName = kpNode->GetName();
-
-		kpNode->SetScale(5);
-		kpNode->SetTranslate(10,11,12);
-		kpNode->Update(0);
-
-		OvStorage kStorage;
-
-		OvObjectProperties kObjStore;
-		kStorage.ExtractProperty(kpNode,kObjStore);
-		kStorage.RestoreObject(kObjStore);
+	OvObjectProperties kObjStore;
+	kStorage.ExtractProperty(objTest,kObjStore);
+	kStorage.RestoreObject(kObjStore);
 
 	}
 	OvSingletonPool::ShutDown();
+};
+GL_TEST_CASE_FUNC( simple_testing_again )
+{
+	OvMessageBox("돼나?","이것도 돼는건가?!");
+	throw "lskfjaslkfja";
+	OvMessageBox("여긴 쌩까는건가?","오긴오냐?");
+};
+
+int	APIENTRY	WinMain(HINSTANCE hi,HINSTANCE,LPSTR,int)
+{
+	GlTestManager::GetInstance()->RunAllTest();
 };

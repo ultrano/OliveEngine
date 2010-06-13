@@ -15,7 +15,8 @@
 //
 
 
-#pragma comment(lib,"..\\..\\..\\output\\lib_d\\OliveG.lib");
+#pragma comment(lib,"..\\..\\..\\output\\lib_d\\OliveGLib_d.lib");
+#pragma comment(lib,"..\\..\\..\\output\\lib_d\\GloryUnitTestKit_d.lib");
 #pragma comment(lib,"..\\..\\TinyXMLLib\\lib\\tinyxmld.lib");
 
 
@@ -30,3 +31,6 @@
 #include "OvXNode.h"
 #include "OvCamera.h"
 #include "OvObjectProperties.h"
+
+#include "GlBaseTestEnviroment.h"
+#include "GlTestManager.h"

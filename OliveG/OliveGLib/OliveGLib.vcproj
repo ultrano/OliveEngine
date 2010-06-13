@@ -63,7 +63,7 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile="$(OutputDir)lib_d/OliveG.lib"
+				OutputFile="$(OutputDir)lib_d/$(ProjectName)_d.lib"
 			/>
 			<Tool
 				Name="VCALinkTool"
