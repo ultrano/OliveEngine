@@ -10,8 +10,8 @@ class OvProperty
 	OvRTTI_DECL_ROOT(OvProperty);
 public:
 
-	OvProperty(){};
-	virtual ~OvProperty(){};
+	OvProperty();
+	virtual ~OvProperty();
 
 	virtual bool	Extract(OvObject* pObj, OvObjectProperties& rXml) = 0;
 	virtual bool	Inject(OvObject* pObj, OvObjectProperties& rXml) = 0;

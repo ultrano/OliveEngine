@@ -7,11 +7,6 @@ OvPropertyBag::~OvPropertyBag()
 	OvPropertyNode* kpNextNode	= 0;
 	while (kpDeleteNode)
 	{
-		if (kpDeleteNode->GetProperty())
-		{
-			OvProperty* kpProperty = kpDeleteNode->GetProperty();
-			delete kpProperty;
-		}
 		kpNextNode = kpDeleteNode->GetNext();
 		delete kpDeleteNode;
 		kpDeleteNode = kpNextNode;

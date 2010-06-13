@@ -1,6 +1,15 @@
 #include "OvProperty.h"
 OvRTTI_IMPL_ROOT(OvProperty);
 
+OvProperty::OvProperty()
+{
+};
+
+OvProperty::~OvProperty()
+{
+	m_strPropertyName.clear();
+};
+
 void*			OvProperty::Access(OvObject* pObj)
 {
 	if (pObj)
