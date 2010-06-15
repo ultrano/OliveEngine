@@ -8,6 +8,7 @@ OvREF_POINTER(OvCamera);
 class OvCamera : public OvXObject
 {
 	OvRTTI_DECL(OvCamera);
+	OvPROPERTY_BAG_DECL(OvCamera);
 
 public:
 
@@ -52,8 +53,6 @@ protected:
 	void			UpdateLookAt();
 
 private:
-	struct OvPimple;
-	OvAutoPtr< OvPimple> m_pPimple;
 
 	OvPoint3	m_pt3LookDirection;
 	OvPoint3	m_pt3UpDirection;

@@ -1,9 +1,20 @@
 #include "OvCamera.h"
 #include "OvTransform.h"
 #include "OvRenderer.h"
+#include "OvRegisterableProperties.h"
 #include <d3dx9.h>
 
-OvRTTI_IMPL(OvCamera,OvXObject);
+OvRTTI_IMPL(OvCamera);
+OvPROPERTY_BAG_BEGIN(OvCamera);
+	OvDECLARE_PROPERTY(OvProp_float3,m_pt3LookDirection);
+	OvDECLARE_PROPERTY(OvProp_float3,m_pt3UpDirection);
+	OvDECLARE_PROPERTY(OvProp_float3,m_pt3RightDirection);
+OvPROPERTY_BAG_END(OvCamera);
+
+
+
+
+
 
 OvCamera::OvCamera()
 {
