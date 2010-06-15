@@ -1,9 +1,19 @@
 #include "include_header.h"
 
-GL_TEST_CASE_FUNC( simple_testing )
+GL_ENVIROMENT(OliveLibTest)
 {
-	OvSingletonPool::StartUp();
-	{		
+	GL_ENV_SET_UP
+	{
+		OvSingletonPool::StartUp();
+	};
+	GL_ENV_TEAR_DOWN
+	{
+		OvSingletonPool::ShutDown();
+	}
+};
+
+GL_TEST_CASE_ENV( OliveLibTest, property_bag_test )
+{
 	OvObjectSPtr objTest = new OvCamera;
 	objTest->SetName("써너버 비취");
 
@@ -17,14 +27,10 @@ GL_TEST_CASE_FUNC( simple_testing )
 	kStorage.ExtractProperty(objTest,kObjStore);
 	kStorage.RestoreObject(kObjStore);
 
-	}
-	OvSingletonPool::ShutDown();
 };
-GL_TEST_CASE_FUNC( simple_testing_again )
+GL_TEST_CASE_ENV( OliveLibTest, simple_testing )
 {
 	OvMessageBox("돼나?","이것도 돼는건가?!");
-	throw "lskfjaslkfja";
-	OvMessageBox("여긴 쌩까는건가?","오긴오냐?");
 };
 
 int	APIENTRY	WinMain(HINSTANCE hi,HINSTANCE,LPSTR,int)
