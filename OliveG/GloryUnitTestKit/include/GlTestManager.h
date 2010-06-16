@@ -26,3 +26,5 @@ private:
 	testcase_table m_testCaseTable;
 
 };
+
+#define	GL_RUN_ALL_TEST	GlTestManager::GetInstance()->RunAllTest
