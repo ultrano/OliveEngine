@@ -1,5 +1,7 @@
 #include "GlTestManager.h"
 #include "GlBaseTestEnviroment.h"
+#include "GLTestUtility.h"
+#include <string>
 #include <windows.h>
 
 GlTestManager* GlTestManager::GetInstance()
@@ -59,9 +61,12 @@ void	GlTestManager::RunAllTest()
 
 				testCase->TearDown();
 			}
-			catch (...)
+			catch ( GLException& e )
 			{
 				testCase->TearDown();
+				std::string expMsg = e.GetExceptionMsg();
+				OutputDebugString(expMsg.c_str());
+				OutputDebugString("\n");
 			}
 		}
 	}

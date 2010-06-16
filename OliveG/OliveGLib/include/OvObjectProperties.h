@@ -8,6 +8,10 @@ using namespace std;
 
 class OvObject;
 class OvStorage;
+namespace OliveValue
+{
+	class Value;
+};
 struct SComponentLinkInfo : OvMemObject
 {
 	SComponentLinkInfo():formerID(OvObjectID::INVALID),linkDestination(){};
@@ -29,6 +33,9 @@ public:
 
 	void	PushValue(const string& rValue);
 	bool	PopValue(string& rValue);
+
+	void	PushValue( OliveValue::Value& rValue );
+	bool	PopValue( OliveValue::Value& rValue );
 
 	void	PushComponentObject(OvObject* pObject);
 	OvObject*	PopComponentObject();

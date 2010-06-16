@@ -1,15 +1,21 @@
-#include "OvExtraProperty.h"
+#include "OliveValue.h"
 
-using namespace OvExtraProperty;
+using namespace OliveValue;
 OvRTTI_IMPL_ROOT(Value);
 
 OvRTTI_IMPL(Float);
 OvRTTI_IMPL(Integer);
 OvRTTI_IMPL(String);
 
-OvRTTF_CONSTRUCTOR_IMPL(Float){};
-OvRTTF_CONSTRUCTOR_IMPL(Integer){};
-OvRTTF_CONSTRUCTOR_IMPL(String){};
+
+//////////////////////////////////////////////////////////////////////////
+REGIST_VALUE_TYPE_BEGINE
+	REGIST_VALUE_TYPE( Float )
+	REGIST_VALUE_TYPE( Integer )
+	REGIST_VALUE_TYPE( String )
+REGIST_VALUE_TYPE_END
+//////////////////////////////////////////////////////////////////////////
+
 
 #include <boost/lexical_cast.hpp>
 

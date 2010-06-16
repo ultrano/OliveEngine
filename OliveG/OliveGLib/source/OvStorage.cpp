@@ -76,6 +76,7 @@ bool	OvStorage::ExtractProperty(OvObjectSPtr pObj,OvObjectProperties& rStore)
 		}
 		rStore.SetObjectType(OvRTTI_Util::TypeName(pObj));
 		rStore.SetObjectID(pObj->GetObjectID());
+		WriteProperty(rStore);
 		return true;
 	}
 	return false;
@@ -123,4 +124,27 @@ void	OvStorage::WriteProperty(OvObjectProperties& rStore)
 	}
 	m_xmlDoc.InsertEndChild(kObjNode);
 	m_xmlDoc.SaveFile("../../export/testprop.xml");
+}
+#include "OvCamera.h"
+void	OvStorage::ReadProperty(const string& fileName)
+{
+	m_xmlDoc.LoadFile(fileName.c_str(),TIXML_ENCODING_UTF8 );
+	TiXmlElement* objNode = m_xmlDoc.RootElement();
+	OvObjectProperties rStore;
+	TiXmlElement* propElem = objNode->FirstChildElement("prop");
+	for (;propElem;propElem=propElem->NextSiblingElement("prop"))
+	{
+		if (propElem->GetText())
+		{
+			rStore.PushValue( propElem->GetText() );
+		}
+		else
+		{
+			rStore.PushValue( "" );
+		}
+	}
+	OvCameraSPtr objTest = new OvCamera;
+	
+	InjectProperty(objTest,rStore);
+
 }

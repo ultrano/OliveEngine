@@ -3,7 +3,6 @@
 #include "OvRefBase.h"
 #include "OvAutoPtr.h"
 #include "OvPropertyBag.h"
-#include "OvExtraProperty.h"
 #include <string>
 #include <map>
 
@@ -11,12 +10,19 @@
 
 class OvStorage;
 OvREF_POINTER(OvObject);
+namespace OliveValue
+{
+	class Value;
+};
 class OvObject : public OvRefBase
 {
 	OvRTTI_DECL(OvObject);
 	OvPROPERTY_BAG_DECL(OvObject);
 
 public:
+
+	typedef std::map< std::string, OliveValue::Value* > extra_property_table;
+	typedef std::pair< std::string, OliveValue::Value* > extra_property_table_pair;
 
 	OvObject();
 	OvObject(OvStorage& rStorage);
@@ -29,19 +35,17 @@ public:
 	//! ID of Object
 	OvObjectID		GetObjectID();
 
-	void		RegisterExtraProperty( const string& propName, OvExtraProperty::Value* extraProp );
+	void		RegisterExtraProperty( const string& propName, OliveValue::Value* extraProp );
 	bool		RemoveExtraProperty( const string& propName );
 	void		ClearExtraProperty();
 
-	OvExtraProperty::Value* FindExtraProperty( const string& propName );
+	OliveValue::Value* FindExtraProperty( const string& propName );
 
 private:
 
 	string			m_strObjectName;
 	OvObjectID		m_idObjectID;
 
-	typedef std::map< std::string, OvExtraProperty::Value* > extra_property_table;
-	typedef std::pair< std::string, OvExtraProperty::Value* > extra_property_table_pair;
 	extra_property_table	m_extraPropertyTable;
 
 };

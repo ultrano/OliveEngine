@@ -28,6 +28,7 @@ public:
 	bool	InjectProperty	(OvObjectSPtr pObj,OvObjectProperties& rStore);
 
 	void	WriteProperty(OvObjectProperties& rStore);
+	void	ReadProperty(const string& fileName);
 	//void	ReadStore(OvObjectSPtr _pObj);
 
 	//OvObjectSPtr RestoreRelationshipTable();

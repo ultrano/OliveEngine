@@ -181,6 +181,22 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="GLTestUtility"
+				>
+				<File
+					RelativePath=".\include\GLTestUtility.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="GlTestHeader"
+				>
+				<File
+					RelativePath=".\include\GlTestHeader.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="리소스 파일"

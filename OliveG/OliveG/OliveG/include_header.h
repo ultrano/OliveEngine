@@ -32,7 +32,6 @@
 #include "OvCamera.h"
 #include "OvObjectProperties.h"
 
-#include "GlBaseTestEnviroment.h"
-#include "GlTestManager.h"
+#include "GlTestHeader.h"
 
-#include "OvExtraProperty.h"
+#include "OliveValue.h"

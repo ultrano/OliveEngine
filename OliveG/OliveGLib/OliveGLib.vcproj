@@ -1331,14 +1331,14 @@
 				</File>
 			</Filter>
 			<Filter
-				Name="OvExtraProperty"
+				Name="OliveValue"
 				>
 				<File
-					RelativePath=".\source\OvExtraProperty.cpp"
+					RelativePath=".\source\OliveValue.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\include\OvExtraProperty.h"
+					RelativePath=".\include\OliveValue.h"
 					>
 				</File>
 			</Filter>

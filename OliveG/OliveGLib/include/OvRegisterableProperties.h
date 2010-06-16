@@ -94,3 +94,12 @@ class OvProp_transform : public OvProperty
 	virtual bool	Inject(OvObject* pObj, OvObjectProperties& rObjStore);
 };
 //
+
+// extra Property
+class OvProp_extra : public OvProperty
+{
+	OvRTTI_DECL(OvProp_extra);
+	virtual bool	Extract(OvObject* pObj, OvObjectProperties& rObjStore);
+	virtual bool	Inject(OvObject* pObj, OvObjectProperties& rObjStore);
+};
+//

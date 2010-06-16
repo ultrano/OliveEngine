@@ -1,4 +1,5 @@
 #include "OvObjectProperties.h"
+#include "OliveValue.h"
 
 OvObjectProperties	OvObjectProperties::INVALID;
 
@@ -33,6 +34,20 @@ bool	OvObjectProperties::PopValue(string& rValue)
 	{
 		rValue = m_queValueQueue.front();
 		m_queValueQueue.pop();
+		return true;
+	}
+	return false;
+}
+void	OvObjectProperties::PushValue( OliveValue::Value& rValue )
+{
+	PushValue(rValue.GetValue());
+}
+bool	OvObjectProperties::PopValue( OliveValue::Value& rValue )
+{
+	string popedValue;
+	if(PopValue(popedValue))
+	{
+		rValue.SetValue(popedValue);
 		return true;
 	}
 	return false;

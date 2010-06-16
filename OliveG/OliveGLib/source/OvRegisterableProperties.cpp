@@ -5,6 +5,7 @@
 #include "OvObjectProperties.h"
 #include "OvObject.h"
 #include "OvTransform.h"
+#include "OliveValue.h"
 using namespace std;
 
 
@@ -326,6 +327,67 @@ bool	OvProp_transform::Inject(OvObject* pObj, OvObjectProperties& rObjStore)
 		rObjStore.PopValue(kstrValue);
 		string_to_float3(kstrValue,	&(kpProp->Quaternion));
 
+		return true;
+	}
+	return false;
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////				extra					/////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
+
+OvRTTI_IMPL(OvProp_extra)
+bool	OvProp_extra::Extract(OvObject* pObj, OvObjectProperties& rObjStore)
+{
+	
+	OvObject::extra_property_table* kpProp = (OvObject::extra_property_table*)Access(pObj);
+
+	if (kpProp)
+	{
+		OvObject::extra_property_table& extraTable = *kpProp;
+		
+		OliveValue::Integer extraCount;
+		extraCount.SetInteger(extraTable.size());
+		rObjStore.PushValue(extraCount.GetValue());
+
+		for each( const OvObject::extra_property_table_pair extraProp in extraTable )
+		{
+			OliveValue::Value* extraValue = (OliveValue::Value*)extraProp.second;
+
+			rObjStore.PushValue( OvRTTI_Util::TypeName( extraValue ) );
+			rObjStore.PushValue( extraProp.first );
+			rObjStore.PushValue( *extraValue );
+		}
+
+		return true;
+	}
+	return false;
+}
+bool	OvProp_extra::Inject(OvObject* pObj, OvObjectProperties& rObjStore)
+{
+	OvObject::extra_property_table* kpProp = (OvObject::extra_property_table*)Access(pObj);
+
+	if (kpProp)
+	{
+		OvObject::extra_property_table& extraTable = *kpProp;
+
+		OliveValue::Integer extraCount;
+		rObjStore.PopValue(extraCount);
+		for (int i = 0 ; i < extraCount.GetInteger() ; ++i)
+		{
+			string valueType;
+
+			rObjStore.PopValue( valueType );
+			OliveValue::Value*	extraValue = OliveValue::ValueFactory( valueType );
+			if (extraValue)
+			{
+				string extraPropName;
+				rObjStore.PopValue( extraPropName );
+				rObjStore.PopValue( *extraValue );
+				extraTable[ extraPropName ] = extraValue;
+			}
+		}
 		return true;
 	}
 	return false;

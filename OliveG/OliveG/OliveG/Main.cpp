@@ -15,25 +15,48 @@ GL_ENVIROMENT(OliveLibTest)
 GL_TEST_CASE_ENV( OliveLibTest, property_bag_test )
 {
 	OvObjectSPtr objTest = new OvCamera;
-	objTest->SetName("써너버 비취");
+	OliveValue::Value* extraValue = NULL;
 
-	OvRTTI_Util::IsKindOf<OvObject>(objTest);
+	objTest->RegisterExtraProperty( "Name", OliveValue::ValueFactory( "String" ) );
+	objTest->RegisterExtraProperty( "Birth", OliveValue::ValueFactory( "String" ) );
+	objTest->RegisterExtraProperty( "Gender", OliveValue::ValueFactory( "String" ) );
+	objTest->RegisterExtraProperty( "Location", OliveValue::ValueFactory( "String" ) );
 
-	string kstrName = objTest->GetName();
+
+	GL_ASSERT( extraValue = objTest->FindExtraProperty( "Name" ) );
+	extraValue->SetValue("Ultrano");
+	GL_ASSERT( extraValue = objTest->FindExtraProperty( "Birth" ) );
+	extraValue->SetValue("1987/06/26");
+	GL_ASSERT( extraValue = objTest->FindExtraProperty( "Gender" ) );
+	extraValue->SetValue("male");
+	GL_ASSERT( extraValue = objTest->FindExtraProperty( "Location" ) );
+	extraValue->SetValue("daegu");
+
+
+	GL_ASSERT( extraValue = objTest->FindExtraProperty( "Name" ) );
+	OutputDebugString(extraValue->GetValue().c_str());
+	OutputDebugString("\n");
+	GL_ASSERT( extraValue = objTest->FindExtraProperty( "Birth" ) );
+	OutputDebugString(extraValue->GetValue().c_str());
+	OutputDebugString("\n");
+	GL_ASSERT( extraValue = objTest->FindExtraProperty( "Gender" ) );
+	OutputDebugString(extraValue->GetValue().c_str());
+	OutputDebugString("\n");
+	GL_ASSERT( extraValue = objTest->FindExtraProperty( "Location" ) );
+	OutputDebugString(extraValue->GetValue().c_str());
+	OutputDebugString("\n");
+
 
 	OvStorage kStorage;
 
 	OvObjectProperties kObjStore;
 	kStorage.ExtractProperty(objTest,kObjStore);
 	kStorage.RestoreObject(kObjStore);
-
-};
-GL_TEST_CASE_ENV( OliveLibTest, simple_testing )
-{
-	OvMessageBox("돼나?","이것도 돼는건가?!");
+	
+	kStorage.ReadProperty("../../export/testprop.xml");
 };
 
 int	APIENTRY	WinMain(HINSTANCE hi,HINSTANCE,LPSTR,int)
 {
-	GlTestManager::GetInstance()->RunAllTest();
+	GL_RUN_ALL_TEST();
 };

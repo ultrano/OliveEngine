@@ -1,26 +1,25 @@
 #pragma once
 #include "OvMemObject.h"
 #include "OvUtility_RTTI.h"
-#include "OvRTTFactory.h"
-#include <string>
 
-namespace OvExtraProperty
+namespace OliveValue
 {
+
 	class Value : public OvMemObject
 	{
+		friend class OvObject;
 		OvRTTI_DECL_ROOT(Value);
+		virtual ~Value();
 	public:
 		Value();
-		virtual ~Value();
 	public:
 		virtual void	SetValue( const string& expData ) = 0;
 		virtual string	GetValue() = 0;
 	};
 
-	class Float : public OvExtraProperty::Value
+	class Float : public OliveValue::Value
 	{
 		OvRTTI_DECL(Float);
-		OvRTTF_CONSTRUCTOR_DECL(Float);
 	public:
 		Float(){};
 		virtual void	SetValue( const string& expData );
@@ -32,10 +31,9 @@ namespace OvExtraProperty
 		float	m_value;
 	};
 
-	class Integer : public OvExtraProperty::Value
+	class Integer : public OliveValue::Value
 	{
 		OvRTTI_DECL(Integer);
-		OvRTTF_CONSTRUCTOR_DECL(Integer);
 	public:
 		Integer(){};
 		virtual void	SetValue( const string& expData );
@@ -47,10 +45,9 @@ namespace OvExtraProperty
 		int		m_value;
 	};
 
-	class String : public OvExtraProperty::Value
+	class String : public OliveValue::Value
 	{
 		OvRTTI_DECL(String);
-		OvRTTF_CONSTRUCTOR_DECL(String);
 	public:
 		String(){};
 		virtual void	SetValue( const string& expData );
@@ -62,5 +59,11 @@ namespace OvExtraProperty
 		string		m_value;
 	};
 
+	Value*	ValueFactory(const std::string& valueType);
 
+
+#define REGIST_VALUE_TYPE_BEGINE OliveValue::Value*	OliveValue::ValueFactory(const std::string& valueType){\
+	if( valueType.empty() ){return NULL;}
+#define	REGIST_VALUE_TYPE( classname ) else if( std::string(#classname) == valueType){return new classname();}
+#define REGIST_VALUE_TYPE_END	return NULL;};
 }
