@@ -8,3 +8,10 @@
 *.exe
 .svn
 .svn/*
+*.lik
+*.lib
+*.dll
+*.dep
+*.manifest
+*.res
+*.ilk
