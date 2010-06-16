@@ -1,11 +1,4 @@
 
-
-//! 와우! 이게 내 머리에서 나온거라니! ㅋㅋㅋㅋㅋㅋ
-//! 졸래 기분 좋은데?
-//! 상수값을 찾기 위한 불필요한 오버헤드도 없어질뿐더러
-//! 당위성도 챙길수 있고, 사용 또한 편하며
-//! 여타의 코드들과 충돌날 일도 적어! ㅋㅋㅋ 오예 ㅋㅋㅋ
-
 #define CONST_GROUP_BEGIN(group)
 #define CONST_GROUP_END
 #define CONST_DECL_FLOAT(type,name,regindex,count)
