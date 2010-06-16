@@ -34,3 +34,5 @@
 
 #include "GlBaseTestEnviroment.h"
 #include "GlTestManager.h"
+
+#include "OvExtraProperty.h"

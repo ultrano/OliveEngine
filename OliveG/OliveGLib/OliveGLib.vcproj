@@ -1330,6 +1330,18 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="OvExtraProperty"
+				>
+				<File
+					RelativePath=".\source\OvExtraProperty.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\OvExtraProperty.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="DeprecatedOlive"
