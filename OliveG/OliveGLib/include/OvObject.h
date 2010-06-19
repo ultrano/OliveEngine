@@ -26,7 +26,7 @@ public:
 
 	OvObject();
 	OvObject(OvStorage& rStorage);
-	~OvObject(); 
+	virtual ~OvObject(); 
 
 	//! Object Name
 	void		SetName(const char* _pName);

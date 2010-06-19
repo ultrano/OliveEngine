@@ -22,7 +22,7 @@ OvObject::OvObject()
 }
 OvObject::OvObject(OvStorage& rStorage)
 {
-
+	m_idObjectID = OvObjectManager::GetInstance()->AllocObjectID(this);
 }
 OvObject::~OvObject()
 {
