@@ -1,12 +1,15 @@
 #include "OvXNode.h"
 #include <list>
 #include <algorithm>
-#include "OvProperty.h"
+#include "OvRegisterableProperties.h"
+#include "OliveValue.h"
 using namespace std;
+
 
 OvRTTI_IMPL(OvXNode);
 
 OvPROPERTY_BAG_BEGIN(OvXNode);
+	OvDECLARE_PROPERTY(OvProp_object_collector,m_clectrChildCollect);
 OvPROPERTY_BAG_END(OvXNode);
 
 
@@ -18,6 +21,7 @@ OvXNode::OvXNode()
 
 OvXNode::~OvXNode()
 {
+	m_clectrChildCollect.Clear();
 }
 
 void	OvXNode::UpdateSubordinate(float _fElapse)
