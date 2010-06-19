@@ -31,7 +31,7 @@ int		OvRefBase::DecreaseReferenceCount()
 	{
 		// 요기서 삭제;
 		DeleteThis();
-		return 0;
+		m_dReferenceCount = 0;
 	}
 	return m_dReferenceCount;
 }
