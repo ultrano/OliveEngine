@@ -61,7 +61,7 @@ public:\
 //////////////////////////////////////////////////////////////////////////
 
 template<typename Type_0>
-const char*	TypeName( Type_0 typePointer )
+const string&	TypeName( Type_0 typePointer )
 {
 	if (typePointer)
 	{

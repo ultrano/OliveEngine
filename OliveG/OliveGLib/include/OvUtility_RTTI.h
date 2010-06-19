@@ -12,7 +12,7 @@ namespace OvUtility
 		#define	OvRTTI_IMPL( classname )
 
 		template<typename Type_0>
-		const char*	TypeName( Type_0 typePointer );
+		const string&	TypeName( Type_0 typePointer );
 
 		template<typename Type_0, typename Type_1>
 		bool	IsSame( Type_1 typePointer0, Type_1 typePointer1 );
