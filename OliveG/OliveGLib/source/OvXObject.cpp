@@ -8,6 +8,7 @@
 
 OvRTTI_IMPL(OvXObject);
 OvPROPERTY_BAG_BEGIN(OvXObject);
+	OvDECLARE_PROPERTY( OvProp_object_pointer, m_pParent);
 	OvDECLARE_PROPERTY( OvProp_float3,  m_tfLocalTransform.Scale);
 	OvDECLARE_PROPERTY( OvProp_float3,  m_tfLocalTransform.Position);
 	OvDECLARE_PROPERTY( OvProp_float4,  m_tfLocalTransform.Quaternion);
@@ -15,8 +16,8 @@ OvPROPERTY_BAG_END(OvXObject);
 
 
 OvXObject::OvXObject()
+:m_pParent(NULL)
 {
-	m_pParent = NULL;
 }
 OvXObject::~OvXObject()
 {
