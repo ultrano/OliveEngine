@@ -45,13 +45,15 @@ void	GlTestManager::RunAllTest()
 
 		if (testCase)
 		{
-			string	testReport = "다음의 테스트를 진행합니다";
+			string	testReport = "Simple unit testing kit - Glory - ";
+			testReport += "\n";
+			testReport += "다음의 테스트를 진행합니다";
 			testReport += "\n";
 			testReport += "\n";
 			testReport += "테스트 환경 : " + testCase->GetEnvName();
 			testReport += "\n";
 			testReport += "테스트 타이틀 : " + testCase->GetCaseTitle();
-			MessageBox( NULL, testReport.c_str(), "Simple unit testing kit - Glory - ", MB_OK | MB_ICONINFORMATION );
+			OutputDebugString(testReport.c_str());
 
 			try
 			{
@@ -60,6 +62,8 @@ void	GlTestManager::RunAllTest()
 				testCase->TestBody();
 
 				testCase->TearDown();
+
+				OutputDebugString("성공적으로 완료.\n");
 			}
 			catch ( GLException& e )
 			{

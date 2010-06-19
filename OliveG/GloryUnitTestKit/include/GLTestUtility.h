@@ -9,4 +9,4 @@ public:
 	std::string m_expMsg;
 };
 
-#define GL_ASSERT( exp ) {if (!(exp)){throw GLException((#exp));}}
+#define GL_ASSERT( exp ) {if (!(exp)){throw GLException(("assert exception-> "#exp"\n"));}}
