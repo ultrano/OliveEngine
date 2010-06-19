@@ -1,8 +1,10 @@
 #pragma once
+#include "OvSmartPointer.h"
 #include "OvObject.h"
-#include "OvAutoPtr.h"
+#include "OvObjectID.h"
+#include <vector>
 
-OvREF_POINTER(OvObject)
+OvREF_POINTER(OvObject);
 
 class OvObjectCollector : public OvMemObject
 {
@@ -33,10 +35,9 @@ public:
 
 private:
 
-	//! Member Values (Ensconsed for encapsulation)
-	//! Application can access member only using get,set interface
-	struct OvPimple;
-	OvAutoPtr<OvPimple> m_pPimple;
+	typedef vector<OvObjectSPtr>		tdObjectArray;
+	tdObjectArray			m_tdObjArray;
+
 };
 template<typename Type_0>
 DWORD OvObjectCollector::CollectTreeObject(OvObjectSPtr	pObject)
