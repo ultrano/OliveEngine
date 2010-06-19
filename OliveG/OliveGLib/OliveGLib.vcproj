@@ -1317,6 +1317,18 @@
 						>
 					</File>
 				</Filter>
+				<Filter
+					Name="OvRelationLinkBuilder"
+					>
+					<File
+						RelativePath=".\source\OvRelationLinkBuilder.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\include\OvRelationLinkBuilder.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 			<Filter
 				Name="OvObjectFactory"

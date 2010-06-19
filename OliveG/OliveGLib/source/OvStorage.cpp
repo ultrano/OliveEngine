@@ -5,54 +5,115 @@
 #include "OvPropertyBag.h"
 #include "OvPropertyNode.h"
 #include "OvProperty.h"
-#include "OvObjectFactory.h"
+#include "OvObject.h"
+#include "OvRelationLinkBuilder.h"
 #include "tinyxml.h"
 
-
+////////////////////// 테스트 인클루드 (물리적 구조때문에 나중에 지워줘야 한다.) /////
+#include "OvCamera.h"
+#include "OvXNode.h"
+OvObject* TemporaryFactoryFunction(const string& typeName);
+//////////////////////////////////////////////////////////////////////////
 
 OvStorage::OvStorage()
+:m_headBuilder(NULL)
 {
 
 }
 OvStorage::~OvStorage()
 {
+	Clear();
+}
+struct SAutoStoreCleaner
+{
+	OvStorage* m_cleanTarget;
+	SAutoStoreCleaner(OvStorage* cleanTarget):m_cleanTarget(cleanTarget){};
+	~SAutoStoreCleaner(){if(m_cleanTarget)m_cleanTarget->Clear();};
+};
+void	OvStorage::Save(const char* pFile, OvObjectCollector& saveObjects )
+{
+	SAutoStoreCleaner autoCleaner(this);
 
+	TiXmlElement rootElement("ObjectTable");
+	m_xmlDoc.InsertEndChild(rootElement);
+
+	for (int i = 0 ; i < saveObjects.Count() ; ++i)
+	{
+		OvObjectSPtr streObj = saveObjects.GetByAt(i);
+		StoreObject( streObj.GetRear() );
+	}
+
+	m_xmlDoc.SaveFile( pFile );
 }
-void	OvStorage::Store(const char* pFile)
+
+void	OvStorage::Load(const char* pFile, OvObjectCollector& loadedObjects)
 {
+	SAutoStoreCleaner autoCleaner(this);
+
+	m_xmlDoc.LoadFile( pFile, TIXML_ENCODING_UTF8 );
+	TiXmlElement* rootElem = m_xmlDoc.RootElement();
+	TiXmlElement* firstObjElem = rootElem->FirstChildElement("Object");
+	if ( firstObjElem )
+	{
+		RestoreObject( *firstObjElem );
+	}
+	RebuildRelatedLink( m_restoreObjectTable, m_headBuilder );
+
+	for each( restore_object_table::value_type tableIter in m_restoreObjectTable )
+	{
+		loadedObjects.AddObject( tableIter.second );
+	}
 }
-void	OvStorage::Restore(const char* pFile)
-{
-}
-void	OvStorage::StoreObject(OvObjectSPtr pObj)
+void	OvStorage::StoreObject(OvObject* pObj)
 {
 	OvObjectProperties rStore;
-	if (m_ocStoredObjects.IsCollected(pObj) == false && ExtractProperty(pObj,rStore))
+	if ( ExtractProperty(pObj,rStore) )
 	{
-		WriteProperty(rStore);
-		m_ocStoredObjects.AddObject(pObj);
-
-		for (OvObject* kpSubObj = rStore.PopComponentObject()
-			;kpSubObj != NULL
-			;kpSubObj = rStore.PopComponentObject())
+		TiXmlElement objElem("");
+		if ( WriteProperty( rStore, objElem ) )
 		{
-			StoreObject(kpSubObj);
+			TiXmlElement* rootElem = m_xmlDoc.RootElement();
+			if (rootElem)
+			{
+				rootElem->InsertEndChild( objElem );
+			}
+
+			for (OvObject* kpSubObj = rStore.PopComponentObject()
+				;kpSubObj != NULL
+				;kpSubObj = rStore.PopComponentObject())
+			{
+				StoreObject(kpSubObj);
+			}
 		}
 	}
 }
-void	OvStorage::RestoreObject(OvObjectProperties& rStore)
+void	OvStorage::RestoreObject( TiXmlElement& objElem )
 {
-	OvObjectID	createdObjID;
-	OvObjectSPtr kpCreatedObj = OvObjectFactory::GetInstance()->CreateInstance(rStore.GetObjectType(),createdObjID);
-	if (InjectProperty(kpCreatedObj,rStore))
+	OvObjectProperties rStore;
+	if ( ReadProperty( objElem, rStore ) )
 	{
-		m_mapCreatedObjects[rStore.GetObjectID()] = kpCreatedObj;
+		OvObject* restoreObj = TemporaryFactoryFunction( rStore.GetObjectType() );
+		if ( InjectProperty( restoreObj, rStore ) )
+		{
+			m_restoreObjectTable[ rStore.GetObjectID() ] = restoreObj;
+			OvRelationLinkBuilder* headBuilder = rStore.HandoverHeadLinkBuilder();
+			if ( headBuilder )
+			{
+				headBuilder->SetNextBuilder( m_headBuilder );
+				m_headBuilder = headBuilder;
+			}
+		}
+	}
+	if (TiXmlElement* nextElem = objElem.NextSiblingElement("Object"))
+	{
+		RestoreObject( *nextElem );
 	}
 }
-bool	OvStorage::ExtractProperty(OvObjectSPtr pObj,OvObjectProperties& rStore)
+bool	OvStorage::ExtractProperty(OvObject* pObj,OvObjectProperties& rStore)
 {
-	if (pObj)
+	if (pObj && m_storeObjectTable.IsCollected(pObj) == false )
 	{
+
 		OvRTTI* kpRTTI = NULL;
 		for (kpRTTI = const_cast<OvRTTI*>(pObj->QueryRTTI())
 			;kpRTTI && kpRTTI->PropertyBag()
@@ -69,19 +130,21 @@ bool	OvStorage::ExtractProperty(OvObjectSPtr pObj,OvObjectProperties& rStore)
 					OvProperty* kpProp = kpPropNode->GetProperty();
 					if (kpProp)
 					{
-						kpProp->Extract(pObj.GetRear(),rStore);
+						kpProp->Extract(pObj,rStore);
 					}
 				}
 			}		
 		}
 		rStore.SetObjectType(OvRTTI_Util::TypeName(pObj));
 		rStore.SetObjectID(pObj->GetObjectID());
-		WriteProperty(rStore);
+
+		m_storeObjectTable.AddObject(pObj);
+
 		return true;
 	}
 	return false;
 }
-bool	OvStorage::InjectProperty(OvObjectSPtr pObj,OvObjectProperties& rStore)
+bool	OvStorage::InjectProperty(OvObject* pObj,OvObjectProperties& rStore)
 {
 	if (pObj)
 	{
@@ -102,7 +165,7 @@ bool	OvStorage::InjectProperty(OvObjectSPtr pObj,OvObjectProperties& rStore)
 					OvProperty* kpProp = kpPropNode->GetProperty();
 					if (kpProp)
 					{
-						kpProp->Inject(pObj.GetRear(),rStore);
+						kpProp->Inject(pObj,rStore);
 					}
 				}
 			}
@@ -111,40 +174,91 @@ bool	OvStorage::InjectProperty(OvObjectSPtr pObj,OvObjectProperties& rStore)
 	}
 	return false;
 }
-void	OvStorage::WriteProperty(OvObjectProperties& rStore)
+bool	OvStorage::WriteProperty(OvObjectProperties& rStore, TiXmlElement& objElem)
 {
-	TiXmlElement kObjNode(rStore.GetObjectType().data());
-	kObjNode.SetAttribute("id",OvFormatString("%d",rStore.GetObjectID()));
+	objElem.SetValue("Object");
+	objElem.SetAttribute("type", rStore.GetObjectType().c_str() );
+	objElem.SetAttribute("id",OvFormatString("%d",rStore.GetObjectID()));
+
 	string kstrValue;
 	while (rStore.PopValue(kstrValue))
 	{
 		TiXmlElement kPropSection("prop");
 		kPropSection.InsertEndChild(TiXmlText(kstrValue.data()));
-		kObjNode.InsertEndChild(kPropSection);
+		objElem.InsertEndChild(kPropSection);
 	}
-	m_xmlDoc.InsertEndChild(kObjNode);
-	m_xmlDoc.SaveFile("../../export/testprop.xml");
+	return true;
 }
-#include "OvCamera.h"
-void	OvStorage::ReadProperty(const string& fileName)
+
+bool	OvStorage::ReadProperty( TiXmlElement& objElem, OvObjectProperties& rStore )
 {
-	m_xmlDoc.LoadFile(fileName.c_str(),TIXML_ENCODING_UTF8 );
-	TiXmlElement* objNode = m_xmlDoc.RootElement();
-	OvObjectProperties rStore;
-	TiXmlElement* propElem = objNode->FirstChildElement("prop");
-	for (;propElem;propElem=propElem->NextSiblingElement("prop"))
+	if ( string("Object") == objElem.Value() )
 	{
-		if (propElem->GetText())
+
+		OvObjectID	formerId;
+		objElem.Attribute( "id", (int*)&formerId );
+		string	typeName = objElem.Attribute( "type" );
+
+		rStore.SetObjectType(typeName);
+		rStore.SetObjectID(formerId);
+
+		for ( TiXmlElement* propElem = objElem.FirstChildElement( "prop" )
+			; propElem != NULL
+			; propElem = propElem->NextSiblingElement( "prop" ) )
 		{
-			rStore.PushValue( propElem->GetText() );
+			if (propElem->GetText())
+			{
+				rStore.PushValue( propElem->GetText() );
+			}
+			else
+			{
+				rStore.PushValue( "" );
+			}
 		}
-		else
+		return true;
+	}
+	return false;
+}
+void	OvStorage::RebuildRelatedLink( OvStorage::restore_object_table& restoreTable, OvRelationLinkBuilder* headBuilder )
+{
+	if ( restoreTable.size() && headBuilder )
+	{
+		for ( OvRelationLinkBuilder* linkBuilder = headBuilder
+			; linkBuilder != NULL
+			; linkBuilder = linkBuilder->GetNextBuilder()
+			)
 		{
-			rStore.PushValue( "" );
+			linkBuilder->BuildLink(restoreTable);
 		}
 	}
-	OvCameraSPtr objTest = new OvCamera;
-	
-	InjectProperty(objTest,rStore);
+}
+void	OvStorage::Clear()
+{
+	m_xmlDoc.Clear();;
+	m_storeObjectTable.Clear();
 
+	m_restoreObjectTable.clear();
+
+	if (m_headBuilder)
+	{
+		for ( OvRelationLinkBuilder* deleteTarget = m_headBuilder
+			; deleteTarget != NULL
+			; deleteTarget = deleteTarget->GetNextBuilder() )
+		{
+			delete deleteTarget;
+		}
+		m_headBuilder = NULL;
+	}
+}
+OvObject* TemporaryFactoryFunction(const string& typeName)
+{
+	if ("OvXNode" == typeName)
+	{
+		return new OvXNode;
+	}
+	else if ("OvCamera" == typeName)
+	{
+		return new OvCamera;
+	}
+	return NULL;
 }
