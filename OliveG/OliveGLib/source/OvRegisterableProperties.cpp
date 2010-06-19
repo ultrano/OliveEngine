@@ -6,6 +6,8 @@
 #include "OvObject.h"
 #include "OvTransform.h"
 #include "OliveValue.h"
+#include "OvObjectCollector.h"
+#include "OvRelationLinkBuilder.h"
 using namespace std;
 
 
@@ -116,33 +118,89 @@ bool	OvProp_STL_string::Inject(OvObject* pObj, OvObjectProperties& rObjStore)
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////				object					/////////////////////////////
+///////////////////////////				object_pointer					/////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////
-OvRTTI_IMPL(OvProp_ObjectPtr)
-bool	OvProp_ObjectPtr::Extract(OvObject* pObj, OvObjectProperties& rObjStore)
+OvRTTI_IMPL(OvProp_object_pointer)
+bool	OvProp_object_pointer::Extract(OvObject* pObj, OvObjectProperties& rObjStore)
 {
-	OvObject* kpProp = (OvObject*)Access(pObj);
-	if (kpProp)
+	OvObject** kpProp = (OvObject**)Access(pObj);
+	if ( kpProp )
 	{
-		string kstrValue = OvFormatString("%I64d",kpProp->GetObjectID());
-		rObjStore.PushValue(kstrValue);
-		rObjStore.PushComponentObject(kpProp);
+		OliveValue::ObjectID extractValue;
+		if (*kpProp )
+		{		
+			extractValue.SetObjectID( (*kpProp)->GetObjectID() );
+		}
+		else
+		{
+			extractValue.SetObjectID( OvObjectID::INVALID );
+		}
+		rObjStore.PushValue(extractValue);
+		rObjStore.PushComponentObject(*kpProp);
 		return true;
 	}
 	return false;
 }
-bool	OvProp_ObjectPtr::Inject(OvObject* pObj, OvObjectProperties& rObjStore)
+bool	OvProp_object_pointer::Inject(OvObject* pObj, OvObjectProperties& rObjStore)
 {
 	OvObject** kpProp = (OvObject**)Access(pObj);
 	if (kpProp)
 	{
-		string kstrValue;
-		if (rObjStore.PopValue(kstrValue))
+		OliveValue::ObjectID injectValue;
+		if ( rObjStore.PopValue(injectValue) && injectValue.GetObjectID() != OvObjectID::INVALID )
 		{
-			SComponentLinkInfo linkInfo;
-			sscanf_s(kstrValue.c_str(),"%I64d",&linkInfo.formerID);
-			linkInfo.linkDestination = kpProp;
-			rObjStore.PushComponentLinkInfo(linkInfo);
+			OvPointLinkBuilder* linkBuilder = new OvPointLinkBuilder;
+
+			linkBuilder->SetFormerID( injectValue.GetObjectID() );
+			linkBuilder->SetDestination( kpProp );
+
+			rObjStore.CollectLinkBuilder( linkBuilder );
+
+			return true;
+		}
+	}
+
+	return false;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////				object_smart_pointer					/////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
+OvRTTI_IMPL(OvProp_object_smart_pointer)
+bool	OvProp_object_smart_pointer::Extract(OvObject* pObj, OvObjectProperties& rObjStore)
+{
+	OvObjectSPtr* kpProp = (OvObjectSPtr*)Access(pObj);
+	if (kpProp)
+	{
+		OliveValue::ObjectID extractValue;
+		if ( (*kpProp) )
+		{		
+			extractValue.SetObjectID( (*kpProp)->GetObjectID() );
+		}
+		else
+		{
+			extractValue.SetObjectID( OvObjectID::INVALID );
+		}
+		rObjStore.PushValue(extractValue);
+		rObjStore.PushComponentObject( kpProp->GetRear() );
+		return true;
+	}
+	return false;
+}
+bool	OvProp_object_smart_pointer::Inject(OvObject* pObj, OvObjectProperties& rObjStore)
+{
+	OvObjectSPtr* kpProp = (OvObjectSPtr*)Access(pObj);
+	if (kpProp)
+	{
+		OliveValue::ObjectID injectValue;
+		if ( rObjStore.PopValue(injectValue) && injectValue.GetObjectID() != OvObjectID::INVALID )
+		{
+			OvSmartLinkBuilder* linkBuilder = new OvSmartLinkBuilder;
+
+			linkBuilder->SetFormerID( injectValue.GetObjectID() );
+			linkBuilder->SetSmartDestination( kpProp );			
+
+			rObjStore.CollectLinkBuilder( linkBuilder );
 
 			return true;
 		}
@@ -162,8 +220,9 @@ bool	OvProp_float::Extract(OvObject* pObj, OvObjectProperties& rObjStore)
 		float* kpProp = (float*)Access(pObj);
 		if (kpProp)
 		{
-			string kstrValue = OvFormatString("%f",*kpProp);
-			rObjStore.PushValue(kstrValue);
+			OliveValue::Float extractValue;
+			extractValue.SetFloat(*kpProp);
+			rObjStore.PushValue(extractValue);
 
 			return true;
 		}
@@ -177,10 +236,10 @@ bool	OvProp_float::Inject(OvObject* pObj, OvObjectProperties& rObjStore)
 		float* kpProp = (float*)Access(pObj);
 		if (kpProp)
 		{
-			string kstrValue;
-			if (rObjStore.PopValue(kstrValue))
+			OliveValue::Float extractValue;
+			if (rObjStore.PopValue(extractValue))
 			{
-				sscanf_s(kstrValue.data(),"%f",kpProp);
+				*kpProp = extractValue.GetFloat();
 			}
 
 			return true;
@@ -202,9 +261,9 @@ bool	OvProp_float2::Extract(OvObject* pObj, OvObjectProperties& rObjStore)
 	float* kpProp = (float*)Access(pObj);
 	if (kpProp)
 	{
-		string kstrValue;
-		float2_to_string(kpProp,kstrValue);
-		rObjStore.PushValue(kstrValue);
+		OliveValue::Point2 extractValue;
+		extractValue.SetPoint2( (const OvPoint2&)*kpProp );
+		rObjStore.PushValue(extractValue);
 		return true;
 	}
 	return false;
@@ -214,9 +273,9 @@ bool	OvProp_float2::Inject(OvObject* pObj, OvObjectProperties& rObjStore)
 	float* kpProp = (float*)Access(pObj);
 	if (kpProp)
 	{
-		string kstrValue;
-		rObjStore.PopValue(kstrValue);
-		string_to_float2(kstrValue,kpProp);
+		OliveValue::Point2 injectValue;
+		rObjStore.PopValue(injectValue);
+		*(OvPoint2*)kpProp = injectValue.GetPoint2();
 		return true;
 	}
 	return false;
@@ -234,9 +293,9 @@ bool	OvProp_float3::Extract(OvObject* pObj, OvObjectProperties& rObjStore)
 	float* kpProp = (float*)Access(pObj);
 	if (kpProp)
 	{
-		string kstrValue;
-		float3_to_string(kpProp,kstrValue);
-		rObjStore.PushValue(kstrValue);
+		OliveValue::Point3 extractValue;
+		extractValue.SetPoint3( (const OvPoint3&)*kpProp );
+		rObjStore.PushValue( extractValue );
 		return true;
 	}
 	return false;
@@ -246,9 +305,9 @@ bool	OvProp_float3::Inject(OvObject* pObj, OvObjectProperties& rObjStore)
 	float* kpProp = (float*)Access(pObj);
 	if (kpProp)
 	{
-		string kstrValue;
-		rObjStore.PopValue(kstrValue);
-		string_to_float3(kstrValue,kpProp);
+		OliveValue::Point3 injectValue;
+		rObjStore.PopValue( injectValue );
+		*(OvPoint3*)kpProp = injectValue.GetPoint3();
 		return true;
 	}
 	return false;
@@ -266,9 +325,9 @@ bool	OvProp_float4::Extract(OvObject* pObj, OvObjectProperties& rObjStore)
 	float* kpProp = (float*)Access(pObj);
 	if (kpProp)
 	{
-		string kstrValue;
-		float4_to_string(kpProp,kstrValue);
-		rObjStore.PushValue(kstrValue);
+		OliveValue::Quaternion extractValue;
+		extractValue.SetQuaternion( (const OvQuaternion&)*kpProp );
+		rObjStore.PushValue(extractValue);
 		return true;
 	}
 	return false;
@@ -278,9 +337,9 @@ bool	OvProp_float4::Inject(OvObject* pObj, OvObjectProperties& rObjStore)
 	float* kpProp = (float*)Access(pObj);
 	if (kpProp)
 	{
-		string kstrValue;
-		rObjStore.PopValue(kstrValue);
-		string_to_float4(kstrValue,kpProp);
+		OliveValue::Quaternion injectValue;
+		rObjStore.PopValue(injectValue);
+		*(OvQuaternion*)kpProp = injectValue.GetQuaternion();
 		return true;
 	}
 	return false;
@@ -389,6 +448,64 @@ bool	OvProp_extra::Inject(OvObject* pObj, OvObjectProperties& rObjStore)
 			}
 		}
 		return true;
+	}
+	return false;
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////				object_collector     		/////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
+
+OvRTTI_IMPL(OvProp_object_collector);
+bool OvProp_object_collector::Extract(OvObject* pObj, OvObjectProperties& rObjStore)
+{
+	if (pObj)
+	{
+		OvObjectCollector* kpProp = (OvObjectCollector*)Access(pObj);
+		OliveValue::Integer relationCount;
+		relationCount.SetInteger( kpProp->Count() );
+
+		rObjStore.PushValue( relationCount );
+
+		for ( int i = 0 ; i < relationCount.GetInteger() ; ++i )
+		{
+			OvObjectSPtr relatedObj = kpProp->GetByAt( i );
+			if (relatedObj)
+			{
+				OliveValue::ObjectID relationID;
+				relationID.SetObjectID( relatedObj->GetObjectID() );
+				rObjStore.PushValue( relationID );
+				rObjStore.PushComponentObject( relatedObj.GetRear() );
+			}
+		}
+		return true;
+	}
+	return false;
+}
+bool OvProp_object_collector::Inject(OvObject* pObj, OvObjectProperties& rObjStore)
+{
+
+	OvObjectCollector* kpProp = (OvObjectCollector*)Access(pObj);
+	if (kpProp)
+	{
+		OvObjectCollectorLinkBuilder* linkBuilder = new OvObjectCollectorLinkBuilder;
+		OliveValue::Integer relationCount;
+		rObjStore.PopValue( relationCount );
+
+		linkBuilder->SetDestinateCollector( kpProp );
+
+		for (int i = 0 ; i < relationCount.GetInteger() ; ++i)
+		{
+			OliveValue::ObjectID formerID;
+			rObjStore.PopValue( formerID );
+			linkBuilder->AddRelatedObjectID( formerID.GetObjectID() );
+		}
+
+		rObjStore.CollectLinkBuilder( linkBuilder );
+
+		return true;
+
 	}
 	return false;
 }

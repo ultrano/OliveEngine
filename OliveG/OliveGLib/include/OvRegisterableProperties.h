@@ -42,10 +42,19 @@ class OvProp_STL_string : public OvProperty
 };
 //
 
-// object Property
-class OvProp_ObjectPtr : public OvProperty
+// object_pointer Property
+class OvProp_object_pointer : public OvProperty
 {
-	OvRTTI_DECL(OvProp_ObjectPtr);
+	OvRTTI_DECL(OvProp_object_pointer);
+	virtual bool	Extract(OvObject* pObj, OvObjectProperties& rObjStore);
+	virtual bool	Inject(OvObject* pObj, OvObjectProperties& rObjStore);
+};
+//
+
+// OvProp_object_smart_pointer Property
+class OvProp_object_smart_pointer : public OvProperty
+{
+	OvRTTI_DECL(OvProp_object_smart_pointer);
 	virtual bool	Extract(OvObject* pObj, OvObjectProperties& rObjStore);
 	virtual bool	Inject(OvObject* pObj, OvObjectProperties& rObjStore);
 };
@@ -99,6 +108,15 @@ class OvProp_transform : public OvProperty
 class OvProp_extra : public OvProperty
 {
 	OvRTTI_DECL(OvProp_extra);
+	virtual bool	Extract(OvObject* pObj, OvObjectProperties& rObjStore);
+	virtual bool	Inject(OvObject* pObj, OvObjectProperties& rObjStore);
+};
+//
+
+// objectcollector Property
+class OvProp_object_collector : public OvProperty
+{
+	OvRTTI_DECL(OvProp_object_collector);
 	virtual bool	Extract(OvObject* pObj, OvObjectProperties& rObjStore);
 	virtual bool	Inject(OvObject* pObj, OvObjectProperties& rObjStore);
 };
