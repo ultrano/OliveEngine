@@ -8,15 +8,10 @@ using namespace std;
 
 class OvObject;
 class OvStorage;
+class OvRelationLinkBuilder;
 namespace OliveValue
 {
 	class Value;
-};
-struct SComponentLinkInfo : OvMemObject
-{
-	SComponentLinkInfo():formerID(OvObjectID::INVALID),linkDestination(){};
-	OvObjectID	formerID;
-	OvObject**	linkDestination;
 };
 
 class OvObjectProperties : public OvMemObject
@@ -24,6 +19,9 @@ class OvObjectProperties : public OvMemObject
 public:
 	static OvObjectProperties	INVALID;
 public:
+
+	OvObjectProperties();
+	~OvObjectProperties();
 
 	void	SetObjectType(const string& );
 	const string& GetObjectType();
@@ -39,14 +37,14 @@ public:
 
 	void	PushComponentObject(OvObject* pObject);
 	OvObject*	PopComponentObject();
-	
-	void	PushComponentLinkInfo(const SComponentLinkInfo& linkInfo);
-	bool	PopComponentLinkInfo( SComponentLinkInfo& linkInfo );
+
+	void	CollectLinkBuilder( OvRelationLinkBuilder* linkBuilder);
+	OvRelationLinkBuilder* HandoverHeadLinkBuilder();
 
 private:
-	queue<string>				m_queValueQueue;
-	queue<OvObject*>			m_queObjects;
-	queue<SComponentLinkInfo>	m_linkInfoQueue;
+	queue<string>		m_queValueQueue;
+	queue<OvObject*>	m_queObjects;
 	string				m_objectType;
 	OvObjectID			m_idObjectID;
+	OvRelationLinkBuilder*		m_headLinkBuilder;
 };

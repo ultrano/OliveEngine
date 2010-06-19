@@ -1,7 +1,33 @@
 #include "OvObjectProperties.h"
 #include "OliveValue.h"
+#include "OvRelationLinkBuilder.h"
 
 OvObjectProperties	OvObjectProperties::INVALID;
+
+
+
+OvObjectProperties::OvObjectProperties()
+:m_idObjectID( OvObjectID::INVALID )
+,m_headLinkBuilder( NULL )
+{
+
+}
+OvObjectProperties::~OvObjectProperties()
+{
+	while (m_queValueQueue.size())
+	{
+		m_queValueQueue.pop();
+	}
+	while (m_headLinkBuilder)
+	{
+		OvRelationLinkBuilder* deleteTarget = m_headLinkBuilder;
+
+		m_headLinkBuilder = m_headLinkBuilder->GetNextBuilder();
+		
+		delete deleteTarget;
+	}
+	m_headLinkBuilder = NULL;
+}
 
 void	OvObjectProperties::SetObjectType(const string& objType)
 {
@@ -55,7 +81,10 @@ bool	OvObjectProperties::PopValue( OliveValue::Value& rValue )
 
 void	OvObjectProperties::PushComponentObject(OvObject* pObject)
 {
-	m_queObjects.push(pObject);
+	if (pObject)
+	{
+		m_queObjects.push(pObject);
+	}
 }
 OvObject*	OvObjectProperties::PopComponentObject()
 {
@@ -67,19 +96,17 @@ OvObject*	OvObjectProperties::PopComponentObject()
 	}
 	return NULL;
 }
-
-void OvObjectProperties::PushComponentLinkInfo( const SComponentLinkInfo& linkInfo )
+void		OvObjectProperties::CollectLinkBuilder( OvRelationLinkBuilder* linkBuilder)
 {
-	m_linkInfoQueue.push(linkInfo);
-}
-
-bool OvObjectProperties::PopComponentLinkInfo( SComponentLinkInfo& linkInfo )
-{
-	if (m_linkInfoQueue.size())
+	if (linkBuilder)
 	{
-		linkInfo = m_linkInfoQueue.front();
-		m_linkInfoQueue.pop();
-		return true;
+		linkBuilder->SetNextBuilder(m_headLinkBuilder);
+		m_headLinkBuilder = linkBuilder;
 	}
-	return false;
+}
+OvRelationLinkBuilder* OvObjectProperties::HandoverHeadLinkBuilder()
+{
+	OvRelationLinkBuilder* handOver = m_headLinkBuilder;
+	m_headLinkBuilder = NULL;
+	return handOver;
 }
