@@ -2,7 +2,7 @@
 
 OvObjectID	OvObjectID::INVALID(0);
 
-OvObjectID::OvObjectID(unsigned int copyid)
+OvObjectID::OvObjectID( id_core_type copyid)
 :core(copyid)
 {
 }
@@ -25,6 +25,9 @@ OvObjectID::OvObjectID( const OvObjectID& copyid)
 bool OvObjectID::operator==(const OvObjectID& idRef){return core == idRef.core;};
 bool OvObjectID::operator==(OvObjectID& idRef){return core == idRef.core;};
 
+bool OvObjectID::operator!=(const OvObjectID& idRef){return core != idRef.core;};
+bool OvObjectID::operator!=(OvObjectID& idRef){return core != idRef.core;};
+
 bool OvObjectID::operator<(const OvObjectID& idRef){return core < idRef.core;};
 bool OvObjectID::operator<(OvObjectID& idRef){return core < idRef.core;};
 
@@ -33,6 +36,9 @@ bool OvObjectID::operator>(OvObjectID& idRef){return core > idRef.core;};
 
 bool operator==(const OvObjectID& idRef0, const OvObjectID& idRef1){return idRef0.core == idRef1.core;};
 bool operator==( OvObjectID& idRef0,  OvObjectID& idRef1){return idRef0.core == idRef1.core;};
+
+bool operator!=(const OvObjectID& idRef0, const OvObjectID& idRef1){return idRef0.core != idRef1.core;};
+bool operator!=( OvObjectID& idRef0,  OvObjectID& idRef1){return idRef0.core != idRef1.core;};
 
 bool operator<(const OvObjectID& idRef0, const OvObjectID& idRef1){return idRef0.core < idRef1.core;};
 
