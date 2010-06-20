@@ -12,7 +12,11 @@ OvRTTI_IMPL(Integer);
 OvRTTI_IMPL(String);
 OvRTTI_IMPL(ObjectID);
 
-
+//////////////////////////////////////////////////////////////////////////
+#define REGIST_VALUE_TYPE_BEGINE OliveValue::Value*	OliveValue::ValueFactory(const std::string& valueType){\
+	if( valueType.empty() ){return NULL;}
+#define	REGIST_VALUE_TYPE( classname ) else if( std::string(#classname) == valueType){return new classname();}
+#define REGIST_VALUE_TYPE_END	return NULL;};
 //////////////////////////////////////////////////////////////////////////
 REGIST_VALUE_TYPE_BEGINE
 	REGIST_VALUE_TYPE( Float )

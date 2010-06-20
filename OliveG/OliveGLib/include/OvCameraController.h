@@ -1,9 +1,9 @@
 #pragma once
-#include "OvXController.h"
+#include "OvXComponent.h"
 
 class OvPoint2;
 OvREF_POINTER(OvCameraController);
-class OvCameraController : public OvXController
+class OvCameraController : public OvXComponent
 {
 	OvRTTI_DECL(OvCameraController);
 

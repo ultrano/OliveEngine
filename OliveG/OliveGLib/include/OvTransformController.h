@@ -1,5 +1,5 @@
 #pragma once
-#include "OvXController.h"
+#include "OvXComponent.h"
 
 class OvPoint3;
 class OvQuaternion;
@@ -7,7 +7,7 @@ OvREF_POINTER(OvRotateTable);
 OvREF_POINTER(OvTranslateTable);
 
 OvREF_POINTER(OvTransformController)
-class OvTransformController : public OvXController
+class OvTransformController : public OvXComponent
 {
 public:
 	OvTransformController();

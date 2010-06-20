@@ -1011,17 +1011,17 @@
 				</Filter>
 			</Filter>
 			<Filter
-				Name="ObjectControllers"
+				Name="OvXComponent"
 				>
 				<Filter
-					Name="OvXController"
+					Name="OvXComponent"
 					>
 					<File
-						RelativePath=".\source\OvXController.cpp"
+						RelativePath=".\source\OvXComponent.cpp"
 						>
 					</File>
 					<File
-						RelativePath=".\include\OvXController.h"
+						RelativePath=".\include\OvXComponent.h"
 						>
 					</File>
 				</Filter>
@@ -1326,6 +1326,14 @@
 					</File>
 					<File
 						RelativePath=".\include\OvRelationLinkBuilder.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="OvStreamCommon"
+					>
+					<File
+						RelativePath=".\include\OvStreamCommon.h"
 						>
 					</File>
 				</Filter>

@@ -5,6 +5,7 @@
 #include "OvObject.h"
 #include "OvTransform.h"
 #include "OvSphere.h"
+#include "OvObjectCollector.h"
 
 // OvXObject -> eXtentionObject 
 // 활동적인 오브젝트 (공간상의 객체역할)
@@ -13,9 +14,8 @@
 class OvPoint3;
 class OvQuaternion;
 class OvMatrix;
-class OvTransform;
 OvREF_POINTER(OvXNode);
-OvREF_POINTER(OvXController);
+OvREF_POINTER(OvXComponent);
 //
 
 OvREF_POINTER(OvXObject);
@@ -26,7 +26,7 @@ class OvXObject : public OvObject
 
 	friend class OvXNode;
 	friend class OvObjectFactory;
-	friend class OvXController;
+	friend class OvXComponent;
 
 public :
 
@@ -70,12 +70,12 @@ public :
 	//! Get Parent
 	OvXObjectSPtr			GetParent();
 
-	OvXControllerSPtr	GetHeaderObjectController();
+	bool	GetExtraComponents( OvObjectCollector& extraComponents );
 
 protected:
 
 	//! Set Object Controller (Do not use in application)
-	void			PrependObjectController(OvXControllerSPtr _pController);
+	bool			EquipExtraComponent(OvXComponentSPtr extraComponent);
 
 	//! Set Parent (Do not use in application)
 	void			SetParent(OvXNodeSPtr _pParentNode);
@@ -101,5 +101,5 @@ private:
 	OvTransform	m_tfLocalTransform;
 	OvTransform	m_tfWorldTransform;
 
-	OvXControllerSPtr	m_spHeaderObjectController;
+	OvObjectCollector	m_extraComponents;
 };

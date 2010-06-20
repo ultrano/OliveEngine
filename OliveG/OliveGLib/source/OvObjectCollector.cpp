@@ -1,6 +1,6 @@
 #include "OvObjectCollector.h"
 #include "OvObject.h"
-#include "OvXNode.h"
+#include "OvObjectID.h"
 #include <algorithm>
 
 OvObjectCollector::OvObjectCollector()

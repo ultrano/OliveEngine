@@ -6,7 +6,7 @@
 #include "OvQuaternion.h"
 #include "OvObjectCollector.h"
 
-OvRTTI_IMPL(OvCameraController,OvXController)
+OvRTTI_IMPL(OvCameraController,OvXComponent)
 
 struct OvCameraController::OvPimple : OvMemObject
 {
@@ -44,7 +44,7 @@ OvPoint2&		OvCameraController::GetMouseMoveInterval()
 void	OvCameraController::Update(float _fElapse)
 {
 	
-	OvCameraSPtr	kpCamera = GetTargetObject();
+	OvCamera*	kpCamera = (OvCamera*)GetEquippedTarget();
 	if (kpCamera)
 	{
 		OvPoint3 kLook = kpCamera->GetWorldLookDirection();

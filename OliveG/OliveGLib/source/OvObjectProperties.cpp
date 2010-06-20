@@ -4,11 +4,8 @@
 
 OvObjectProperties	OvObjectProperties::INVALID;
 
-
-
 OvObjectProperties::OvObjectProperties()
 :m_idObjectID( OvObjectID::INVALID )
-,m_headLinkBuilder( NULL )
 {
 
 }
@@ -18,15 +15,16 @@ OvObjectProperties::~OvObjectProperties()
 	{
 		m_queValueQueue.pop();
 	}
-	while (m_headLinkBuilder)
-	{
-		OvRelationLinkBuilder* deleteTarget = m_headLinkBuilder;
 
-		m_headLinkBuilder = m_headLinkBuilder->GetNextBuilder();
-		
-		delete deleteTarget;
+	for each( OvRelationLinkBuilder* linkBuilder in m_collectedLinkBuilder )
+	{
+		if (linkBuilder)
+		{
+			delete linkBuilder;
+		}
 	}
-	m_headLinkBuilder = NULL;
+	m_collectedLinkBuilder.clear();
+
 }
 
 void	OvObjectProperties::SetObjectType(const string& objType)
@@ -98,15 +96,13 @@ OvObject*	OvObjectProperties::PopComponentObject()
 }
 void		OvObjectProperties::CollectLinkBuilder( OvRelationLinkBuilder* linkBuilder)
 {
-	if (linkBuilder)
-	{
-		linkBuilder->SetNextBuilder(m_headLinkBuilder);
-		m_headLinkBuilder = linkBuilder;
-	}
+	m_collectedLinkBuilder.push_back( linkBuilder );
 }
-OvRelationLinkBuilder* OvObjectProperties::HandoverHeadLinkBuilder()
+void OvObjectProperties::LinkBuilderListMoveTo( link_builder_list& builderList )
 {
-	OvRelationLinkBuilder* handOver = m_headLinkBuilder;
-	m_headLinkBuilder = NULL;
-	return handOver;
+	for each( OvRelationLinkBuilder* linkBuilder in m_collectedLinkBuilder )
+	{
+		builderList.push_back( linkBuilder );
+	}
+	m_collectedLinkBuilder.clear();
 }

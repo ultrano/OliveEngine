@@ -1,17 +1,18 @@
 #include "OvXObject.h"
 #include "OvXNode.h"
-#include "OvXController.h"
-#include "OvXController.h"
+#include "OvXComponent.h"
+#include "OvObjectCollector.h"
 #include "OvStringUtility.h"
 #include "OvProperty.h"
 #include "OvRegisterableProperties.h"
 
 OvRTTI_IMPL(OvXObject);
 OvPROPERTY_BAG_BEGIN(OvXObject);
-	OvDECLARE_PROPERTY( OvProp_object_pointer, m_pParent);
-	OvDECLARE_PROPERTY( OvProp_float3,  m_tfLocalTransform.Scale);
-	OvDECLARE_PROPERTY( OvProp_float3,  m_tfLocalTransform.Position);
-	OvDECLARE_PROPERTY( OvProp_float4,  m_tfLocalTransform.Quaternion);
+	OvDECLARE_PROPERTY( OvProp_object_pointer, m_pParent );
+	OvDECLARE_PROPERTY( OvProp_float3,  m_tfLocalTransform.Scale );
+	OvDECLARE_PROPERTY( OvProp_float3,  m_tfLocalTransform.Position );
+	OvDECLARE_PROPERTY( OvProp_float4,  m_tfLocalTransform.Quaternion );
+	OvDECLARE_PROPERTY( OvProp_object_collector,  m_extraComponents );
 OvPROPERTY_BAG_END(OvXObject);
 
 
@@ -44,10 +45,13 @@ void OvXObject::Update(float _fElapse)
 
 	krWorldTransform.ExtractTransformFromBuildMatrix();
 
-	OvXControllerSPtr	kpController = GetHeaderObjectController();
-	for (;kpController;kpController = kpController->GetNextController())
+	for (int i = 0 ; i < m_extraComponents.Count() ; ++i)
 	{
-		kpController->Update(_fElapse);
+		OvXComponentSPtr	kpController = m_extraComponents.GetByAt( i );
+		if ( kpController )
+		{
+			kpController->Update(_fElapse);
+		}
 	}
 
 	UpdateSubordinate(_fElapse);
@@ -190,16 +194,16 @@ OvXObjectSPtr	OvXObject::GetParent()
 }
 
 
-OvXControllerSPtr	OvXObject::GetHeaderObjectController()
+bool	OvXObject::GetExtraComponents( OvObjectCollector& extraComponents )
 {
-	return m_spHeaderObjectController;
+	return extraComponents.AddObject( m_extraComponents );
 };
 
-void	OvXObject::PrependObjectController(OvXControllerSPtr _pController)
+bool	OvXObject::EquipExtraComponent( OvXComponentSPtr extraComponent )
 {
-	if(!_pController)
-		return ;
-
-	_pController->SetNextController(m_spHeaderObjectController);
-	m_spHeaderObjectController = _pController;
+	if( extraComponent && extraComponent->GetEquippedTarget() == this )
+	{
+		return m_extraComponents.AddObject( extraComponent );
+	}
+	return false;
 };

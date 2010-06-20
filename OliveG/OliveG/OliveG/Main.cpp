@@ -5,13 +5,13 @@ GL_ENVIROMENT(OliveLibTest)
 	GL_ENV_SET_UP
 	{
 		OvSingletonPool::StartUp();
-#ifdef _WINDOWS
-#ifdef _DEBUG
-		_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF );
-
-		_CrtSetBreakAlloc(2106);
-#endif
-#endif
+// #ifdef _WINDOWS
+// #ifdef _DEBUG
+// 		_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF );
+// 
+// 		_CrtSetBreakAlloc(2828);
+// #endif
+// #endif
 
 
 	};
@@ -59,16 +59,13 @@ GL_TEST_CASE_ENV( OliveLibTest, property_bag_test )
 
 	OvStorage kStorage;
 
-
 	OvObjectCollector streamObject;
 	streamObject.AddObject(nodeTest);
 	nodeTest = NULL;
 	kStorage.Save("../../export/testprop.xml", streamObject);
  	streamObject.Clear();
 	kStorage.Load("../../export/testprop.xml", streamObject);
-	//streamObject.Clear();
-// 	kStorage.Save("../../export/testprop2.xml", streamObject);
-// 	streamObject.Clear();
+	streamObject.Clear();
 };
 
 int	APIENTRY	WinMain(HINSTANCE hi,HINSTANCE,LPSTR,int)

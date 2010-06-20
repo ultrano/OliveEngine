@@ -7,6 +7,7 @@
 #include "OvProperty.h"
 #include "OvObject.h"
 #include "OvRelationLinkBuilder.h"
+#include "OvObjectID.h"
 #include "tinyxml.h"
 
 ////////////////////// 테스트 인클루드 (물리적 구조때문에 나중에 지워줘야 한다.) /////
@@ -16,7 +17,6 @@ OvObject* TemporaryFactoryFunction(const string& typeName);
 //////////////////////////////////////////////////////////////////////////
 
 OvStorage::OvStorage()
-:m_headBuilder(NULL)
 {
 
 }
@@ -57,7 +57,7 @@ void	OvStorage::Load(const char* pFile, OvObjectCollector& loadedObjects)
 	{
 		RestoreObject( *firstObjElem );
 	}
-	RebuildRelatedLink( m_restoreObjectTable, m_headBuilder );
+	RebuildRelatedLink( m_restoreObjectTable, m_linkBuilderList );
 
 	for each( restore_object_table::value_type tableIter in m_restoreObjectTable )
 	{
@@ -96,12 +96,7 @@ void	OvStorage::RestoreObject( TiXmlElement& objElem )
 		if ( InjectProperty( restoreObj, rStore ) )
 		{
 			m_restoreObjectTable[ rStore.GetObjectID() ] = restoreObj;
-			OvRelationLinkBuilder* headBuilder = rStore.HandoverHeadLinkBuilder();
-			if ( headBuilder )
-			{
-				headBuilder->SetNextBuilder( m_headBuilder );
-				m_headBuilder = headBuilder;
-			}
+			rStore.LinkBuilderListMoveTo( m_linkBuilderList );
 		}
 	}
 	if (TiXmlElement* nextElem = objElem.NextSiblingElement("Object"))
@@ -219,16 +214,16 @@ bool	OvStorage::ReadProperty( TiXmlElement& objElem, OvObjectProperties& rStore 
 	}
 	return false;
 }
-void	OvStorage::RebuildRelatedLink( OvStorage::restore_object_table& restoreTable, OvRelationLinkBuilder* headBuilder )
+void	OvStorage::RebuildRelatedLink( restore_object_table& restoreTable, link_builder_list& linkBuilderList )
 {
-	if ( restoreTable.size() && headBuilder )
+	if ( restoreTable.size() && linkBuilderList.size() )
 	{
-		for ( OvRelationLinkBuilder* linkBuilder = headBuilder
-			; linkBuilder != NULL
-			; linkBuilder = linkBuilder->GetNextBuilder()
-			)
+		for each( OvRelationLinkBuilder* linkBuilder in linkBuilderList )
 		{
-			linkBuilder->BuildLink(restoreTable);
+			if (linkBuilder)
+			{
+				linkBuilder->BuildLink(restoreTable);
+			}
 		}
 	}
 }
@@ -239,15 +234,16 @@ void	OvStorage::Clear()
 
 	m_restoreObjectTable.clear();
 
-	if (m_headBuilder)
+	if ( m_linkBuilderList.size() )
 	{
-		for ( OvRelationLinkBuilder* deleteTarget = m_headBuilder
-			; deleteTarget != NULL
-			; deleteTarget = deleteTarget->GetNextBuilder() )
+		for each( OvRelationLinkBuilder* linkBuilder in m_linkBuilderList )
 		{
-			delete deleteTarget;
+			if (linkBuilder)
+			{
+				delete linkBuilder;
+			}
 		}
-		m_headBuilder = NULL;
+		m_linkBuilderList.clear();
 	}
 }
 OvObject* TemporaryFactoryFunction(const string& typeName)

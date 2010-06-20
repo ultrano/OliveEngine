@@ -1,8 +1,12 @@
 #pragma once
 #include "OvMemObject.h"
+#include "OvSmartPointer.h"
 #include "OvUtility_RTTI.h"
-#include "OvStorage.h"
+#include "OvStreamCommon.h"
+#include "OvObjectID.h"
 #include <vector>
+
+OvREF_POINTER(OvObject);
 
 class OvRelationLinkBuilder : public OvMemObject
 {
@@ -12,13 +16,7 @@ public:
 	OvRelationLinkBuilder();
 	virtual ~OvRelationLinkBuilder();
 
-	void	SetNextBuilder( OvRelationLinkBuilder* nextBuilder );
-	OvRelationLinkBuilder* GetNextBuilder();
-
-	virtual bool	BuildLink( OvStorage::restore_object_table& restoreTable ) = 0;
-
-private:
-	OvRelationLinkBuilder* m_nextBuilder;
+	virtual bool	BuildLink( restore_object_table& restoreTable ) = 0;
 
 };
 
@@ -36,7 +34,7 @@ public:
 	void	SetFormerID( const OvObjectID& );
 	const OvObjectID& GetFormerID();
 
-	virtual bool	BuildLink( OvStorage::restore_object_table& restoreTable ) override ;
+	virtual bool	BuildLink( restore_object_table& restoreTable ) override ;
 private:
 
 	OvObjectID	m_formerID;
@@ -57,7 +55,7 @@ public:
 	void	SetFormerID( const OvObjectID& );
 	const OvObjectID& GetFormerID();
 
-	virtual bool	BuildLink( OvStorage::restore_object_table& restoreTable ) override ;
+	virtual bool	BuildLink( restore_object_table& restoreTable ) override ;
 
 private:
 
@@ -80,7 +78,7 @@ public:
 
 	void	AddRelatedObjectID( const OvObjectID& objectID );
 
-	virtual bool	BuildLink( OvStorage::restore_object_table& restoreTable ) override ;
+	virtual bool	BuildLink( restore_object_table& restoreTable ) override ;
 
 private:
 

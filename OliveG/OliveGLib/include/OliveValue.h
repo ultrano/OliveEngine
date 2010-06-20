@@ -10,6 +10,7 @@ namespace OliveValue
 {
 
 #define	ACCEPT_STRING_CONSTRUCTOR	public:__this_class(){};__this_class(const string& strValue){SetValue(strValue);};
+
 	class Value : public OvMemObject
 	{
 		friend class OvObject;
@@ -125,9 +126,4 @@ namespace OliveValue
 
 	Value*	ValueFactory(const std::string& valueType);
 
-
-#define REGIST_VALUE_TYPE_BEGINE OliveValue::Value*	OliveValue::ValueFactory(const std::string& valueType){\
-	if( valueType.empty() ){return NULL;}
-#define	REGIST_VALUE_TYPE( classname ) else if( std::string(#classname) == valueType){return new classname();}
-#define REGIST_VALUE_TYPE_END	return NULL;};
 }

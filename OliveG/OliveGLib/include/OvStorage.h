@@ -4,7 +4,7 @@
 #include "OvSmartPointer.h"
 #include "tinyxml.h"
 #include "OvObjectCollector.h"
-#include <map>
+#include "OvStreamCommon.h"
 
 class OvObjectProperties;
 class OvRelationLinkBuilder;
@@ -13,7 +13,7 @@ class OvObject;
 class OvStorage : public OvMemObject
 {
 public:
-	typedef std::map< OvObjectID, OvObject* > restore_object_table;
+	
 
 	OvStorage();
 	~OvStorage();
@@ -30,15 +30,16 @@ public:
 	bool	WriteProperty(OvObjectProperties& rStore, TiXmlElement& objElem);
 	bool	ReadProperty( TiXmlElement& objElem, OvObjectProperties& rStore );
 
-	void	RebuildRelatedLink( restore_object_table& restoreTable, OvRelationLinkBuilder* headInfoNode );
+	void	RebuildRelatedLink( restore_object_table& restoreTable, link_builder_list& linkBuilderList );
 
 	void	Clear();
 
 private:
 
-	TiXmlDocument					m_xmlDoc;
-	OvObjectCollector				m_storeObjectTable;
-	restore_object_table			m_restoreObjectTable;
-	OvRelationLinkBuilder*			m_headBuilder;
+	TiXmlDocument			m_xmlDoc;
+	OvObjectCollector		m_storeObjectTable;
+
+	restore_object_table	m_restoreObjectTable;
+	link_builder_list		m_linkBuilderList;
 
 };

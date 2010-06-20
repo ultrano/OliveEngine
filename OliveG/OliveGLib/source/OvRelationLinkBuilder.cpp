@@ -1,9 +1,10 @@
 #include "OvRelationLinkBuilder.h"
 #include "OvObjectCollector.h"
+#include "OvObject.h"
+#include "OvObjectID.h"
 
 OvRTTI_IMPL_ROOT(OvRelationLinkBuilder);
 OvRelationLinkBuilder::OvRelationLinkBuilder()
-:m_nextBuilder( NULL )
 {
 
 }
@@ -11,16 +12,6 @@ OvRelationLinkBuilder::~OvRelationLinkBuilder()
 {
 
 }
-
-void	OvRelationLinkBuilder::SetNextBuilder( OvRelationLinkBuilder* nextBuilder )
-{
-	m_nextBuilder = nextBuilder;
-}
-OvRelationLinkBuilder* OvRelationLinkBuilder::GetNextBuilder()
-{
-	return m_nextBuilder;
-}
-
 
 //////////////////////////////////////////////////////////////////////////
 
@@ -47,9 +38,9 @@ OvObject** OvPointLinkBuilder::GetDestination()
 	return m_destination;
 }
 
-bool OvPointLinkBuilder::BuildLink(OvStorage::restore_object_table &restoreTable)
+bool OvPointLinkBuilder::BuildLink( restore_object_table &restoreTable)
 {
-	OvStorage::restore_object_table::iterator tableIter = restoreTable.find( GetFormerID() );
+	restore_object_table::iterator tableIter = restoreTable.find( GetFormerID() );
 	
 	if ( tableIter != restoreTable.end() )
 	{
@@ -97,9 +88,9 @@ OvObjectSPtr* OvSmartLinkBuilder::GetSmartDestination()
 	return m_destination;
 }
 
-bool OvSmartLinkBuilder::BuildLink( OvStorage::restore_object_table& restoreTable )
+bool OvSmartLinkBuilder::BuildLink( restore_object_table& restoreTable )
 {
-	OvStorage::restore_object_table::iterator tableIter = restoreTable.find( GetFormerID() );
+	restore_object_table::iterator tableIter = restoreTable.find( GetFormerID() );
 
 	if ( tableIter != restoreTable.end() )
 	{
@@ -127,12 +118,13 @@ const OvObjectID& OvSmartLinkBuilder::GetFormerID()
 OvRTTI_IMPL(OvObjectCollectorLinkBuilder);
 
 OvObjectCollectorLinkBuilder::OvObjectCollectorLinkBuilder()
-:m_destination( NULL )
 {
-
+	m_destination = NULL;
+	m_relatedObjects.clear();
 }
 OvObjectCollectorLinkBuilder::~OvObjectCollectorLinkBuilder()
 {
+	m_destination = NULL;
 	m_relatedObjects.clear();
 }
 
@@ -148,18 +140,20 @@ OvObjectCollector* OvObjectCollectorLinkBuilder::GetDestinateCollector()
 
 void	OvObjectCollectorLinkBuilder::AddRelatedObjectID( const OvObjectID& objectID )
 {
-	m_relatedObjects.push_back( objectID );
+	if ( OvObjectID::INVALID != objectID )
+	{
+		m_relatedObjects.push_back( objectID );
+	}
 }
 
-bool OvObjectCollectorLinkBuilder::BuildLink( OvStorage::restore_object_table& restoreTable )
+bool OvObjectCollectorLinkBuilder::BuildLink( restore_object_table& restoreTable )
 {
-	OvStorage::restore_object_table::iterator tableIter;
-
 	OvObjectCollector* destAddress = GetDestinateCollector();
 	if (destAddress)
 	{
 		for each (const OvObjectID& formerID in m_relatedObjects )
 		{
+			restore_object_table::iterator tableIter;
 			tableIter = restoreTable.find( formerID );
 			if ( OvObject* restoreObject = tableIter->second )
 			{

@@ -1,8 +1,8 @@
 #pragma once
-
+#include "OvMemObject.h"
 //typedef unsigned int OvObjectID;;
 
-class OvObjectID
+class OvObjectID : public OvMemObject
 {
 public:
 
@@ -14,6 +14,7 @@ public:
 	OvObjectID( OvObjectID& );
 	OvObjectID( id_core_type );
 	OvObjectID( const OvObjectID& );
+	~OvObjectID();
 
 	friend bool operator==(const OvObjectID& idRef0, const OvObjectID& idRef1);
 	friend bool operator==( OvObjectID& idRef0,  OvObjectID& idRef1);

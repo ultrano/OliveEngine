@@ -64,7 +64,7 @@ float			OvAnimateController::GetMinTick()
 
 void	OvAnimateController::Update(float _fElapse)
 {
-	if (GetTargetObject())
+	if (GetEquippedTarget())
 	{
 		m_pPimple->mAccumulateTick += _fElapse;
 		float		kfTickScr,kfTickDest;
@@ -74,6 +74,6 @@ void	OvAnimateController::Update(float _fElapse)
 		OvPoint3	kProgressVector	= (kPosDest - kPosScr);
 		kProgressVector = kPosScr + (kProgressVector * kfProgressRate);
 
-		GetTargetObject()->SetTranslate(kProgressVector);
+		GetEquippedTarget()->SetTranslate(kProgressVector);
 	}
 }

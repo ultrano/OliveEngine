@@ -1,10 +1,9 @@
 #pragma once
-#include "OvSmartPointer.h"
-#include "OvObject.h"
-#include "OvObjectID.h"
+#include "OvRefBase.h"
 #include <vector>
 
 OvREF_POINTER(OvObject);
+class OvObjectID;
 
 class OvObjectCollector : public OvMemObject
 {
@@ -39,24 +38,3 @@ private:
 	tdObjectArray			m_tdObjArray;
 
 };
-template<typename Type_0>
-DWORD OvObjectCollector::CollectTreeObject(OvObjectSPtr	pObject)
-{
-	OvObjectCollector	kContainer;
-	if (pObject->IsNode())
-	{
-		OvXNodeSPtr	kpConvertToNode = pObject;
-		for (int i=0;i<kpConvertToNode->GetChildCount();++i)
-		{
-			CollectTreeObject<Type_0>(kpConvertToNode->GetChildeAt(i));
-		}
-	}
-	else
-	{
-		if ( OvRTTI_Util::IsKindOf< Type_0 >( pObject ) )
-		{
-			AddObject(pObject);
-		}
-	}
-	return Count();
-}

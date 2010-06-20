@@ -2,13 +2,14 @@
 
 #include "OvMemObject.h"
 #include "OvObjectID.h"
+#include "OvStreamCommon.h"
 #include <queue>
+#include <list>
 #include <string>
 using namespace std;
 
 class OvObject;
 class OvStorage;
-class OvRelationLinkBuilder;
 namespace OliveValue
 {
 	class Value;
@@ -39,12 +40,12 @@ public:
 	OvObject*	PopComponentObject();
 
 	void	CollectLinkBuilder( OvRelationLinkBuilder* linkBuilder);
-	OvRelationLinkBuilder* HandoverHeadLinkBuilder();
+	void	LinkBuilderListMoveTo( link_builder_list& builderList );
 
 private:
 	queue<string>		m_queValueQueue;
 	queue<OvObject*>	m_queObjects;
 	string				m_objectType;
 	OvObjectID			m_idObjectID;
-	OvRelationLinkBuilder*		m_headLinkBuilder;
+	link_builder_list	m_collectedLinkBuilder;
 };

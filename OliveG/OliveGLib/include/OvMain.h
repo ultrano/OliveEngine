@@ -14,7 +14,7 @@
 #include "OvCollisionFinder.h"
 #include "OvStringUtility.h"
 #include "OvCamera.h"
-#include "OvXController.h"
+#include "OvXComponent.h"
 #include "OvRenderer.h"
 #include "OvTransform.h"
 #include "OvValueStream.h"

@@ -21,6 +21,11 @@ OvObjectID::OvObjectID( const OvObjectID& copyid)
 {
 
 }
+OvObjectID::~OvObjectID()
+{
+
+}
+
 
 bool OvObjectID::operator==(const OvObjectID& idRef){return core == idRef.core;};
 bool OvObjectID::operator==(OvObjectID& idRef){return core == idRef.core;};

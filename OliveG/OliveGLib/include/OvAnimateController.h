@@ -1,10 +1,10 @@
 #pragma once
-#include "OvXController.h"
+#include "OvXComponent.h"
 
 class OvPoint3;
 
 OvREF_POINTER(OvAnimateController)
-class OvAnimateController : public OvXController
+class OvAnimateController : public OvXComponent
 {
 public:
 
