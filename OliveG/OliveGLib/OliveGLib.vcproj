@@ -153,56 +153,8 @@
 			Name="GraphicOlive"
 			>
 			<Filter
-				Name="OvCamera"
-				>
-				<File
-					RelativePath=".\source\OvCamera.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\include\OvCamera.h"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="OvRenderer"
-				>
-				<File
-					RelativePath=".\source\OvRenderer.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\include\OvRenderer.h"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="OvRenderableObject"
-				>
-				<File
-					RelativePath=".\source\OvRenderableObject.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\include\OvRenderableObject.h"
-					>
-				</File>
-			</Filter>
-			<Filter
 				Name="ShaderGroup"
 				>
-				<Filter
-					Name="OvShaderConstantTable"
-					>
-					<File
-						RelativePath=".\source\OvShaderConstantTable.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\include\OvShaderConstantTable.h"
-						>
-					</File>
-				</Filter>
 				<Filter
 					Name="OvShader"
 					>
@@ -253,220 +205,120 @@
 				</Filter>
 			</Filter>
 			<Filter
-				Name="OvMesh"
-				>
-				<File
-					RelativePath=".\source\OvMesh.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\include\OvMesh.h"
-					>
-				</File>
-				<File
-					RelativePath=".\include\OvNSMeshDescription.h"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="OvTexture"
+				Name="RenderingGroup"
 				>
 				<Filter
-					Name="OvTexture"
+					Name="OvCamera"
 					>
 					<File
-						RelativePath=".\source\OvTexture.cpp"
+						RelativePath=".\source\OvCamera.cpp"
 						>
 					</File>
 					<File
-						RelativePath=".\include\OvTexture.h"
+						RelativePath=".\include\OvCamera.h"
 						>
 					</File>
 				</Filter>
 				<Filter
-					Name="OvBasicTexture"
-					>
-				</Filter>
-				<Filter
-					Name="OvSurface"
+					Name="OvCameraController"
 					>
 					<File
-						RelativePath=".\source\OvSurface.cpp"
+						RelativePath=".\source\OvCameraController.cpp"
 						>
 					</File>
 					<File
-						RelativePath=".\include\OvSurface.h"
+						RelativePath=".\include\OvCameraController.h"
 						>
 					</File>
 				</Filter>
-			</Filter>
-			<Filter
-				Name="OvRenderTarget"
-				>
-				<File
-					RelativePath=".\source\OvRenderTarget.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\include\OvRenderTarget.h"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="OvSceneBuilder"
-				>
-				<File
-					RelativePath=".\source\OvSceneBuilder.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\include\OvSceneBuilder.h"
-					>
-				</File>
-				<Filter
-					Name="Builder"
-					>
-					<Filter
-						Name="OvNodeTreeBuilder"
-						>
-						<File
-							RelativePath=".\source\OvNodeTreeBuilder.cpp"
-							>
-						</File>
-						<File
-							RelativePath=".\include\OvNodeTreeBuilder.h"
-							>
-						</File>
-					</Filter>
-					<Filter
-						Name="OvNodeBuilder"
-						>
-						<File
-							RelativePath=".\source\OvNodeBuilder.cpp"
-							>
-						</File>
-						<File
-							RelativePath=".\include\OvNodeBuilder.h"
-							>
-						</File>
-					</Filter>
-					<Filter
-						Name="OvMeshBuilder"
-						>
-						<File
-							RelativePath=".\source\OvMeshBuilder.cpp"
-							>
-						</File>
-						<File
-							RelativePath=".\include\OvMeshBuilder.h"
-							>
-						</File>
-					</Filter>
-					<Filter
-						Name="OvMassBuilder"
-						>
-						<File
-							RelativePath=".\source\OvMassBuilder.cpp"
-							>
-						</File>
-						<File
-							RelativePath=".\include\OvMassBuilder.h"
-							>
-						</File>
-					</Filter>
-				</Filter>
-				<Filter
-					Name="XMLImporter"
-					>
-					<Filter
-						Name="OvXMLImportUtility"
-						>
-						<File
-							RelativePath=".\source\OvXMLImportUtility.cpp"
-							>
-						</File>
-						<File
-							RelativePath=".\include\OvXMLImportUtility.h"
-							>
-						</File>
-					</Filter>
-					<Filter
-						Name="OvXMLGeomTableImporter"
-						>
-					</Filter>
-					<Filter
-						Name="OvXMLSceneImporter"
-						>
-					</Filter>
-					<Filter
-						Name="OvXMLCameraTableImporter"
-						>
-					</Filter>
-					<Filter
-						Name="OvXMLNodeTableImporter"
-						>
-						<File
-							RelativePath=".\source\OvXMLNodeTableImporter.cpp"
-							>
-						</File>
-						<File
-							RelativePath=".\include\OvXMLNodeTableImporter.h"
-							>
-						</File>
-					</Filter>
-				</Filter>
-			</Filter>
-			<Filter
-				Name="OvLightEffect"
-				>
-				<File
-					RelativePath=".\source\OvLightEffect.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\include\OvLightEffect.h"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="OvLight"
-				>
 				<Filter
 					Name="OvLight"
 					>
+					<Filter
+						Name="OvLight"
+						>
+						<File
+							RelativePath=".\source\OvLight.cpp"
+							>
+						</File>
+						<File
+							RelativePath=".\include\OvLight.h"
+							>
+						</File>
+					</Filter>
+					<Filter
+						Name="OvSpotLight"
+						>
+						<File
+							RelativePath=".\source\OvSpotLight.cpp"
+							>
+						</File>
+						<File
+							RelativePath=".\include\OvSpotLight.h"
+							>
+						</File>
+					</Filter>
+				</Filter>
+				<Filter
+					Name="OvLightEffect"
+					>
 					<File
-						RelativePath=".\source\OvLight.cpp"
+						RelativePath=".\source\OvLightEffect.cpp"
 						>
 					</File>
 					<File
-						RelativePath=".\include\OvLight.h"
+						RelativePath=".\include\OvLightEffect.h"
 						>
 					</File>
 				</Filter>
 				<Filter
-					Name="OvSpotLight"
+					Name="OvRenderableObject"
 					>
 					<File
-						RelativePath=".\source\OvSpotLight.cpp"
+						RelativePath=".\source\OvRenderableObject.cpp"
 						>
 					</File>
 					<File
-						RelativePath=".\include\OvSpotLight.h"
+						RelativePath=".\include\OvRenderableObject.h"
 						>
 					</File>
 				</Filter>
-			</Filter>
-			<Filter
-				Name="OvCameraController"
-				>
-				<File
-					RelativePath=".\source\OvCameraController.cpp"
+				<Filter
+					Name="OvRenderer"
 					>
-				</File>
-				<File
-					RelativePath=".\include\OvCameraController.h"
+					<File
+						RelativePath=".\source\OvRenderer.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\include\OvRenderer.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="OvRenderTarget"
 					>
-				</File>
+					<File
+						RelativePath=".\source\OvRenderTarget.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\include\OvRenderTarget.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="OvModel"
+					>
+					<File
+						RelativePath=".\source\OvModel.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\include\OvModel.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 			<Filter
 				Name="MaterialGroup"
@@ -507,6 +359,82 @@
 					RelativePath=".\include\OvMainRenderViewWindow.h"
 					>
 				</File>
+			</Filter>
+			<Filter
+				Name="ResourceGroup"
+				>
+				<Filter
+					Name="OvMesh"
+					>
+					<File
+						RelativePath=".\source\OvMesh.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\include\OvMesh.h"
+						>
+					</File>
+					<File
+						RelativePath=".\include\OvNSMeshDescription.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="OvTexture"
+					>
+					<Filter
+						Name="OvTexture"
+						>
+						<File
+							RelativePath=".\source\OvTexture.cpp"
+							>
+						</File>
+						<File
+							RelativePath=".\include\OvTexture.h"
+							>
+						</File>
+					</Filter>
+					<Filter
+						Name="OvBasicTexture"
+						>
+					</Filter>
+					<Filter
+						Name="OvSurface"
+						>
+						<File
+							RelativePath=".\source\OvSurface.cpp"
+							>
+						</File>
+						<File
+							RelativePath=".\include\OvSurface.h"
+							>
+						</File>
+					</Filter>
+				</Filter>
+				<Filter
+					Name="OvSound"
+					>
+				</Filter>
+				<Filter
+					Name="OvRenderingCommon"
+					>
+					<File
+						RelativePath=".\include\OvRenderingCommon.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="OvResource"
+					>
+					<File
+						RelativePath=".\source\OvResource.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\include\OvResource.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 		</Filter>
 		<Filter
@@ -1493,6 +1421,122 @@
 						>
 					</File>
 				</Filter>
+			</Filter>
+			<Filter
+				Name="OvSceneBuilder"
+				>
+				<File
+					RelativePath=".\source\OvSceneBuilder.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\OvSceneBuilder.h"
+					>
+				</File>
+				<Filter
+					Name="Builder"
+					>
+					<Filter
+						Name="OvNodeTreeBuilder"
+						>
+						<File
+							RelativePath=".\source\OvNodeTreeBuilder.cpp"
+							>
+						</File>
+						<File
+							RelativePath=".\include\OvNodeTreeBuilder.h"
+							>
+						</File>
+					</Filter>
+					<Filter
+						Name="OvNodeBuilder"
+						>
+						<File
+							RelativePath=".\source\OvNodeBuilder.cpp"
+							>
+						</File>
+						<File
+							RelativePath=".\include\OvNodeBuilder.h"
+							>
+						</File>
+					</Filter>
+					<Filter
+						Name="OvMeshBuilder"
+						>
+						<File
+							RelativePath=".\source\OvMeshBuilder.cpp"
+							>
+						</File>
+						<File
+							RelativePath=".\include\OvMeshBuilder.h"
+							>
+						</File>
+					</Filter>
+					<Filter
+						Name="OvMassBuilder"
+						>
+						<File
+							RelativePath=".\source\OvMassBuilder.cpp"
+							>
+						</File>
+						<File
+							RelativePath=".\include\OvMassBuilder.h"
+							>
+						</File>
+					</Filter>
+				</Filter>
+				<Filter
+					Name="XMLImporter"
+					>
+					<Filter
+						Name="OvXMLImportUtility"
+						>
+						<File
+							RelativePath=".\source\OvXMLImportUtility.cpp"
+							>
+						</File>
+						<File
+							RelativePath=".\include\OvXMLImportUtility.h"
+							>
+						</File>
+					</Filter>
+					<Filter
+						Name="OvXMLGeomTableImporter"
+						>
+					</Filter>
+					<Filter
+						Name="OvXMLSceneImporter"
+						>
+					</Filter>
+					<Filter
+						Name="OvXMLCameraTableImporter"
+						>
+					</Filter>
+					<Filter
+						Name="OvXMLNodeTableImporter"
+						>
+						<File
+							RelativePath=".\source\OvXMLNodeTableImporter.cpp"
+							>
+						</File>
+						<File
+							RelativePath=".\include\OvXMLNodeTableImporter.h"
+							>
+						</File>
+					</Filter>
+				</Filter>
+			</Filter>
+			<Filter
+				Name="OvShaderConstantTable"
+				>
+				<File
+					RelativePath=".\source\OvShaderConstantTable.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\OvShaderConstantTable.h"
+					>
+				</File>
 			</Filter>
 		</Filter>
 		<Filter

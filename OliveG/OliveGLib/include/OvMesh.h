@@ -3,9 +3,11 @@
 #include "OvUtility_RTTI.h"
 #include "OvAutoPtr.h"
 #include "OvNSMeshDescription.h"
+#include "OvRenderingCommon.h"
 
 class OvPoint3;
 class OvPoint2;
+
 
 OvREF_POINTER(OvMesh);
 class OvMesh : public OvObject
