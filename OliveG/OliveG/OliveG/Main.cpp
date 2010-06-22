@@ -52,20 +52,22 @@ GL_TEST_CASE_ENV( OliveLibTest, property_bag_test )
 	childObject->SetName("second");
 	nodeTest->AttachChild( childObject );
 
-
 	childObject = new OvCamera;
 	childObject->SetName("third");
 	nodeTest->AttachChild( childObject );
 
 	OvStorage kStorage;
 
-	OvObjectCollector streamObject;
+	OvObjectCollector streamObject, streamObject2;
 	streamObject.AddObject(nodeTest);
 	nodeTest = NULL;
 	kStorage.Save("../../export/testprop.xml", streamObject);
  	streamObject.Clear();
 	kStorage.Load("../../export/testprop.xml", streamObject);
-	streamObject.Clear();
+
+	streamObject2.AddObject(streamObject.GetByAt(1));
+	kStorage.Save("../../export/testprop2.xml", streamObject2);
+
 };
 
 int	APIENTRY	WinMain(HINSTANCE hi,HINSTANCE,LPSTR,int)

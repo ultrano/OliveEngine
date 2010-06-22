@@ -13,7 +13,7 @@ class OvPoint2;
 OvREF_POINTER(OvCamera);
 OvREF_POINTER(OvXObject);
 OvREF_POINTER(OvGeometry);
-OvREF_POINTER(OvMesh);
+//OvREF_POINTER(OvMesh);
 OvREF_POINTER(OvTexture);
 OvREF_POINTER(OvSurface);
 OvREF_POINTER(OvRenderTarget);
@@ -34,7 +34,7 @@ public:
 	//! 이를 해결할 방법은 싱글톤을 총괄하는 클레스를 만들고 명시적인 터미네이팅을 해줘야할것 같다.
 	//! 혹은 메모리풀보다 먼저 NULL을 셋팅 하면 되겠지만, 그 시기가 애매하기때문에 좀더 확실한 해법이 필요 할것 같다.
 
-	void			DrawMesh(OvMeshSPtr pMesh);
+//	void			DrawMesh(OvMeshSPtr pMesh);
 
 	bool			ClearTarget();
 	bool			BeginTarget();

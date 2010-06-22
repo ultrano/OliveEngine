@@ -4,7 +4,6 @@
 #include "OvQuaternion.h"
 #include "OvStringUtility.h"
 #include "OvMeshBuilder.h"
-#include "OvMesh.h"
 #include "OvTransformController.h"
 #include "tinyxml.h"
 #include "OvTranslateTable.h"

@@ -3,7 +3,6 @@
 #include "OvRenderer.h"
 #include "OvMaterialManager.h"
 #include "OvRenderableObject.h"
-#include "OvMesh.h"
 #include "OvVertexShader.h"
 #include "OvPixelShader.h"
 #include "OvTransform.h"

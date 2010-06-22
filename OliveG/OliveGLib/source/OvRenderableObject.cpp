@@ -1,6 +1,5 @@
 #include "OvRenderableObject.h"
 #include "OvMaterial.h"
-#include "OvMesh.h"
 #include "OvAutoPtr.h"
 #include "OvRenderer.h"
 
@@ -9,7 +8,6 @@ OvRTTI_IMPL(OvRenderableObject,OvXObject);
 
 struct OvRenderableObject::OvPimple : OvMemObject
 {
-	OvMeshSPtr	m_pMesh;
 	OvMaterialSPtr	m_pMaterial;
 };
 
@@ -31,14 +29,6 @@ OvMaterialSPtr OvRenderableObject::GetMaterial()
 {
 	return m_pPimple->m_pMaterial;
 }
-void		OvRenderableObject::SetMesh(OvMeshSPtr pMesh)
-{
-	m_pPimple->m_pMesh = pMesh;
-}
-OvMeshSPtr	OvRenderableObject::GetMesh()
-{
-	return m_pPimple->m_pMesh;
-}
 void	OvRenderableObject::Render()
 {
 	OvMaterialSPtr pMaterial = GetMaterial();
@@ -50,8 +40,4 @@ void	OvRenderableObject::Render()
 }
 void	OvRenderableObject::RenderMaterialNonappliedMesh()
 {
-	if (GetMesh())
-	{
-		OvRenderer::GetInstance()->DrawMesh(GetMesh());
-	}
 }

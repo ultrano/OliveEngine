@@ -367,14 +367,6 @@
 					Name="OvMesh"
 					>
 					<File
-						RelativePath=".\source\OvMesh.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\include\OvMesh.h"
-						>
-					</File>
-					<File
 						RelativePath=".\include\OvNSMeshDescription.h"
 						>
 					</File>
@@ -1425,14 +1417,6 @@
 			<Filter
 				Name="OvSceneBuilder"
 				>
-				<File
-					RelativePath=".\source\OvSceneBuilder.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\include\OvSceneBuilder.h"
-					>
-				</File>
 				<Filter
 					Name="Builder"
 					>
@@ -1491,38 +1475,10 @@
 					<Filter
 						Name="OvXMLImportUtility"
 						>
-						<File
-							RelativePath=".\source\OvXMLImportUtility.cpp"
-							>
-						</File>
-						<File
-							RelativePath=".\include\OvXMLImportUtility.h"
-							>
-						</File>
-					</Filter>
-					<Filter
-						Name="OvXMLGeomTableImporter"
-						>
-					</Filter>
-					<Filter
-						Name="OvXMLSceneImporter"
-						>
-					</Filter>
-					<Filter
-						Name="OvXMLCameraTableImporter"
-						>
 					</Filter>
 					<Filter
 						Name="OvXMLNodeTableImporter"
 						>
-						<File
-							RelativePath=".\source\OvXMLNodeTableImporter.cpp"
-							>
-						</File>
-						<File
-							RelativePath=".\include\OvXMLNodeTableImporter.h"
-							>
-						</File>
 					</Filter>
 				</Filter>
 			</Filter>

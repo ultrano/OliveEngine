@@ -1,7 +1,6 @@
 #include "OvRenderer.h"
 
 #include <d3dx9.h>
-#include "OvMesh.h"
 #include "OvTexture.h"
 #include "OvTexture.h"
 #include "OvSurface.h"
@@ -194,7 +193,7 @@ bool		OvRenderer::GenerateRenderer(HWND _hTargetWindowHangle)
 
 
 
-void			OvRenderer::DrawMesh(OvMeshSPtr pMesh)
+/*void			OvRenderer::DrawMesh(OvMeshSPtr pMesh)
 {
 	if (pMesh && OvRTTI_Util::IsKindOf< OvMesh >( pMesh ))
 	{
@@ -233,7 +232,7 @@ void			OvRenderer::DrawMesh(OvMeshSPtr pMesh)
 			OvAssertMsg("Draw Failed");
 		}
 	}
-}
+}*/
 bool			OvRenderer::ClearTarget()
 {
 	LPDIRECT3DDEVICE9	kpDX9Device = m_pPimple->mpDirect3DDevice;
