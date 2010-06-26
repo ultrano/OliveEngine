@@ -4,11 +4,12 @@
 #include "OvSingleton.h"
 struct lua_State;
 
-class OvCoreCommander
+class OvCoreCommander : public OvSingletonBase< OvCoreCommander >
 {
-	OvSingleton_DECL(OvCoreCommander);
 
 public:
+	OvCoreCommander();
+	~OvCoreCommander();
 
 	void		Initialize();
 

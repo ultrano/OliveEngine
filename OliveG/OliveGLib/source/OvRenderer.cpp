@@ -55,7 +55,7 @@ bool	SafeCopyToIndexBuffer(LPDIRECT3DINDEXBUFFER9 pIndexBuffer, size_t stFaceStr
 }
 
 OvRTTI_IMPL_ROOT(OvRenderer);
-OvSingletonEx_IMPL(OvRenderer);
+
 
 struct OvRenderer::OvPimple : OvMemObject
 {
@@ -75,7 +75,7 @@ struct OvRenderer::OvPimple : OvMemObject
 
 };
 
-void	OvRenderer::Singleton_InitializeProcessing()
+OvRenderer::OvRenderer()
 {
 	m_pPimple = OvNew OvRenderer::OvPimple;
 	m_pPimple->mpDirect3DDevice			=	NULL;
@@ -87,7 +87,7 @@ void	OvRenderer::Singleton_InitializeProcessing()
 	m_pPimple->mdWindowHeight			=	0;
 	m_pPimple->mdWindowWidth			=	0;
 }
-void	OvRenderer::Singleton_TerminateProcessing()
+OvRenderer::~OvRenderer()
 {
 	LPDIRECT3DINDEXBUFFER9&		kpIndexBuffer	=	m_pPimple->mpIndexBuffer;
 	if (NULL != kpIndexBuffer )

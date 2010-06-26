@@ -14,11 +14,11 @@
 struct OvShaderConstInfo;
 class OvMatrix;
 
-class OvMaterialManager : public OvMemObject
+class OvMaterialManager : public OvSingletonBase< OvMaterialManager >
 {
-	OvSingleton_DECL(OvMaterialManager);
 public:
-
+	OvMaterialManager();
+	~OvMaterialManager();
 private:
 
 	struct OvPimple;

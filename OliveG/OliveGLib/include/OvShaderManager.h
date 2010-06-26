@@ -7,11 +7,12 @@ class OvShaderConstInfo;
 class OvMatrix;
 OvREF_POINTER(OvTexture);
 
-class OvShaderManager : public OvMemObject
+class OvShaderManager : public OvSingletonBase< OvShaderManager >
 {
-	OvSingletonEx_DECL(OvShaderManager);
 public:
 
+	OvShaderManager();
+	~OvShaderManager();
 
 	////////////////////////////////////////////////////////////////////////////////////////////////
 	/////////////////////////*  버텍스 쉐이더 관련 함수들 */////////////////////////////////////

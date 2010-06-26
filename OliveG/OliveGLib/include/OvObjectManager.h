@@ -6,12 +6,14 @@
 #include "OvObject.h"
 #include "OvSingleton.h"
 
-class OvObjectManager : public OvMemObject
+class OvObjectManager : public OvSingletonBase< OvObjectManager >
 {
-	OvSingletonEx_DECL(OvObjectManager);
 	friend OvREF_POINTER(OvObject);
 
 public:
+
+	OvObjectManager();
+	~OvObjectManager();
 
 	OvObject*			FindObject(const OvObjectID& rObjHandle);
 

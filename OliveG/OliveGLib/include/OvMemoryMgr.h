@@ -31,7 +31,7 @@ struct OvMemoryPoolList ;
 //		
 //		
 //	}
-class  OvMemoryMgr
+class  OvMemoryMgr : public OvSingletonBase< OvMemoryMgr >
 {
 #ifdef _OvMEMORY_DEBUG_
 	friend void* OvMemAlloc_Debug(char* ,int ,const size_t);
@@ -41,7 +41,9 @@ class  OvMemoryMgr
 	friend void* OvMemAlloc_Release(const size_t);
 	friend void	OvMemFree_Release(void*);
 	friend class OvMemObject;
-	OvSingletonEx_DECL(OvMemoryMgr);
+	friend class OvSingletonContextList;
+	OvMemoryMgr();
+	~OvMemoryMgr();
 
 private:
 

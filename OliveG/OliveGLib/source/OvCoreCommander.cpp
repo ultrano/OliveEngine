@@ -15,7 +15,6 @@ using namespace luabind;
 #include "OvXNode.h"
 
 
-OvSingleton_IMPL(OvCoreCommander);
 struct SPrivateStruct_ExitHandle
 {
 	SPrivateStruct_ExitHandle():bCheck(false){};
@@ -32,7 +31,7 @@ void	OvPrivateFunction_OvExitProgram()
 }
 bool	OvPrivateFunction_OvExcuteScriptFile(const char* pFilePath)
 {
-	return OvCoreCommander::Instance()->ExcuteScriptFile(pFilePath);
+	return OvCoreCommander::GetInstance()->ExcuteScriptFile(pFilePath);
 }
 
 struct OvCoreCommander::OvPimple : OvMemObject
@@ -50,11 +49,11 @@ OvCoreCommander::~OvCoreCommander()
 }
 void		Initialize_CoreHandling()
 {
-	OvCoreCommander::Instance()->Initialize();
+	OvCoreCommander::GetInstance()->Initialize();
 }
 bool		ExcuteCommand_CoreHandling(const char* pCommand)
 {
-	return OvCoreCommander::Instance()->ExcuteCommand(pCommand);
+	return OvCoreCommander::GetInstance()->ExcuteCommand(pCommand);
 }
 void		OvCoreCommander::Initialize()
 {

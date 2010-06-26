@@ -4,8 +4,6 @@
 #include "OvMemoryMgr.h"
 #include "OvMemoryPool.h"
 
-OvSingletonEx_IMPL(OvMemoryMgr);
-
 struct OvMemoryPoolList 
 {
 	OvMemoryPoolList*	mNext;
@@ -22,11 +20,11 @@ struct OvMemoryPoolList
 };
 
 
-void	OvMemoryMgr::Singleton_InitializeProcessing()
+OvMemoryMgr::OvMemoryMgr()
 {
 	m_pMemoryPoolList = NULL;
 }
-void	OvMemoryMgr::Singleton_TerminateProcessing()
+OvMemoryMgr::~OvMemoryMgr()
 {
 	OvMemoryPoolList* k_list = m_pMemoryPoolList;
 	OvMemoryPoolList* k_target = NULL;

@@ -10,12 +10,12 @@ OvREF_POINTER(OvObject);
 class OvStorage;
 class OvObjectID;
 
-class OvObjectFactory : public OvMemObject
+class OvObjectFactory : public OvSingletonBase< OvObjectFactory >
 {
-	OvSingletonEx_DECL(OvObjectFactory);
 
 public:
-
+	OvObjectFactory();
+	~OvObjectFactory();
 	OvObjectSPtr	CreateInstance(const string& rClass,OvObjectID& objID);
 
 private:

@@ -1,12 +1,11 @@
 #include "OvObjectFactory.h"
 #include "OvXNode.h"
 
-OvSingletonEx_IMPL(OvObjectFactory);
-void OvObjectFactory::Singleton_InitializeProcessing()
+OvObjectFactory::OvObjectFactory()
 {
 	m_mapFactoryCallback["OvXNode"] = OvXNode::FactoryCallback;
 }
-void OvObjectFactory::Singleton_TerminateProcessing()
+OvObjectFactory::~OvObjectFactory()
 {
 
 }

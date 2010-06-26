@@ -7,13 +7,11 @@
 #include <d3dx9.h>
 #include <map>
 
-OvSingletonEx_IMPL(OvShaderManager);
-
-void OvShaderManager::Singleton_InitializeProcessing()
+OvShaderManager::OvShaderManager()
 {
 
 }
-void OvShaderManager::Singleton_TerminateProcessing()
+OvShaderManager::~OvShaderManager()
 {
 
 }

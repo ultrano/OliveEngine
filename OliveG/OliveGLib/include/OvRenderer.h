@@ -19,12 +19,13 @@ OvREF_POINTER(OvSurface);
 OvREF_POINTER(OvRenderTarget);
 //
 
-class OvRenderer : public OvMemObject
+class OvRenderer : public OvSingletonBase< OvRenderer >
 {
 	OvRTTI_DECL_ROOT(OvRenderer);
-	OvSingletonEx_DECL(OvRenderer);
 public:
 
+	OvRenderer();
+	~OvRenderer();
 
 	bool		GenerateRenderer(HWND _hTargetWindowHangle);
 

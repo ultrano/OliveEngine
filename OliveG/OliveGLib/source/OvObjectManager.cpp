@@ -4,8 +4,6 @@
 #include <map>
 #include <queue>
 
-OvSingletonEx_IMPL(OvObjectManager);
-
 typedef map<OvObjectID,OvObject*>			OvObjectTable;
 
 
@@ -16,11 +14,11 @@ struct OvObjectManager::OvPimple : OvMemObject
 
 };
 
-void	OvObjectManager::Singleton_InitializeProcessing()
+OvObjectManager::OvObjectManager()
 {
 	m_pPimple = OvNew OvObjectManager::OvPimple;
 }
-void	OvObjectManager::Singleton_TerminateProcessing()
+OvObjectManager::~OvObjectManager()
 {
 
 }

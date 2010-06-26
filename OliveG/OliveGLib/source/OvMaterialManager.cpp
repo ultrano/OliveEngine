@@ -6,7 +6,6 @@
 #include <map>
 #include "OvStringUtility.h"
 
-OvSingleton_IMPL(OvMaterialManager);
 
 typedef map<string,OvShaderConstInfo> tdShaderConstMappingTable;
 struct OvMaterialManager::OvPimple : OvMemObject
