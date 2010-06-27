@@ -32,17 +32,6 @@ GL_TEST_CASE_ENV( OliveLibTest, property_bag_test )
 {
 	CreateDxDevice();
 
-	OvMeshBuilder meshBuilder;
-	geometry_element_buffer geomElemBuffer;
-	geomElemBuffer.push_back(geometry_element( OvPoint3(0,0,0), OvPoint3(0,0,0) ));
-	geomElemBuffer.push_back(geometry_element( OvPoint3(0,1,0), OvPoint3(0,0,0) ));
-	geomElemBuffer.push_back(geometry_element( OvPoint3(1,0,0), OvPoint3(0,0,0) ));
-	geomElemBuffer.push_back(geometry_element( OvPoint3(1,1,0), OvPoint3(0,0,0) ));
-
-	meshBuilder.SetGeometryBuffer( geomElemBuffer );
-
-	OvMeshSPtr meshtest = meshBuilder.BuildMesh();
-
 	MSG msg;
 	ZeroMemory( &msg, sizeof( msg ) );
 	if ( msg.message != WM_QUIT )

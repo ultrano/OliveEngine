@@ -6,171 +6,72 @@
 
 
 
-OvMeshBuilder::OvMeshBuilder()
-: m_vertexDeclaration( NULL )
-, m_faceStreamSource( NULL )
+bool OvMeshBuilder::LoadMesh(/*블라 블라*/)
 {
-
-};
-OvMeshBuilder::~OvMeshBuilder()
-{
-
-};
-void	OvMeshBuilder::SetGeometryBuffer(const geometry_element_buffer& buffer)
-{
-	m_geometryBuffer.clear();
-	m_geometryBuffer = buffer;
-	_push_element_declare
-		( 0
-		, sizeof( geometry_element_buffer::value_type )
-		, D3DDECLTYPE_FLOAT3
-		, D3DDECLUSAGE_POSITION
-		, m_geometryBuffer.size()
-		, (void*)&(m_geometryBuffer[0]) );
+	SRenderData	renderData;
+	renderData.vertexCount	= 4;
+	renderData.faceCount	= 6;
+	renderData.vertStreamTable = m_vertexStreamTable;
+	//renderData.faceStream	= CreateIndexStream();
+	m_device->CreateVertexDeclaration(MESH_VERT_ELEMENT,&renderData.vertDecl);
+	return true;
 }
-const geometry_element_buffer&	OvMeshBuilder::GetGeometryBuffer()
+bool OvMeshBuilder::BuildVertexStream0(explicit stream_0_element_buffer& buffer)
 {
-	return m_geometryBuffer;
-}
-
-void	OvMeshBuilder::SetFaceBuffer( const face_element_buffer& buffer )
-{
-	if ( buffer.empty() == false )
+	if ( m_device )
 	{
-		m_faceBuffer.clear();
-		m_faceBuffer = buffer;
-	}
-}
-const face_element_buffer OvMeshBuilder::GetFaceBuffer()
-{
-	return m_faceBuffer;
-}
-
-OvMeshSPtr	OvMeshBuilder::BuildMesh()
-{
-	LPDIRECT3DDEVICE9 directDevice = (LPDIRECT3DDEVICE9)OvRenderer::GetInstance()->GetDevice();
-	if ( directDevice )
-	{
-		SStreamInfo	streamInfo;
-		for each ( SBufferInfo info in m_streamSourceArray )
+		size_t elemSize = sizeof( stream_0_element_buffer::value_type );
+		size_t streamSize = buffer.size() * elemSize;
+		SVertexStreamInfo	streamInfo;
+		HRESULT hr = m_device->CreateVertexBuffer
+			( streamSize
+			, 0
+			, 0
+			, D3DPOOL_MANAGED
+			, &streamInfo.vertexStream
+			, NULL
+			);
+		if ( SUCCEEDED(hr) && streamInfo.vertexStream )
 		{
-			LPDIRECT3DVERTEXBUFFER9 vertexStream = NULL;
-			vertexStream = _build_vertex_stream( directDevice, info );
-			if (vertexStream)
+			void* copyDest = NULL;
+			if ( SUCCEEDED(streamInfo.vertexStream->Lock( 0, streamSize, &copyDest, 0)) && copyDest)
 			{
-				streamInfo.vertStreamTable[ info.stream ].vertStream = vertexStream;
-				streamInfo.vertStreamTable[ info.stream ].vertStride = info.elemSize;
-				streamInfo.vertexCount = info.elemCount;
+				memcpy( copyDest, &buffer[0], streamSize );
+				streamInfo.vertexStream->Unlock();
+				streamInfo.vertexStride = elemSize;
+				m_vertexStreamTable[Pos_Norm] = streamInfo;
+				return true;
 			}
 		}
-		streamInfo.faceStream = _build_index_stream( directDevice, m_faceBuffer );
-		streamInfo.vertDecl = _build_vertex_declare( directDevice );
-		streamInfo.faceCount = m_faceBuffer.size();
-		return new OvMesh( streamInfo );
 	}
-	return NULL;
+	return false;
 }
-LPDIRECT3DVERTEXBUFFER9 OvMeshBuilder::_build_vertex_stream( LPDIRECT3DDEVICE9 directDevice, const SBufferInfo& info )
+LPDIRECT3DINDEXBUFFER9	OvMeshBuilder::CreateIndexStream(explicit face_element_buffer& buffer)
 {
-	LPDIRECT3DVERTEXBUFFER9	vertexBuffer = NULL;
-	size_t streamSize = info.elemSize * info.elemCount;
-	directDevice->CreateVertexBuffer
-		( streamSize
-		, 0
-		, 0
-		, D3DPOOL_MANAGED
-		, &vertexBuffer
-		, NULL);
-	if ( vertexBuffer )
+	if ( m_device )
 	{
-		
-		void*	copyAddress = NULL;
-		if ( SUCCEEDED( vertexBuffer->Lock(0,streamSize,&copyAddress,0) && copyAddress ) )
-		{
-			memcpy( copyAddress, info.buffer, streamSize);
-			vertexBuffer->Unlock();
-			return vertexBuffer;
-		}
-	}
-	return NULL;
-}
-LPDIRECT3DINDEXBUFFER9	OvMeshBuilder::_build_index_stream(  LPDIRECT3DDEVICE9 directDevice, face_element_buffer& faceBuffer )
-{
-	LPDIRECT3DINDEXBUFFER9 indexStream = NULL;
-	if ( directDevice )
-	{
-		size_t streamSize = sizeof( face_element_buffer::value_type ) * faceBuffer.size();
-		directDevice->CreateIndexBuffer
+		LPDIRECT3DINDEXBUFFER9	streamBuffer = NULL;
+		size_t elemSize = sizeof( face_element_buffer::value_type );
+		size_t streamSize = buffer.size() * elemSize;
+		HRESULT hr = m_device->CreateIndexBuffer
 			( streamSize
 			, 0
 			, D3DFMT_INDEX16
 			, D3DPOOL_MANAGED
-			, &indexStream
+			, &streamBuffer
 			, NULL
 			);
-		if ( indexStream )
+
+		if ( SUCCEEDED(hr) && streamBuffer )
 		{
-			void* copyAddress = NULL;
-			
-			if ( SUCCEEDED( indexStream->Lock( 0, streamSize, &copyAddress,0 ) && copyAddress) )
+			void* copyDest = NULL;
+			if ( SUCCEEDED(streamBuffer->Lock( 0, streamSize, &copyDest, 0)) && copyDest)
 			{
-				memcpy( copyAddress, &(faceBuffer[0]), streamSize );
-				indexStream->Unlock();
+				memcpy( copyDest, &buffer[0], streamSize );
+				streamBuffer->Unlock();
+				return streamBuffer;
 			}
 		}
-
 	}
-
-	return indexStream;
-}
-
-void	OvMeshBuilder::_push_element_declare( WORD stream
-											 , WORD elemSize
-											 , BYTE elemType
-											 , BYTE elemUsage
-											 , size_t elemCount
-											 , void* buffer )
-{
-	SBufferInfo	vertexDecl;
-	vertexDecl.stream = stream;
-	vertexDecl.elemSize = elemSize;
-	vertexDecl.elemType = elemType;
-	vertexDecl.elemUsage = elemUsage;
-	vertexDecl.elemCount = elemCount;
-	vertexDecl.buffer = buffer;
-	m_streamSourceArray.push_back( vertexDecl );
-	++m_usageCountTable[elemType];
-
-}
-LPDIRECT3DVERTEXDECLARATION9	OvMeshBuilder::_build_vertex_declare( LPDIRECT3DDEVICE9 device )
-{
-	LPDIRECT3DVERTEXDECLARATION9 vertexDeclaration = NULL;
-	if ( device )
-	{
-		vector<D3DVERTEXELEMENT9> dxVertexDecl;
-		SBufferInfo curDecl;
-		size_t	lastElemSize = 0;
-		for each( curDecl in m_streamSourceArray )
-		{
-			D3DVERTEXELEMENT9 dxElemDecl;
-
-			dxElemDecl.Stream = curDecl.stream;
-			dxElemDecl.Type	  = curDecl.elemType;
-			dxElemDecl.Usage  = curDecl.elemUsage;
-			dxElemDecl.Method = D3DDECLMETHOD_DEFAULT;
-			dxElemDecl.UsageIndex = m_usageCountTable[curDecl.elemType];
-			dxElemDecl.Offset = lastElemSize;
-
-			lastElemSize = curDecl.elemSize;
-
-			dxVertexDecl.push_back( dxElemDecl );
-
-		}
-		D3DVERTEXELEMENT9 dxEndDecl = D3DDECL_END();
-		dxVertexDecl.push_back( dxEndDecl );
-
-
-		SUCCEEDED(device->CreateVertexDeclaration( &dxVertexDecl[0], &vertexDeclaration ));
-	}
-	return vertexDeclaration;
+	return NULL;
 }
