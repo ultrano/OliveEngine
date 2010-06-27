@@ -15,7 +15,6 @@ OvPROPERTY_BAG_BEGIN(OvXObject);
 	OvDECLARE_PROPERTY( OvProp_object_collector,  m_extraComponents );
 OvPROPERTY_BAG_END(OvXObject);
 
-
 OvXObject::OvXObject()
 :m_pParent(NULL)
 {

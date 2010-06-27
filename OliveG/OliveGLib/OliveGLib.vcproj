@@ -367,6 +367,14 @@
 					Name="OvMesh"
 					>
 					<File
+						RelativePath=".\source\OvMesh.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\include\OvMesh.h"
+						>
+					</File>
+					<File
 						RelativePath=".\include\OvNSMeshDescription.h"
 						>
 					</File>
@@ -424,6 +432,22 @@
 					</File>
 					<File
 						RelativePath=".\include\OvResource.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="OvLua"
+					>
+				</Filter>
+				<Filter
+					Name="OvMeshBuilder"
+					>
+					<File
+						RelativePath=".\source\OvMeshBuilder.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\include\OvMeshBuilder.h"
 						>
 					</File>
 				</Filter>
@@ -1412,74 +1436,6 @@
 						RelativePath=".\include\OvGateKey.h"
 						>
 					</File>
-				</Filter>
-			</Filter>
-			<Filter
-				Name="OvSceneBuilder"
-				>
-				<Filter
-					Name="Builder"
-					>
-					<Filter
-						Name="OvNodeTreeBuilder"
-						>
-						<File
-							RelativePath=".\source\OvNodeTreeBuilder.cpp"
-							>
-						</File>
-						<File
-							RelativePath=".\include\OvNodeTreeBuilder.h"
-							>
-						</File>
-					</Filter>
-					<Filter
-						Name="OvNodeBuilder"
-						>
-						<File
-							RelativePath=".\source\OvNodeBuilder.cpp"
-							>
-						</File>
-						<File
-							RelativePath=".\include\OvNodeBuilder.h"
-							>
-						</File>
-					</Filter>
-					<Filter
-						Name="OvMeshBuilder"
-						>
-						<File
-							RelativePath=".\source\OvMeshBuilder.cpp"
-							>
-						</File>
-						<File
-							RelativePath=".\include\OvMeshBuilder.h"
-							>
-						</File>
-					</Filter>
-					<Filter
-						Name="OvMassBuilder"
-						>
-						<File
-							RelativePath=".\source\OvMassBuilder.cpp"
-							>
-						</File>
-						<File
-							RelativePath=".\include\OvMassBuilder.h"
-							>
-						</File>
-					</Filter>
-				</Filter>
-				<Filter
-					Name="XMLImporter"
-					>
-					<Filter
-						Name="OvXMLImportUtility"
-						>
-					</Filter>
-					<Filter
-						Name="OvXMLNodeTableImporter"
-						>
-					</Filter>
 				</Filter>
 			</Filter>
 			<Filter

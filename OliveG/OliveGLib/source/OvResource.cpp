@@ -35,7 +35,7 @@ OvResource::~OvResource()
 	DeleteCriticalSection( & m_criticalSection );
 }
 
-bool	OvResource::_resource_load( const std::string& fileLocation )
+bool	OvResource::_call_by_async_load( const std::string& fileLocation )
 {
 	bool loadSuccess = Load( fileLocation );
 	_set_loading_completed( loadSuccess );

@@ -19,55 +19,41 @@ GL_ENVIROMENT(OliveLibTest)
 	{
 		OvSingletonPool::ShutDown();
 	}
+public:
+	void CreateDxDevice()
+	{
+		OvRenderer::GetInstance()->GenerateRenderer(
+			CreateWindow("listbox","listbox",WS_OVERLAPPEDWINDOW | WS_VISIBLE,50,50,400,300,NULL,NULL,GetModuleHandle(NULL),NULL)
+			);
+	};
 };
 
 GL_TEST_CASE_ENV( OliveLibTest, property_bag_test )
 {
-	OvXNodeSPtr nodeTest = new OvXNode;
-	OliveValue::Value* extraValue = NULL;
+	CreateDxDevice();
 
-	nodeTest->RegisterExtraProperty( "Name", OliveValue::ValueFactory( "String" ) );
-	nodeTest->RegisterExtraProperty( "Birth", OliveValue::ValueFactory( "String" ) );
-	nodeTest->RegisterExtraProperty( "Gender", OliveValue::ValueFactory( "String" ) );
-	nodeTest->RegisterExtraProperty( "Location", OliveValue::ValueFactory( "String" ) );
-	nodeTest->RegisterExtraProperty( "Coordination", OliveValue::ValueFactory( "Point3" ) );
+	OvMeshBuilder meshBuilder;
+	geometry_element_buffer geomElemBuffer;
+	geomElemBuffer.push_back(geometry_element( OvPoint3(0,0,0), OvPoint3(0,0,0) ));
+	geomElemBuffer.push_back(geometry_element( OvPoint3(0,1,0), OvPoint3(0,0,0) ));
+	geomElemBuffer.push_back(geometry_element( OvPoint3(1,0,0), OvPoint3(0,0,0) ));
+	geomElemBuffer.push_back(geometry_element( OvPoint3(1,1,0), OvPoint3(0,0,0) ));
 
-	GL_ASSERT( extraValue = nodeTest->FindExtraProperty( "Name" ) );
-	extraValue->SetValue("Ultrano");
-	GL_ASSERT( extraValue = nodeTest->FindExtraProperty( "Birth" ) );
-	extraValue->SetValue("1987/06/26");
-	GL_ASSERT( extraValue = nodeTest->FindExtraProperty( "Gender" ) );
-	extraValue->SetValue("male");
-	GL_ASSERT( extraValue = nodeTest->FindExtraProperty( "Location" ) );
-	extraValue->SetValue("daegu");
-	GL_ASSERT( extraValue = nodeTest->FindExtraProperty( "Coordination" ) );
-	extraValue->SetValue("1,2,3");
+	meshBuilder.SetGeometryBuffer( geomElemBuffer );
 
-	OvObjectSPtr childObject = NULL;
-	childObject = new OvCamera;
-	childObject->SetName("first");
-	nodeTest->AttachChild( childObject );
+	OvMeshSPtr meshtest = meshBuilder.BuildMesh();
 
-	childObject = new OvCamera;
-	childObject->SetName("second");
-	nodeTest->AttachChild( childObject );
+	MSG msg;
+	ZeroMemory( &msg, sizeof( msg ) );
+	if ( msg.message != WM_QUIT )
+	{
+		while ( PeekMessage( &msg, NULL, NULL, NULL, PM_REMOVE ) )
+		{
+			TranslateMessage( &msg );
+			DispatchMessage( &msg );
 
-	childObject = new OvCamera;
-	childObject->SetName("third");
-	nodeTest->AttachChild( childObject );
-
-	OvStorage kStorage;
-
-	OvObjectCollector streamObject, streamObject2;
-	streamObject.AddObject(nodeTest);
-	nodeTest = NULL;
-	kStorage.Save("../../export/testprop.xml", streamObject);
- 	streamObject.Clear();
-	kStorage.Load("../../export/testprop.xml", streamObject);
-
-	streamObject2.AddObject(streamObject.GetByAt(1));
-	kStorage.Save("../../export/testprop2.xml", streamObject2);
-
+		}
+	}
 };
 
 int	APIENTRY	WinMain(HINSTANCE hi,HINSTANCE,LPSTR,int)

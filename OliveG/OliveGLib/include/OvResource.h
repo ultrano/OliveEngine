@@ -17,7 +17,7 @@ public:
 	void	SetAsyncLoading(bool asyncLoad);
 
 private:
-	bool	_resource_load( const std::string& fileLocation );
+	bool	_call_by_async_load( const std::string& fileLocation );
 	void	_set_loading_completed( bool loadCompleted );
 private:
 	Ov8SetFlags	m_resSetting;

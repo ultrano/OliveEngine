@@ -102,4 +102,5 @@ private:
 	OvTransform	m_tfWorldTransform;
 
 	OvObjectCollector	m_extraComponents;
+
 };
