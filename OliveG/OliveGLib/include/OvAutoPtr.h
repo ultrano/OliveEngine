@@ -24,6 +24,9 @@ public:
 	//! access to rear pointer address
 	Type_0*				GetRear()const;
 
+	//! release holding ( use carefully )
+	Type_0*				Release();
+
 	Type_0&				operator *();
 	Type_0*				operator ->();
 	OvAutoPtr&			operator = (const OvAutoPtr& _copy);

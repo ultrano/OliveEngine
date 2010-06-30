@@ -32,11 +32,21 @@ OvAutoPtr<Type_0>::operator	bool()const
 {
 	return (m_pReferenceTarget != NULL);
 }
+
 template<typename Type_0>
 Type_0* OvAutoPtr<Type_0>::GetRear()const
 {
 	return (Type_0*)m_pReferenceTarget;
 }
+
+template<typename Type_0>
+Type_0*	OvAutoPtr<Type_0>::Release()
+{
+	Type_0* releaseTarget = m_pReferenceTarget;
+	m_pReferenceTarget = NULL;
+	return (Type_0*)releaseTarget;
+}
+
 template<typename Type_0>
 Type_0&				OvAutoPtr<Type_0>::operator *()
 {
