@@ -53,6 +53,7 @@ void	GlTestManager::RunAllTest()
 			testReport += "테스트 환경 : " + testCase->GetEnvName();
 			testReport += "\n";
 			testReport += "테스트 타이틀 : " + testCase->GetCaseTitle();
+			testReport += "\n";
 			OutputDebugString(testReport.c_str());
 
 			try

@@ -1,8 +1,6 @@
-#include "OvConstDefineUtil.ocs"
+#include "OvConstDefineUtil.h"
 
-
-
-CONST_GROUP_BEGIN(OvMaterialVSConstTable)
+CONST_GROUP_BEGIN(OvMatVSConst)
 
 //CONST_DECL_BOOL(Bool_IsSkinned,0)
 

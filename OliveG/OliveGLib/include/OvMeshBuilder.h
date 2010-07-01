@@ -13,10 +13,6 @@ public:
 	
 	bool	LoadMesh(/*블라 블라*/);
 
-	bool BuildVertexStream0(explicit stream_0_element_buffer& buffer);
-	
-	LPDIRECT3DINDEXBUFFER9	CreateIndexStream(explicit face_element_buffer& buffer);
-
 private:
 
 	LPDIRECT3DDEVICE9 m_device;

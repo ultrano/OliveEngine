@@ -31,7 +31,7 @@ void*	OvVertexShader::GetVertexShaderInstance()
 
 bool OvVertexShader::Activate()
 {
-	LPDIRECT3DDEVICE9 kpDevice =  (LPDIRECT3DDEVICE9)OvRenderer::GetInstance()->GetDevice();
+	LPDIRECT3DDEVICE9 kpDevice =  OvRenderer::GetInstance()->GetDevice();
 	LPDIRECT3DVERTEXSHADER9 kpShaderInst = (LPDIRECT3DVERTEXSHADER9)GetVertexShaderInstance();
 	if (kpDevice && kpShaderInst)
 	{
@@ -41,7 +41,7 @@ bool OvVertexShader::Activate()
 }
 bool OvVertexShader::Inactivate()
 {
-	LPDIRECT3DDEVICE9 kpDevice =  (LPDIRECT3DDEVICE9)OvRenderer::GetInstance()->GetDevice();
+	LPDIRECT3DDEVICE9 kpDevice =  OvRenderer::GetInstance()->GetDevice();
 	if (kpDevice)
 	{
 		kpDevice->SetVertexShader(NULL);
@@ -53,7 +53,7 @@ bool OvVertexShader::Inactivate()
 OvVertexShaderSPtr	OvLoadVertexShader(const char* pFile,const char* pEntranceFuncName,const char* pComplieVersion)
 {
 
-	LPDIRECT3DDEVICE9 kpDevice =  (LPDIRECT3DDEVICE9)OvRenderer::GetInstance()->GetDevice();
+	LPDIRECT3DDEVICE9 kpDevice =  OvRenderer::GetInstance()->GetDevice();
 	IUnknown*	kpShaderInstance = NULL;
 	LPD3DXCONSTANTTABLE	kpConstTableInst = NULL;
 	LPD3DXBUFFER kShaderBuffer = NULL;

@@ -31,7 +31,7 @@ void*	OvPixelShader::GetPixelShaderInstance()
 
 bool OvPixelShader::Activate()
 {
-	LPDIRECT3DDEVICE9 kpDevice =  (LPDIRECT3DDEVICE9)OvRenderer::GetInstance()->GetDevice();
+	LPDIRECT3DDEVICE9 kpDevice =  OvRenderer::GetInstance()->GetDevice();
 	LPDIRECT3DPIXELSHADER9 kpShaderInst = (LPDIRECT3DPIXELSHADER9)GetPixelShaderInstance();
 	if (kpDevice && kpShaderInst)
 	{
@@ -41,7 +41,7 @@ bool OvPixelShader::Activate()
 }
 bool OvPixelShader::Inactivate()
 {
-	LPDIRECT3DDEVICE9 kpDevice =  (LPDIRECT3DDEVICE9)OvRenderer::GetInstance()->GetDevice();
+	LPDIRECT3DDEVICE9 kpDevice =  OvRenderer::GetInstance()->GetDevice();
 	if (kpDevice)
 	{
 		kpDevice->SetPixelShader(NULL);
@@ -54,7 +54,7 @@ bool OvPixelShader::Inactivate()
 OvPixelShaderSPtr	OvLoadPixelShader(const char* pFile,const char* pEntranceFuncName,const char* pComplieVersion)
 {
 
-	LPDIRECT3DDEVICE9 kpDevice =  (LPDIRECT3DDEVICE9)OvRenderer::GetInstance()->GetDevice();
+	LPDIRECT3DDEVICE9 kpDevice =  OvRenderer::GetInstance()->GetDevice();
 	IUnknown*	kpShaderInstance = NULL;
 	LPD3DXCONSTANTTABLE	kpConstTableInst = NULL;
 	LPD3DXBUFFER kShaderBuffer = NULL;

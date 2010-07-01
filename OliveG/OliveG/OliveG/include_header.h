@@ -1,4 +1,4 @@
-
+#pragma once
 #ifdef _DEBUG
 #pragma comment(lib,"..\\..\\vld\\lib_d\\vldmtdll.lib");
 #pragma comment(lib,"..\\..\\vld\\lib_d\\vldmt.lib");
@@ -40,3 +40,6 @@
 #include "OvRenderer.h"
 #include <windows.h>
 #include "OvMesh.h"
+
+#include "OvShaderManager.h"
+#include "OvMaterialManager.h"

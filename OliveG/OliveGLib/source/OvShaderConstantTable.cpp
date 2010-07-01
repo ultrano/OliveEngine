@@ -23,7 +23,7 @@ OvShaderConstantTable::~OvShaderConstantTable()
 bool	OvShaderConstantTable::SetUserConstantF(const char* pConstName,float* pConst,size_t stByteSize)
 {
 	LPD3DXCONSTANTTABLE	kpConstTable = (LPD3DXCONSTANTTABLE)GetConstTableInst();
-	LPDIRECT3DDEVICE9 kpDevice =  (LPDIRECT3DDEVICE9)OvRenderer::GetInstance()->GetDevice();
+	LPDIRECT3DDEVICE9 kpDevice =  OvRenderer::GetInstance()->GetDevice();
 	if (kpConstTable && pConstName && kpDevice)
 	{
 		HRESULT khs;
@@ -37,7 +37,7 @@ bool	OvShaderConstantTable::SetUserConstantF(const char* pConstName,float* pCons
 bool	OvShaderConstantTable::SetMatrix(const char* pConstName,const OvMatrix& rMat)
 {
 	LPD3DXCONSTANTTABLE	kpConstTable = (LPD3DXCONSTANTTABLE)GetConstTableInst();
-	LPDIRECT3DDEVICE9 kpDevice =  (LPDIRECT3DDEVICE9)OvRenderer::GetInstance()->GetDevice();
+	LPDIRECT3DDEVICE9 kpDevice =  OvRenderer::GetInstance()->GetDevice();
 	if (kpConstTable && pConstName && kpDevice)
 	{
 		HRESULT khs;

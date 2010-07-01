@@ -1,6 +1,6 @@
 
 #define CONST_DECLARE_IN_SHADER
-#include "OvMaterialConst.ovs"
+#include "OvMaterialVConst.h"
 #undef CONST_DECLARE_IN_SHADER
 
 struct VS_INPUT

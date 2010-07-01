@@ -7,7 +7,7 @@
 #include "OvStringUtility.h"
 
 
-typedef map<string,OvShaderConstInfo> tdShaderConstMappingTable;
+typedef std::map<std::string,OvShaderConstInfo> tdShaderConstMappingTable;
 struct OvMaterialManager::OvPimple : OvMemObject
 {
 	tdShaderConstMappingTable	m_mapCommonVertShaderConstTable;

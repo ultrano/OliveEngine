@@ -62,12 +62,12 @@ void	OvMaterial::PrepareShader(OvRenderableObjectSPtr pRO, OvVertexShaderSPtr pV
 
 	OvMatrix kMat;
 
-	OvShaderManager::GetInstance()->GetVSConst(OvMaterialVSConstTable::Matrix_ViewProject,kMat);
+	OvShaderManager::GetInstance()->GetVSConst(OvMatVSConst::Matrix_ViewProject,kMat);
 
 	kMat = pRO->GetWorldMatrix()*kMat;
 
-	OvShaderManager::GetInstance()->SetVSConst(OvMaterialVSConstTable::Float4x3_World,pRO->GetWorldMatrix());
-	OvShaderManager::GetInstance()->SetVSConst(OvMaterialVSConstTable::Matrix_WorldViewProject,kMat);
+	OvShaderManager::GetInstance()->SetVSConst(OvMatVSConst::Float4x3_World,pRO->GetWorldMatrix());
+	OvShaderManager::GetInstance()->SetVSConst(OvMatVSConst::Matrix_WorldViewProject,kMat);
 
 	OvShaderManager::GetInstance()->SetTexture(0,GetDiffuseTexture());
 	OvShaderManager::GetInstance()->SetTexture(1,GetSpecularMaskTexture());

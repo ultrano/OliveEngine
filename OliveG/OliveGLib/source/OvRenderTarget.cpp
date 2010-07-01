@@ -56,7 +56,7 @@ void	OvRenderTarget::LockTarget()
 	if (IsTargetLocked() == false)
 	{
 		m_pPimple->m_bIsTargetLocked = true;
-		LPDIRECT3DDEVICE9	kpDevice = (LPDIRECT3DDEVICE9)OvRenderer::GetInstance()->GetDevice();
+		LPDIRECT3DDEVICE9	kpDevice = OvRenderer::GetInstance()->GetDevice();
 		LPDIRECT3DTEXTURE9	kpTexture	=	NULL;
 		if (kpDevice)
 		{
@@ -86,7 +86,7 @@ void	OvRenderTarget::UnlockTarget()
 {
 	if (IsTargetLocked())
 	{
-		LPDIRECT3DDEVICE9	kpDevice = (LPDIRECT3DDEVICE9)OvRenderer::GetInstance()->GetDevice();
+		LPDIRECT3DDEVICE9	kpDevice = OvRenderer::GetInstance()->GetDevice();
 		m_pPimple->m_bIsTargetLocked = false;
 		if (m_pPimple->m_pOldRenderTarget)
 		{

@@ -1,0 +1,66 @@
+<ObjectTable>
+    <Object type="OvXNode" id="1">
+        <prop>3</prop>
+        <prop>2</prop>
+        <prop>3</prop>
+        <prop>4</prop>
+        <prop>0</prop>
+        <prop>1.000000,1.000000,1.000000</prop>
+        <prop>0.000000,0.000000,0.000000</prop>
+        <prop>0.000000,0.000000,0.000000,1.000000</prop>
+        <prop>0</prop>
+        <prop></prop>
+        <prop>5</prop>
+        <prop>String</prop>
+        <prop>Birth</prop>
+        <prop>1987/06/26</prop>
+        <prop>Point3</prop>
+        <prop>Coordination</prop>
+        <prop>1.000000,2.000000,3.000000</prop>
+        <prop>String</prop>
+        <prop>Gender</prop>
+        <prop>male</prop>
+        <prop>String</prop>
+        <prop>Location</prop>
+        <prop>daegu</prop>
+        <prop>String</prop>
+        <prop>Name</prop>
+        <prop>Ultrano</prop>
+    </Object>
+    <Object type="OvCamera" id="2">
+        <prop>0.000000,0.000000,0.000000</prop>
+        <prop>0.000000,0.000000,0.000000</prop>
+        <prop>0.000000,0.000000,0.000000</prop>
+        <prop>1</prop>
+        <prop>1.000000,1.000000,1.000000</prop>
+        <prop>0.000000,0.000000,0.000000</prop>
+        <prop>0.000000,0.000000,0.000000,1.000000</prop>
+        <prop>0</prop>
+        <prop>first</prop>
+        <prop>0</prop>
+    </Object>
+    <Object type="OvCamera" id="3">
+        <prop>0.000000,0.000000,0.000000</prop>
+        <prop>0.000000,0.000000,0.000000</prop>
+        <prop>0.000000,0.000000,0.000000</prop>
+        <prop>1</prop>
+        <prop>1.000000,1.000000,1.000000</prop>
+        <prop>0.000000,0.000000,0.000000</prop>
+        <prop>0.000000,0.000000,0.000000,1.000000</prop>
+        <prop>0</prop>
+        <prop>second</prop>
+        <prop>0</prop>
+    </Object>
+    <Object type="OvCamera" id="4">
+        <prop>0.000000,0.000000,0.000000</prop>
+        <prop>0.000000,0.000000,0.000000</prop>
+        <prop>0.000000,0.000000,0.000000</prop>
+        <prop>1</prop>
+        <prop>1.000000,1.000000,1.000000</prop>
+        <prop>0.000000,0.000000,0.000000</prop>
+        <prop>0.000000,0.000000,0.000000,1.000000</prop>
+        <prop>0</prop>
+        <prop>third</prop>
+        <prop>0</prop>
+    </Object>
+</ObjectTable>

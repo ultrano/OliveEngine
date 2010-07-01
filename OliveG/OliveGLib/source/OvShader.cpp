@@ -27,7 +27,7 @@ OvShaderConstantTableSPtr OvShader::GetConstantTable()
 /*
 OvShaderSPtr	OvLoadShader(const char* pFile,OvShader::eShaderType eType,const char* pEntranceFuncName,const char* pComplieVersion)
 {
-	LPDIRECT3DDEVICE9 kpDevice =  (LPDIRECT3DDEVICE9)OvRenderer::GetInstance()->GetDevice();
+	LPDIRECT3DDEVICE9 kpDevice =  OvRenderer::GetInstance()->GetDevice();
 	IUnknown*	kpShaderInstance = NULL;
 	LPD3DXCONSTANTTABLE	kpConstTable = NULL;
 	LPD3DXBUFFER kShaderBuffer = NULL;

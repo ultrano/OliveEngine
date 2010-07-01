@@ -1,7 +1,5 @@
 
-#define CONST_DECLARE_IN_SHADER
-#include "OvMaterialConst.ops"
-#undef CONST_DECLARE_IN_SHADER
+#include "OvMaterialPConst.h"
 
 sampler sDiffuse	: register(s0);
 sampler sSpecMask	: register(s1);

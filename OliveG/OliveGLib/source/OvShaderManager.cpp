@@ -7,6 +7,54 @@
 #include <d3dx9.h>
 #include <map>
 
+/////////////////////////// 테스트 유틸리티  ///////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
+struct SDxAutoRelease
+{
+	SDxAutoRelease( IUnknown* target ):m_target( target ){};
+	~SDxAutoRelease(){if(m_target)m_target->Release();};
+
+	IUnknown* m_target;
+};
+//////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
+
+LPD3DXBUFFER	CompileShaderFromFile( const string& file, const string& funcName, const string& version)
+{
+	LPD3DXBUFFER	shaderBuffer = NULL;
+	LPD3DXBUFFER	compileResult = NULL;
+	HRESULT hr = D3DXCompileShaderFromFile
+		( file.c_str()
+		, NULL
+		, NULL
+		, funcName.c_str()
+		, version.c_str()
+		, D3DXSHADER_DEBUG
+		, &shaderBuffer
+		, &compileResult
+		, NULL);
+	if ( SUCCEEDED( hr ) )
+	{
+		return shaderBuffer;
+	}
+	else
+	{
+		SDxAutoRelease autoRelease0( compileResult );
+		SDxAutoRelease autoRelease1( shaderBuffer );
+		if ( compileResult )
+		{
+			OvAssertMsg( ( char* )compileResult->GetBufferPointer() );
+			compileResult->Release();
+		}
+		if ( shaderBuffer )
+		{
+			shaderBuffer->Release();
+		}
+		return NULL;
+	}
+	return NULL;
+}
+
 OvShaderManager::OvShaderManager()
 {
 
@@ -16,9 +64,42 @@ OvShaderManager::~OvShaderManager()
 
 }
 
+LPDIRECT3DVERTEXSHADER9	OvShaderManager::CreateVertexShaderFromFile( const string& file, const string& func, const string& version)
+{
+	LPD3DXBUFFER shaderBuffer = CompileShaderFromFile( file, func, version );
+	SDxAutoRelease autoRelease( shaderBuffer );
+	if ( shaderBuffer )
+	{
+		LPDIRECT3DDEVICE9 device = OvRenderer::GetInstance()->GetDevice();
+		if ( device )
+		{
+			LPDIRECT3DVERTEXSHADER9 shader = NULL;
+			device->CreateVertexShader( (DWORD*)shaderBuffer->GetBufferPointer(), &shader );
+			return shader;
+		}
+	}
+	return NULL;
+}
+LPDIRECT3DPIXELSHADER9	OvShaderManager::CreatePixelShaderFromFile( const string& file, const string& func, const string& version)
+{
+	LPD3DXBUFFER shaderBuffer = CompileShaderFromFile( file, func, version );
+	SDxAutoRelease autoRelease( shaderBuffer );
+	if ( shaderBuffer )
+	{
+		LPDIRECT3DDEVICE9 device = OvRenderer::GetInstance()->GetDevice();
+		if ( device )
+		{
+			LPDIRECT3DPIXELSHADER9 shader = NULL;
+			device->CreatePixelShader( (DWORD*)shaderBuffer->GetBufferPointer(), &shader );
+			return shader;
+		}
+	}
+	return NULL;
+}
+
 bool	OvShaderManager::SetVSConstB(const OvShaderConstInfo& rConstInfo,bool bCheck)
 {
-	LPDIRECT3DDEVICE9 kpDevice =  (LPDIRECT3DDEVICE9)OvRenderer::GetInstance()->GetDevice();
+	LPDIRECT3DDEVICE9 kpDevice =  OvRenderer::GetInstance()->GetDevice();
 	if (kpDevice)
 	{
 		HRESULT kHs = E_FAIL;
@@ -29,7 +110,7 @@ bool	OvShaderManager::SetVSConstB(const OvShaderConstInfo& rConstInfo,bool bChec
 }
 bool	OvShaderManager::GetVSConstB(const OvShaderConstInfo& rConstInfo,bool& bCheck)
 {
-	LPDIRECT3DDEVICE9 kpDevice =  (LPDIRECT3DDEVICE9)OvRenderer::GetInstance()->GetDevice();
+	LPDIRECT3DDEVICE9 kpDevice =  OvRenderer::GetInstance()->GetDevice();
 	if (kpDevice)
 	{
 		HRESULT kHs = E_FAIL;
@@ -39,9 +120,9 @@ bool	OvShaderManager::GetVSConstB(const OvShaderConstInfo& rConstInfo,bool& bChe
 	return false;
 }
 
-bool	OvShaderManager::SetVSConstF(const OvShaderConstInfo& rConstInfo,float* pConst,size_t stConstSize)
+bool	OvShaderManager::_SetVSConstF(const OvShaderConstInfo& rConstInfo,float* pConst,size_t stConstSize)
 {
-	LPDIRECT3DDEVICE9 kpDevice =  (LPDIRECT3DDEVICE9)OvRenderer::GetInstance()->GetDevice();
+	LPDIRECT3DDEVICE9 kpDevice =  OvRenderer::GetInstance()->GetDevice();
 	if (kpDevice)
 	{
 		HRESULT kHs = E_FAIL;
@@ -61,9 +142,9 @@ bool	OvShaderManager::SetVSConstF(const OvShaderConstInfo& rConstInfo,float* pCo
 	}
 	return false;
 }
-bool	OvShaderManager::GetVSConstF(const OvShaderConstInfo& rConstInfo,float* pConst,size_t stConstSize)
+bool	OvShaderManager::_GetVSConstF(const OvShaderConstInfo& rConstInfo,float* pConst,size_t stConstSize)
 {
-	LPDIRECT3DDEVICE9 kpDevice =  (LPDIRECT3DDEVICE9)OvRenderer::GetInstance()->GetDevice();
+	LPDIRECT3DDEVICE9 kpDevice =  OvRenderer::GetInstance()->GetDevice();
 	if (kpDevice)
 	{
 		HRESULT kHs = E_FAIL;
@@ -87,12 +168,12 @@ bool	OvShaderManager::SetVSConst(const OvShaderConstInfo& rConstInfo,const OvMat
 {
 	OvMatrix kMat;
 	kMat = OvMatrixTranspose(rType);
-	return SetVSConstF(rConstInfo,(float*)&(kMat),sizeof(OvMatrix));
+	return _SetVSConstF(rConstInfo,(float*)&(kMat),sizeof(OvMatrix));
 }
 bool	OvShaderManager::GetVSConst(const OvShaderConstInfo& rConstInfo,OvMatrix& rType)
 {
 	OvMatrix kMat;
-	if (GetVSConstF(rConstInfo,(float*)&(kMat),sizeof(OvMatrix)))
+	if (_GetVSConstF(rConstInfo,(float*)&(kMat),sizeof(OvMatrix)))
 	{
 		rType = OvMatrixTranspose(kMat);
 		return true;
@@ -101,9 +182,9 @@ bool	OvShaderManager::GetVSConst(const OvShaderConstInfo& rConstInfo,OvMatrix& r
 }
 //////////////////////////////////////
 
-bool	OvShaderManager::SetPSConstF(const OvShaderConstInfo& rConstInfo,float* pConst,size_t stConstSize)
+bool	OvShaderManager::_SetPSConstF(const OvShaderConstInfo& rConstInfo,float* pConst,size_t stConstSize)
 {
-	LPDIRECT3DDEVICE9 kpDevice =  (LPDIRECT3DDEVICE9)OvRenderer::GetInstance()->GetDevice();
+	LPDIRECT3DDEVICE9 kpDevice =  OvRenderer::GetInstance()->GetDevice();
 	if (kpDevice)
 	{
 		HRESULT kHs = E_FAIL;
@@ -113,9 +194,9 @@ bool	OvShaderManager::SetPSConstF(const OvShaderConstInfo& rConstInfo,float* pCo
 	return false;
 
 }
-bool	OvShaderManager::GetPSConstF(const OvShaderConstInfo& rConstInfo,float* pConst,size_t stConstSize)
+bool	OvShaderManager::_GetPSConstF(const OvShaderConstInfo& rConstInfo,float* pConst,size_t stConstSize)
 {
-	LPDIRECT3DDEVICE9 kpDevice =  (LPDIRECT3DDEVICE9)OvRenderer::GetInstance()->GetDevice();
+	LPDIRECT3DDEVICE9 kpDevice =  OvRenderer::GetInstance()->GetDevice();
 	if (kpDevice)
 	{
 		HRESULT kHs = E_FAIL;
@@ -127,7 +208,7 @@ bool	OvShaderManager::GetPSConstF(const OvShaderConstInfo& rConstInfo,float* pCo
 }
 bool	OvShaderManager::SetTexture(UINT uiSamplerIndex,OvTextureSPtr pTexture)
 {
-	LPDIRECT3DDEVICE9 kpDevice =  (LPDIRECT3DDEVICE9)OvRenderer::GetInstance()->GetDevice();
+	LPDIRECT3DDEVICE9 kpDevice =  OvRenderer::GetInstance()->GetDevice();
 	if (kpDevice && pTexture)
 	{
 		HRESULT kHs = E_FAIL;

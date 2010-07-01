@@ -101,7 +101,7 @@ bool	OvVisibleText::BuildFont(const char* pStyle,int iWidth,int iHeight)
 	}
 	LPD3DXFONT	kpFont = NULL;
 	LPDIRECT3DDEVICE9 kpDevice = NULL;
-	kpDevice = (LPDIRECT3DDEVICE9)OvRenderer::GetInstance()->GetDevice();
+	kpDevice = OvRenderer::GetInstance()->GetDevice();
 	HRESULT hr = D3DXCreateFont(kpDevice,
 		iHeight,
 		iWidth,

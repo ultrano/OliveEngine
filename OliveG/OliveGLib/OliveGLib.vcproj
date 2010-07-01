@@ -451,6 +451,18 @@
 						>
 					</File>
 				</Filter>
+				<Filter
+					Name="OvVertexStream"
+					>
+					<File
+						RelativePath=".\source\OvVertexStream.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\include\OvVertexStream.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 		</Filter>
 		<Filter
@@ -1494,7 +1506,7 @@
 				Name="Common"
 				>
 				<File
-					RelativePath=".\shader\OvConstDefineUtil.ocs"
+					RelativePath=".\shader\OvConstDefineUtil.h"
 					>
 				</File>
 			</Filter>
@@ -1505,11 +1517,11 @@
 					Name="CommonConst"
 					>
 					<File
-						RelativePath=".\shader\OvMaterialConst.ops"
+						RelativePath=".\shader\OvMaterialPConst.h"
 						>
 					</File>
 					<File
-						RelativePath=".\shader\OvMaterialConst.ovs"
+						RelativePath=".\shader\OvMaterialVConst.h"
 						>
 					</File>
 				</Filter>
@@ -1522,6 +1534,14 @@
 					</File>
 					<File
 						RelativePath=".\shader\test_shader.ovs"
+						>
+					</File>
+					<File
+						RelativePath=".\shader\testP.fx"
+						>
+					</File>
+					<File
+						RelativePath=".\shader\testV.fx"
 						>
 					</File>
 				</Filter>

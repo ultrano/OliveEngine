@@ -13,96 +13,20 @@
 //! Temporary include
 #include "OvUtility.h"
 #include "OvStringUtility.h"
-//
-
-
-bool	SafeCopyToVertexBuffer(LPDIRECT3DVERTEXBUFFER9 pVertexBuffer, size_t stVertStreamSize, void* pVertStreamPointer)
-{
-
-	if (pVertStreamPointer && pVertexBuffer)
-	{
-		void*	kpLockedBuffer = NULL;
-		if (stVertStreamSize && SUCCEEDED(pVertexBuffer->Lock(0,stVertStreamSize,(void**)&kpLockedBuffer,0)))
-		{
-			memcpy(kpLockedBuffer,pVertStreamPointer,stVertStreamSize);
-			pVertexBuffer->Unlock();
-			return true;
-		}
-		else
-		{
-			OvAssertMsg("Locking VertexBuffer is failed");
-		}
-	}
-	return false;
-}
-bool	SafeCopyToIndexBuffer(LPDIRECT3DINDEXBUFFER9 pIndexBuffer, size_t stFaceStreamSize, void* pFaceStreamPointer)
-{
-	if (pFaceStreamPointer && pIndexBuffer)
-	{
-		void*	kpLockedBuffer = NULL;
-		if (stFaceStreamSize && SUCCEEDED(pIndexBuffer->Lock(0,stFaceStreamSize,(VOID**)&kpLockedBuffer,0)))
-		{
-			memcpy(kpLockedBuffer,pFaceStreamPointer,stFaceStreamSize);
-			pIndexBuffer->Unlock();
-			return true;
-		}
-		else
-		{
-			OvAssertMsg("Locking IndexBuffer is failed");
-		}
-	}
-	return false;
-}
 
 OvRTTI_IMPL_ROOT(OvRenderer);
 
 
-struct OvRenderer::OvPimple : OvMemObject
-{
-	LPDIRECT3DDEVICE9			mpDirect3DDevice;
-	LPDIRECT3DVERTEXBUFFER9		mpVertexBuffer	;
-	LPDIRECT3DINDEXBUFFER9		mpIndexBuffer	;
-	DWORD						mdMaxVertexBufferSize;
-	DWORD						mdMaxIndexBufferSize;
-	HWND						mhWindowHandle;
-	DWORD						mdWindowHeight;
-	DWORD						mdWindowWidth;
-
-
-	OvMatrix					mSelectedViewMatrix;
-	OvMatrix					mSelectedProjectMatrix;
-
-
-};
 
 OvRenderer::OvRenderer()
 {
-	m_pPimple = OvNew OvRenderer::OvPimple;
-	m_pPimple->mpDirect3DDevice			=	NULL;
-	m_pPimple->mpVertexBuffer			=	NULL;
-	m_pPimple->mpIndexBuffer			=	NULL;
-	m_pPimple->mdMaxVertexBufferSize	=	0;
-	m_pPimple->mdMaxIndexBufferSize		=	0;
-	m_pPimple->mhWindowHandle			=	NULL;
-	m_pPimple->mdWindowHeight			=	0;
-	m_pPimple->mdWindowWidth			=	0;
 }
 OvRenderer::~OvRenderer()
 {
-	LPDIRECT3DINDEXBUFFER9&		kpIndexBuffer	=	m_pPimple->mpIndexBuffer;
-	if (NULL != kpIndexBuffer )
+	
+	if (m_device)
 	{
-		kpIndexBuffer->Release();
-	}
-	LPDIRECT3DVERTEXBUFFER9&		kpVertexBuffer	=	m_pPimple->mpVertexBuffer;
-	if (NULL != kpVertexBuffer )
-	{
-		kpVertexBuffer->Release();
-	}
-	LPDIRECT3DDEVICE9	kpDX9Device = m_pPimple->mpDirect3DDevice;
-	if (kpDX9Device)
-	{
-		kpDX9Device->Release();
+		m_device->Release();
 	}
 }
 
@@ -155,89 +79,21 @@ bool		OvRenderer::GenerateRenderer(HWND _hTargetWindowHangle)
 		_hTargetWindowHangle,
 		D3DCREATE_SOFTWARE_VERTEXPROCESSING,
 		&d3dpp,
-		&(m_pPimple->mpDirect3DDevice)
+		&(m_device)
 		);
 
-	LPDIRECT3DDEVICE9 kpDevice = m_pPimple->mpDirect3DDevice;
+	//m_device->SetRenderState(D3DRS_ZENABLE,TRUE);
 
-	m_pPimple->mhWindowHandle = _hTargetWindowHangle;
-
-	WINDOWINFO	kWndInfo ;
-	GetWindowInfo(m_pPimple->mhWindowHandle,&kWndInfo);
-	m_pPimple->mdWindowHeight = kWndInfo.rcWindow.bottom - kWndInfo.rcWindow.top;
-	m_pPimple->mdWindowWidth  = kWndInfo.rcWindow.right - kWndInfo.rcWindow.left;
-
-	kpDevice->SetRenderState(D3DRS_ZENABLE,TRUE);
-
-
-// 	kpDevice->SetRenderState(D3DRS_ALPHABLENDENABLE,true);
-// 	kpDevice->SetRenderState(D3DRS_SRCBLEND,D3DBLEND_ONE);
-// 	kpDevice->SetRenderState(D3DRS_DESTBLEND,D3DBLEND_ONE);
-// 	kpDevice->SetRenderState(D3DRS_BLENDOP,D3DBLENDOP_ADD);
-// 
-// 	kpDevice->SetRenderState(D3DRS_SRCBLENDALPHA,D3DBLEND_ZERO);
-// 	kpDevice->SetRenderState(D3DRS_DESTBLENDALPHA,D3DBLEND_ZERO);
-// 	kpDevice->SetRenderState(D3DRS_BLENDOPALPHA,D3DBLENDOP_ADD);
-
-	kpDevice->SetRenderState(D3DRS_CULLMODE,D3DCULL_CCW);
-	kpDevice->SetRenderState(D3DRS_LIGHTING,false);
-
-
-	/*OvMatrix	kMatProjeTexOffset;
-	kMatProjeTexOffset = kMatProjeTexOffset * OvMatrix().Scale(0.5f,-0.5f,1);
-	kMatProjeTexOffset = kMatProjeTexOffset * OvMatrix().Translate(0.5f,0.5f,0);*/
+	//m_device->SetRenderState(D3DRS_CULLMODE,D3DCULL_CCW);
+	//m_device->SetRenderState(D3DRS_LIGHTING,false);
 
 	return SUCCEEDED(hr);
 
 };
-
-
-
-/*void			OvRenderer::DrawMesh(OvMeshSPtr pMesh)
-{
-	if (pMesh && OvRTTI_Util::IsKindOf< OvMesh >( pMesh ))
-	{
-
-		LPDIRECT3DDEVICE9				kpDX9Device		= m_pPimple->mpDirect3DDevice;
-
-		LPDIRECT3DVERTEXBUFFER9&		kpVertexBuffer	=	m_pPimple->mpVertexBuffer;
-		LPDIRECT3DINDEXBUFFER9&			kpIndexBuffer	=	m_pPimple->mpIndexBuffer;
-
-		SafeCopyToVertexBuffer(kpVertexBuffer, pMesh->GetVertexStreamByteSize(), pMesh->GetVertexStreamRealPointer());
-		SafeCopyToIndexBuffer(kpIndexBuffer, pMesh->GetIndexedFaceStreamByteSize(), pMesh->GetIndexedFaceStreamRealPointer());
-
-		kpDX9Device->SetStreamSource(0,kpVertexBuffer,0,pMesh->GetVertexStrideByteSize());
-		kpDX9Device->SetIndices(kpIndexBuffer);
-		kpDX9Device->SetFVF(pMesh->GetVertexFormatFlag());
-
-		HRESULT kHs = -1;
-		switch (pMesh->GetPrimitiveType())
-		{
-		case OvNSMeshDescription::ePrimitiveType_None_Indexed :
-			kHs = kpDX9Device->DrawPrimitive((D3DPRIMITIVETYPE)pMesh->GetDrawType(),0,pMesh->GetVertexCount());
-			break;
-		case OvNSMeshDescription::ePrimitiveType_Indexed : 
-			kHs = kpDX9Device->DrawIndexedPrimitive(
-				(D3DPRIMITIVETYPE)pMesh->GetDrawType()
-				,0
-				,0
-				,pMesh->GetVertexCount()
-				,0
-				,pMesh->GetFaceCount() 
-				);
-			break;
-		}
-		if (FAILED(kHs))
-		{
-			OvAssertMsg("Draw Failed");
-		}
-	}
-}*/
 bool			OvRenderer::ClearTarget()
 {
-	LPDIRECT3DDEVICE9	kpDX9Device = m_pPimple->mpDirect3DDevice;
 
-	if (FAILED(kpDX9Device->Clear(0,
+	if (FAILED(m_device->Clear(0,
 		NULL,
 		D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER ,
 		D3DCOLOR_XRGB(1,1,1),
@@ -245,6 +101,7 @@ bool			OvRenderer::ClearTarget()
 		0)))
 	{
 		OvAssertMsg("Failed Clear RenderTarget");
+		return false;
 	}
 
 	return true;
@@ -252,24 +109,23 @@ bool			OvRenderer::ClearTarget()
 
 bool			OvRenderer::BeginTarget()
 {
-	LPDIRECT3DDEVICE9	kpDX9Device = m_pPimple->mpDirect3DDevice;
 
-	if (FAILED(kpDX9Device->BeginScene()))
+	if (FAILED(m_device->BeginScene()))
 	{
 		OvAssertMsg("Failed Begin RenderTarget");
+		return false;
 	}
-	;
 
 	return true;
 }
 
 bool			OvRenderer::EndTarget()
 {
-	LPDIRECT3DDEVICE9	kpDX9Device = m_pPimple->mpDirect3DDevice;
 
-	if (FAILED(kpDX9Device->EndScene()))
+	if (FAILED(m_device->EndScene()))
 	{
 		OvAssertMsg("Failed End RenderTarget");
+		return false;
 	}
 
 	return true;
@@ -277,144 +133,139 @@ bool			OvRenderer::EndTarget()
 
 bool			OvRenderer::PresentTarget()
 {
-	LPDIRECT3DDEVICE9	kpDX9Device = m_pPimple->mpDirect3DDevice;
-
-	if (FAILED(kpDX9Device->Present(0,0,0,0)))
+	if (FAILED(m_device->Present(0,0,0,0)))
 	{
 		OvAssertMsg("Failed Present RenderTarget");
-	}
-
-	return true;
-}
-bool	OvRenderer::ExtentionVertexBuffer(DWORD dBufferSize)
-{
-	LPDIRECT3DDEVICE9	kpDX9Device =	m_pPimple->mpDirect3DDevice;
-
-	//! Extention VertexBuffer
-	if (dBufferSize > m_pPimple->mdMaxVertexBufferSize)
-	{
-		LPDIRECT3DVERTEXBUFFER9&		kpVertexBuffer	=	m_pPimple->mpVertexBuffer;
-		if (NULL != kpVertexBuffer )
-		{
-			kpVertexBuffer->Release();
-		}
-		if (FAILED(kpDX9Device->CreateVertexBuffer(dBufferSize,0,0,D3DPOOL_MANAGED,&kpVertexBuffer,NULL)))
-		{
-			OvAssertMsg("Creating VertexBuffer is failed");
-			return false;
-		}
-		m_pPimple->mdMaxVertexBufferSize	=	dBufferSize;
-	}
-	else
-	{
 		return false;
 	}
+
 	return true;
-
-}
-bool	OvRenderer::ExtentionIndexBuffer(DWORD dBufferSize)
-{
-	LPDIRECT3DDEVICE9	kpDX9Device =	m_pPimple->mpDirect3DDevice;
-
-	//! Extention VertexBuffer
-	if (dBufferSize > m_pPimple->mdMaxIndexBufferSize)
-	{
-		LPDIRECT3DINDEXBUFFER9&		kpIndexBuffer	=	m_pPimple->mpIndexBuffer;
-		if (NULL != kpIndexBuffer )
-		{
-			kpIndexBuffer->Release();
-		}
-		if (FAILED(kpDX9Device->CreateIndexBuffer(dBufferSize,0,D3DFMT_INDEX16,D3DPOOL_MANAGED,&kpIndexBuffer,NULL)))
-		{
-			OvAssertMsg("Creating VertexBuffer is failed");
-			return false;
-		}
-		m_pPimple->mdMaxIndexBufferSize	=	dBufferSize;
-	}
-	else
-	{
-		return false;
-	}
-	return true;
-
 }
 
-OvTextureSPtr	OvRenderer::LoadTexture(const char* pFile)
+void OvRenderer::SetVertexStream( WORD streamIndex, SVertexStreamInfo* streamInfo )
 {
-	if (pFile)
-	{
-		LPDIRECT3DDEVICE9 kpDevice = (LPDIRECT3DDEVICE9)GetDevice();
-		if (kpDevice)
+	if ( m_device )
+	{		
+		LPDIRECT3DVERTEXBUFFER9 Stream = NULL;
+		size_t Stride = 0;
+		
+		if (streamInfo)
 		{
-			LPDIRECT3DTEXTURE9	kpTexture = NULL;
-			if (SUCCEEDED(D3DXCreateTextureFromFile(kpDevice,pFile,&kpTexture)) )
+			Stream = streamInfo->vertexStream;
+			Stride = streamInfo->vertexStride;
+		}
+
+		HRESULT hr = m_device->SetStreamSource( streamIndex, Stream, 0, Stride );
+		OvAssert( SUCCEEDED( hr ) );
+
+	}
+}
+
+void OvRenderer::SetIndexStream( LPDIRECT3DINDEXBUFFER9 streamBuffer )
+{
+	if ( m_device )
+	{
+		HRESULT hr = m_device->SetIndices( streamBuffer );
+		OvAssert( SUCCEEDED( hr ) );
+	}
+}
+void OvRenderer::SetVertexDeclaration( LPDIRECT3DVERTEXDECLARATION9 decl )
+{
+	if ( m_device )
+	{
+		HRESULT hr = m_device->SetVertexDeclaration( decl );
+		OvAssert( SUCCEEDED( hr ) );
+	}
+}
+bool OvRenderer::DrawIndexedPrimitive( D3DPRIMITIVETYPE primitiveType, size_t vertCount, size_t faceCount )
+{
+	if ( m_device )
+	{
+		HRESULT hr = m_device->DrawIndexedPrimitive
+			( primitiveType
+			, 0
+			, 0
+			, vertCount
+			, 0
+			, faceCount);
+		return SUCCEEDED( hr );
+	}
+	return false;
+}
+
+LPDIRECT3DDEVICE9	OvRenderer::GetDevice()
+{	
+	return m_device;
+}
+
+LPDIRECT3DVERTEXBUFFER9 OvRenderer::CreateVertexStream( void* buffer, size_t stride, size_t count )
+{
+	if ( m_device )
+	{
+		LPDIRECT3DVERTEXBUFFER9 vertexStream = NULL;
+		size_t streamSize = count * stride;
+		HRESULT hr = m_device->CreateVertexBuffer
+			( streamSize
+			, 0
+			, 0
+			, D3DPOOL_MANAGED
+			, &vertexStream
+			, NULL
+			);
+		if ( SUCCEEDED(hr) && vertexStream )
+		{
+			void* copyDest = NULL;
+			if ( SUCCEEDED(vertexStream->Lock( 0, streamSize, &copyDest, 0)) && copyDest)
 			{
-				OvTextureSPtr	kpDiffTex = new OvTexture(kpTexture);
-				return kpDiffTex;
+				memcpy( copyDest, buffer, streamSize );
+				vertexStream->Unlock();
+				return vertexStream;
 			}
 		}
 	}
 	return NULL;
 }
 
-OvTextureSPtr	OvRenderer::CreateTexture(size_t stWidth,size_t stHeight,size_t stMipLevel,DWORD dUsage,DWORD dFormat)
+LPDIRECT3DINDEXBUFFER9 OvRenderer::CreateIndexStream( void* buffer, size_t stride, size_t count )
 {
-	LPDIRECT3DDEVICE9 kpDevice = (LPDIRECT3DDEVICE9)GetDevice();
-
-	LPDIRECT3DTEXTURE9 kpTexture = NULL;
-
-	if (kpDevice)
+	if ( m_device )
 	{
-		if (SUCCEEDED(D3DXCreateTexture(
-			kpDevice
-			,stWidth
-			,stHeight
-			,stMipLevel
-			,dUsage
-			,(D3DFORMAT)dFormat
-			,D3DPOOL_DEFAULT
-			,&(kpTexture)
-			)))
+		LPDIRECT3DINDEXBUFFER9	streamBuffer = NULL;
+		size_t streamSize = count * stride;
+		HRESULT hr = m_device->CreateIndexBuffer
+			( streamSize
+			, 0
+			, D3DFMT_INDEX16
+			, D3DPOOL_MANAGED
+			, &streamBuffer
+			, NULL
+			);
+
+		if ( SUCCEEDED(hr) && streamBuffer )
 		{
-			OvTextureSPtr	kpRenderTex = new OvTexture((void*)kpTexture);
-			return kpRenderTex;
+			void* copyDest = NULL;
+			if ( SUCCEEDED(streamBuffer->Lock( 0, streamSize, &copyDest, 0)) && copyDest)
+			{
+				memcpy( copyDest, buffer, streamSize );
+				streamBuffer->Unlock();
+				return streamBuffer;
+			}
 		}
 	}
 	return NULL;
 
 }
-OvSurfaceSPtr	OvRenderer::CreateDepthStencilSurface(size_t stWidth,size_t stHeight,DWORD dFormat,DWORD dMultiSample,DWORD dMultiSampleQuality,bool bIdDiscard)
-{
 
-	LPDIRECT3DDEVICE9 kpDevice = (LPDIRECT3DDEVICE9)GetDevice();
-	if (kpDevice )
+LPDIRECT3DVERTEXDECLARATION9 OvRenderer::CreateVertexDeclaration( D3DVERTEXELEMENT9* vertElement )
+{
+	if ( m_device )
 	{
-		LPDIRECT3DSURFACE9	kpBuffer = NULL;
-		kpDevice->CreateDepthStencilSurface(
-			stWidth, stHeight, 
-			(D3DFORMAT)dFormat, (D3DMULTISAMPLE_TYPE)dMultiSample, dMultiSampleQuality,
-			bIdDiscard, &kpBuffer , NULL);
-
-		OvSurfaceSPtr	kpSurface = OvNew OvSurface((void*)kpBuffer);
-
-		return kpSurface;
+		LPDIRECT3DVERTEXDECLARATION9 vertDecl = NULL;
+		HRESULT hr = m_device->CreateVertexDeclaration( vertElement, &vertDecl );
+		if ( SUCCEEDED( hr ) )
+		{
+			return vertDecl;
+		}
 	}
-
 	return NULL;
-
-}
-void*	OvRenderer::GetDevice()
-{
-	LPDIRECT3DDEVICE9	kpDX9Device =	m_pPimple->mpDirect3DDevice;
-	return (void*)kpDX9Device;
-}
-
-DWORD	OvRenderer::GetRenderWindowHeight()
-{
-	return m_pPimple->mdWindowHeight;
-}
-
-DWORD	OvRenderer::GetRenderWindowWidth()
-{
-	return m_pPimple->mdWindowWidth;
 }
