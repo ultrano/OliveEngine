@@ -43,3 +43,7 @@
 
 #include "OvShaderManager.h"
 #include "OvMaterialManager.h"
+#include "OvTransform.h"
+#include "OvModel.h"
+
+#include "OvInputManager.h"

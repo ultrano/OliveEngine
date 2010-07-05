@@ -16,7 +16,7 @@ class OvObjectFactory : public OvSingletonBase< OvObjectFactory >
 public:
 	OvObjectFactory();
 	~OvObjectFactory();
-	OvObjectSPtr	CreateInstance(const string& rClass,OvObjectID& objID);
+	OvObjectSPtr	CreateInstance(const string& rClass);
 
 private:
 

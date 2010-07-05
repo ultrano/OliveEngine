@@ -1,6 +1,8 @@
 
 #include "OvPoint3.h"
 #include "OvUtility.h"
+#include "OvMatrix.h"
+#include "OvQuaternion.h"
 
 OvPoint3 OvPoint3::AXIS_X(1,0,0);
 OvPoint3 OvPoint3::AXIS_Y(0,1,0);
@@ -46,6 +48,25 @@ OvPoint3 OvPoint3::operator *(float _fScalar) const
 OvPoint3	OvPoint3::operator /(float _fScalar) const
 {
 	return OvPoint3(x / _fScalar ,y / _fScalar ,z / _fScalar );
+}
+OvPoint3	OvPoint3::operator *(const OvMatrix mulMat) const
+{
+	/*
+	D3DXVec3Transform((D3DXVECTOR4*)&outPut2,(D3DXVECTOR3*)this,(D3DXMATRIX*)&mulMat);
+	return outPut;
+	*/
+	OvQuaternion outPut
+	( ( x * mulMat._11 ) + ( y * mulMat._21 ) + ( z * mulMat._31 ) + ( 1 * mulMat._41 )
+	, ( x * mulMat._12 ) + ( y * mulMat._22 ) + ( z * mulMat._32 ) + ( 1 * mulMat._42 )
+	, ( x * mulMat._13 ) + ( y * mulMat._23 ) + ( z * mulMat._33 ) + ( 1 * mulMat._43 )
+	, ( x * mulMat._14 ) + ( y * mulMat._24 ) + ( z * mulMat._34 ) + ( 1 * mulMat._44 )
+	);
+	float w = (outPut.w)? outPut.w : 1;
+	return OvPoint3
+		( outPut.x / w
+		, outPut.y / w
+		, outPut.z / w
+		);
 }
 
 //OvPoint3 OvPoint3::operator *(const OvQuaternion& _rQuter) const

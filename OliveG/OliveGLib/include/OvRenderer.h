@@ -32,6 +32,7 @@ public:
 	LPDIRECT3DVERTEXBUFFER9 CreateVertexStream( void* buffer, size_t stride, size_t count );
 	LPDIRECT3DINDEXBUFFER9	CreateIndexStream( void* buffer, size_t stride, size_t count);
 	LPDIRECT3DVERTEXDECLARATION9 CreateVertexDeclaration( D3DVERTEXELEMENT9* vertElement );
+
 	LPDIRECT3DDEVICE9	GetDevice();
 
 private:

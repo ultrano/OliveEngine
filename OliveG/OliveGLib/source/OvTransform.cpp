@@ -6,33 +6,38 @@ OvTransform::OvTransform()
 {
 }
 
-void	OvTransform::BuildTransformMatrix()
+OvMatrix MakeTransformMatrix( const OvPoint3& scale, const OvQuaternion& quat, const OvPoint3& pos )
 {
 	OvMatrix kSupportMat;
+	OvMatrix BuildMatrix;
 
 	kSupportMat.Identity();
 	BuildMatrix.Identity();
 
-	BuildMatrix = BuildMatrix * kSupportMat.Scale(Scale.x,Scale.y,Scale.z);
+	BuildMatrix = BuildMatrix * kSupportMat.Scale(scale.x,scale.y,scale.z);
 	kSupportMat.Identity();
-	BuildMatrix = BuildMatrix * kSupportMat.Rotate(Quaternion);
+	BuildMatrix = BuildMatrix * kSupportMat.Rotate(quat);
 	kSupportMat.Identity();
-	BuildMatrix = BuildMatrix * kSupportMat.Translate(Position);
-}
-
-
-void	OvTransform::ExtractTransformFromBuildMatrix()
+	BuildMatrix = BuildMatrix * kSupportMat.Translate(pos);
+	return BuildMatrix;
+};
+OvMatrix MakeTransformMatrix( const OvTransform& transform )
 {
-	Position.x = BuildMatrix._41;
-	Position.y = BuildMatrix._42;
-	Position.z = BuildMatrix._43;
+	return MakeTransformMatrix( transform.Scale, transform.Quaternion, transform.Position );
+}
+OvTransform ExtractTransformFromMatrix( const OvMatrix& mat )
+{
+	OvTransform outPut;
+	outPut.Position.x = mat._41;
+	outPut.Position.y = mat._42;
+	outPut.Position.z = mat._43;
 
 	OvMatrix kExtractMat;
-	D3DXQuaternionRotationMatrix((D3DXQUATERNION*)&Quaternion,(D3DXMATRIX*)&BuildMatrix);
-	kExtractMat = BuildMatrix*OvMatrix().Rotate(Quaternion.Inverse());
+	D3DXQuaternionRotationMatrix((D3DXQUATERNION*)&outPut.Quaternion,(D3DXMATRIX*)&mat);
+	kExtractMat = mat*OvMatrix().Rotate(outPut.Quaternion.Inverse());
 
-	Scale.x = kExtractMat._11;
-	Scale.y = kExtractMat._22;
-	Scale.z = kExtractMat._33;
-
+	outPut.Scale.x = kExtractMat._11;
+	outPut.Scale.y = kExtractMat._22;
+	outPut.Scale.z = kExtractMat._33;
+	return outPut;
 }

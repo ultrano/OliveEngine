@@ -1,30 +1,32 @@
 #include "OvTexture.h"
+#include "OvRenderer.h"
 #include <d3dx9.h>
 
-OvRTTI_IMPL(OvTexture,OvRefBase);
-struct OvTexture::OvPimple : OvMemObject
-{
-	LPDIRECT3DTEXTURE9 m_pTexture;
-};
+OvRTTI_IMPL(OvTexture);
 
-
-OvTexture::OvTexture(void* pTexture)
-:m_pPimple(OvNew OvTexture::OvPimple)
+OvTexture::OvTexture()
 {
-	LPDIRECT3DTEXTURE9 kpDXTexture = (LPDIRECT3DTEXTURE9)pTexture;
-	if (kpDXTexture)
-	{
-		m_pPimple->m_pTexture = kpDXTexture;
-	}
 };
 OvTexture::~OvTexture()
 {
-	if (m_pPimple->m_pTexture)
-	{
-		m_pPimple->m_pTexture->Release();
-	}
 };
-void*	OvTexture::GetTexture()
+LPDIRECT3DTEXTURE9 OvTexture::ToDxTexture()
 {
-	return (void*)m_pPimple->m_pTexture;
+	return m_texture;
+}
+bool	OvTexture::Load( const std::string& fileLocation )
+{
+	if ( fileLocation.empty() == false )
+	{
+		LPDIRECT3DDEVICE9 device = OvRenderer::GetInstance()->GetDevice();
+		if ( device )
+		{
+			LPDIRECT3DTEXTURE9	kpTexture = NULL;
+			if ( SUCCEEDED( D3DXCreateTextureFromFile( device, fileLocation.c_str(), &kpTexture ) ) )
+			{
+				return kpTexture;
+			}
+		}
+	}
+	return false;
 }

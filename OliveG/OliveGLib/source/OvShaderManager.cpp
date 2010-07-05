@@ -212,7 +212,7 @@ bool	OvShaderManager::SetTexture(UINT uiSamplerIndex,OvTextureSPtr pTexture)
 	if (kpDevice && pTexture)
 	{
 		HRESULT kHs = E_FAIL;
-		kHs = kpDevice->SetTexture(uiSamplerIndex,(LPDIRECT3DTEXTURE9)pTexture->GetTexture());
+		kHs = kpDevice->SetTexture( uiSamplerIndex, pTexture->ToDxTexture() );
 		return SUCCEEDED(kHs);
 	}
 	return false;

@@ -65,7 +65,7 @@ void	OvRenderTarget::LockTarget()
 			{
 				kpNewSurface = NULL;
 
-				kpTexture	=	(LPDIRECT3DTEXTURE9)GetRenderTexture()->GetTexture();
+				kpTexture	=	GetRenderTexture()->ToDxTexture();
 				kpDevice->GetRenderTarget(0,&m_pPimple->m_pOldRenderTarget);
 				kpTexture->GetSurfaceLevel(0,&kpNewSurface);
 				kpDevice->SetRenderTarget(0,kpNewSurface);

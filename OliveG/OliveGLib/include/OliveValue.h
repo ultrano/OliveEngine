@@ -9,7 +9,13 @@
 namespace OliveValue
 {
 
-#define	ACCEPT_STRING_CONSTRUCTOR	public:__this_class(){};__this_class(const string& strValue){SetValue(strValue);};
+#define	ACCEPT_STRING_CONSTRUCTOR( type_name )	\
+	private:type_name m_value;\
+	public:\
+	__this_class(){};\
+	__this_class( const char* strValue ){SetValue( string( strValue ) );};\
+	__this_class( string& strValue ){SetValue(strValue);};\
+	__this_class( const type_name& typeValue ){m_value = typeValue;};
 
 	class Value : public OvMemObject
 	{
@@ -26,21 +32,19 @@ namespace OliveValue
 	class Float : public OliveValue::Value
 	{
 		OvRTTI_DECL(Float);
-		ACCEPT_STRING_CONSTRUCTOR
+		ACCEPT_STRING_CONSTRUCTOR(float);
 	public:
 		virtual void	SetValue( const string& expData );
 		virtual string	GetValue();
 	public:
 		void			SetFloat( float expValue );
 		float			GetFloat();
-	private:
-		float	m_value;
 	};
 	
 	class Point2 : public OliveValue::Value
 	{
 		OvRTTI_DECL(Point2);
-		ACCEPT_STRING_CONSTRUCTOR
+		ACCEPT_STRING_CONSTRUCTOR(OvPoint2);
 	public:
 		virtual void	SetValue( const string& expData );
 		virtual string	GetValue();
@@ -48,14 +52,12 @@ namespace OliveValue
 		void			SetPoint2( const OvPoint2& expValue );
 		void			SetPoint2( float x, float y );
 		const OvPoint2&	GetPoint2();
-	private:
-		OvPoint2	m_value;
 	};
 
 	class Point3 : public OliveValue::Value
 	{
 		OvRTTI_DECL(Point3);
-		ACCEPT_STRING_CONSTRUCTOR
+		ACCEPT_STRING_CONSTRUCTOR(OvPoint3);
 	public:
 		virtual void	SetValue( const string& expData );
 		virtual string	GetValue();
@@ -63,14 +65,12 @@ namespace OliveValue
 		void			SetPoint3( const OvPoint3& expValue );
 		void			SetPoint3( float x, float y, float z );
 		const OvPoint3&	GetPoint3();
-	private:
-		OvPoint3	m_value;
 	};
 
 	class Quaternion : public OliveValue::Value
 	{
 		OvRTTI_DECL(Quaternion);
-		ACCEPT_STRING_CONSTRUCTOR
+		ACCEPT_STRING_CONSTRUCTOR(OvQuaternion);
 	public:
 		virtual void	SetValue( const string& expData );
 		virtual string	GetValue();
@@ -78,50 +78,42 @@ namespace OliveValue
 		void			  SetQuaternion( const OvQuaternion& expValue );
 		void			  SetQuaternion( float x, float y, float z, float w );
 		const OvQuaternion& GetQuaternion();
-	private:
-		OvQuaternion	m_value;
 	};
 
 	class Integer : public OliveValue::Value
 	{
 		OvRTTI_DECL(Integer);
-		ACCEPT_STRING_CONSTRUCTOR
+		ACCEPT_STRING_CONSTRUCTOR(int);
 	public:
 		virtual void	SetValue( const string& expData );
 		virtual string	GetValue();
 	public:
 		void			SetInteger( int expValue );
 		int				GetInteger();
-	private:
-		int		m_value;
 	};
 
 	class String : public OliveValue::Value
 	{
 		OvRTTI_DECL(String);
-		ACCEPT_STRING_CONSTRUCTOR
+		ACCEPT_STRING_CONSTRUCTOR(string);
 	public:
 		virtual void	SetValue( const string& expData );
 		virtual string	GetValue();
 	public:
 		void			SetString( const string& expValue );
 		string			GetString();
-	private:
-		string		m_value;
 	};
 
 	class ObjectID : public OliveValue::Value
 	{
 		OvRTTI_DECL(ObjectID);
-		ACCEPT_STRING_CONSTRUCTOR
+		ACCEPT_STRING_CONSTRUCTOR(OvObjectID);
 	public:
 		virtual void	SetValue( const string& expData );
 		virtual string	GetValue();
 	public:
 		void			SetObjectID( const OvObjectID& expValue );
 		const OvObjectID&	GetObjectID();
-	private:
-		OvObjectID		m_value;
 	};
 
 	Value*	ValueFactory(const std::string& valueType);

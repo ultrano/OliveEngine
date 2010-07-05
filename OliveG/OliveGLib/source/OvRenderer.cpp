@@ -19,6 +19,7 @@ OvRTTI_IMPL_ROOT(OvRenderer);
 
 
 OvRenderer::OvRenderer()
+:m_device( NULL )
 {
 }
 OvRenderer::~OvRenderer()
@@ -84,7 +85,7 @@ bool		OvRenderer::GenerateRenderer(HWND _hTargetWindowHangle)
 
 	//m_device->SetRenderState(D3DRS_ZENABLE,TRUE);
 
-	//m_device->SetRenderState(D3DRS_CULLMODE,D3DCULL_CCW);
+	m_device->SetRenderState(D3DRS_CULLMODE,D3DCULL_NONE);
 	//m_device->SetRenderState(D3DRS_LIGHTING,false);
 
 	return SUCCEEDED(hr);

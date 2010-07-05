@@ -55,13 +55,13 @@ public :
 	OvPoint3&		GetTranslate();
 	OvQuaternion&	GetRotation();
 	const OvPoint3&	GetScale();
+	const OvMatrix&	GetLocalMatrix();
 
 	//! Get World Transform
 	const OvPoint3&		GetWorldTranslate();
 	const OvQuaternion&	GetWorldRotation();
 	const OvPoint3&		GetWorldScale();
 	const OvMatrix&		GetWorldMatrix();
-	const OvTransform&	GetWorldTransform();
 
 	//! Which Kind
 	bool			IsNode();
@@ -99,7 +99,10 @@ private:
 
 	OvSphere	m_cCullingSphere;
 	OvTransform	m_tfLocalTransform;
+	OvMatrix	m_localBuildMatrix;
+
 	OvTransform	m_tfWorldTransform;
+	OvMatrix	m_worldBuildMatrix;
 
 	OvObjectCollector	m_extraComponents;
 

@@ -13,6 +13,7 @@ public:
 	enum RenderLevel
 	{
 		Pos_Norm,
+		Diff_Norm_TexCoord,
 		MaxLevel,
 	};
 

@@ -28,21 +28,21 @@ void OvXObject::Update(float _fElapse)
 	OvTransform&	krLocalTransform = m_tfLocalTransform;
 	OvTransform&	krWorldTransform = m_tfWorldTransform;
 
-	krLocalTransform.BuildTransformMatrix();
+	m_localBuildMatrix = MakeTransformMatrix( krLocalTransform );
 
 	if (GetParent())
 	{
 		OvXNodeSPtr kpParent = GetParent();
-		const OvTransform&	krParentWorldTransform = kpParent->GetWorldTransform();
+		const OvMatrix&	krParentWorldMatrix = kpParent->GetWorldMatrix();
 
-		krWorldTransform.BuildMatrix = krLocalTransform.BuildMatrix * krParentWorldTransform.BuildMatrix;
+		m_worldBuildMatrix = m_localBuildMatrix * krParentWorldMatrix;
 
 	}else
 	{
-		krWorldTransform.BuildMatrix	= krLocalTransform.BuildMatrix;
+		m_worldBuildMatrix	= m_localBuildMatrix;
 	}
 
-	krWorldTransform.ExtractTransformFromBuildMatrix();
+	m_tfWorldTransform = ExtractTransformFromMatrix( m_worldBuildMatrix );
 
 	for (int i = 0 ; i < m_extraComponents.Count() ; ++i)
 	{
@@ -97,11 +97,16 @@ const OvPoint3&			OvXObject::GetScale()
 	return m_tfLocalTransform.Scale;
 }
 
+const OvMatrix&	OvXObject::GetLocalMatrix()
+{
+	return m_localBuildMatrix;
+}
+
 void			OvXObject::SetTranslateFromWorldCoord(OvPoint3& _rPosition)
 {
 	if (GetParent())
 	{
-		OvMatrix	kParentMat = GetParent()->GetWorldTransform().BuildMatrix;
+		OvMatrix	kParentMat = GetParent()->GetWorldMatrix();
 		OvMatrix	kResultMat = OvMatrix().Translate(_rPosition) * OvMatrixInverseMatrix(kParentMat);
 		SetTranslate( OvMatrixExtractTraslate(kResultMat) );
 	}
@@ -120,7 +125,7 @@ void			OvXObject::SetRotationFromWorldCoord(OvQuaternion& _rRotation)
 {
 	if (GetParent())
 	{
-		OvMatrix	kParentMat = GetParent()->GetWorldTransform().BuildMatrix;
+		OvMatrix	kParentMat = GetParent()->GetWorldMatrix();
 		OvMatrix	kResultMat = OvMatrix().Rotate(_rRotation) * OvMatrixInverseMatrix(kParentMat);
 		SetRotation( OvMatrixExtractRotate(kResultMat) );
 	}
@@ -134,7 +139,7 @@ void			OvXObject::SetScaleFromWorldCoord(OvPoint3& _rScale)
 {
 	if (GetParent())
 	{
-		OvMatrix	kParentMat = GetParent()->GetWorldTransform().BuildMatrix;
+		OvMatrix	kParentMat = GetParent()->GetWorldMatrix();
 		OvMatrix	kResultMat = OvMatrix().Scale(_rScale) * OvMatrixInverseMatrix(kParentMat);
 		SetScale( OvMatrixExtractScale(kResultMat) );
 	}
@@ -163,12 +168,7 @@ const OvPoint3&			OvXObject::GetWorldScale()
 }
 const OvMatrix&		OvXObject::GetWorldMatrix()
 {
-	return m_tfWorldTransform.BuildMatrix;
-}
-
-const OvTransform&	OvXObject::GetWorldTransform()
-{
-	return m_tfWorldTransform;
+	return m_worldBuildMatrix;
 }
 
 bool OvXObject::IsNode()

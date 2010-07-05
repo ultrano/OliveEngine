@@ -6,39 +6,53 @@
 
 OvRTTI_IMPL(OvCamera);
 OvPROPERTY_BAG_BEGIN(OvCamera);
-	OvDECLARE_PROPERTY(OvProp_float3,m_pt3LookDirection);
-	OvDECLARE_PROPERTY(OvProp_float3,m_pt3UpDirection);
-	OvDECLARE_PROPERTY(OvProp_float3,m_pt3RightDirection);
+	OvDECLARE_PROPERTY( OvProp_object_smart_pointer, m_spLookTarget )
+	OvDECLARE_PROPERTY( OvProp_integer, m_eCameraType )
+	OvDECLARE_PROPERTY( OvProp_float, m_fFOV )
+	OvDECLARE_PROPERTY( OvProp_float, m_fNearClip )
+	OvDECLARE_PROPERTY( OvProp_float, m_fFarClip )
+	OvDECLARE_PROPERTY( OvProp_float, m_aspect )
 OvPROPERTY_BAG_END(OvCamera);
-
-
-
-
-
 
 OvCamera::OvCamera()
 {
 	SetNearClip(1.0f);
 	SetFarClip(5000.0f);
-	SetFOV((D3DX_PI*45.0f)/180.0f);
+	SetFOV( ( D3DX_PI * 45.0f ) / 180.0f );
+	SetAspect( 800.0f / 600.0f );
 }
 OvCamera::~OvCamera()
 {
 
 }
 
-const OvPoint3&	OvCamera::GetWorldLookDirection()
+OvPoint3	OvCamera::GetWorldLookDirection()
 {
-	return m_pt3LookDirection;
+	return -OvPoint3(GetWorldMatrix()._21,GetWorldMatrix()._22,GetWorldMatrix()._23).Normalize();;
 }
-const OvPoint3&	OvCamera::GetWorldUpDirection()
+OvPoint3	OvCamera::GetWorldUpDirection()
 {
-	return m_pt3UpDirection;
+	return OvPoint3(GetWorldMatrix()._31,GetWorldMatrix()._32,GetWorldMatrix()._33).Normalize();
 }
-const OvPoint3&	OvCamera::GetWorldRightDirection()
+OvPoint3	OvCamera::GetWorldRightDirection()
 {
-	return m_pt3RightDirection;
+	return OvPoint3(GetWorldMatrix()._11,GetWorldMatrix()._12,GetWorldMatrix()._13).Normalize();	
 }
+
+
+OvPoint3	OvCamera::GetLocalLookDirection()
+{
+	return -OvPoint3(GetLocalMatrix()._21,GetLocalMatrix()._22,GetLocalMatrix()._23).Normalize();
+}
+OvPoint3	OvCamera::GetLocalUpDirection()
+{
+	return OvPoint3(GetLocalMatrix()._31,GetLocalMatrix()._32,GetLocalMatrix()._33).Normalize();
+}
+OvPoint3	OvCamera::GetLocalRightDirection()
+{
+	return OvPoint3(GetLocalMatrix()._11,GetLocalMatrix()._12,GetLocalMatrix()._13).Normalize();
+}
+
 void			OvCamera::SetLookTarget(OvXObjectSPtr _pLookTarget)
 {
 	if(!_pLookTarget)
@@ -63,14 +77,6 @@ const OvMatrix&	OvCamera::GetProjectMatrix()
 
 void			OvCamera::UpdateSubordinate(float _fElapse)
 {
-	const OvMatrix& kWorldMat = GetWorldTransform().BuildMatrix;
-
-	m_pt3UpDirection = OvPoint3(kWorldMat._31,kWorldMat._32,kWorldMat._33).Normalize();
-
-	m_pt3LookDirection = -OvPoint3(kWorldMat._21,kWorldMat._22,kWorldMat._23).Normalize();
-
-	m_pt3RightDirection = OvPoint3(kWorldMat._11,kWorldMat._12,kWorldMat._13).Normalize();
-
 	UpdateProjection();
 	UpdateView();
 	UpdateLookAt();
@@ -110,9 +116,23 @@ float			OvCamera::GetFarClip()
 	return m_fFarClip ;
 }
 
+void			OvCamera::SetAspect( float aspect )
+{
+	m_aspect = aspect;
+}
+float			OvCamera::GetAspect()
+{
+	return m_aspect;
+}
+
 void			OvCamera::UpdateProjection()
 {
-	D3DXMatrixPerspectiveFovLH((D3DXMATRIX*)&(m_mxProjectMatrix),GetFOV(),800.0f/600.0f,GetNearClip(),GetFarClip());
+	D3DXMatrixPerspectiveFovLH
+		( (D3DXMATRIX*)&(m_mxProjectMatrix)
+		, GetFOV()
+		, GetAspect()
+		, GetNearClip()
+		, GetFarClip() );
 }
 
 void			OvCamera::UpdateView()

@@ -4,6 +4,7 @@
 //// 나중에 만들어 주자;
 //typedef	D3DXVECTOR3	OvPoint3;
 class OvQuaternion;
+class OvMatrix;
 class OvPoint3
 {
 public:
@@ -24,6 +25,7 @@ public :
 	OvPoint3	operator -() const;
 	OvPoint3	operator *(float _fScalar) const;
 	OvPoint3	operator /(float _fScalar) const;
+	OvPoint3	operator *(const OvMatrix mulMat) const;
 	//OvPoint3 operator *(const OvQuaternion& _rQuter) const;
 
 	OvPoint3&	operator +=(const OvPoint3& _rPt) ;

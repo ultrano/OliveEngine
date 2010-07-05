@@ -1,21 +1,23 @@
 #pragma once
 
-#include "OvRefBase.h"
+#include "OvResource.h"
 #include "OvAutoPtr.h"
 #include "OvUtility.h"
+#include "OvRenderingCommon.h"
 
 OvREF_POINTER(OvTexture)
 
-class OvTexture : public OvRefBase
+class OvTexture : public OvResource
 {
 	OvRTTI_DECL(OvTexture);
 public:
-	OvTexture(void* pTexture);
+	OvTexture();
 	~OvTexture();
-	void*	GetTexture();
+
+	LPDIRECT3DTEXTURE9 ToDxTexture();
+
+	virtual bool	Load( const std::string& fileLocation ) override;
 
 private:
-	struct OvPimple;
-	OvAutoPtr<OvPimple> m_pPimple;
-
+	LPDIRECT3DTEXTURE9 m_texture;
 };
