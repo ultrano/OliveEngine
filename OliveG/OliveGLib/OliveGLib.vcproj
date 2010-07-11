@@ -378,6 +378,54 @@
 						RelativePath=".\include\OvNSMeshDescription.h"
 						>
 					</File>
+					<Filter
+						Name="OvXmlMeshLoader"
+						>
+						<File
+							RelativePath=".\source\OvXmlMeshLoader.cpp"
+							>
+						</File>
+						<File
+							RelativePath=".\include\OvXmlMeshLoader.h"
+							>
+						</File>
+					</Filter>
+					<Filter
+						Name="OvFileMeshLoader"
+						>
+						<File
+							RelativePath=".\source\OvFileMeshLoader.cpp"
+							>
+						</File>
+						<File
+							RelativePath=".\include\OvFileMeshLoader.h"
+							>
+						</File>
+					</Filter>
+					<Filter
+						Name="OvMeshLoaderBase"
+						>
+						<File
+							RelativePath=".\source\OvMeshLoaderBase.cpp"
+							>
+						</File>
+						<File
+							RelativePath=".\include\OvMeshLoaderBase.h"
+							>
+						</File>
+					</Filter>
+					<Filter
+						Name="OvMeshBuilder"
+						>
+						<File
+							RelativePath=".\source\OvMeshBuilder.cpp"
+							>
+						</File>
+						<File
+							RelativePath=".\include\OvMeshBuilder.h"
+							>
+						</File>
+					</Filter>
 				</Filter>
 				<Filter
 					Name="OvTexture"
@@ -391,6 +439,14 @@
 						</File>
 						<File
 							RelativePath=".\include\OvTexture.h"
+							>
+						</File>
+						<File
+							RelativePath=".\source\OvTextureLoader.cpp"
+							>
+						</File>
+						<File
+							RelativePath=".\include\OvTextureLoader.h"
 							>
 						</File>
 					</Filter>
@@ -440,18 +496,6 @@
 					>
 				</Filter>
 				<Filter
-					Name="OvMeshBuilder"
-					>
-					<File
-						RelativePath=".\source\OvMeshBuilder.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\include\OvMeshBuilder.h"
-						>
-					</File>
-				</Filter>
-				<Filter
 					Name="OvVertexStream"
 					>
 					<File
@@ -463,6 +507,22 @@
 						>
 					</File>
 				</Filter>
+				<Filter
+					Name="OvResInterface"
+					>
+				</Filter>
+			</Filter>
+			<Filter
+				Name="OvSceneNode"
+				>
+				<File
+					RelativePath=".\source\OvSceneNode.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\OvSceneNode.h"
+					>
+				</File>
 			</Filter>
 		</Filter>
 		<Filter
@@ -1319,14 +1379,14 @@
 				</File>
 			</Filter>
 			<Filter
-				Name="OvInputManager"
+				Name="OvInputDevice"
 				>
 				<File
-					RelativePath=".\source\OvInputManager.cpp"
+					RelativePath=".\source\OvInputDevice.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\include\OvInputManager.h"
+					RelativePath=".\include\OvInputDevice.h"
 					>
 				</File>
 			</Filter>

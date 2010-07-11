@@ -30,9 +30,9 @@ void OvXObject::Update(float _fElapse)
 
 	m_localBuildMatrix = MakeTransformMatrix( krLocalTransform );
 
-	if (GetParent())
+	if (GetAttachedNode())
 	{
-		OvXNodeSPtr kpParent = GetParent();
+		OvXNodeSPtr kpParent = GetAttachedNode();
 		const OvMatrix&	krParentWorldMatrix = kpParent->GetWorldMatrix();
 
 		m_worldBuildMatrix = m_localBuildMatrix * krParentWorldMatrix;
@@ -104,9 +104,9 @@ const OvMatrix&	OvXObject::GetLocalMatrix()
 
 void			OvXObject::SetTranslateFromWorldCoord(OvPoint3& _rPosition)
 {
-	if (GetParent())
+	if (GetAttachedNode())
 	{
-		OvMatrix	kParentMat = GetParent()->GetWorldMatrix();
+		OvMatrix	kParentMat = GetAttachedNode()->GetWorldMatrix();
 		OvMatrix	kResultMat = OvMatrix().Translate(_rPosition) * OvMatrixInverseMatrix(kParentMat);
 		SetTranslate( OvMatrixExtractTraslate(kResultMat) );
 	}
@@ -123,9 +123,9 @@ void			OvXObject::SetTranslateFromWorldCoord(float x,float y,float z)
 
 void			OvXObject::SetRotationFromWorldCoord(OvQuaternion& _rRotation)
 {
-	if (GetParent())
+	if (GetAttachedNode())
 	{
-		OvMatrix	kParentMat = GetParent()->GetWorldMatrix();
+		OvMatrix	kParentMat = GetAttachedNode()->GetWorldMatrix();
 		OvMatrix	kResultMat = OvMatrix().Rotate(_rRotation) * OvMatrixInverseMatrix(kParentMat);
 		SetRotation( OvMatrixExtractRotate(kResultMat) );
 	}
@@ -137,9 +137,9 @@ void			OvXObject::SetRotationFromWorldCoord(OvQuaternion& _rRotation)
 
 void			OvXObject::SetScaleFromWorldCoord(OvPoint3& _rScale)
 {
-	if (GetParent())
+	if (GetAttachedNode())
 	{
-		OvMatrix	kParentMat = GetParent()->GetWorldMatrix();
+		OvMatrix	kParentMat = GetAttachedNode()->GetWorldMatrix();
 		OvMatrix	kResultMat = OvMatrix().Scale(_rScale) * OvMatrixInverseMatrix(kParentMat);
 		SetScale( OvMatrixExtractScale(kResultMat) );
 	}
@@ -187,7 +187,7 @@ void	OvXObject::SetParent(OvXNodeSPtr _pParentNode)
 	m_pParent = _pParentNode.GetRear();
 }
 
-OvXObjectSPtr	OvXObject::GetParent()
+OvXNodeSPtr	OvXObject::GetAttachedNode()
 {
 	return m_pParent;
 }

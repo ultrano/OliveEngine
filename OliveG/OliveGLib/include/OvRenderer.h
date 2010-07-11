@@ -15,7 +15,7 @@ public:
 	OvRenderer();
 	~OvRenderer();
 
-	bool			GenerateRenderer(HWND _hTargetWindowHangle);
+	bool			GenerateRenderer();
 
 	bool			ClearTarget();
 	bool			BeginTarget();
@@ -25,7 +25,7 @@ public:
 	void			SetVertexStream( WORD streamIndex, SVertexStreamInfo* streamInfo );
 	void			SetIndexStream( LPDIRECT3DINDEXBUFFER9 streamBuffer );
 	void			SetVertexDeclaration( LPDIRECT3DVERTEXDECLARATION9 decl );
-	bool			DrawIndexedPrimitive( D3DPRIMITIVETYPE primitiveType, size_t vertCount, size_t faceCount );
+	bool			DrawPrimitive( D3DPRIMITIVETYPE primitiveType, size_t primCount );
 
 //////////////////////////////////////////////////////////////////////////
 

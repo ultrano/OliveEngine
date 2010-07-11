@@ -1,21 +1,21 @@
-#include "OvInputManager.h"
+#include "OvInputDevice.h"
 #include "OliveValue.h"
 
-OvInputManager::OvInputManager()
+OvInputDevice::OvInputDevice()
 {
 
 }
-OvInputManager::~OvInputManager()
+OvInputDevice::~OvInputDevice()
 {
 
 }
 
-bool	OvInputManager::ListenMessage( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+bool	OvInputDevice::ListenMessage( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	return GetInstance()->_listenMessage( hWnd, message, wParam, lParam );
 }
 
-bool	OvInputManager::_listenMessage( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+bool	OvInputDevice::_listenMessage( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch ( message )
 	{
@@ -33,11 +33,11 @@ bool	OvInputManager::_listenMessage( HWND hWnd, UINT message, WPARAM wParam, LPA
 	}
 	return true;
 }
-OvPoint2	OvInputManager::GetLastMousePoint()
+OvPoint2	OvInputDevice::GetLastMousePoint()
 {
 	return m_lastMousePoint;
 }
-OvPoint2	OvInputManager::GetMouseInterval()
+OvPoint2	OvInputDevice::GetMouseInterval()
 {
 	return m_mouseMoveInterval;
 }

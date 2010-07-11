@@ -1,6 +1,7 @@
 #include "OvModel.h"
 #include "OvMesh.h"
 #include "OvMaterialManager.h"
+#include "OvTexture.h"
 
 OvRTTI_IMPL(OvModel)
 OvPROPERTY_BAG_BEGIN(OvModel)
@@ -19,10 +20,17 @@ OvMeshSPtr OvModel::GetMesh()
 }
 void	OvModel::Render()
 {
-	OvShaderManager::GetInstance()->SetVSConst( OvMatVSConst::Float4x3_World, GetWorldMatrix() );
+	OvShaderManager::GetInstance()->SetVSConst( OvMatVSConst::World, GetWorldMatrix() );
 	OvMatrix view_proj;
-	OvShaderManager::GetInstance()->GetVSConst( OvMatVSConst::Matrix_ViewProject, view_proj );
-	OvShaderManager::GetInstance()->SetVSConst( OvMatVSConst::Matrix_WorldViewProject, GetWorldMatrix() * view_proj );
+	OvShaderManager::GetInstance()->GetVSConst( OvMatVSConst::ViewProject, view_proj );
+	OvShaderManager::GetInstance()->SetVSConst( OvMatVSConst::WorldViewProject, GetWorldMatrix() * view_proj );
+
+	for ( int i = 0 
+		; i < TextureStage::MaxStage 
+		; ++i )
+	{
+		OvShaderManager::GetInstance()->SetTexture( i , m_stageTexture[i] );
+	}
 
 	if ( m_resourceMesh )
 	{
@@ -37,4 +45,14 @@ void	OvModel::Render()
 	m_materialResource->
 
 	*/
+}
+
+void OvModel::SetStageTexture( TextureStage stageIndex, OvTextureSPtr texture )
+{
+	m_stageTexture[stageIndex] = texture;
+}
+
+OvTextureSPtr OvModel::GetStageTexture( TextureStage stageIndex )
+{
+	return m_stageTexture[stageIndex];
 }

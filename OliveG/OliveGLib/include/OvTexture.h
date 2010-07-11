@@ -10,13 +10,13 @@ OvREF_POINTER(OvTexture)
 class OvTexture : public OvResource
 {
 	OvRTTI_DECL(OvTexture);
+	friend class OvTextureLoader;
 public:
+
 	OvTexture();
 	~OvTexture();
 
 	LPDIRECT3DTEXTURE9 ToDxTexture();
-
-	virtual bool	Load( const std::string& fileLocation ) override;
 
 private:
 	LPDIRECT3DTEXTURE9 m_texture;

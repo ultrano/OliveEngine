@@ -1,7 +1,7 @@
 #include "OvRenderer.h"
+#include "OvInputDevice.h"
 
 #include <d3dx9.h>
-#include "OvTexture.h"
 #include "OvTexture.h"
 #include "OvSurface.h"
 #include "OvCamera.h"
@@ -47,7 +47,7 @@ m_pDirect3D9Object(NULL)
 LPDIRECT3D9 m_pDirect3D9Object;
 };
 
-bool		OvRenderer::GenerateRenderer(HWND _hTargetWindowHangle)
+bool		OvRenderer::GenerateRenderer()
 {
 
 	LPDIRECT3D9 kpDirect3D9Object = Direct3DCreate9(D3D_SDK_VERSION);
@@ -61,6 +61,34 @@ bool		OvRenderer::GenerateRenderer(HWND _hTargetWindowHangle)
 	/*D3DCAPS9 kCapability;
 	kpDirect3D9Object->GetDeviceCaps(D3DADAPTER_DEFAULT,D3DDEVTYPE_HAL,&kCapability);
 	OvMessageBox(OvFormatString("랜더 타겟 한계 개수: %d",kCapability.NumSimultaneousRTs),"MRT Limit Count");*/
+
+	char windowClassName[] = "Olive_Renderer_View";
+
+	WNDCLASS WndClass;
+
+	WndClass.cbClsExtra		=	0;
+	WndClass.cbWndExtra		=	0;
+	WndClass.hbrBackground	=	(HBRUSH)GetStockObject(WHITE_BRUSH);
+	WndClass.hCursor		=	LoadCursor(NULL,IDC_ARROW);
+	WndClass.hIcon			=	LoadIcon(NULL,IDI_APPLICATION);
+	WndClass.hInstance		=	GetModuleHandle(NULL);
+	WndClass.lpfnWndProc	=	(WNDPROC)OvInputDevice::ListenMessage;
+	WndClass.lpszClassName	=	windowClassName;
+	WndClass.lpszMenuName	=	NULL;
+	WndClass.style			=	CS_HREDRAW | CS_VREDRAW;
+
+	RegisterClass(&WndClass);
+
+	HWND _hTargetWindowHangle = CreateWindow
+		( windowClassName
+		, windowClassName
+		, WS_OVERLAPPEDWINDOW | WS_VISIBLE
+		, 300, 50
+		, 800, 600
+		, NULL
+		, NULL
+		, GetModuleHandle(NULL)
+		, NULL);
 
 	OvDirect3D9ObjectSafeRelease kSafeRelease(kpDirect3D9Object);
 
@@ -85,7 +113,7 @@ bool		OvRenderer::GenerateRenderer(HWND _hTargetWindowHangle)
 
 	//m_device->SetRenderState(D3DRS_ZENABLE,TRUE);
 
-	m_device->SetRenderState(D3DRS_CULLMODE,D3DCULL_NONE);
+	m_device->SetRenderState(D3DRS_CULLMODE,D3DCULL_CW);
 	//m_device->SetRenderState(D3DRS_LIGHTING,false);
 
 	return SUCCEEDED(hr);
@@ -178,17 +206,14 @@ void OvRenderer::SetVertexDeclaration( LPDIRECT3DVERTEXDECLARATION9 decl )
 		OvAssert( SUCCEEDED( hr ) );
 	}
 }
-bool OvRenderer::DrawIndexedPrimitive( D3DPRIMITIVETYPE primitiveType, size_t vertCount, size_t faceCount )
+bool OvRenderer::DrawPrimitive( D3DPRIMITIVETYPE primitiveType, size_t primCount )
 {
 	if ( m_device )
 	{
-		HRESULT hr = m_device->DrawIndexedPrimitive
+		HRESULT hr = m_device->DrawPrimitive
 			( primitiveType
 			, 0
-			, 0
-			, vertCount
-			, 0
-			, faceCount);
+			, primCount);
 		return SUCCEEDED( hr );
 	}
 	return false;

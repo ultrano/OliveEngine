@@ -1,32 +1,37 @@
 #pragma once
 #include "OvResource.h"
 #include "OvAutoPtr.h"
+#include "OvRenderingCommon.h"
 
-struct SRenderData;
 OvREF_POINTER(OvMesh)
 class OvMesh : public OvResource
 {
 	OvRTTI_DECL(OvMesh);
-
+	friend class OvMeshLoaderBase;
 public:
-
-	enum RenderLevel
+	enum MeshDetail
 	{
-		Pos_Norm,
-		Diff_Norm_TexCoord,
+		Low,
+		Medium,
+		High,
 		MaxLevel,
+	};
+	struct SRenderData
+	{
+		SRenderData():faceStream(NULL), vertDecl(NULL), vertexCount(0), faceCount(0){};
+		SVertexStreamInfo	vertStreamInfo[ MaxLevel ];
+		LPDIRECT3DVERTEXDECLARATION9 vertDecl;
+		size_t	vertexCount;
+		LPDIRECT3DINDEXBUFFER9	faceStream;
+		size_t	faceCount;
 	};
 
 	OvMesh();
 	~OvMesh();
 
-	virtual bool Load( const std::string& fileLocation ) override;
-
-	void	Rendering();
+	void	Rendering( MeshDetail meshDetail = High );
 
 private:
-
-	// mesh_render_level
 
 	OvAutoPtr<SRenderData>	m_renderData;
 

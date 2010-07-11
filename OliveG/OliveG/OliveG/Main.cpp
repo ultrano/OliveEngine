@@ -22,6 +22,7 @@ public:
 		m_mainCamera->RegisterExtraProperty("accumPt", OliveValue::ValueFactory("Point2") );
 
 		m_testModel = new OvModel;
+
 // #ifdef _WINDOWS
 // #ifdef _DEBUG
 // 		_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF );
@@ -42,9 +43,7 @@ public:
 public:
 	void CreateDxDevice()
 	{
-		OvRenderer::GetInstance()->GenerateRenderer(
-			CreateWindow("listbox","listbox",WS_OVERLAPPEDWINDOW | WS_VISIBLE,50,50,800,600,NULL,NULL,GetModuleHandle(NULL),NULL)
-			);
+		OvRenderer::GetInstance()->GenerateRenderer();
 	};
 	void CreateShader()
 	{
@@ -84,25 +83,26 @@ public:
 					
 					GetMainCamera()->SetRotation( yRot * xRot );
 					
-					accumPt->SetPoint2( accumPt->GetPoint2() + OvInputManager::GetInstance()->GetMouseInterval() );
+					accumPt->SetPoint2( accumPt->GetPoint2() + OvInputDevice::GetInstance()->GetMouseInterval() );
 				}
 			}
 			break;
 		case WM_KEYDOWN : 
 			{
+				float moveSpeed = 1.0f;
 				switch ( msg.wParam )
 				{
 				case VK_UP :
-					GetMainCamera()->SetTranslate( GetMainCamera()->GetTranslate() + GetMainCamera()->GetLocalLookDirection() / 10.0f );
+					GetMainCamera()->SetTranslate( GetMainCamera()->GetTranslate() + GetMainCamera()->GetLocalLookDirection() * moveSpeed );
 					break;
 				case VK_DOWN :
-					GetMainCamera()->SetTranslate( GetMainCamera()->GetTranslate() - GetMainCamera()->GetLocalLookDirection() / 10.0f );
+					GetMainCamera()->SetTranslate( GetMainCamera()->GetTranslate() - GetMainCamera()->GetLocalLookDirection() * moveSpeed );
 					break;
 				case VK_LEFT :
-					GetMainCamera()->SetTranslate( GetMainCamera()->GetTranslate() - GetMainCamera()->GetLocalRightDirection() / 10.0f );
+					GetMainCamera()->SetTranslate( GetMainCamera()->GetTranslate() - GetMainCamera()->GetLocalRightDirection() * moveSpeed );
 					break;
 				case VK_RIGHT :
-					GetMainCamera()->SetTranslate( GetMainCamera()->GetTranslate() + GetMainCamera()->GetLocalRightDirection() / 10.0f );
+					GetMainCamera()->SetTranslate( GetMainCamera()->GetTranslate() + GetMainCamera()->GetLocalRightDirection() * moveSpeed );
 					break;
 				}
 			}
@@ -114,18 +114,30 @@ public:
 	void UpdateAndCommit()
 	{
 
+		float timeCycle = GetTickCount();
+		timeCycle = timeCycle / 1000.0f;
+
 		GetMainCamera()->Update(0);
 		GetTestModel()->Update(0);
 
 		OvMatrix view_project = GetMainCamera()->GetViewMatrix() * GetMainCamera()->GetProjectMatrix();
-		OvShaderManager::GetInstance()->SetVSConst( OvMatVSConst::Matrix_ViewProject, view_project );
+		OvShaderManager::GetInstance()->SetPSConst( OvMatPSConst::Time, timeCycle);
+		OvShaderManager::GetInstance()->SetVSConst( OvMatVSConst::Time, timeCycle);
+		OvShaderManager::GetInstance()->SetVSConst( OvMatVSConst::ViewProject, view_project );
+		OvShaderManager::GetInstance()->SetVSConst( OvMatVSConst::ViewPos, GetMainCamera()->GetWorldTranslate() );
 
 	}
 	void RenderSimpleTriangle()
 	{
-		OvMeshSPtr testMesh = new OvMesh;
-		testMesh->Load("../../export/mesh_test.xml");
+		OvFileMeshLoader meshLoader;
+		OvTextureLoader	texLoader;
+		OvMeshSPtr testMesh = meshLoader.Load("../../export/test.msf0");
+
 		GetTestModel()->SetMesh( testMesh );
+		GetTestModel()->SetStageTexture( OvModel::Diffuse, texLoader.Load( "../../export/test.jpg" ) );
+		GetTestModel()->SetStageTexture( OvModel::Normal, texLoader.Load( "../../export/normal.jpg" ) );
+
+
 		MSG msg;
 		ZeroMemory( &msg, sizeof( msg ) );
 		if ( msg.message != WM_QUIT )
@@ -136,7 +148,6 @@ public:
 				{
 					TranslateMessage( &msg );
 					DispatchMessage( &msg );
-					OvInputManager::ListenMessage( msg.hwnd, msg.message, msg.wParam, msg.lParam );
 					ControlMainCamera( msg );
 					UpdateAndCommit();
 
@@ -145,6 +156,7 @@ public:
 					GetTestModel()->Render();
 					OvRenderer::GetInstance()->EndTarget();
 					OvRenderer::GetInstance()->PresentTarget();
+					
 				}
 			}
 		}
@@ -163,6 +175,14 @@ GL_TEST_CASE_ENV( OliveLibTest, mesh_rendering )
 	CreateShader();
 	RenderSimpleTriangle();
 };
+
+GL_TEST_CASE_ENV( OliveLibTest, mesh_loader )
+{
+// 	CreateDxDevice();
+// 	OvFileMeshLoader file_loader;
+// 	file_loader.Load( "../../export/mesh_test.mesh0" );
+}
+
 
 int	APIENTRY	WinMain(HINSTANCE hi,HINSTANCE,LPSTR,int)
 {

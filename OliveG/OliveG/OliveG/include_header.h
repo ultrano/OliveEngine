@@ -45,5 +45,10 @@
 #include "OvMaterialManager.h"
 #include "OvTransform.h"
 #include "OvModel.h"
+#include "OvTexture.h"
 
-#include "OvInputManager.h"
+#include "OvInputDevice.h"
+
+#include "OvTextureLoader.h"
+#include "OvXmlMeshLoader.h"
+#include "OvFileMeshLoader.h"

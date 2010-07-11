@@ -46,7 +46,7 @@ void OvXNode::AttachChild(OvXObjectSPtr _pObject)
 		return ;
 
 	// 기존 부모가 있다면 그 부모에게 이 객체에 대한 삭제를 요청.
-	OvXNodeSPtr kpParentNode = _pObject->GetParent();
+	OvXNodeSPtr kpParentNode = _pObject->GetAttachedNode();
 	if(kpParentNode)
 		kpParentNode->DettachChild(_pObject);
 

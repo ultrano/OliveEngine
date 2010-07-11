@@ -4,11 +4,11 @@
 #include "OvPoint2.h"
 #include <windows.h>
 
-class OvInputManager : public OvSingletonBase< OvInputManager >
+class OvInputDevice : public OvSingletonBase< OvInputDevice >
 {
 public:
-	OvInputManager();
-	~OvInputManager();
+	OvInputDevice();
+	~OvInputDevice();
 
 public:
 

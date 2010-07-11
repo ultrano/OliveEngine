@@ -90,7 +90,7 @@ void		OvCoreCommander::Initialize()
 			.def("GetWorldScale",		&OvXObject::GetWorldScale)
 			.def("IsNode",				&OvXObject::IsNode)
 			.def("IsLeaf",				&OvXObject::IsLeaf)
-			.def("GetParent",			&OvXObject::GetParent)
+			.def("GetParent",			&OvXObject::GetAttachedNode)
 			,
 			class_<OvVisibleText>("OvVisibleText")
 			.def(constructor<>())

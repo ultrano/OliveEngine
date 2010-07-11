@@ -18,6 +18,7 @@ OvREF_POINTER(OvXNode);
 OvREF_POINTER(OvXComponent);
 //
 
+OvREF_POINTER(OvXNode);
 OvREF_POINTER(OvXObject);
 class OvXObject : public OvObject
 {
@@ -68,7 +69,7 @@ public :
 	bool			IsLeaf();
 
 	//! Get Parent
-	OvXObjectSPtr			GetParent();
+	OvXNodeSPtr			GetAttachedNode();
 
 	bool	GetExtraComponents( OvObjectCollector& extraComponents );
 

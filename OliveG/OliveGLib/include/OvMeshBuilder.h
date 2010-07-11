@@ -17,6 +17,6 @@ private:
 
 	LPDIRECT3DDEVICE9 m_device;
 
-	vertex_stream_table	m_vertexStreamTable;
+	//vertex_stream_table	m_vertexStreamTable;
 
 };

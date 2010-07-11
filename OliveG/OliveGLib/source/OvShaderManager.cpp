@@ -148,7 +148,16 @@ bool	OvShaderManager::_GetVSConstF(const OvShaderConstInfo& rConstInfo,float* pC
 	if (kpDevice)
 	{
 		HRESULT kHs = E_FAIL;
-		kHs = kpDevice->GetVertexShaderConstantF(rConstInfo.RegistIndex,(float*)pConst,rConstInfo.ConstCount);
+		if ( stConstSize < sizeof( float ) * 4 )
+		{
+			float temp[4];
+			kHs = kpDevice->GetVertexShaderConstantF(rConstInfo.RegistIndex,(float*)temp,rConstInfo.ConstCount);
+			memcpy( pConst, temp, stConstSize);
+		}
+		else
+		{
+			kHs = kpDevice->GetVertexShaderConstantF(rConstInfo.RegistIndex,(float*)pConst,rConstInfo.ConstCount);
+		}
 
 		//! byte값은 값의 최소단위의 의미에서 곱해주며 현재로선 1값이니 의미없기도 하다.
 		/*UINT uiRegConstSize = kConstInfo.ConstCount * sizeof(float) * 4 * sizeof(byte);

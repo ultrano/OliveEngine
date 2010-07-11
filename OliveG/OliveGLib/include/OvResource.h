@@ -7,19 +7,21 @@ class OvResource : public OvRefBase
 {
 	OvRTTI_DECL(OvResource);
 public:
+
 	OvResource();
 	~OvResource();
-	
-	virtual bool	Load( const std::string& fileLocation ) = 0;
 
-	bool	IsLoadingCompleted();
-	bool	IsAsyncLoading();
-	void	SetAsyncLoading(bool asyncLoad);
+	const string&	GetResourceLocation() const ;
 
 private:
-	bool	_call_by_async_load( const std::string& fileLocation );
-	void	_set_loading_completed( bool loadCompleted );
-private:
-	Ov8SetFlags	m_resSetting;
-	CRITICAL_SECTION	m_criticalSection;
+	string		m_fileLocation;
+};
+
+OvREF_POINTER(OvResourceLoader);
+class OvResourceLoader : public OvRefBase
+{
+public:
+
+	virtual OvResourceSPtr Load( const std::string& fileLocation ) = 0;
+
 };
