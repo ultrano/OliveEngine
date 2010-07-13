@@ -1,7 +1,7 @@
 #pragma once
-#include "OvXObject.h"
+#include "OvRenderEffector.h"
 
-class OvLight : public OvXObject
+class OvLight : public OvRenderEffector
 {
 	OvRTTI_DECL(OvLight);
 };

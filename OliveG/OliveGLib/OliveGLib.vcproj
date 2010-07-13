@@ -205,7 +205,7 @@
 				</Filter>
 			</Filter>
 			<Filter
-				Name="RenderingGroup"
+				Name="SceneGroup"
 				>
 				<Filter
 					Name="OvCamera"
@@ -255,6 +255,18 @@
 						</File>
 						<File
 							RelativePath=".\include\OvSpotLight.h"
+							>
+						</File>
+					</Filter>
+					<Filter
+						Name="OvPointLight"
+						>
+						<File
+							RelativePath=".\source\OvPointLight.cpp"
+							>
+						</File>
+						<File
+							RelativePath=".\include\OvPointLight.h"
 							>
 						</File>
 					</Filter>
@@ -316,6 +328,18 @@
 					</File>
 					<File
 						RelativePath=".\include\OvModel.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="OvRenderEffector"
+					>
+					<File
+						RelativePath=".\source\OvRenderEffector.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\include\OvRenderEffector.h"
 						>
 					</File>
 				</Filter>

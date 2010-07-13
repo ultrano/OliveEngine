@@ -27,11 +27,9 @@ void	Vmain( in vertex_stream_input input, out vertex_stream_output output )
 	output.pos = mul( vector( input.pos, 1.0 ), WorldViewProject );
 	
 	float3 lightdir;
-	lightdir.x = cos( Time );
-	lightdir.y = 0;
-	lightdir.z = sin( Time );
-	lightdir = lightdir * 100;
-	lightdir = mul( input.pos, World) - lightdir;
+	lightdir.x = 0;
+	lightdir.y = sin( Time );
+	lightdir.z = cos( Time );
 	lightdir = normalize( lightdir );
 	
 	float3 norm = normalize( mul( input.norm, World) );

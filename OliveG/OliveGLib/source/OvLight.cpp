@@ -1,2 +1,2 @@
 #include "OvLight.h"
-OvRTTI_IMPL(OvLight,OvXObject)
+OvRTTI_IMPL(OvLight)

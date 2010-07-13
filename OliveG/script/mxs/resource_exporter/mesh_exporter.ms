@@ -32,6 +32,7 @@ struct mesh_exporter
 			format "%\n" vertex_count to: file_handle;
 			for i=1 to face_count do
 			(
+				progressupdate (( 100.0 * i ) / face_count);
 				local face = getface mesh_data i;
 				-- descript position
 				local position;
@@ -47,6 +48,7 @@ struct mesh_exporter
 			
 			for i=1 to face_count do
 			(
+				progressupdate (( 100.0 * i ) / face_count);
 				local face = getface mesh_data i;
 				-- descript normal
 				local normal;
@@ -62,6 +64,7 @@ struct mesh_exporter
 			
 			for i=1 to face_count do
 			(
+				progressupdate (( 100.0 * i ) / face_count);
 				local face = getface mesh_data i;
 				local tface = gettvface mesh_data i;
 				
@@ -93,6 +96,7 @@ struct mesh_exporter
 			format "%\n" vertex_count to: file_handle;
 			for i=1 to face_count do
 			(
+				progressupdate (( 100.0 * i ) / face_count);
 				-- descript texcoord0
 				local tface = gettvface mesh_data i;
 				local texcoord;
@@ -110,6 +114,7 @@ struct mesh_exporter
 			format "%\n" face_count to: file_handle;
 			for i=1 to face_count do
 			(
+				progressupdate (( 100.0 * i ) / face_count);
 				local offsetIndex = ((i-1) * 3);
 				local index1 = offsetIndex + 0;
 				local index2 = offsetIndex + 2;

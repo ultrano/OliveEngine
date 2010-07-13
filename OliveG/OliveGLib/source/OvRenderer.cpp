@@ -113,6 +113,8 @@ bool		OvRenderer::GenerateRenderer()
 
 	//m_device->SetRenderState(D3DRS_ZENABLE,TRUE);
 
+	m_device->SetSamplerState( 1, D3DSAMP_MINFILTER, D3DTEXF_LINEAR );
+	m_device->SetSamplerState( 1, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR );
 	m_device->SetRenderState(D3DRS_CULLMODE,D3DCULL_CW);
 	//m_device->SetRenderState(D3DRS_LIGHTING,false);
 

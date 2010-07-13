@@ -74,7 +74,7 @@ size_t			OvXNode::GetChildCount()
 	return m_clectrChildCollect.Count();
 }
 
-OvXObjectSPtr	OvXNode::GetChildeAt(int iIndex)
+OvXObjectSPtr	OvXNode::GetChildeAt(unsigned int iIndex)
 {
 	if (0 > iIndex)
 	{

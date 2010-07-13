@@ -15,8 +15,8 @@ public:
 		OvSingletonPool::StartUp();
 
 		m_mainCamera = new OvCamera;
-		m_mainCamera->SetTranslate(0,0,-2);
-		m_mainCamera->SetRotation( OvQuaternion().MakeQuaternion(OvPoint3(-1,0,0),D3DX_PI/2.0f) );
+		m_mainCamera->SetTranslate(0,50,0);
+		//m_mainCamera->SetRotation( OvQuaternion().MakeQuaternion(OvPoint3(-1,0,0),D3DX_PI/2.0f) );
 		m_mainCamera->Update(0);
 
 		m_mainCamera->RegisterExtraProperty("accumPt", OliveValue::ValueFactory("Point2") );
