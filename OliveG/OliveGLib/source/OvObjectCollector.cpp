@@ -23,39 +23,27 @@ OvObjectSPtr	OvObjectCollector::GetByAt(int iIndex)
 {
 	return m_tdObjArray[iIndex];
 }
-
-struct SKObjectFindFunctorByName
-{
-	SKObjectFindFunctorByName(const string& strName):m_strName(strName),m_pObj(NULL){};
-	void operator()(OvObjectSPtr pObj)
-	{
-		if(pObj && m_strName == string(pObj->GetName()) ) m_pObj=pObj;
-	}
-	const string	m_strName;
-	OvObjectSPtr	m_pObj;
-};
 OvObjectSPtr	OvObjectCollector::GetByName(const char* pName)
 {
-	SKObjectFindFunctorByName	kFindFunctor(pName);
-	std::for_each(m_tdObjArray.begin(),m_tdObjArray.end(),kFindFunctor);
-	return kFindFunctor.m_pObj;
-}
-
-struct SKObjectFindFunctorByHandle
-{
-	SKObjectFindFunctorByHandle(OvObjectID& dhHandle):m_dhHandle(dhHandle),m_pObj(NULL){};
-	void operator()(OvObjectSPtr pObj)
+	for each( tdObjectArray::value_type obj in m_tdObjArray )
 	{
-		if(pObj && pObj->GetObjectID() == m_dhHandle ) m_pObj=pObj;
+		if ( obj->GetName() == pName )
+		{
+			return obj;
+		}
 	}
-	OvObjectID		m_dhHandle;
-	OvObjectSPtr	m_pObj;
-};
-OvObjectSPtr	OvObjectCollector::GetByHandle(OvObjectID& dhHandle)
+	return NULL;
+}
+OvObjectSPtr	OvObjectCollector::GetByID(OvObjectID& dhHandle)
 {
-	SKObjectFindFunctorByHandle	kFindFunctor(dhHandle);
-	std::for_each(m_tdObjArray.begin(),m_tdObjArray.end(),kFindFunctor);
-	return kFindFunctor.m_pObj;
+	for each( tdObjectArray::value_type obj in m_tdObjArray )
+	{
+		if ( obj->GetObjectID() == dhHandle )
+		{
+			return obj;
+		}
+	}
+	return NULL;
 }
 
 DWORD			OvObjectCollector::Count()

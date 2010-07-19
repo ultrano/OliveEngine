@@ -8,11 +8,11 @@
 
 OvRTTI_IMPL(OvXObject);
 OvPROPERTY_BAG_BEGIN(OvXObject);
-	OvDECLARE_PROPERTY( OvProp_object_pointer, m_pParent );
-	OvDECLARE_PROPERTY( OvProp_float3,  m_tfLocalTransform.Scale );
-	OvDECLARE_PROPERTY( OvProp_float3,  m_tfLocalTransform.Position );
-	OvDECLARE_PROPERTY( OvProp_float4,  m_tfLocalTransform.Quaternion );
-	OvDECLARE_PROPERTY( OvProp_object_collector,  m_extraComponents );
+	OvPROPERTY_BAG_REGISTER( OvProp_object_pointer, m_pParent );
+	OvPROPERTY_BAG_REGISTER( OvProp_float3,  m_tfLocalTransform.Scale );
+	OvPROPERTY_BAG_REGISTER( OvProp_float3,  m_tfLocalTransform.Position );
+	OvPROPERTY_BAG_REGISTER( OvProp_float4,  m_tfLocalTransform.Quaternion );
+	OvPROPERTY_BAG_REGISTER( OvProp_object_collector,  m_extraComponents );
 OvPROPERTY_BAG_END(OvXObject);
 
 OvXObject::OvXObject()

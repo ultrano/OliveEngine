@@ -3,6 +3,9 @@
 
 #include <d3dx9.h>
 #include "OvTexture.h"
+#include "OvVertexShader.h"
+#include "OvPixelShader.h"
+
 #include "OvSurface.h"
 #include "OvCamera.h"
 #include <queue>
@@ -171,6 +174,22 @@ bool			OvRenderer::PresentTarget()
 	}
 
 	return true;
+}
+
+void OvRenderer::SetPixelShader( OvPixelShaderSPtr shader )
+{
+	if ( m_device && shader )
+	{
+		m_device->SetPixelShader( shader->ToDirectShader() );
+	}
+}
+
+void OvRenderer::SetVertexShader( OvVertexShaderSPtr shader )
+{
+	if ( m_device && shader )
+	{
+		m_device->SetVertexShader( shader->ToDirectShader() );
+	}
 }
 
 void OvRenderer::SetVertexStream( WORD streamIndex, SVertexStreamInfo* streamInfo )

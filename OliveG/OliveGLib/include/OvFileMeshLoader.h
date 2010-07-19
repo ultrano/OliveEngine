@@ -3,6 +3,7 @@
 
 class OvFileMeshLoader : public OvMeshLoaderBase
 {
+	OvRTTI_DECL(OvFileMeshLoader);
 public:
 	virtual OvResourceSPtr Load( const std::string& fileLocation ) override;
 private:

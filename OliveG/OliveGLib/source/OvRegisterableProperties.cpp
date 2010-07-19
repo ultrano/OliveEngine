@@ -8,6 +8,7 @@
 #include "OliveValue.h"
 #include "OvObjectCollector.h"
 #include "OvRelationLinkBuilder.h"
+#include "OvResourceManager.h"
 using namespace std;
 
 
@@ -149,7 +150,7 @@ bool	OvProp_object_pointer::Inject(OvObject* pObj, OvObjectProperties& rObjStore
 		OliveValue::ObjectID injectValue;
 		if ( rObjStore.PopValue(injectValue) && injectValue.GetObjectID() != OvObjectID::INVALID )
 		{
-			OvPointLinkBuilder* linkBuilder = new OvPointLinkBuilder;
+			OvPointLinkBuilder* linkBuilder = OvNew OvPointLinkBuilder;
 
 			linkBuilder->SetFormerID( injectValue.GetObjectID() );
 			linkBuilder->SetDestination( kpProp );
@@ -174,7 +175,7 @@ bool	OvProp_object_smart_pointer::Extract(OvObject* pObj, OvObjectProperties& rO
 	{
 		OliveValue::ObjectID extractValue;
 		if ( (*kpProp) )
-		{		
+		{
 			extractValue.SetObjectID( (*kpProp)->GetObjectID() );
 		}
 		else
@@ -195,7 +196,7 @@ bool	OvProp_object_smart_pointer::Inject(OvObject* pObj, OvObjectProperties& rOb
 		OliveValue::ObjectID injectValue;
 		if ( rObjStore.PopValue(injectValue) && injectValue.GetObjectID() != OvObjectID::INVALID )
 		{
-			OvSmartLinkBuilder* linkBuilder = new OvSmartLinkBuilder;
+			OvSmartLinkBuilder* linkBuilder = OvNew OvSmartLinkBuilder;
 
 			linkBuilder->SetFormerID( injectValue.GetObjectID() );
 			linkBuilder->SetSmartDestination( kpProp );			
@@ -405,19 +406,37 @@ bool	OvProp_extra::Extract(OvObject* pObj, OvObjectProperties& rObjStore)
 	if (kpProp)
 	{
 		OvObject::extra_property_table& extraTable = *kpProp;
+
+		OliveValue::Integer extraCount( extraTable.size() );
 		
-		OliveValue::Integer extraCount;
-		extraCount.SetInteger(extraTable.size());
-		rObjStore.PushValue(extraCount.GetValue());
+		string extraInfo;
+		extraInfo = extraCount.GetValue() + ":";
+
 
 		for each( const OvObject::extra_property_table_pair extraProp in extraTable )
 		{
 			OliveValue::Value* extraValue = (OliveValue::Value*)extraProp.second;
 
-			rObjStore.PushValue( OvRTTI_Util::TypeName( extraValue ) );
-			rObjStore.PushValue( extraProp.first );
-			rObjStore.PushValue( *extraValue );
+			string typeName = OvRTTI_Util::TypeName( extraValue );
+
+			OliveValue::Integer typeLength( typeName.size() );
+			OliveValue::Integer nameLength( extraProp.first.size() );
+			OliveValue::Integer valueLength( extraValue->GetValue().size() );
+
+			// [9-5-1]somethingtest0
+			// type: something
+			// name: test
+			// value: 0
+			extraInfo += "[";
+			extraInfo += typeLength.GetValue();
+			extraInfo += "-";
+			extraInfo += nameLength.GetValue();
+			extraInfo += "-";
+			extraInfo += valueLength.GetValue();
+			extraInfo += "]";
+			extraInfo += typeName + extraProp.first + extraValue->GetValue();
 		}
+		rObjStore.PushValue( extraInfo );
 
 		return true;
 	}
@@ -431,21 +450,48 @@ bool	OvProp_extra::Inject(OvObject* pObj, OvObjectProperties& rObjStore)
 	{
 		OvObject::extra_property_table& extraTable = *kpProp;
 
-		OliveValue::Integer extraCount;
-		rObjStore.PopValue(extraCount);
-		for (int i = 0 ; i < extraCount.GetInteger() ; ++i)
-		{
-			string valueType;
+		string extraInfo;
 
-			rObjStore.PopValue( valueType );
-			OliveValue::Value*	extraValue = OliveValue::ValueFactory( valueType );
-			if (extraValue)
+		unsigned int count = 0;
+
+		rObjStore.PopValue( extraInfo );
+
+		sscanf( extraInfo.c_str(), "%d:%s", &count, &extraInfo[0] );
+
+		string propInfo;
+		propInfo = extraInfo;
+
+		for (int i = 0 ; i < count ; ++i)
+		{
+			// [9-5-1]somethingtest0
+			// type: something
+			// name: test
+			// value: 0
+			unsigned int typeLength = 0;
+			unsigned int nameLength = 0;
+			unsigned int valueLength = 0;
+
+			sscanf( propInfo.c_str(), "[%d-%d-%d]%s", &typeLength, &nameLength, &valueLength, &propInfo[0] );
+
+			string extra_type = propInfo;
+			extra_type.resize( typeLength );
+
+			OliveValue::Value*	extraValue = OliveValue::ValueFactory( extra_type );
+			if ( extraValue )
 			{
-				string extraPropName;
-				rObjStore.PopValue( extraPropName );
-				rObjStore.PopValue( *extraValue );
-				extraTable[ extraPropName ] = extraValue;
+
+				string extra_name = &( propInfo[ typeLength ] );
+				string extra_value = &( propInfo[ typeLength + nameLength ] );
+
+				extra_name.resize( nameLength );
+				extra_value.resize( valueLength );
+
+				extraValue->SetValue( extra_value );
+
+				extraTable[ extra_name ] = extraValue;
 			}
+
+			propInfo = &( propInfo[ typeLength + nameLength + valueLength ] );
 		}
 		return true;
 	}
@@ -462,23 +508,23 @@ bool OvProp_object_collector::Extract(OvObject* pObj, OvObjectProperties& rObjSt
 {
 	if (pObj)
 	{
+		string collectedInfo;
 		OvObjectCollector* kpProp = (OvObjectCollector*)Access(pObj);
-		OliveValue::Integer relationCount;
-		relationCount.SetInteger( kpProp->Count() );
+		OliveValue::Integer relationCount( kpProp->Count() );
 
-		rObjStore.PushValue( relationCount );
+		collectedInfo += relationCount.GetValue() + ":";
 
 		for ( int i = 0 ; i < relationCount.GetInteger() ; ++i )
 		{
 			OvObjectSPtr relatedObj = kpProp->GetByAt( i );
 			if (relatedObj)
 			{
-				OliveValue::ObjectID relationID;
-				relationID.SetObjectID( relatedObj->GetObjectID() );
-				rObjStore.PushValue( relationID );
+				OliveValue::ObjectID relationID( relatedObj->GetObjectID() );
+				collectedInfo += relationID.GetValue() + "!";
 				rObjStore.PushComponentObject( relatedObj.GetRear() );
 			}
 		}
+		rObjStore.PushValue( collectedInfo );
 		return true;
 	}
 	return false;
@@ -489,23 +535,80 @@ bool OvProp_object_collector::Inject(OvObject* pObj, OvObjectProperties& rObjSto
 	OvObjectCollector* kpProp = (OvObjectCollector*)Access(pObj);
 	if (kpProp)
 	{
-		OvObjectCollectorLinkBuilder* linkBuilder = new OvObjectCollectorLinkBuilder;
-		OliveValue::Integer relationCount;
-		rObjStore.PopValue( relationCount );
+		string data;
+		unsigned int count = 0;
 
-		linkBuilder->SetDestinateCollector( kpProp );
+		rObjStore.PopValue( data );
 
-		for (int i = 0 ; i < relationCount.GetInteger() ; ++i)
+		sscanf( data.c_str(), "%d:%s", &count, &data[0] );
+
+		if ( count )
 		{
-			OliveValue::ObjectID formerID;
-			rObjStore.PopValue( formerID );
-			linkBuilder->AddRelatedObjectID( formerID.GetObjectID() );
-		}
+			unsigned int id = 0;
 
-		rObjStore.CollectLinkBuilder( linkBuilder );
+			OvObjectCollectorLinkBuilder* linkBuilder = OvNew OvObjectCollectorLinkBuilder;
+
+			linkBuilder->SetDestinateCollector( kpProp );
+
+			for (int i = 0 ; i < count ; ++i)
+			{
+				sscanf( data.c_str(), "%d!%s", &id, &data[0] );
+				OliveValue::ObjectID formerID( id );
+				linkBuilder->AddRelatedObjectID( formerID.GetObjectID() );
+			}
+
+			rObjStore.CollectLinkBuilder( linkBuilder );
+		}
 
 		return true;
 
 	}
+	return false;
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////				resource     		/////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
+
+OvRTTI_IMPL(OvProp_resource);
+
+bool OvProp_resource::Extract( OvObject* pObj, OvObjectProperties& rObjStore )
+{
+
+	OvResourceSPtr* accessProp = (OvResourceSPtr*)Access(pObj);
+	if ( accessProp && (*accessProp) )
+	{
+		string typeName = OvRTTI_Util::TypeName( (*accessProp) );
+		string fileLocation = (*accessProp)->GetFileLocation();
+
+		string resourceInfo;
+		resourceInfo += typeName;
+		resourceInfo += ":";
+		resourceInfo += fileLocation;
+		rObjStore.PushValue( resourceInfo );
+		return true;
+	}
+	return false;
+}
+
+bool OvProp_resource::Inject( OvObject* pObj, OvObjectProperties& rObjStore )
+{
+	OvResourceSPtr* accessProp = (OvResourceSPtr*)Access(pObj);
+	if ( accessProp )
+	{
+		string resourceInfo;
+		string resourceType;
+		string fileLocation;
+		rObjStore.PopValue( resourceInfo );
+
+		resourceType = resourceInfo;
+		fileLocation = &(resourceInfo.at( resourceInfo.find(':') + 1 ));
+		resourceType.resize( resourceInfo.find(':') );
+
+		OvResourceSPtr resource = OvResourceManager::GetInstance()->LoadResource( resourceType, fileLocation);
+		(*accessProp) = resource;
+	}
+
 	return false;
 }

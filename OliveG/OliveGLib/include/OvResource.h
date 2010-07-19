@@ -11,7 +11,8 @@ public:
 	OvResource();
 	~OvResource();
 
-	const string&	GetResourceLocation() const ;
+	void	SetFileLocation(const string& file);
+	const string&	GetFileLocation() const ;
 
 private:
 	string		m_fileLocation;
@@ -20,6 +21,7 @@ private:
 OvREF_POINTER(OvResourceLoader);
 class OvResourceLoader : public OvRefBase
 {
+	OvRTTI_DECL(OvResourceLoader);
 public:
 
 	virtual OvResourceSPtr Load( const std::string& fileLocation ) = 0;

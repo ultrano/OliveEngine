@@ -6,6 +6,7 @@
 #include "OvPropertyNode.h"
 #include "OvProperty.h"
 #include "OvObject.h"
+#include "OvObjectFactory.h"
 #include "OvRelationLinkBuilder.h"
 #include "OvObjectID.h"
 #include "tinyxml.h"
@@ -13,7 +14,33 @@
 ////////////////////// 테스트 인클루드 (물리적 구조때문에 나중에 지워줘야 한다.) /////
 #include "OvCamera.h"
 #include "OvXNode.h"
-OvObject* TemporaryFactoryFunction(const string& typeName);
+#include "OvModel.h"
+#include "OvPointLight.h"
+#include "OvMaterial.h"
+OvObject* TemporaryFactoryFunction(const string& typeName)
+{
+	if ("OvXNode" == typeName)
+	{
+		return OvNew OvXNode;
+	}
+	else if ("OvCamera" == typeName)
+	{
+		return OvNew OvCamera;
+	}
+	else if ("OvModel" == typeName)
+	{
+		return OvNew OvModel;
+	}
+	else if ("OvPointLight" == typeName)
+	{
+		return OvNew OvPointLight;
+	}
+	else if ("OvMaterial" == typeName)
+	{
+		return OvNew OvMaterial;
+	}
+	return NULL;
+}
 //////////////////////////////////////////////////////////////////////////
 
 OvStorage::OvStorage()
@@ -40,7 +67,7 @@ void	OvStorage::Save(const char* pFile, OvObjectCollector& saveObjects )
 	for (int i = 0 ; i < saveObjects.Count() ; ++i)
 	{
 		OvObjectSPtr streObj = saveObjects.GetByAt(i);
-		StoreObject( streObj.GetRear() );
+		_store_object( streObj.GetRear() );
 	}
 
 	m_xmlDoc.SaveFile( pFile );
@@ -55,22 +82,53 @@ void	OvStorage::Load(const char* pFile, OvObjectCollector& loadedObjects)
 	TiXmlElement* firstObjElem = rootElem->FirstChildElement("Object");
 	if ( firstObjElem )
 	{
-		RestoreObject( *firstObjElem );
+		_restore_object( *firstObjElem );
 	}
-	RebuildRelatedLink( m_restoreObjectTable, m_linkBuilderList );
+	_rebuild_related_link( m_restoreObjectTable, m_linkBuilderList );
 
 	for each( restore_object_table::value_type tableIter in m_restoreObjectTable )
 	{
 		loadedObjects.AddObject( tableIter.second );
 	}
 }
-void	OvStorage::StoreObject(OvObject* pObj)
+
+void OvStorage::ExportObjectStructure( const char* pFile,const OvRTTI* rtti )
+{
+	TiXmlDocument doc("Export Structure");
+	TiXmlElement root( const_cast<OvRTTI*>(rtti)->TypeName().c_str() );
+
+	OvRTTI* kpRTTI = NULL;
+	for (kpRTTI = const_cast<OvRTTI*>(rtti)
+		;kpRTTI && kpRTTI->PropertyBag()
+		;kpRTTI = const_cast<OvRTTI*>(kpRTTI->GetBaseRTTI()))
+	{
+		OvPropertyBag* kpPropBag = kpRTTI->PropertyBag();
+		if (kpPropBag)
+		{
+			OvPropertyNode* kpPropNode = NULL;
+			for (kpPropNode = kpPropBag->BeginProperty()
+				;kpPropNode != NULL
+				;kpPropNode = kpPropNode->GetNext())
+			{
+				if (OvProperty* kpProp = kpPropNode->GetProperty())
+				{
+					TiXmlElement member( kpProp->GetPropertyName().c_str() );
+					root.InsertEndChild( member );
+				}
+			}
+		}		
+	}
+	doc.InsertEndChild( root );
+	doc.SaveFile( pFile );
+}
+
+void	OvStorage::_store_object(OvObject* pObj)
 {
 	OvObjectProperties rStore;
-	if ( ExtractProperty(pObj,rStore) )
+	if ( _extract_property(pObj,rStore) )
 	{
 		TiXmlElement objElem("");
-		if ( WriteProperty( rStore, objElem ) )
+		if ( _write_property( rStore, objElem ) )
 		{
 			TiXmlElement* rootElem = m_xmlDoc.RootElement();
 			if (rootElem)
@@ -82,18 +140,18 @@ void	OvStorage::StoreObject(OvObject* pObj)
 				;kpSubObj != NULL
 				;kpSubObj = rStore.PopComponentObject())
 			{
-				StoreObject(kpSubObj);
+				_store_object(kpSubObj);
 			}
 		}
 	}
 }
-void	OvStorage::RestoreObject( TiXmlElement& objElem )
+void	OvStorage::_restore_object( TiXmlElement& objElem )
 {
 	OvObjectProperties rStore;
-	if ( ReadProperty( objElem, rStore ) )
+	if ( _read_property( objElem, rStore ) )
 	{
 		OvObject* restoreObj = TemporaryFactoryFunction( rStore.GetObjectType() );
-		if ( InjectProperty( restoreObj, rStore ) )
+		if ( _inject_property( restoreObj, rStore ) )
 		{
 			m_restoreObjectTable[ rStore.GetObjectID() ] = restoreObj;
 			rStore.LinkBuilderListMoveTo( m_linkBuilderList );
@@ -101,10 +159,10 @@ void	OvStorage::RestoreObject( TiXmlElement& objElem )
 	}
 	if (TiXmlElement* nextElem = objElem.NextSiblingElement("Object"))
 	{
-		RestoreObject( *nextElem );
+		_restore_object( *nextElem );
 	}
 }
-bool	OvStorage::ExtractProperty(OvObject* pObj,OvObjectProperties& rStore)
+bool	OvStorage::_extract_property(OvObject* pObj,OvObjectProperties& rStore)
 {
 	if (pObj && m_storeObjectTable.IsCollected(pObj) == false )
 	{
@@ -130,7 +188,8 @@ bool	OvStorage::ExtractProperty(OvObject* pObj,OvObjectProperties& rStore)
 				}
 			}		
 		}
-		rStore.SetObjectType(OvRTTI_Util::TypeName(pObj));
+		string typeName = OvRTTI_Util::TypeName( pObj );
+		rStore.SetObjectType( typeName );
 		rStore.SetObjectID(pObj->GetObjectID());
 
 		m_storeObjectTable.AddObject(pObj);
@@ -139,7 +198,7 @@ bool	OvStorage::ExtractProperty(OvObject* pObj,OvObjectProperties& rStore)
 	}
 	return false;
 }
-bool	OvStorage::InjectProperty(OvObject* pObj,OvObjectProperties& rStore)
+bool	OvStorage::_inject_property(OvObject* pObj,OvObjectProperties& rStore)
 {
 	if (pObj)
 	{
@@ -169,7 +228,7 @@ bool	OvStorage::InjectProperty(OvObject* pObj,OvObjectProperties& rStore)
 	}
 	return false;
 }
-bool	OvStorage::WriteProperty(OvObjectProperties& rStore, TiXmlElement& objElem)
+bool	OvStorage::_write_property(OvObjectProperties& rStore, TiXmlElement& objElem)
 {
 	objElem.SetValue("Object");
 	objElem.SetAttribute("type", rStore.GetObjectType().c_str() );
@@ -185,7 +244,7 @@ bool	OvStorage::WriteProperty(OvObjectProperties& rStore, TiXmlElement& objElem)
 	return true;
 }
 
-bool	OvStorage::ReadProperty( TiXmlElement& objElem, OvObjectProperties& rStore )
+bool	OvStorage::_read_property( TiXmlElement& objElem, OvObjectProperties& rStore )
 {
 	if ( string("Object") == objElem.Value() )
 	{
@@ -214,7 +273,7 @@ bool	OvStorage::ReadProperty( TiXmlElement& objElem, OvObjectProperties& rStore 
 	}
 	return false;
 }
-void	OvStorage::RebuildRelatedLink( restore_object_table& restoreTable, link_builder_list& linkBuilderList )
+void	OvStorage::_rebuild_related_link( restore_object_table& restoreTable, link_builder_list& linkBuilderList )
 {
 	if ( restoreTable.size() && linkBuilderList.size() )
 	{
@@ -245,16 +304,4 @@ void	OvStorage::Clear()
 		}
 		m_linkBuilderList.clear();
 	}
-}
-OvObject* TemporaryFactoryFunction(const string& typeName)
-{
-	if ("OvXNode" == typeName)
-	{
-		return new OvXNode;
-	}
-	else if ("OvCamera" == typeName)
-	{
-		return new OvCamera;
-	}
-	return NULL;
 }

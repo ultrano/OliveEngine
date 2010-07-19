@@ -1,15 +1,15 @@
 #pragma once
-
+#include "OvMacro.h"
 template<class Type_0>
 class OvSingletonBase
 {
 private:
-	static Type_0*& _standalone_instance_pointer(){static Type_0* static_pointer(NULL);return static_pointer;};
+	static Type_0*& _standalone_instance_pointer(){static Type_0* static_pointer( 0 );return static_pointer;};
 	friend class OvSingletonContextList;
 protected:
 	OvSingletonBase()
 	{
-		if(NULL == _standalone_instance_pointer())
+		if( 0 == _standalone_instance_pointer())
 		{
 			_standalone_instance_pointer() = static_cast<Type_0*>( this );
 			//Singleton_InitializeProcessing();
@@ -24,7 +24,7 @@ protected:
 	}
 	virtual ~OvSingletonBase()
 	{
-		_standalone_instance_pointer() = NULL;\
+		_standalone_instance_pointer() = 0 ;\
 	}
 public:
 	static Type_0*	GetInstance()

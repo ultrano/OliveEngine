@@ -1,11 +1,11 @@
 #pragma once
-#include "OvXObject.h"
+#include "OvXNode.h"
 #include "OvTransform.h"
 //! Predeclare Class
 OvREF_POINTER(OvXObject);
 //
 OvREF_POINTER(OvCamera);
-class OvCamera : public OvXObject
+class OvCamera : public OvXNode
 {
 	OvRTTI_DECL(OvCamera);
 	OvPROPERTY_BAG_DECL(OvCamera);

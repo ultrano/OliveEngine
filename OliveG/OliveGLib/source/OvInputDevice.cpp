@@ -27,8 +27,6 @@ bool	OvInputDevice::_listenMessage( HWND hWnd, UINT message, WPARAM wParam, LPAR
 		m_mouseMoveInterval = mousePoint - m_lastMousePoint;
 		m_lastMousePoint = mousePoint;
 		OliveValue::Point2 test(m_mouseMoveInterval);
-		OutputDebugString( test.GetValue().c_str() );
-		OutputDebugString( "\n" );
 		break;
 	}
 	return true;

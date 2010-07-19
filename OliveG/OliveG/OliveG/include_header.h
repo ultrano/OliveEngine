@@ -6,6 +6,16 @@
 #pragma comment(lib,"..\\..\\zlib\\lib\\zdll.lib");
 #include "vld.h"
 
+
+// #ifdef _WINDOWS
+// #ifdef _DEBUG
+// 		_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF );
+// 
+// 		_CrtSetBreakAlloc(2828);
+// #endif
+// #endif
+
+
 #endif
 #include <windows.h>
 #include "OvStorage.h"
@@ -52,3 +62,6 @@
 #include "OvTextureLoader.h"
 #include "OvXmlMeshLoader.h"
 #include "OvFileMeshLoader.h"
+#include "OvResourceManager.h"
+#include "OvVertexShader.h"
+#include "OvPixelShader.h"

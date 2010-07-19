@@ -6,12 +6,12 @@
 
 OvRTTI_IMPL(OvCamera);
 OvPROPERTY_BAG_BEGIN(OvCamera);
-	OvDECLARE_PROPERTY( OvProp_object_smart_pointer, m_spLookTarget )
-	OvDECLARE_PROPERTY( OvProp_integer, m_eCameraType )
-	OvDECLARE_PROPERTY( OvProp_float, m_fFOV )
-	OvDECLARE_PROPERTY( OvProp_float, m_fNearClip )
-	OvDECLARE_PROPERTY( OvProp_float, m_fFarClip )
-	OvDECLARE_PROPERTY( OvProp_float, m_aspect )
+	OvPROPERTY_BAG_REGISTER( OvProp_object_smart_pointer, m_spLookTarget )
+	OvPROPERTY_BAG_REGISTER( OvProp_integer, m_eCameraType )
+	OvPROPERTY_BAG_REGISTER( OvProp_float, m_fFOV )
+	OvPROPERTY_BAG_REGISTER( OvProp_float, m_fNearClip )
+	OvPROPERTY_BAG_REGISTER( OvProp_float, m_fFarClip )
+	OvPROPERTY_BAG_REGISTER( OvProp_float, m_aspect )
 OvPROPERTY_BAG_END(OvCamera);
 
 OvCamera::OvCamera()

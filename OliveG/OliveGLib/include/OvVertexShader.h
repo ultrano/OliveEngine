@@ -7,20 +7,13 @@ class OvVertexShader : public OvShader
 	OvRTTI_DECL(OvVertexShader);
 public:
 
-	OvVertexShader();
+	OvVertexShader( LPDIRECT3DVERTEXSHADER9 vertexShader );
 	~OvVertexShader();
-public:
 
-	void	SetVertexShaderInstance(void* pShaderInst);
-	void*	GetVertexShaderInstance();
+	LPDIRECT3DVERTEXSHADER9 ToDirectShader();
 
-public:
-	virtual bool Activate();
-	virtual bool Inactivate();
 private:
 
-	struct OvPimple;
-	OvAutoPtr<OvPimple> m_pPimple;
-};
+	LPDIRECT3DVERTEXSHADER9 m_vertexShader;
 
-OvVertexShaderSPtr	OvLoadVertexShader(const char* pFile,const char* pEntranceFuncName,const char* pComplieVersion);
+};

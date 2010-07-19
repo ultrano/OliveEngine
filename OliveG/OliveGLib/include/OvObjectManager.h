@@ -5,10 +5,14 @@
 #include "OvRefBase.h"
 #include "OvObject.h"
 #include "OvSingleton.h"
+#include <list>
+#include <time.h>
 
 class OvObjectManager : public OvSingletonBase< OvObjectManager >
 {
 	friend OvREF_POINTER(OvObject);
+
+	typedef map<OvObjectID,OvObject*>			object_table;
 
 public:
 
@@ -29,4 +33,6 @@ private:
 	//! Application can access member only using get,set interface
 	struct OvPimple;
 	OvAutoPtr<OvPimple> m_pPimple;
+
+	object_table	m_objectTable;
 };

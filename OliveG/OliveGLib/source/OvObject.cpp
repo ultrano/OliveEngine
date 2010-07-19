@@ -12,8 +12,8 @@ using namespace std;
 OvRTTI_IMPL(OvObject);
 
 OvPROPERTY_BAG_BEGIN(OvObject);
-	OvDECLARE_PROPERTY( OvProp_STL_string,  m_strObjectName );
-	OvDECLARE_PROPERTY( OvProp_extra,  m_extraPropertyTable );
+	OvPROPERTY_BAG_REGISTER( OvProp_STL_string,  m_strObjectName );
+	OvPROPERTY_BAG_REGISTER( OvProp_extra,  m_extraPropertyTable );
 OvPROPERTY_BAG_END(OvObject);
 
 OvObject::OvObject()
@@ -34,9 +34,9 @@ void	OvObject::SetName(const char* _pName)
 {
 	m_strObjectName = _pName;
 }
-const char* OvObject::GetName()
+const string& OvObject::GetName()
 {
-	return m_strObjectName.data();
+	return m_strObjectName;
 }
 
 OvObjectID		OvObject::GetObjectID()

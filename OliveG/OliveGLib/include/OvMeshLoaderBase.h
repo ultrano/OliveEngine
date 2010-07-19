@@ -3,6 +3,7 @@
 
 class OvMeshLoaderBase : public OvResourceLoader
 {
+	OvRTTI_DECL(OvMeshLoaderBase);
 protected:
 	void	SetRenderData(OvMeshSPtr mesh, OvMesh::SRenderData* renderData);
 	OvMeshSPtr	_buildMesh

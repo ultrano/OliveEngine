@@ -1,30 +1,21 @@
 #pragma once
-#include "OvRefBase.h"
-#include "OvAutoPtr.h"
-#include "OvShaderConstantTable.h"
+#include "OvResource.h"
+#include "d3dx9.h"
 
 OvREF_POINTER(OvShader);
-class	OvShader : public OvRefBase
+class	OvShader : public OvResource
 {
 	OvRTTI_DECL(OvShader);
-
+	friend class OvPixelShaderLoader;
+	friend class OvVertexShaderLoader;
 public:
 
-	OvShader();
-	~OvShader();
+	const std::string& GetEntryFuncName();
 
-	void	SetConstantTable(OvShaderConstantTableSPtr pConstTable);
-	OvShaderConstantTableSPtr GetConstantTable();
+	const std::string& GetCompileVersion();
 
 private:
-	//! 이 두 함수는 파생될 버텍스,픽셀 쉐이더에서 공통으로 제공되야할
-	//! 인터페이스이지만 부모인 OvShader에 의해서 접근되어선 안된다(잘못 사용되는것을 막기 위함)
-	virtual bool Activate() = 0;
-	virtual bool Inactivate() = 0;
-private:
 
-	struct OvPimple;
-	OvAutoPtr<OvPimple> m_pPimple;
+	std::string m_entryFuncName;
+	std::string m_compileVersion;
 };
-
-//OvShaderSPtr	OvLoadShader(const char* pFile,OvShader::eShaderType eType,const char* pEntranceFuncName,const char* pComplieVersion);

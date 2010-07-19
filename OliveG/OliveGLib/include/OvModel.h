@@ -1,11 +1,10 @@
 #pragma once
-#include "OvXObject.h"
-
-OvREF_POINTER(OvMesh);
-OvREF_POINTER(OvTexture);
+#include "OvXNode.h"
+#include "OvMesh.h"
+#include "OvMaterial.h"
 
 OvREF_POINTER(OvModel);
-class OvModel : public OvXObject
+class OvModel : public OvXNode
 {
 	OvRTTI_DECL(OvModel);
 	OvPROPERTY_BAG_DECL(OvModel);
@@ -19,22 +18,20 @@ public:
 		MaxStage
 	};
 
+	OvModel();
+	~OvModel();
+
 	void	SetMesh(OvMeshSPtr);
 	OvMeshSPtr GetMesh();
 
-	void	SetStageTexture( TextureStage stageIndex, OvTextureSPtr texture );
-	OvTextureSPtr GetStageTexture( TextureStage stageIndex);
+	void	SetMaterial( OvMaterialSPtr	material );
+	OvMaterialSPtr	GetMaterial();
 
 	void	Render();
 
 private:
 
+	OvMaterialSPtr	m_material;
 	OvMeshSPtr		m_resourceMesh;
-	OvTextureSPtr	m_stageTexture[ TextureStage::MaxStage ];
-	/*
-	mesh_resource	m_meshResource;
-	testure_resource m_textureResource;
-	material_resource m_materialResource;
-	*/
 
 };

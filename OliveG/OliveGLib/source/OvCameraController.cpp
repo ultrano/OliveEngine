@@ -16,7 +16,7 @@ struct OvCameraController::OvPimple : OvMemObject
 };
 
 OvCameraController::OvCameraController()
-:m_pPimple(new OvCameraController::OvPimple)
+:m_pPimple(OvNew OvCameraController::OvPimple)
 {
 
 }

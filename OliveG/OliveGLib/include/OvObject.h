@@ -30,7 +30,7 @@ public:
 
 	//! Object Name
 	void		SetName(const char* _pName);
-	const char* GetName();
+	const string& GetName();
 
 	//! ID of Object
 	OvObjectID		GetObjectID();

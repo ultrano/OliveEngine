@@ -11,22 +11,36 @@ OvMesh::OvMesh()
 
 OvMesh::~OvMesh()
 {
-
-}
-void	OvMesh::Rendering( MeshDetail meshDetail )
-{
-	meshDetail = (meshDetail < Low)? Low : meshDetail;
-	meshDetail = (meshDetail > High)? High : meshDetail;
-
-	for( int i = 0 
-		; i <= OvMesh::High
-		; ++i)
+	if ( m_renderData )
 	{
-		OvRenderer::GetInstance()->SetVertexStream( i, NULL );
+		for( int i = 0 
+			; i < StreamStage::STAGE_MAX
+			; ++i)
+		{
+			SVertexStreamInfo& streamInfo = m_renderData->vertStreamInfo[ i ];
+			if ( streamInfo.vertexStream )
+			{
+				streamInfo.vertexStream->Release();
+			}
+		}
+		if ( m_renderData->faceStream )
+		{
+			m_renderData->faceStream->Release();
+		}
+		if ( m_renderData->vertDecl )
+		{
+			m_renderData->vertDecl->Release();
+		}
+
 	}
+}
+void	OvMesh::Rendering( StreamStage meshDetail )
+{
+	meshDetail = (meshDetail < Geometry)? Geometry : meshDetail;
+	meshDetail = (meshDetail > Blend)? Blend : meshDetail;
 
 	for( int i = 0 
-		; i <= meshDetail
+		; i < StreamStage::STAGE_MAX
 		; ++i)
 	{
 		OvRenderer::GetInstance()->SetVertexStream( i, &(m_renderData->vertStreamInfo[ i ]) );

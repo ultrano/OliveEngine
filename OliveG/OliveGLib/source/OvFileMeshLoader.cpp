@@ -3,6 +3,8 @@
 #include "OliveValue.h"
 #include "OvPoint2.h"
 #include "OvPoint3.h"
+
+OvRTTI_IMPL(OvFileMeshLoader);
 //////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
@@ -11,23 +13,23 @@
 //////////////////////////////////////////////////////////////////////////
 D3DVERTEXELEMENT9 MESH_ELEMENT[] =
 {
-	{ OvMesh::Low, 0
+	{ OvMesh::Geometry, 0
 	, D3DDECLTYPE_FLOAT3
 	, D3DDECLMETHOD_DEFAULT
 	, D3DDECLUSAGE_POSITION, 0 },
 
-	{ OvMesh::Low, 12
+	{ OvMesh::Geometry, 12
 	, D3DDECLTYPE_FLOAT3
 	, D3DDECLMETHOD_DEFAULT
 	, D3DDECLUSAGE_NORMAL, 0 },
 
-	{ OvMesh::Low, 24
+	{ OvMesh::Geometry, 24
 	, D3DDECLTYPE_FLOAT3
 	, D3DDECLMETHOD_DEFAULT
 	, D3DDECLUSAGE_TANGENT, 0 },
 
 
-	{ OvMesh::Medium, 0
+	{ OvMesh::TextureCoord, 0
 	, D3DDECLTYPE_FLOAT2
 	, D3DDECLMETHOD_DEFAULT
 	, D3DDECLUSAGE_TEXCOORD, 0 },

@@ -1,40 +1,44 @@
 #pragma once
-#include "OvRefBase.h"
+#include "OvObject.h"
 #include "OvAutoPtr.h"
+#include "OvPixelShader.h"
+#include "OvVertexShader.h"
+#include "OvTexture.h"
 //
 //OvREF_POINTER(OvTexture);
 //OvREF_POINTER(OvMesh);
 //
 
-OvREF_POINTER(OvVertexShader);
-OvREF_POINTER(OvPixelShader);
-OvREF_POINTER(OvRenderableObject);
-OvREF_POINTER(OvTexture);
-
 OvREF_POINTER(OvMaterial);
-class OvMaterial : public OvRefBase
+class OvMaterial : public OvObject
 {
+	OvRTTI_DECL( OvMaterial );
+	OvPROPERTY_BAG_DECL( OvMaterial );
 public:
 
-	OvMaterial();
-	~OvMaterial();
+	// 요고는 마테리얼 부분으로 빼자
+	enum TextureStage
+	{
+		Stage0,
+		Stage1,
+		MaxStage
+	};
 
-	void	SetVertexShader(OvVertexShaderSPtr pVertShader);
+	void	SetVertexShader( OvVertexShaderSPtr shader );
 	OvVertexShaderSPtr GetVertexShader();
 
-	void	SetPixelShader(OvPixelShaderSPtr pPixShader);
+	void	SetPixelShader( OvPixelShaderSPtr shader );
 	OvPixelShaderSPtr GetPixelShader();
 
-	void	ApplyMaterial(OvRenderableObjectSPtr,void* pUserExtraData = NULL);
-	void	PrepareShader(OvRenderableObjectSPtr, OvVertexShaderSPtr, OvPixelShaderSPtr, void* pUserExtraData);
+	void	SetStageTexture( TextureStage stageIndex, OvTextureSPtr texture );
+	OvTextureSPtr GetStageTexture( TextureStage stageIndex);
 
-	void	SetDiffuseTexture(OvTextureSPtr pTesture);
-	OvTextureSPtr GetDiffuseTexture();
-
-	void	SetSpecularMaskTexture(OvTextureSPtr pTesture);
-	OvTextureSPtr	GetSpecularMaskTexture();
+	void	ApplyMaterial();
 
 private:
-	struct OvPimple;
-	OvAutoPtr< OvPimple> m_pPimple;
+
+	OvVertexShaderSPtr m_vertexShader;
+	OvPixelShaderSPtr m_pixelShader;
+	OvTextureSPtr	m_stageTexture[ TextureStage::MaxStage ];
+
 };

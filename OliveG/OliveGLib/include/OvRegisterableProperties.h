@@ -121,3 +121,12 @@ class OvProp_object_collector : public OvProperty
 	virtual bool	Inject(OvObject* pObj, OvObjectProperties& rObjStore);
 };
 //
+
+//resource Property
+class OvResourceLoader;
+class OvProp_resource : public OvProperty
+{
+	OvRTTI_DECL(OvProp_resource);
+	virtual bool	Extract(OvObject* pObj, OvObjectProperties& rObjStore);
+	virtual bool	Inject(OvObject* pObj, OvObjectProperties& rObjStore);
+};

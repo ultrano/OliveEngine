@@ -7,19 +7,12 @@ class OvPixelShader : public OvShader
 	OvRTTI_DECL(OvPixelShader);
 public:
 
-	OvPixelShader();
+	OvPixelShader( LPDIRECT3DPIXELSHADER9 pixelShader );
 	~OvPixelShader();
-public:
 
-	void	SetPixelShaderInstance(void* pShaderInst);
-	void*	GetPixelShaderInstance();
+	LPDIRECT3DPIXELSHADER9 ToDirectShader();
 
-public:
-	virtual bool Activate();
-	virtual bool Inactivate();
 private:
 
-	struct OvPimple;
-	OvAutoPtr<OvPimple> m_pPimple;
+	LPDIRECT3DPIXELSHADER9 m_pixelShader;
 };
-OvPixelShaderSPtr	OvLoadPixelShader(const char* pFile,const char* pEntranceFuncName,const char* pComplieVersion);

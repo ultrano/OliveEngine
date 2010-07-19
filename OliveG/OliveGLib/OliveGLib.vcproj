@@ -156,42 +156,6 @@
 				Name="ShaderGroup"
 				>
 				<Filter
-					Name="OvShader"
-					>
-					<File
-						RelativePath=".\source\OvShader.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\include\OvShader.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="OvVertexShader"
-					>
-					<File
-						RelativePath=".\source\OvVertexShader.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\include\OvVertexShader.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="OvPixelShader"
-					>
-					<File
-						RelativePath=".\source\OvPixelShader.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\include\OvPixelShader.h"
-						>
-					</File>
-				</Filter>
-				<Filter
 					Name="OvShaderManager"
 					>
 					<File
@@ -532,8 +496,72 @@
 					</File>
 				</Filter>
 				<Filter
-					Name="OvResInterface"
+					Name="OvResourceManager"
 					>
+					<File
+						RelativePath=".\source\OvResourceManager.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\include\OvResourceManager.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="OvShader"
+					>
+					<Filter
+						Name="OvVertexShader"
+						>
+						<File
+							RelativePath=".\source\OvVertexShader.cpp"
+							>
+						</File>
+						<File
+							RelativePath=".\include\OvVertexShader.h"
+							>
+						</File>
+						<File
+							RelativePath=".\source\OvVertexShaderLoader.cpp"
+							>
+						</File>
+						<File
+							RelativePath=".\include\OvVertexShaderLoader.h"
+							>
+						</File>
+					</Filter>
+					<Filter
+						Name="OvPixelShader"
+						>
+						<File
+							RelativePath=".\source\OvPixelShader.cpp"
+							>
+						</File>
+						<File
+							RelativePath=".\include\OvPixelShader.h"
+							>
+						</File>
+						<File
+							RelativePath=".\source\OvPixelShaderLoader.cpp"
+							>
+						</File>
+						<File
+							RelativePath=".\include\OvPixelShaderLoader.h"
+							>
+						</File>
+					</Filter>
+					<Filter
+						Name="OvShader"
+						>
+						<File
+							RelativePath=".\source\OvShader.cpp"
+							>
+						</File>
+						<File
+							RelativePath=".\include\OvShader.h"
+							>
+						</File>
+					</Filter>
 				</Filter>
 			</Filter>
 			<Filter

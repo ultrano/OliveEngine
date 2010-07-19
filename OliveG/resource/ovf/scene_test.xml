@@ -1,0 +1,42 @@
+<ObjectTable>
+  
+  <Object type="OvModel" id="2">
+    <prop>1</prop>
+    <prop>OvMesh:../../resource/mesh/test.msf0</prop>
+    <prop>0:</prop>
+    <prop>0</prop>
+    <prop>1.000000,1.000000,1.000000</prop>
+    <prop>0.000000,0.000000,0.000000</prop>
+    <prop>0.000000,0.000000,0.000000,1.000000</prop>
+    <prop>0:</prop>
+    <prop>Model</prop>
+    <prop>0:</prop>
+  </Object>
+  
+  <Object type="OvMaterial" id="1">
+    <prop>OvVertexShader:../../OliveGLib/shader/test_vertex_shader.vshader</prop>
+    <prop>OvPixelShader:../../OliveGLib/shader/test_pixel_shader.pshader</prop>
+    <prop>OvTexture:../../resource/texture/test.jpg</prop>
+    <prop>OvTexture:../../resource/texture/normal.jpg</prop>
+    <prop></prop>
+    <prop>0:</prop>
+  </Object>
+  
+    <Object type="OvCamera" id="0">
+      <prop>0</prop>
+      <prop>0</prop>
+      <prop>0.785398</prop>
+      <prop>1.0</prop>
+      <prop>1000.0</prop>
+      <prop>1.0</prop>
+      <prop>0:</prop>
+      <prop>0</prop>
+      <prop>1.0,1.0,1.0</prop>
+      <prop>0.0,50.0,0.0</prop>
+      <prop>0.0,0.0,0.0,1.0</prop>
+      <prop>0:</prop>
+      <prop>Camera</prop>
+      <prop>0:</prop>
+    </Object>
+  
+</ObjectTable>

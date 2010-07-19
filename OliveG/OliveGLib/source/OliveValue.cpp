@@ -15,7 +15,7 @@ OvRTTI_IMPL(ObjectID);
 //////////////////////////////////////////////////////////////////////////
 #define REGIST_VALUE_TYPE_BEGINE OliveValue::Value*	OliveValue::ValueFactory(const std::string& valueType){\
 	if( valueType.empty() ){return NULL;}
-#define	REGIST_VALUE_TYPE( classname ) else if( std::string(#classname) == valueType){return new classname();}
+#define	REGIST_VALUE_TYPE( classname ) else if( std::string(#classname) == valueType){return OvNew classname();}
 #define REGIST_VALUE_TYPE_END	return NULL;};
 //////////////////////////////////////////////////////////////////////////
 REGIST_VALUE_TYPE_BEGINE

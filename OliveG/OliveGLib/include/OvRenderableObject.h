@@ -1,5 +1,5 @@
 #pragma once
-#include "OvXObject.h"
+#include "OvXNode.h"
 
 // Class Predeclare;
 class OvRenderer;
@@ -8,26 +8,10 @@ OvREF_POINTER(OvMaterial);
 //
 
 OvREF_POINTER(OvRenderableObject);
-class OvRenderableObject : public OvXObject
+class OvRenderableObject : public OvXNode
 {
 	OvRTTI_DECL(OvRenderableObject);
 
 
-public:
-
-	OvRenderableObject();
-	~OvRenderableObject();
-
-	void			SetMaterial(OvMaterialSPtr pMaterial);
-	OvMaterialSPtr	GetMaterial();
-
-
-	void	Render();
-	void	RenderMaterialNonappliedMesh();
-
-private:
-
-	struct OvPimple;
-	OvAutoPtr<OvPimple> m_pPimple;
 
 };

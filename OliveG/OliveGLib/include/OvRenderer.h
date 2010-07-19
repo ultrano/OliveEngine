@@ -6,6 +6,8 @@
 #include "OvSingleton.h"
 #include "OvRenderingCommon.h"
 
+OvREF_POINTER(OvPixelShader);
+OvREF_POINTER(OvVertexShader);
 
 class OvRenderer : public OvSingletonBase< OvRenderer >
 {
@@ -21,6 +23,9 @@ public:
 	bool			BeginTarget();
 	bool			EndTarget();
 	bool			PresentTarget();
+
+	void			SetPixelShader( OvPixelShaderSPtr shader );
+	void			SetVertexShader( OvVertexShaderSPtr shader );
 
 	void			SetVertexStream( WORD streamIndex, SVertexStreamInfo* streamInfo );
 	void			SetIndexStream( LPDIRECT3DINDEXBUFFER9 streamBuffer );

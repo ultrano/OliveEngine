@@ -57,7 +57,6 @@ LPD3DXBUFFER	CompileShaderFromFile( const string& file, const string& funcName, 
 
 OvShaderManager::OvShaderManager()
 {
-
 }
 OvShaderManager::~OvShaderManager()
 {

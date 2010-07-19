@@ -1,91 +1,58 @@
 #include "OvMaterial.h"
-#include "OvTexture.h"
 #include "OvRenderer.h"
-#include "OvMaterialManager.h"
-#include "OvRenderableObject.h"
-#include "OvVertexShader.h"
-#include "OvPixelShader.h"
-#include "OvTransform.h"
-#include <map>
-#include <d3dx9.h>
+#include "OvShaderManager.h"
 
-struct OvMaterial::OvPimple : OvMemObject
-{
-	OvVertexShaderSPtr	m_pVertShader;
-	OvPixelShaderSPtr	m_pPixShader;
-	OvTextureSPtr		m_pDiffuseTex;
-	OvTextureSPtr		m_pSpecMaskTex;
-};
 
-OvMaterial::OvMaterial()
-:m_pPimple(OvNew OvMaterial::OvPimple)
-{
-}
-OvMaterial::~OvMaterial()
-{
+#include "OvRegisterableProperties.h"
 
+OvRTTI_IMPL( OvMaterial );
+OvPROPERTY_BAG_BEGIN(OvMaterial)
+	OvPROPERTY_BAG_REGISTER( OvProp_resource, m_vertexShader )
+	OvPROPERTY_BAG_REGISTER( OvProp_resource, m_pixelShader )
+	OvPROPERTY_BAG_REGISTER( OvProp_resource, m_stageTexture[ OvMaterial::Stage0 ] )
+	OvPROPERTY_BAG_REGISTER( OvProp_resource, m_stageTexture[ OvMaterial::Stage1 ] )
+OvPROPERTY_BAG_END(OvMaterial)
+
+void OvMaterial::SetVertexShader( OvVertexShaderSPtr shader )
+{
+	m_vertexShader = shader;
 }
 
-void	OvMaterial::SetVertexShader(OvVertexShaderSPtr pVertShader)
-{
-	m_pPimple->m_pVertShader = pVertShader;
-}
 OvVertexShaderSPtr OvMaterial::GetVertexShader()
 {
-	return m_pPimple->m_pVertShader;
+	return m_vertexShader;
 }
-void	OvMaterial::SetPixelShader(OvPixelShaderSPtr pPixShader)
+
+void OvMaterial::SetPixelShader( OvPixelShaderSPtr shader )
 {
-	m_pPimple->m_pPixShader = pPixShader;
+	m_pixelShader = shader;
 }
+
 OvPixelShaderSPtr OvMaterial::GetPixelShader()
 {
-	return m_pPimple->m_pPixShader;
+	return m_pixelShader;
 }
-void	OvMaterial::ApplyMaterial(OvRenderableObjectSPtr pRO,void* pUserExtraData /*= NULL*/)
-{
-	OvVertexShaderSPtr	pVS = GetVertexShader();
-	OvPixelShaderSPtr	pPS = GetPixelShader();
 
-	if (pRO && pVS && pPS)
+void OvMaterial::SetStageTexture( OvMaterial::TextureStage stageIndex, OvTextureSPtr texture )
+{
+	m_stageTexture[stageIndex] = texture;
+}
+
+OvTextureSPtr OvMaterial::GetStageTexture( OvMaterial::TextureStage stageIndex )
+{
+	return m_stageTexture[stageIndex];
+}
+
+void OvMaterial::ApplyMaterial()
+{
+	OvRenderer::GetInstance()->SetVertexShader( m_vertexShader );
+	OvRenderer::GetInstance()->SetPixelShader( m_pixelShader );
+
+	for ( int i = 0 
+		; i < TextureStage::MaxStage 
+		; ++i )
 	{
-		if (pVS->Activate() && pPS->Activate())
-		{
-			PrepareShader( pRO,  pVS,  pPS,  pUserExtraData);
-		}
+		OvShaderManager::GetInstance()->SetTexture( i , m_stageTexture[i] );
 	}
-}
-void	OvMaterial::PrepareShader(OvRenderableObjectSPtr pRO, OvVertexShaderSPtr pVS, OvPixelShaderSPtr pPS, void* pUserExtraData)
-{
-	OvShaderConstantTableSPtr pVSConstTable = pVS->GetConstantTable();
-	OvShaderConstantTableSPtr pPSConstTable = pPS->GetConstantTable();
 
-	OvMatrix kMat;
-
-	OvShaderManager::GetInstance()->GetVSConst(OvMatVSConst::ViewProject,kMat);
-
-	kMat = pRO->GetWorldMatrix()*kMat;
-
-	OvShaderManager::GetInstance()->SetVSConst(OvMatVSConst::World,pRO->GetWorldMatrix());
-	OvShaderManager::GetInstance()->SetVSConst(OvMatVSConst::WorldViewProject,kMat);
-
-	OvShaderManager::GetInstance()->SetTexture(0,GetDiffuseTexture());
-	OvShaderManager::GetInstance()->SetTexture(1,GetSpecularMaskTexture());
-
-}
-void	OvMaterial::SetDiffuseTexture(OvTextureSPtr pTesture)
-{
-	m_pPimple->m_pDiffuseTex = pTesture;
-}
-OvTextureSPtr OvMaterial::GetDiffuseTexture()
-{
-	return m_pPimple->m_pDiffuseTex;
-}
-void	OvMaterial::SetSpecularMaskTexture(OvTextureSPtr pTesture)
-{
-	m_pPimple->m_pSpecMaskTex = pTesture;
-}
-OvTextureSPtr	OvMaterial::GetSpecularMaskTexture()
-{
-	return m_pPimple->m_pSpecMaskTex;
 }

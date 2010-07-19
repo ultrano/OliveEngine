@@ -21,7 +21,7 @@ public:
 
 	OvObjectSPtr	GetByAt(int iIndex);
 	OvObjectSPtr	GetByName(const char* pName);
-	OvObjectSPtr	GetByHandle(OvObjectID& dhHandle);
+	OvObjectSPtr	GetByID(OvObjectID& dhHandle);
 
 	DWORD			Count();
 	void			Clear();

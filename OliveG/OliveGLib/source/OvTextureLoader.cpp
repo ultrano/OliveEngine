@@ -11,7 +11,7 @@ OvResourceSPtr OvTextureLoader::Load( const std::string& fileLocation )
 			LPDIRECT3DTEXTURE9	kpTexture = NULL;
 			if ( SUCCEEDED( D3DXCreateTextureFromFile( device, fileLocation.c_str(), &kpTexture ) ) )
 			{
-				OvTextureSPtr texture = new OvTexture;
+				OvTextureSPtr texture = OvNew OvTexture;
 				texture->m_texture = kpTexture;
 				return texture;
 			}
