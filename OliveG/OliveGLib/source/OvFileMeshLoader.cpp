@@ -73,6 +73,18 @@ typedef vector<SVertex_Medium> medium_stream_buffer;
 //////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
+
+
+OvFileMeshLoader::OvFileMeshLoader()
+{
+	m_readBuffer.resize( MAX_READ_BUFFER_SIZE );
+}
+
+OvFileMeshLoader::~OvFileMeshLoader()
+{
+	m_readBuffer.clear();
+}
+
 OvResourceSPtr OvFileMeshLoader::Load( const std::string& fileLocation )
 {
 	FILE* meshFile = m_file = fopen( fileLocation.c_str(), "r" );
@@ -109,8 +121,12 @@ OvResourceSPtr OvFileMeshLoader::Load( const std::string& fileLocation )
 
 const char* OvFileMeshLoader::_readLine()
 {
-	fscanf( m_file, "%s", &m_readBuffer );
-	return m_readBuffer;
+	// fgets() 의 특성상 '\n' 개행 문자가 끌려 온다.
+	// 개행 문자가 있으면 문자를 다른 데이터타입으로 변환시 
+	// 문제가 발생할수 있으므로 '\0'터미널 문자로 바꿔준다.
+	fgets( &m_readBuffer[0], m_readBuffer.size(), m_file);
+	m_readBuffer.at(m_readBuffer.find("\n")) = '\0';
+	return m_readBuffer.c_str();
 }
 
 SVertexStreamInfo OvFileMeshLoader::_parseStreamLow()

@@ -1,4 +1,7 @@
-
+<material>
+  <vertex_shader complie_version="vs_2_0">
+    <![CDATA[
+    
 #include "pixel_common.h"
 
 
@@ -29,3 +32,6 @@ void main( in input_pixel input, out vector col0 : COLOR0 )
 	//
 	
 }
+    ]]>]
+  </vertex_shader>
+</material>

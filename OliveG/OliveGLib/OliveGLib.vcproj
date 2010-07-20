@@ -159,6 +159,14 @@
 					Name="OvShaderManager"
 					>
 					<File
+						RelativePath=".\source\OvShaderCodeIncluder.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\include\OvShaderCodeIncluder.h"
+						>
+					</File>
+					<File
 						RelativePath=".\source\OvShaderManager.cpp"
 						>
 					</File>
@@ -562,6 +570,30 @@
 							>
 						</File>
 					</Filter>
+				</Filter>
+				<Filter
+					Name="OvShaderCode"
+					>
+				</Filter>
+				<Filter
+					Name="OvNextTermMaterial"
+					>
+					<File
+						RelativePath=".\source\OvNextTermMaterial.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\include\OvNextTermMaterial.h"
+						>
+					</File>
+					<File
+						RelativePath=".\source\OvNextTermMaterialLoader.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\include\OvNextTermMaterialLoader.h"
+						>
+					</File>
 				</Filter>
 			</Filter>
 			<Filter
@@ -1646,6 +1678,10 @@
 					</File>
 					<File
 						RelativePath=".\shader\OvMaterialVConst.h"
+						>
+					</File>
+					<File
+						RelativePath=".\shader\pixel_common.h"
 						>
 					</File>
 				</Filter>

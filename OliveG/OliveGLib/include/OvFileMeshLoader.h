@@ -1,10 +1,13 @@
 #pragma once
 #include "OvMeshLoaderBase.h"
+#include <string>
 
 class OvFileMeshLoader : public OvMeshLoaderBase
 {
 	OvRTTI_DECL(OvFileMeshLoader);
 public:
+	OvFileMeshLoader();
+	~OvFileMeshLoader();
 	virtual OvResourceSPtr Load( const std::string& fileLocation ) override;
 private:
 	
@@ -17,5 +20,5 @@ private:
 private:
 	enum {MAX_READ_BUFFER_SIZE = 256};
 	FILE* m_file;
-	char m_readBuffer[ MAX_READ_BUFFER_SIZE ];
+	std::string m_readBuffer;
 };

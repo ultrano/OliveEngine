@@ -19,14 +19,14 @@ struct SDxAutoRelease
 //////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
 
-LPD3DXBUFFER	CompileShaderFromFile( const string& file, const string& funcName, const string& version)
+LPD3DXBUFFER	CompileShaderFromFile( const string& file, const string& funcName, const string& version, LPD3DXINCLUDE includer = NULL)
 {
 	LPD3DXBUFFER	shaderBuffer = NULL;
 	LPD3DXBUFFER	compileResult = NULL;
 	HRESULT hr = D3DXCompileShaderFromFile
 		( file.c_str()
 		, NULL
-		, NULL
+		, includer
 		, funcName.c_str()
 		, version.c_str()
 		, D3DXSHADER_DEBUG
@@ -54,6 +54,47 @@ LPD3DXBUFFER	CompileShaderFromFile( const string& file, const string& funcName, 
 	}
 	return NULL;
 }
+//////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
+
+LPD3DXBUFFER	CompileShaderFromCode( const string& code, const string& funcName, const string& version, LPD3DXINCLUDE includer = NULL)
+{
+	LPD3DXBUFFER	shaderBuffer = NULL;
+	LPD3DXBUFFER	compileResult = NULL;
+	HRESULT hr = D3DXCompileShader
+		( code.c_str()
+		, code.size()
+		, NULL
+		, includer
+		, funcName.c_str()
+		, version.c_str()
+		, D3DXSHADER_DEBUG
+		, &shaderBuffer
+		, &compileResult
+		, NULL);
+	if ( SUCCEEDED( hr ) )
+	{
+		return shaderBuffer;
+	}
+	else
+	{
+		SDxAutoRelease autoRelease0( compileResult );
+		SDxAutoRelease autoRelease1( shaderBuffer );
+		if ( compileResult )
+		{
+			OvAssertMsg( ( char* )compileResult->GetBufferPointer() );
+			compileResult->Release();
+		}
+		if ( shaderBuffer )
+		{
+			shaderBuffer->Release();
+		}
+		return NULL;
+	}
+	return NULL;
+}
+//////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
 
 OvShaderManager::OvShaderManager()
 {
@@ -63,9 +104,9 @@ OvShaderManager::~OvShaderManager()
 
 }
 
-LPDIRECT3DVERTEXSHADER9	OvShaderManager::CreateVertexShaderFromFile( const string& file, const string& func, const string& version)
+LPDIRECT3DVERTEXSHADER9	OvShaderManager::CreateVertexShaderFromFile( const string& file, const string& func, const string& version, LPD3DXINCLUDE includer)
 {
-	LPD3DXBUFFER shaderBuffer = CompileShaderFromFile( file, func, version );
+	LPD3DXBUFFER shaderBuffer = CompileShaderFromFile( file, func, version, includer );
 	SDxAutoRelease autoRelease( shaderBuffer );
 	if ( shaderBuffer )
 	{
@@ -79,9 +120,9 @@ LPDIRECT3DVERTEXSHADER9	OvShaderManager::CreateVertexShaderFromFile( const strin
 	}
 	return NULL;
 }
-LPDIRECT3DPIXELSHADER9	OvShaderManager::CreatePixelShaderFromFile( const string& file, const string& func, const string& version)
+LPDIRECT3DPIXELSHADER9	OvShaderManager::CreatePixelShaderFromFile( const string& file, const string& func, const string& version, LPD3DXINCLUDE includer)
 {
-	LPD3DXBUFFER shaderBuffer = CompileShaderFromFile( file, func, version );
+	LPD3DXBUFFER shaderBuffer = CompileShaderFromFile( file, func, version, includer );
 	SDxAutoRelease autoRelease( shaderBuffer );
 	if ( shaderBuffer )
 	{
@@ -95,6 +136,41 @@ LPDIRECT3DPIXELSHADER9	OvShaderManager::CreatePixelShaderFromFile( const string&
 	}
 	return NULL;
 }
+
+LPDIRECT3DVERTEXSHADER9 OvShaderManager::CreateVertexShaderFromCode( const string& code, const string& func, const string& version, LPD3DXINCLUDE includer /*= NULL*/ )
+{
+	LPD3DXBUFFER shaderBuffer = CompileShaderFromCode( code, func, version, includer );
+	SDxAutoRelease autoRelease( shaderBuffer );
+	if ( shaderBuffer )
+	{
+		LPDIRECT3DDEVICE9 device = OvRenderer::GetInstance()->GetDevice();
+		if ( device )
+		{
+			LPDIRECT3DVERTEXSHADER9 shader = NULL;
+			device->CreateVertexShader( (DWORD*)shaderBuffer->GetBufferPointer(), &shader );
+			return shader;
+		}
+	}
+	return NULL;
+}
+
+LPDIRECT3DPIXELSHADER9 OvShaderManager::CreatePixelShaderFromCode( const string& code, const string& func, const string& version, LPD3DXINCLUDE includer /*= NULL*/ )
+{
+	LPD3DXBUFFER shaderBuffer = CompileShaderFromCode( code, func, version, includer );
+	SDxAutoRelease autoRelease( shaderBuffer );
+	if ( shaderBuffer )
+	{
+		LPDIRECT3DDEVICE9 device = OvRenderer::GetInstance()->GetDevice();
+		if ( device )
+		{
+			LPDIRECT3DPIXELSHADER9 shader = NULL;
+			device->CreatePixelShader( (DWORD*)shaderBuffer->GetBufferPointer(), &shader );
+			return shader;
+		}
+	}
+	return NULL;
+}
+
 
 bool	OvShaderManager::SetVSConstB(const OvShaderConstInfo& rConstInfo,bool bCheck)
 {
