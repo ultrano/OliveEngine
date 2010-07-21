@@ -1,5 +1,7 @@
 #include "OvShaderCodeIncluder.h"
 #include "OvGlobalFunc.h"
+#include "OvResourceManager.h"
+#include "OvShaderCode.h"
 #include <iostream>
 #include <fstream>
 using namespace std;
@@ -13,35 +15,30 @@ OvShaderCodeIncluder::OvShaderCodeIncluder( const std::string& basePath )
 
 STDMETHODIMP OvShaderCodeIncluder::Open( THIS_ D3DXINCLUDE_TYPE IncludeType, LPCSTR pFileName, LPCVOID pParentData, LPCVOID *ppData, UINT *pBytes )
 {
-	if ( D3DXINC_SYSTEM == IncludeType )
+	string fileLocation;
+	switch ( IncludeType )
 	{
-		string fileLocation = m_basePath + "/" + pFileName;
+	case D3DXINC_SYSTEM : 
+		fileLocation = m_basePath + "/" + pFileName;
+		break;
+	case D3DXINC_LOCAL : 
+		fileLocation = pFileName;
+		break;
+	}
 
-		FILE* file = fopen( fileLocation.c_str(), "r" );
+	OvShaderCodeSPtr code_resource = OvResourceManager::GetInstance()->LoadResource<OvShaderCode>( fileLocation );
 
-		string shader_code;
-		if ( file )
-		{
-			char line[256]={0};
-			while ( fgets( line, 256, file ) )
-			{
-				shader_code += line;
-			}
-			OvMessageBox( shader_code.c_str(), "");
-			char* data = new char[ shader_code.size() ];
-			memcpy( data, shader_code.c_str(), shader_code.size() );
-			*ppData = data;
-			*pBytes = shader_code.size();
-		}
+	if ( code_resource )
+	{
+		OvResourceManager::GetInstance()->ResourceCache( code_resource );
+		*ppData = code_resource->GetCodeBuffer();
+		*pBytes = code_resource->GetCodeSize();
 		return S_OK;
 	}
+	return S_FALSE;
 }
 
 STDMETHODIMP OvShaderCodeIncluder::Close( THIS_ LPCVOID pData )
 {
-	if ( pData )
-	{
-		delete pData;
-	}
 	return S_OK;
 }

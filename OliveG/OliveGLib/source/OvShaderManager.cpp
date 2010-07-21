@@ -3,6 +3,8 @@
 #include "OvRenderer.h"
 #include "OvTransform.h"
 #include "OvStringUtility.h"
+#include "OvVertexShader.h"
+#include "OvPixelShader.h"
 #include "OvTexture.h"
 #include <d3dx9.h>
 #include <map>
@@ -137,7 +139,7 @@ LPDIRECT3DPIXELSHADER9	OvShaderManager::CreatePixelShaderFromFile( const string&
 	return NULL;
 }
 
-LPDIRECT3DVERTEXSHADER9 OvShaderManager::CreateVertexShaderFromCode( const string& code, const string& func, const string& version, LPD3DXINCLUDE includer /*= NULL*/ )
+OvVertexShaderSPtr OvShaderManager::CreateVertexShaderFromCode( const string& code, const string& func, const string& version, LPD3DXINCLUDE includer /*= NULL*/ )
 {
 	LPD3DXBUFFER shaderBuffer = CompileShaderFromCode( code, func, version, includer );
 	SDxAutoRelease autoRelease( shaderBuffer );
@@ -147,14 +149,16 @@ LPDIRECT3DVERTEXSHADER9 OvShaderManager::CreateVertexShaderFromCode( const strin
 		if ( device )
 		{
 			LPDIRECT3DVERTEXSHADER9 shader = NULL;
-			device->CreateVertexShader( (DWORD*)shaderBuffer->GetBufferPointer(), &shader );
-			return shader;
+			if ( SUCCEEDED( device->CreateVertexShader( (DWORD*)shaderBuffer->GetBufferPointer(), &shader ) ) )
+			{
+				return new OvVertexShader( shader );
+			}
 		}
 	}
 	return NULL;
 }
 
-LPDIRECT3DPIXELSHADER9 OvShaderManager::CreatePixelShaderFromCode( const string& code, const string& func, const string& version, LPD3DXINCLUDE includer /*= NULL*/ )
+OvPixelShaderSPtr OvShaderManager::CreatePixelShaderFromCode( const string& code, const string& func, const string& version, LPD3DXINCLUDE includer /*= NULL*/ )
 {
 	LPD3DXBUFFER shaderBuffer = CompileShaderFromCode( code, func, version, includer );
 	SDxAutoRelease autoRelease( shaderBuffer );
@@ -164,8 +168,10 @@ LPDIRECT3DPIXELSHADER9 OvShaderManager::CreatePixelShaderFromCode( const string&
 		if ( device )
 		{
 			LPDIRECT3DPIXELSHADER9 shader = NULL;
-			device->CreatePixelShader( (DWORD*)shaderBuffer->GetBufferPointer(), &shader );
-			return shader;
+			if ( SUCCEEDED( device->CreatePixelShader( (DWORD*)shaderBuffer->GetBufferPointer(), &shader ) ) )
+			{
+				return new OvPixelShader( shader );
+			}
 		}
 	}
 	return NULL;

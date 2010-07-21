@@ -6,6 +6,8 @@
 #include "OvRenderingCommon.h"
 class OvShaderConstInfo;
 class OvMatrix;
+OvREF_POINTER(OvVertexShader);
+OvREF_POINTER(OvPixelShader);
 OvREF_POINTER(OvTexture);
 
 class OvShaderManager : public OvSingletonBase< OvShaderManager >
@@ -18,8 +20,8 @@ public:
 	LPDIRECT3DVERTEXSHADER9	CreateVertexShaderFromFile( const string& file, const string& func, const string& version, LPD3DXINCLUDE includer = NULL);
 	LPDIRECT3DPIXELSHADER9	CreatePixelShaderFromFile( const string& file, const string& func, const string& version, LPD3DXINCLUDE includer = NULL);
 
-	LPDIRECT3DVERTEXSHADER9	CreateVertexShaderFromCode( const string& code, const string& func, const string& version, LPD3DXINCLUDE includer = NULL);
-	LPDIRECT3DPIXELSHADER9	CreatePixelShaderFromCode( const string& code, const string& func, const string& version, LPD3DXINCLUDE includer = NULL);
+	OvVertexShaderSPtr CreateVertexShaderFromCode( const string& code, const string& func, const string& version, LPD3DXINCLUDE includer = NULL);
+	OvPixelShaderSPtr CreatePixelShaderFromCode( const string& code, const string& func, const string& version, LPD3DXINCLUDE includer = NULL);
 
 	////////////////////////////////////////////////////////////////////////////////////////////////
 	/////////////////////////*  버텍스 쉐이더 관련 함수들 */////////////////////////////////////

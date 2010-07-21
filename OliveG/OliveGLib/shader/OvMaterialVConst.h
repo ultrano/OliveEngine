@@ -1,8 +1,6 @@
-#include "OvConstDefineUtil.h"
+#include <OvConstDefineUtil.h>
 
 CONST_GROUP_BEGIN(OvMatVSConst)
-
-//CONST_DECL_BOOL(Bool_IsSkinned,0)
 
 CONST_DECL_FLOAT(matrix,ViewProject,0,4)
 CONST_DECL_FLOAT(matrix,WorldViewProject,4,4)

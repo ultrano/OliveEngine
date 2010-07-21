@@ -575,12 +575,11 @@ OvRTTI_IMPL(OvProp_resource);
 
 bool OvProp_resource::Extract( OvObject* pObj, OvObjectProperties& rObjStore )
 {
-
 	OvResourceSPtr* accessProp = (OvResourceSPtr*)Access(pObj);
 	if ( accessProp && (*accessProp) )
 	{
 		string typeName = OvRTTI_Util::TypeName( (*accessProp) );
-		string fileLocation = (*accessProp)->GetFileLocation();
+		string fileLocation = OvResourceManager::GetInstance()->FindFileLocation( (*accessProp).GetRear() );
 
 		string resourceInfo;
 		resourceInfo += typeName;

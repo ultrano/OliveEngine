@@ -1,4 +1,4 @@
-#include "OvNextTermMaterialLoader.h"
+#include "OvMaterialLoader.h"
 
 GL_TEST_CASE_FUNC( next_term_material_load_test )
 {
@@ -7,7 +7,7 @@ GL_TEST_CASE_FUNC( next_term_material_load_test )
 	{
 		OvRenderer::GetInstance()->GenerateRenderer();
 
-		OvNextTermMaterialLoader loader;
+		OvMaterialLoader loader;
 		loader.Load("../../resource/material/test.mat");
 
 	}

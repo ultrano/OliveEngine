@@ -2,16 +2,9 @@
 #include "OvRenderer.h"
 #include "OvShaderManager.h"
 
-
 #include "OvRegisterableProperties.h"
 
 OvRTTI_IMPL( OvMaterial );
-OvPROPERTY_BAG_BEGIN(OvMaterial)
-	OvPROPERTY_BAG_REGISTER( OvProp_resource, m_vertexShader )
-	OvPROPERTY_BAG_REGISTER( OvProp_resource, m_pixelShader )
-	OvPROPERTY_BAG_REGISTER( OvProp_resource, m_stageTexture[ OvMaterial::Stage0 ] )
-	OvPROPERTY_BAG_REGISTER( OvProp_resource, m_stageTexture[ OvMaterial::Stage1 ] )
-OvPROPERTY_BAG_END(OvMaterial)
 
 void OvMaterial::SetVertexShader( OvVertexShaderSPtr shader )
 {

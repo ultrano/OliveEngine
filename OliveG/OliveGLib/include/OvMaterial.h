@@ -1,5 +1,5 @@
 #pragma once
-#include "OvObject.h"
+#include "OvResource.h"
 #include "OvAutoPtr.h"
 #include "OvPixelShader.h"
 #include "OvVertexShader.h"
@@ -10,10 +10,9 @@
 //
 
 OvREF_POINTER(OvMaterial);
-class OvMaterial : public OvObject
+class OvMaterial : public OvResource
 {
 	OvRTTI_DECL( OvMaterial );
-	OvPROPERTY_BAG_DECL( OvMaterial );
 public:
 
 	// 요고는 마테리얼 부분으로 빼자

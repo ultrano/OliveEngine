@@ -6,6 +6,7 @@ OvRTTI_IMPL(OvResourceLoader);
 
 OvResource::OvResource()
 {
+	OvResourceManager::GetInstance()->_resource_created( this );
 }
 
 OvResource::~OvResource()
@@ -13,11 +14,7 @@ OvResource::~OvResource()
 	OvResourceManager::GetInstance()->_resource_deleted( this );
 }
 
-void OvResource::SetFileLocation( const string& file )
+OvResourceSPtr OvResourceLoader::_load_resource( const std::string& fileLocation )
 {
-	m_fileLocation = file;
-}
-const string& OvResource::GetFileLocation() const
-{
-	return m_fileLocation;
+	return Load( fileLocation );
 }

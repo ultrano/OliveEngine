@@ -320,18 +320,6 @@
 				Name="MaterialGroup"
 				>
 				<Filter
-					Name="OvMaterial"
-					>
-					<File
-						RelativePath=".\source\OvMaterial.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\include\OvMaterial.h"
-						>
-					</File>
-				</Filter>
-				<Filter
 					Name="OvMaterialManager"
 					>
 					<File
@@ -529,14 +517,6 @@
 							RelativePath=".\include\OvVertexShader.h"
 							>
 						</File>
-						<File
-							RelativePath=".\source\OvVertexShaderLoader.cpp"
-							>
-						</File>
-						<File
-							RelativePath=".\include\OvVertexShaderLoader.h"
-							>
-						</File>
 					</Filter>
 					<Filter
 						Name="OvPixelShader"
@@ -547,14 +527,6 @@
 						</File>
 						<File
 							RelativePath=".\include\OvPixelShader.h"
-							>
-						</File>
-						<File
-							RelativePath=".\source\OvPixelShaderLoader.cpp"
-							>
-						</File>
-						<File
-							RelativePath=".\include\OvPixelShaderLoader.h"
 							>
 						</File>
 					</Filter>
@@ -570,28 +542,48 @@
 							>
 						</File>
 					</Filter>
+					<Filter
+						Name="OvShaderCode"
+						>
+						<File
+							RelativePath=".\source\OvShaderCode.cpp"
+							>
+						</File>
+						<File
+							RelativePath=".\include\OvShaderCode.h"
+							>
+						</File>
+						<File
+							RelativePath=".\source\OvShaderCodeLoader.cpp"
+							>
+						</File>
+						<File
+							RelativePath=".\include\OvShaderCodeLoader.h"
+							>
+						</File>
+					</Filter>
 				</Filter>
 				<Filter
 					Name="OvShaderCode"
 					>
 				</Filter>
 				<Filter
-					Name="OvNextTermMaterial"
+					Name="OvMaterial"
 					>
 					<File
-						RelativePath=".\source\OvNextTermMaterial.cpp"
+						RelativePath=".\source\OvMaterial.cpp"
 						>
 					</File>
 					<File
-						RelativePath=".\include\OvNextTermMaterial.h"
+						RelativePath=".\include\OvMaterial.h"
 						>
 					</File>
 					<File
-						RelativePath=".\source\OvNextTermMaterialLoader.cpp"
+						RelativePath=".\source\OvMaterialLoader.cpp"
 						>
 					</File>
 					<File
-						RelativePath=".\include\OvNextTermMaterialLoader.h"
+						RelativePath=".\include\OvMaterialLoader.h"
 						>
 					</File>
 				</Filter>
@@ -1682,6 +1674,10 @@
 					</File>
 					<File
 						RelativePath=".\shader\pixel_common.h"
+						>
+					</File>
+					<File
+						RelativePath=".\shader\vertex_common.h"
 						>
 					</File>
 				</Filter>

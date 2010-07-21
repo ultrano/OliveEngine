@@ -11,19 +11,17 @@ public:
 	OvResource();
 	~OvResource();
 
-	void	SetFileLocation(const string& file);
-	const string&	GetFileLocation() const ;
-
-private:
-	string		m_fileLocation;
 };
 
 OvREF_POINTER(OvResourceLoader);
 class OvResourceLoader : public OvRefBase
 {
 	OvRTTI_DECL(OvResourceLoader);
-public:
 
 	virtual OvResourceSPtr Load( const std::string& fileLocation ) = 0;
 
+private:
+	// OvResourceManager만을 위한 접근 인터페이스.
+	friend class OvResourceManager;
+	OvResourceSPtr _load_resource( const std::string& fileLocation );
 };

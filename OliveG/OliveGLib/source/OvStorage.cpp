@@ -35,10 +35,6 @@ OvObject* TemporaryFactoryFunction(const string& typeName)
 	{
 		return OvNew OvPointLight;
 	}
-	else if ("OvMaterial" == typeName)
-	{
-		return OvNew OvMaterial;
-	}
 	return NULL;
 }
 //////////////////////////////////////////////////////////////////////////

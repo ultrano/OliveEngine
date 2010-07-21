@@ -1,7 +1,7 @@
 #pragma once
-#include "OvNextTermMaterial.h"
+#include "OvMaterial.h"
 
-class OvNextTermMaterialLoader : public OvResourceLoader
+class OvMaterialLoader : public OvResourceLoader
 {
 public:
 	virtual OvResourceSPtr Load( const std::string& fileLocation );
