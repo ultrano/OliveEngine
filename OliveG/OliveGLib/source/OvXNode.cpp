@@ -36,14 +36,30 @@ void	OvXNode::UpdateSubordinate(float _fElapse)
 
 }
 
-void OvXNode::AttachChild(OvXObjectSPtr _pObject)
+void OvXNode::AttachChild( OvXObjectSPtr _pObject )
 {
+
 	if(!_pObject)
+	{
 		return ;
+	}
+
+	// 자신 혹은 조상을 자신의 자식으로 두려는 시도인지 검사한다.
+	// 그렇게 돼버리면 시도햇던 노드로 부터 하위의 노드들은 고립되어 버린다.
+	OvXNodeSPtr parentNode = this;
+	for ( ; parentNode ; parentNode = parentNode->GetAttachedNode() )
+	{
+		if ( _pObject == parentNode )
+		{
+			return ;
+		}
+	}
 
 	// 차일드오브젝트를 찾는다.
 	if (m_clectrChildCollect.IsCollected(_pObject))
+	{
 		return ;
+	}
 
 	// 기존 부모가 있다면 그 부모에게 이 객체에 대한 삭제를 요청.
 	OvXNodeSPtr kpParentNode = _pObject->GetAttachedNode();
