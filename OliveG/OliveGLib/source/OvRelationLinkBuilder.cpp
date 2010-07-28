@@ -155,9 +155,12 @@ bool OvObjectCollectorLinkBuilder::BuildLink( restore_object_table& restoreTable
 		{
 			restore_object_table::iterator tableIter;
 			tableIter = restoreTable.find( formerID );
-			if ( OvObject* restoreObject = tableIter->second )
+			if ( restoreTable.end() != tableIter )
 			{
-				destAddress->AddObject( restoreObject );
+				if ( OvObject* restoreObject = tableIter->second )
+				{
+					destAddress->AddObject( restoreObject );
+				}
 			}
 		}
 		return true;

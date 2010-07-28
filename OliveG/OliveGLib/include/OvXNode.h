@@ -14,8 +14,6 @@ public:
 	OvXNode();
 	virtual ~OvXNode();
 
-	virtual void	UpdateSubordinate(float _fElapse);
-
 	void AttachChild(OvXObjectSPtr _pObject);
 
 	// 제대로 지워졌다면, 지워진 객체에 대한 포인터를 리턴한다.
@@ -24,6 +22,9 @@ public:
 	size_t			GetChildCount();
 
 	OvXObjectSPtr	GetChildeAt( unsigned int iIndex);
+private:
+
+	virtual void	_update_system( float _fElapse ) override;
 
 private:
 

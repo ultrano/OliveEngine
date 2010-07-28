@@ -36,6 +36,8 @@ public :
 
 	//! Update
 	void			Update(float _fElapse);
+
+	//! updating for application
 	virtual void	UpdateSubordinate(float _fElapse);
 
 	//! Set Local Transform
@@ -71,15 +73,21 @@ public :
 	//! Get Parent
 	OvXNodeSPtr			GetAttachedNode();
 
-	bool	GetExtraComponents( OvObjectCollector& extraComponents );
+	bool				GetComponents( OvObjectCollector& extraComponents );
+	OvXComponentSPtr	RemoveComponent( const OvObjectSPtr component );
+	OvXComponentSPtr	RemoveComponent( const OvObjectID& compoentID );
 
-protected:
+private:
 
 	//! Set Object Controller (Do not use in application)
-	bool			EquipExtraComponent(OvXComponentSPtr extraComponent);
+	bool			_equip_component( OvXComponentSPtr component );
+	bool			_remove_component( OvXComponentSPtr component );
 
 	//! Set Parent (Do not use in application)
-	void			SetParent(OvXNodeSPtr _pParentNode);
+	void			_set_parent(OvXNodeSPtr _pParentNode);
+
+	//! Updating for system (Do not override in application, Use the "UpdateSubordinate" Method)
+	virtual void	_update_system( float _fElapse );
 
 private:
 

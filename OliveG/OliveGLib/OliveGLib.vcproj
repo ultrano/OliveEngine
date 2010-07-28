@@ -180,30 +180,6 @@
 				Name="SceneGroup"
 				>
 				<Filter
-					Name="OvCamera"
-					>
-					<File
-						RelativePath=".\source\OvCamera.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\include\OvCamera.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="OvCameraController"
-					>
-					<File
-						RelativePath=".\source\OvCameraController.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\include\OvCameraController.h"
-						>
-					</File>
-				</Filter>
-				<Filter
 					Name="OvLight"
 					>
 					<Filter
@@ -312,6 +288,18 @@
 					</File>
 					<File
 						RelativePath=".\include\OvRenderEffector.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="OvCamera"
+					>
+					<File
+						RelativePath=".\source\OvCamera.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\include\OvCamera.h"
 						>
 					</File>
 				</Filter>
@@ -1216,6 +1204,30 @@
 							>
 						</File>
 					</Filter>
+				</Filter>
+				<Filter
+					Name="OvInputEventListener"
+					>
+					<File
+						RelativePath=".\source\OvInputEventListener.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\include\OvInputEventListener.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="OvCameraController"
+					>
+					<File
+						RelativePath=".\source\OvCameraController.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\include\OvCameraController.h"
+						>
+					</File>
 				</Filter>
 			</Filter>
 			<Filter

@@ -37,7 +37,7 @@ public:
 	const OvMatrix&	GetViewMatrix();
 	const OvMatrix&	GetProjectMatrix();
 
-	virtual void	UpdateSubordinate(float _fElapse);
+	virtual void	UpdateSubordinate( float _fElapse ) override;
 
 	void			SetCameraType(eCameraType eType);
 	eCameraType		GetCameraType();

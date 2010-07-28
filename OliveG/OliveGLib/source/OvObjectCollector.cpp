@@ -34,11 +34,11 @@ OvObjectSPtr	OvObjectCollector::GetByName(const char* pName)
 	}
 	return NULL;
 }
-OvObjectSPtr	OvObjectCollector::GetByID(OvObjectID& dhHandle)
+OvObjectSPtr	OvObjectCollector::GetByID( const OvObjectID& objectID )
 {
 	for each( tdObjectArray::value_type obj in m_tdObjArray )
 	{
-		if ( obj->GetObjectID() == dhHandle )
+		if ( obj->GetObjectID() == objectID )
 		{
 			return obj;
 		}
@@ -83,6 +83,15 @@ OvObjectSPtr	OvObjectCollector::RemoveObject(OvObjectSPtr pObj)
 	return NULL;
 }
 
+OvObjectSPtr OvObjectCollector::RemoveObject( const OvObjectID& objectID )
+{
+	OvObjectSPtr object = GetByID( objectID );
+	if ( object )
+	{
+		return RemoveObject( object );
+	}
+	return NULL;
+}
 bool			OvObjectCollector::IsCollected(OvObjectSPtr pObj)
 {
 	if (pObj)

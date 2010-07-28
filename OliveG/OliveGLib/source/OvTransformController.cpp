@@ -103,9 +103,9 @@ void			OvTransformController::UpdatePos()
 }
 void			OvTransformController::CommitTransform()
 {
-	if (GetEquippedTarget())
+	if (GetTarget())
 	{
-		GetEquippedTarget()->SetRotation(m_pPimple->m_cResultRotation);
-		GetEquippedTarget()->SetTranslate(m_pPimple->m_cResultPosition);
+		GetTarget()->SetRotation(m_pPimple->m_cResultRotation);
+		GetTarget()->SetTranslate(m_pPimple->m_cResultPosition);
 	}
 }

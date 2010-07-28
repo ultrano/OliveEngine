@@ -21,7 +21,7 @@ public:
 
 	OvObjectSPtr	GetByAt(int iIndex);
 	OvObjectSPtr	GetByName(const char* pName);
-	OvObjectSPtr	GetByID(OvObjectID& dhHandle);
+	OvObjectSPtr	GetByID( const OvObjectID& objectID );
 
 	DWORD			Count();
 	void			Clear();
@@ -29,6 +29,7 @@ public:
 	bool			AddObject(OvObjectSPtr pObj);
 	bool			AddObject(OvObjectCollector& pObjContainer);
 	OvObjectSPtr	RemoveObject(OvObjectSPtr pObj);
+	OvObjectSPtr	RemoveObject( const OvObjectID& objectID );
 
 	bool			IsCollected(OvObjectSPtr pObj);
 

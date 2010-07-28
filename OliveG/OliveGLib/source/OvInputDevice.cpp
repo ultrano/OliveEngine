@@ -1,5 +1,9 @@
 #include "OvInputDevice.h"
+#include "OvXObject.h"
 #include "OliveValue.h"
+#include "OvInputEventListener.h"
+#include <algorithm>
+using namespace std;
 
 OvInputDevice::OvInputDevice()
 {
@@ -22,12 +26,19 @@ bool	OvInputDevice::_listenMessage( HWND hWnd, UINT message, WPARAM wParam, LPAR
 	case WM_MOUSEMOVE : 
 
 		OvPoint2 mousePoint;
-		mousePoint.x = ( float )HIWORD( lParam );
-		mousePoint.y = ( float )LOWORD( lParam );
+		mousePoint.x = ( float )LOWORD( lParam );
+		mousePoint.y = ( float )HIWORD( lParam );
 		m_mouseMoveInterval = mousePoint - m_lastMousePoint;
 		m_lastMousePoint = mousePoint;
-		OliveValue::Point2 test(m_mouseMoveInterval);
 		break;
+	}
+
+	for each( OvInputEventListener* listener in m_listenerList )
+	{
+		if ( listener && listener->GetTarget() )
+		{
+			listener->_push_message(OvInputEventListener::InputMessage(hWnd,message,wParam,lParam));
+		}
 	}
 	return true;
 }
@@ -38,4 +49,21 @@ OvPoint2	OvInputDevice::GetLastMousePoint()
 OvPoint2	OvInputDevice::GetMouseInterval()
 {
 	return m_mouseMoveInterval;
+}
+
+void OvInputDevice::_register_listener( OvInputEventListener* listener )
+{
+	if ( OvSTL_Find( m_listenerList, listener ) == m_listenerList.end() )
+	{
+		m_listenerList.push_back( listener );
+	}
+}
+
+void OvInputDevice::_remove_listener( OvInputEventListener* listener )
+{
+	listener_list::iterator itor = OvSTL_Find( m_listenerList, listener );
+	if ( m_listenerList.end() != itor )
+	{
+		m_listenerList.erase( itor );
+	}
 }

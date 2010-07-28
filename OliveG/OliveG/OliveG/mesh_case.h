@@ -1,4 +1,7 @@
 
+#include "OvXObject.h"
+#include "OvCameraController.h"
+
 GL_ENVIROMENT(OliveLibTest)
 {
 private:
@@ -16,11 +19,7 @@ public:
 
 		OvStorage store;
 		store.Load( "../../resource/ovf/scene_test.xml", m_loadedObjects);
-
-		m_mainCamera = m_loadedObjects.GetByName("Camera");
-		m_mainCamera->Update(0);
-
-		m_mainCamera->RegisterExtraProperty("accumPt", OliveValue::ValueFactory("Point2") );
+		m_mainCamera = m_loadedObjects.GetByName("Camera");		
 
 	};
 	GL_ENV_TEAR_DOWN
@@ -36,38 +35,10 @@ public:
 		OvPoint3 curPos = GetMainCamera()->GetTranslate();
 		switch ( msg.message )
 		{
-		case WM_MOUSEMOVE : 
-			{
-				OliveValue::Point2*	accumPt = (OliveValue::Point2*)GetMainCamera()->FindExtraProperty("accumPt");
-				if ( accumPt )
-				{
-					OvQuaternion yRot,xRot;
-					yRot.MakeQuaternion(OvPoint3::AXIS_Y, accumPt->GetPoint2().y / (D3DX_PI * 20.0f) );
-					xRot.MakeQuaternion(OvPoint3::AXIS_X, accumPt->GetPoint2().x / (D3DX_PI * 20.0f));
-
-					GetMainCamera()->SetRotation( yRot * xRot );
-
-					accumPt->SetPoint2( accumPt->GetPoint2() + OvInputDevice::GetInstance()->GetMouseInterval() );
-				}
-			}
-			break;
 		case WM_KEYDOWN : 
 			{
-				float moveSpeed = 1.0f;
 				switch ( msg.wParam )
 				{
-				case VK_UP :
-					GetMainCamera()->SetTranslate( GetMainCamera()->GetTranslate() + GetMainCamera()->GetLocalLookDirection() * moveSpeed );
-					break;
-				case VK_DOWN :
-					GetMainCamera()->SetTranslate( GetMainCamera()->GetTranslate() - GetMainCamera()->GetLocalLookDirection() * moveSpeed );
-					break;
-				case VK_LEFT :
-					GetMainCamera()->SetTranslate( GetMainCamera()->GetTranslate() - GetMainCamera()->GetLocalRightDirection() * moveSpeed );
-					break;
-				case VK_RIGHT :
-					GetMainCamera()->SetTranslate( GetMainCamera()->GetTranslate() + GetMainCamera()->GetLocalRightDirection() * moveSpeed );
-					break;
 				case VK_ESCAPE:
 					m_exitFlag = true;
 					break;

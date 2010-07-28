@@ -80,6 +80,7 @@ void			OvCamera::UpdateSubordinate(float _fElapse)
 	UpdateProjection();
 	UpdateView();
 	UpdateLookAt();
+
 	__super::UpdateSubordinate(_fElapse);
 }
 

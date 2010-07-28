@@ -53,13 +53,21 @@ void OvXObject::Update(float _fElapse)
 		}
 	}
 
+	for ( int i = 0 ; i < m_extraComponents.Count() ; ++i )
+	{
+		OvXComponentSPtr component = m_extraComponents.GetByAt( i );
+		if ( component )
+		{
+			component->Update( _fElapse );
+		}
+	}
+
 	UpdateSubordinate(_fElapse);
+	_update_system(_fElapse);
 }
 
-void	OvXObject::UpdateSubordinate(float _fElapse)
+void OvXObject::UpdateSubordinate( float _fElapse )
 {
-
-	
 
 }
 
@@ -182,7 +190,7 @@ bool OvXObject::IsLeaf()
 }
 
 
-void	OvXObject::SetParent(OvXNodeSPtr _pParentNode)
+void	OvXObject::_set_parent(OvXNodeSPtr _pParentNode)
 {
 	m_pParent = _pParentNode.GetRear();
 }
@@ -193,16 +201,43 @@ OvXNodeSPtr	OvXObject::GetAttachedNode()
 }
 
 
-bool	OvXObject::GetExtraComponents( OvObjectCollector& extraComponents )
+bool	OvXObject::GetComponents( OvObjectCollector& extraComponents )
 {
 	return extraComponents.AddObject( m_extraComponents );
 };
 
-bool	OvXObject::EquipExtraComponent( OvXComponentSPtr extraComponent )
+bool	OvXObject::_equip_component( OvXComponentSPtr component )
 {
-	if( extraComponent && extraComponent->GetEquippedTarget() == this )
+	if( component && component->GetTarget() == this )
 	{
-		return m_extraComponents.AddObject( extraComponent );
+		return m_extraComponents.AddObject( component );
 	}
 	return false;
 };
+
+bool OvXObject::_remove_component( OvXComponentSPtr component )
+{
+	if( component && component->GetTarget() == this )
+	{
+		return m_extraComponents.RemoveObject( component );
+	}
+	return false;
+}
+
+void OvXObject::_update_system( float _fElapse )
+{
+
+}
+
+OvXComponentSPtr OvXObject::RemoveComponent( const OvObjectSPtr component )
+{
+	OvXComponentSPtr removedComponent = m_extraComponents.RemoveObject( component );
+	removedComponent->SetTarget( NULL );
+	return removedComponent;
+}
+OvXComponentSPtr OvXObject::RemoveComponent( const OvObjectID& compoentID )
+{
+	OvXComponentSPtr removedComponent = m_extraComponents.RemoveObject( compoentID );
+	removedComponent->SetTarget( NULL );
+	return removedComponent;
+}

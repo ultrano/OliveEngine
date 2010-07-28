@@ -11,7 +11,6 @@ OvResourceManager::OvResourceManager()
 	m_loaderTable[ OvMesh			::GetRTTI() ]	= OvNew OvFileMeshLoader;
 	m_loaderTable[ OvTexture		::GetRTTI() ]	= OvNew OvTextureLoader;
 	m_loaderTable[ OvShaderCode		::GetRTTI() ]	= OvNew OvShaderCodeLoader;
-	m_loaderTable[ OvShaderCode		::GetRTTI() ]	= OvNew OvShaderCodeLoader;
 	m_loaderTable[ OvMaterial		::GetRTTI() ]	= OvNew OvMaterialLoader;
 }
 

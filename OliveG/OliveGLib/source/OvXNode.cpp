@@ -24,16 +24,13 @@ OvXNode::~OvXNode()
 	m_clectrChildCollect.Clear();
 }
 
-void	OvXNode::UpdateSubordinate(float _fElapse)
+void OvXNode::_update_system( float _fElapse )
 {
-	__super::UpdateSubordinate(_fElapse);
-
 	for (int i=0;i<m_clectrChildCollect.Count();++i)
 	{
 		OvXObjectSPtr kpChild = m_clectrChildCollect.GetByAt(i);
 		kpChild->Update(_fElapse);
 	}
-
 }
 
 void OvXNode::AttachChild( OvXObjectSPtr _pObject )
@@ -67,7 +64,7 @@ void OvXNode::AttachChild( OvXObjectSPtr _pObject )
 		kpParentNode->DettachChild(_pObject);
 
 	m_clectrChildCollect.AddObject(_pObject);
-	_pObject->SetParent(this);
+	_pObject->_set_parent(this);
 }
 
 OvXObjectSPtr	OvXNode::DettachChild(OvXObjectSPtr _pObject)
@@ -79,7 +76,7 @@ OvXObjectSPtr	OvXNode::DettachChild(OvXObjectSPtr _pObject)
 	if (m_clectrChildCollect.IsCollected(_pObject) == false)
 		return NULL;
 
-	_pObject->SetParent(NULL);
+	_pObject->_set_parent(NULL);
 	m_clectrChildCollect.RemoveObject(_pObject);
 
 	return _pObject;

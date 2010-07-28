@@ -17,6 +17,7 @@
 #include "OvModel.h"
 #include "OvPointLight.h"
 #include "OvMaterial.h"
+#include "OvCameraController.h"
 OvObject* TemporaryFactoryFunction(const string& typeName)
 {
 	if ("OvXNode" == typeName)
@@ -34,6 +35,10 @@ OvObject* TemporaryFactoryFunction(const string& typeName)
 	else if ("OvPointLight" == typeName)
 	{
 		return OvNew OvPointLight;
+	}
+	else if ("OvCameraController" == typeName)
+	{
+		return OvNew OvCameraController;
 	}
 	return NULL;
 }
@@ -164,9 +169,9 @@ bool	OvStorage::_extract_property(OvObject* pObj,OvObjectProperties& rStore)
 	{
 
 		OvRTTI* kpRTTI = NULL;
-		for (kpRTTI = const_cast<OvRTTI*>(pObj->QueryRTTI())
-			;kpRTTI && kpRTTI->PropertyBag()
-			;kpRTTI = const_cast<OvRTTI*>(kpRTTI->GetBaseRTTI()))
+		for ( kpRTTI = const_cast<OvRTTI*>(pObj->QueryRTTI())
+			; NULL != kpRTTI
+			; kpRTTI = const_cast<OvRTTI*>(kpRTTI->GetBaseRTTI()))
 		{
 			OvPropertyBag* kpPropBag = kpRTTI->PropertyBag();
 			if (kpPropBag)
@@ -200,9 +205,9 @@ bool	OvStorage::_inject_property(OvObject* pObj,OvObjectProperties& rStore)
 	{
 
 		OvRTTI* kpRTTI = NULL;
-		for (kpRTTI = const_cast<OvRTTI*>(pObj->QueryRTTI())
-			;kpRTTI && kpRTTI->PropertyBag()
-			;kpRTTI = const_cast<OvRTTI*>(kpRTTI->GetBaseRTTI()))
+		for ( kpRTTI = const_cast<OvRTTI*>(pObj->QueryRTTI())
+			; NULL != kpRTTI
+			; kpRTTI = const_cast<OvRTTI*>(kpRTTI->GetBaseRTTI()))
 		{
 			OvPropertyBag* kpPropBag = kpRTTI->PropertyBag();
 			if (kpPropBag)

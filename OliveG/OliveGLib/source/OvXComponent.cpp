@@ -18,15 +18,19 @@ OvXComponent::~OvXComponent()
 
 }
 
-void		OvXComponent::SetEquippedTarget( OvXObject* _pEquippedObject )
+void		OvXComponent::SetTarget( OvXObjectSPtr _pEquippedObject )
 {
-	if( ! _pEquippedObject )
-		return;
-
-	m_equippedObject = _pEquippedObject;
-	_pEquippedObject->EquipExtraComponent( this );
+	if ( m_equippedObject )
+	{
+		m_equippedObject->_remove_component( this );
+	}
+	m_equippedObject = _pEquippedObject.GetRear();
+	if ( m_equippedObject )
+	{
+		m_equippedObject->_equip_component( this );
+	}
 }
-OvXObject*	OvXComponent::GetEquippedTarget()
+OvXObjectSPtr	OvXComponent::GetTarget()
 {
 	return m_equippedObject;
 }

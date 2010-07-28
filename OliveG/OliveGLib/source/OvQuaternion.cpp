@@ -132,9 +132,10 @@ OvQuaternion&		OvQuaternion::MakeQuaternion(float _fAxisX,float _fAxisY,float _f
 OvQuaternion&		OvQuaternion::MakeQuaternion(const OvPoint3& _rAxis,float _fAngleRadian)
 {
 	OvPoint3 kNormAxis = ((OvPoint3&)_rAxis).Normalize();
-	x = kNormAxis.x*sinf(_fAngleRadian/2.0f);
-	y = kNormAxis.y*sinf(_fAngleRadian/2.0f);
-	z = kNormAxis.z*sinf(_fAngleRadian/2.0f);
+	kNormAxis = kNormAxis * sinf(_fAngleRadian/2.0f);
+	x = kNormAxis.x;
+	y = kNormAxis.y;
+	z = kNormAxis.z;
 	w = cosf(_fAngleRadian/2.0f);
 	return *this;
 }

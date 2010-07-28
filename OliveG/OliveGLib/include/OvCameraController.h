@@ -1,36 +1,19 @@
 #pragma once
-#include "OvXComponent.h"
+#include "OvInputEventListener.h"
+#include "OvPoint2.h"
 
-class OvPoint2;
-OvREF_POINTER(OvCameraController);
-class OvCameraController : public OvXComponent
+OvREF_POINTER(OvCameraController)
+class OvCameraController : public OvInputEventListener
 {
 	OvRTTI_DECL(OvCameraController);
-
 public:
-
-	enum eKeyFlag
-	{
-		eKeyFlag_Left,
-		eKeyFlag_Right,
-		eKeyFlag_Up,
-		eKeyFlag_Down,
-	};
-
 	OvCameraController();
 	~OvCameraController();
-
-	void			SetKeyFlag(eKeyFlag eFlag,bool bCheck);
-	bool			GetKeyFlag(eKeyFlag eFlag);
-
-	void			SetMouseMoveInterval(OvPoint2& pt2Interval);
-	OvPoint2&		GetMouseMoveInterval();
-
-	virtual void	Update(float _fElapse);
+	virtual bool MessageListen(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam);
 
 private:
-
-	struct OvPimple;
-	OvAutoPtr<OvPimple> m_pPimple;
-
+	OvPoint2 m_lastMoustPt;
+	OvPoint2 m_currentMoustPt;
+	OvPoint2 m_moustMoveInterval;
+	OvPoint2 m_accumulatedRotate;
 };
