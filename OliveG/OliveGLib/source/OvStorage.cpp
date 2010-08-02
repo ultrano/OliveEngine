@@ -100,7 +100,7 @@ void OvStorage::ExportObjectStructure( const char* pFile,const OvRTTI* rtti )
 
 	OvRTTI* kpRTTI = NULL;
 	for (kpRTTI = const_cast<OvRTTI*>(rtti)
-		;kpRTTI && kpRTTI->PropertyBag()
+		;NULL != kpRTTI 
 		;kpRTTI = const_cast<OvRTTI*>(kpRTTI->GetBaseRTTI()))
 	{
 		OvPropertyBag* kpPropBag = kpRTTI->PropertyBag();
