@@ -43,7 +43,6 @@ public:
 
 private:
 
-	string			m_strObjectName;
 	OvObjectID		m_idObjectID;
 
 	extra_property_table	m_extraPropertyTable;

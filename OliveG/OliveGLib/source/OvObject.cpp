@@ -12,13 +12,13 @@ using namespace std;
 OvRTTI_IMPL(OvObject);
 
 OvPROPERTY_BAG_BEGIN(OvObject);
-	OvPROPERTY_BAG_REGISTER( OvProp_STL_string,  m_strObjectName );
 	OvPROPERTY_BAG_REGISTER( OvProp_extra,  m_extraPropertyTable );
 OvPROPERTY_BAG_END(OvObject);
 
 OvObject::OvObject()
 {
 	m_idObjectID = OvObjectManager::GetInstance()->AllocObjectID(this);
+	RegisterExtraProperty( "Name", OliveValue::Factory( "String" ) );
 }
 OvObject::OvObject(OvStorage& rStorage)
 {
@@ -30,13 +30,21 @@ OvObject::~OvObject()
 	OvObjectManager::GetInstance()->RecallObjectID(this);
 }
 
-void	OvObject::SetName(const char* _pName)
+void	OvObject::SetName( const char* _pName )
 {
-	m_strObjectName = _pName;
+	if ( OliveValue::Value* nameProp = FindExtraProperty( "Name" ) )
+	{
+		nameProp->SetValue( _pName );
+	}
 }
 const string& OvObject::GetName()
 {
-	return m_strObjectName;
+	string name;
+	if ( OliveValue::Value* nameProp = FindExtraProperty( "Name" ) )
+	{
+		name = nameProp->GetValue();
+	}
+	return name;
 }
 
 OvObjectID		OvObject::GetObjectID()

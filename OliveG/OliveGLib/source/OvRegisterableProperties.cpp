@@ -476,7 +476,7 @@ bool	OvProp_extra::Inject(OvObject* pObj, OvObjectProperties& rObjStore)
 			string extra_type = propInfo;
 			extra_type.resize( typeLength );
 
-			OliveValue::Value*	extraValue = OliveValue::ValueFactory( extra_type );
+			OliveValue::Value*	extraValue = OliveValue::Factory( extra_type );
 			if ( extraValue )
 			{
 

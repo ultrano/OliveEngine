@@ -13,7 +13,7 @@ OvRTTI_IMPL(String);
 OvRTTI_IMPL(ObjectID);
 
 //////////////////////////////////////////////////////////////////////////
-#define REGIST_VALUE_TYPE_BEGINE OliveValue::Value*	OliveValue::ValueFactory(const std::string& valueType){\
+#define REGIST_VALUE_TYPE_BEGINE OliveValue::Value*	OliveValue::Factory(const std::string& valueType){\
 	if( valueType.empty() ){return NULL;}
 #define	REGIST_VALUE_TYPE( classname ) else if( std::string(#classname) == valueType){return OvNew classname();}
 #define REGIST_VALUE_TYPE_END	return NULL;};

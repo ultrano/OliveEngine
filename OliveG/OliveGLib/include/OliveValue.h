@@ -17,13 +17,16 @@ namespace OliveValue
 	__this_class( string& strValue ){SetValue(strValue);};\
 	__this_class( const type_name& typeValue ){m_value = typeValue;};
 
+	class Value;
+	Value*	Factory(const std::string& valueType);
+
 	class Value : public OvMemObject
 	{
+		friend Value*	Factory(const std::string& valueType);
 		friend class OvObject;
 		OvRTTI_DECL_ROOT(Value);
-		virtual ~Value();
-	public:
 		Value();
+		virtual ~Value();
 	public:
 		virtual void	SetValue( const string& expData ) = 0;
 		virtual string	GetValue() = 0;
@@ -115,7 +118,5 @@ namespace OliveValue
 		void			SetObjectID( const OvObjectID& expValue );
 		const OvObjectID&	GetObjectID();
 	};
-
-	Value*	ValueFactory(const std::string& valueType);
 
 }
