@@ -1,5 +1,4 @@
 #include "OvTranslateTable.h"
-#include "OvInterpolate.h"
 #include <map>
 
 typedef map<float,OvPoint3>	tdInterpolateTable;

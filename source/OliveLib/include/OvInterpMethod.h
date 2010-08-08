@@ -1,15 +1,9 @@
 #pragma once
-#include "OvMemObject.h"
-#include "OvUtility_RTTI.h"
 
-class OvInterpMethod : public OvMemObject
+class OvInterpolator;
+
+namespace OvInterpMethod
 {
-	OvRTTI_DECL_ROOT( OvInterpMethod );
-
-public:
-
-	virtual float Interpolating( float src, float dest) = 0;
-
-private:
-
-};
+	typedef float(*MethodType)( OvInterpolator* interplator, float src, float dest );
+	float Linear( OvInterpolator* interplator, float src, float dest );
+}

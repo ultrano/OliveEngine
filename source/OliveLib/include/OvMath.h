@@ -5,5 +5,4 @@
 #include "OvPoint3.h"
 #include "OvQuaternion.h"
 #include "OvMatrix.h"
-#include "OvInterpolate.h"
 #include "OvTransform.h"

@@ -279,34 +279,6 @@
 					</File>
 				</Filter>
 				<Filter
-					Name="OvDirectMacro"
-					>
-					<File
-						RelativePath=".\include\OvDirectMacro.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="OvDX9Renderer"
-					>
-					<File
-						RelativePath=".\source\OvDX9Renderer.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\include\OvDX9Renderer.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="OvInterpolate"
-					>
-					<File
-						RelativePath=".\include\OvInterpolate.h"
-						>
-					</File>
-				</Filter>
-				<Filter
 					Name="OvInterpolator"
 					>
 					<File
@@ -559,18 +531,6 @@
 					</File>
 					<File
 						RelativePath=".\include\OvResourceManager.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="OvRotateTable"
-					>
-					<File
-						RelativePath=".\source\OvRotateTable.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\include\OvRotateTable.h"
 						>
 					</File>
 				</Filter>
@@ -1513,18 +1473,6 @@
 					</File>
 					<File
 						RelativePath=".\include\OvTransformController.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="OvTranslateTable"
-					>
-					<File
-						RelativePath=".\source\OvTranslateTable.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\include\OvTranslateTable.h"
 						>
 					</File>
 				</Filter>

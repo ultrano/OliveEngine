@@ -1,3 +1,10 @@
 #include "OvInterpMethod.h"
+#include "OvInterpolator.h"
 
-OvRTTI_IMPL_ROOT( OvInterpMethod )
+using namespace OvInterpMethod;
+
+float Linear( OvInterpolator* interplator, float src, float dest )
+{
+
+	return 0;
+}
