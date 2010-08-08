@@ -40,7 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories=""
+				AdditionalIncludeDirectories="../GloryUnitTestKit\include;../SupportLib\vld\include;../OliveLib\shader;../SupportLib\tixml\include;../OliveLib\include"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -63,7 +63,7 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="d3dx9d.lib d3d9.lib GloryLib.lib OliveLib.lib tinyxmld.lib"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories=""
+				AdditionalLibraryDirectories="../debug;../SupportLib\tixml\lib;../SupportLib\vld\lib_d"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				TargetMachine="1"
