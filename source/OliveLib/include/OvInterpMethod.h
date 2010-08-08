@@ -8,6 +8,8 @@ class OvInterpMethod : public OvMemObject
 
 public:
 
+	virtual float Interpolating( float src, float dest) = 0;
+
 private:
 
 };
