@@ -163,7 +163,7 @@ void			String::SetString( const string& expValue )
 {
 	m_value = expValue;
 }
-string				String::GetString()
+const string&	String::GetString()
 {
 	return m_value;
 }

@@ -1,6 +1,7 @@
 #pragma once
 #include "OvRefBase.h"
 #include <vector>
+#include <string>
 
 OvREF_POINTER(OvObject);
 class OvObjectID;
@@ -20,7 +21,7 @@ public:
 	DWORD			CollectTreeObject(OvObjectSPtr	pObject);
 
 	OvObjectSPtr	GetByAt(int iIndex);
-	OvObjectSPtr	GetByName(const char* pName);
+	OvObjectSPtr	GetByName( const std::string& name );
 	OvObjectSPtr	GetByID( const OvObjectID& objectID );
 
 	DWORD			Count();

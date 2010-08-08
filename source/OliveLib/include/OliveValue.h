@@ -104,7 +104,7 @@ namespace OliveValue
 		virtual string	GetValue();
 	public:
 		void			SetString( const string& expValue );
-		string			GetString();
+		const string&	GetString();
 	};
 
 	class ObjectID : public OliveValue::Value

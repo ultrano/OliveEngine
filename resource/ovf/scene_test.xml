@@ -1,35 +1,32 @@
 <ObjectTable>
-  <Object type="OvCamera" id="2">
-    <prop>0</prop>
-    <prop>0</prop>
-    <prop>0.785398006</prop>
-    <prop>1</prop>
-    <prop>1000</prop>
-    <prop>1</prop>
-    <prop>0:</prop>
-    <prop>0</prop>
-    <prop>1.000000,1.000000,1.000000</prop>
-    <prop>0.000000,50.000000,0.000000</prop>
-    <prop>0.000000,0.000000,0.000000,1.000000</prop>
-    <prop>1:3!</prop>
-    <prop>Camera</prop>
-    <prop>0:</prop>
-  </Object>
-  <Object type="OvCameraController" id="3">
-    <prop>2</prop>
-    <prop></prop>
-    <prop>0:</prop>
-  </Object>
-  <Object type="OvModel" id="1">
-    <prop>OvMaterial:../../resource/material/test.matf0</prop>
-    <prop>OvMesh:../../resource/mesh/test.msf0</prop>
-    <prop>0:</prop>
-    <prop>0</prop>
-    <prop>1.000000,1.000000,1.000000</prop>
-    <prop>0.000000,0.000000,0.000000</prop>
-    <prop>0.000000,0.000000,0.000000,1.000000</prop>
-    <prop>0:</prop>
-    <prop>Model</prop>
-    <prop>0:</prop>
-  </Object>
+    <Object type="OvModel" id="3">
+        <prop>OvMaterial:../../resource/material/test.matf0</prop>
+        <prop>OvMesh:../../resource/mesh/test.msf0</prop>
+        <prop>0:</prop>
+        <prop>0</prop>
+        <prop>1.000000,1.000000,1.000000</prop>
+        <prop>0.000000,0.000000,0.000000</prop>
+        <prop>0.000000,0.000000,0.000000,1.000000</prop>
+        <prop>0:</prop>
+        <prop>1:[6-4-5]StringNameModel</prop>
+    </Object>
+    <Object type="OvCamera" id="1">
+        <prop>0</prop>
+        <prop>0</prop>
+        <prop>0.785398006</prop>
+        <prop>1</prop>
+        <prop>1000</prop>
+        <prop>1</prop>
+        <prop>0:</prop>
+        <prop>0</prop>
+        <prop>1.000000,1.000000,1.000000</prop>
+        <prop>0.000000,50.000000,0.000000</prop>
+        <prop>0.000000,0.000000,0.000000,1.000000</prop>
+        <prop>1:2!</prop>
+        <prop>1:[6-4-6]StringNameCamera</prop>
+    </Object>
+    <Object type="OvCameraController" id="2">
+        <prop>1</prop>
+        <prop>0:</prop>
+    </Object>
 </ObjectTable>

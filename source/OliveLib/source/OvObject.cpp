@@ -39,12 +39,17 @@ void	OvObject::SetName( const char* _pName )
 }
 const string& OvObject::GetName()
 {
-	string name;
 	if ( OliveValue::Value* nameProp = FindExtraProperty( "Name" ) )
 	{
-		name = nameProp->GetValue();
+		if ( OvRTTI_Util::IsTypeOf<OliveValue::String>( nameProp ) )
+		{
+			if ( OliveValue::String* name = static_cast<OliveValue::String*>( nameProp ) )
+			{
+				return name->GetString();
+			}
+		}
 	}
-	return name;
+	return "";
 }
 
 OvObjectID		OvObject::GetObjectID()

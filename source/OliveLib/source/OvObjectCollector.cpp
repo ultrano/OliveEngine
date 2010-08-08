@@ -2,6 +2,7 @@
 #include "OvObject.h"
 #include "OvObjectID.h"
 #include <algorithm>
+using namespace std;
 
 OvObjectCollector::OvObjectCollector()
 {
@@ -23,11 +24,11 @@ OvObjectSPtr	OvObjectCollector::GetByAt(int iIndex)
 {
 	return m_tdObjArray[iIndex];
 }
-OvObjectSPtr	OvObjectCollector::GetByName(const char* pName)
+OvObjectSPtr	OvObjectCollector::GetByName( const string& name )
 {
 	for each( tdObjectArray::value_type obj in m_tdObjArray )
 	{
-		if ( obj->GetName() == pName )
+		if ( obj->GetName() == name )
 		{
 			return obj;
 		}

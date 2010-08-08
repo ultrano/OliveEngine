@@ -409,9 +409,8 @@ bool	OvProp_extra::Extract(OvObject* pObj, OvObjectProperties& rObjStore)
 
 		OliveValue::Integer extraCount( extraTable.size() );
 		
+		unsigned savedPropCount = 0;
 		string extraInfo;
-		extraInfo = extraCount.GetValue() + ":";
-
 
 		for each( const OvObject::extra_property_table_pair extraProp in extraTable )
 		{
@@ -423,19 +422,26 @@ bool	OvProp_extra::Extract(OvObject* pObj, OvObjectProperties& rObjStore)
 			OliveValue::Integer nameLength( extraProp.first.size() );
 			OliveValue::Integer valueLength( extraValue->GetValue().size() );
 
-			// [9-5-1]somethingtest0
-			// type: something
-			// name: test
-			// value: 0
-			extraInfo += "[";
-			extraInfo += typeLength.GetValue();
-			extraInfo += "-";
-			extraInfo += nameLength.GetValue();
-			extraInfo += "-";
-			extraInfo += valueLength.GetValue();
-			extraInfo += "]";
-			extraInfo += typeName + extraProp.first + extraValue->GetValue();
+			if ( valueLength.GetInteger() )
+			{
+				// [9-5-1]somethingtest0
+				// type: something
+				// name: test
+				// value: 0
+				extraInfo += "[";
+				extraInfo += typeLength.GetValue();
+				extraInfo += "-";
+				extraInfo += nameLength.GetValue();
+				extraInfo += "-";
+				extraInfo += valueLength.GetValue();
+				extraInfo += "]";
+				extraInfo += typeName + extraProp.first + extraValue->GetValue();
+
+				++savedPropCount;
+			}
 		}
+
+		extraInfo = OliveValue::Integer( savedPropCount ).GetValue() + ":" + extraInfo;
 		rObjStore.PushValue( extraInfo );
 
 		return true;
