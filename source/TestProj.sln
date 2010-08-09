@@ -9,7 +9,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestProj", "TestProj\TestPr
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OliveLib", "OliveLib\OliveLib.vcproj", "{6F173ACA-8534-4A33-BFCE-232D8500DDA8}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GloryLib", "GloryUnitTestKit\GloryLib\GloryLib.vcproj", "{383BE356-ADF5-4B46-9D72-B6E32E5F1365}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GloryLib", "GloryUnitTestKit\GloryLib.vcproj", "{383BE356-ADF5-4B46-9D72-B6E32E5F1365}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
