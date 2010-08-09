@@ -40,7 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories=""
+				AdditionalIncludeDirectories="./include"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -1461,18 +1461,6 @@
 					</File>
 					<File
 						RelativePath=".\include\OvTransform.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="OvTransformController"
-					>
-					<File
-						RelativePath=".\source\OvTransformController.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\include\OvTransformController.h"
 						>
 					</File>
 				</Filter>
