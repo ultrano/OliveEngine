@@ -290,18 +290,6 @@
 						RelativePath=".\include\OvInterpolator.h"
 						>
 					</File>
-					<Filter
-						Name="OvInterpMethod"
-						>
-						<File
-							RelativePath=".\source\OvInterpMethod.cpp"
-							>
-						</File>
-						<File
-							RelativePath=".\include\OvInterpMethod.h"
-							>
-						</File>
-					</Filter>
 				</Filter>
 				<Filter
 					Name="OvLight"
