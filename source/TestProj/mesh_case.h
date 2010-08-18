@@ -2,7 +2,7 @@
 #include "OvXObject.h"
 #include "OvCameraController.h"
 
-GL_ENVIROMENT(OliveLibTest)
+GL_TEST_ENVIROMENT(OliveLibTest)
 {
 private:
 protected:

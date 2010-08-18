@@ -34,7 +34,7 @@ private:
 
 //_enviroment_name( const std::string& envName, const std::string& caseTitle ):GlBaseTestEnviroment(envName,caseTitle){};
 
-#define GL_ENVIROMENT( _enviroment_name ) \
+#define GL_TEST_ENVIROMENT( _enviroment_name ) \
 class _enviroment_name : public GlBaseTestEnviroment
 
 #define GL_ENV_SET_UP \
@@ -63,7 +63,7 @@ struct _enviroment##_##_testcase_title##_TestCaseRegister\
 void	_enviroment##_##_testcase_title::TestBody()
 
 
-GL_ENVIROMENT(BasicTestingEnviroment)
+GL_TEST_ENVIROMENT(BasicTestingEnviroment)
 {
 	GL_ENV_SET_UP
 	{

@@ -212,6 +212,18 @@
 				>
 			</File>
 		</Filter>
+		<Filter
+			Name="simple_game"
+			>
+			<Filter
+				Name="game_controller"
+				>
+				<File
+					RelativePath=".\game_controller.h"
+					>
+				</File>
+			</Filter>
+		</Filter>
 	</Files>
 	<Globals>
 	</Globals>

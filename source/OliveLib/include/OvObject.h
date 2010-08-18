@@ -39,6 +39,8 @@ public:
 	bool		RemoveExtraProperty( const string& propName );
 	void		ClearExtraProperty();
 
+	template<typename Type_0>
+	Type_0* FindExtraProperty( const string& propName );
 	OliveValue::Value* FindExtraProperty( const string& propName );
 
 private:
@@ -48,6 +50,18 @@ private:
 	extra_property_table	m_extraPropertyTable;
 
 };
+
+template<typename Type_0>
+Type_0* OvObject::FindExtraProperty( const string& propName )
+{
+	OliveValue::Value* extraValue = NULL;
+	extraValue = FindExtraProperty( propName );
+	if ( OvRTTI_Util::IsTypeOf<Type_0>( extraValue ) )
+	{
+		return ( Type_0* ) extraValue;
+	}
+	return NULL;
+}
 
 #define OvFACTORY_MEMBER(__class_name) friend class OvObjectFactory;\
 __class_name(OvObjectID& objID){objID = GetObjectID();};\
