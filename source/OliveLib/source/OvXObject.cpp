@@ -210,6 +210,7 @@ bool	OvXObject::_equip_component( OvXComponentSPtr component )
 {
 	if( component && component->GetTarget() == this )
 	{
+		component->SetUp();
 		return m_extraComponents.AddObject( component );
 	}
 	return false;
@@ -219,6 +220,7 @@ bool OvXObject::_remove_component( OvXComponentSPtr component )
 {
 	if( component && component->GetTarget() == this )
 	{
+		component->ShutDown();
 		return m_extraComponents.RemoveObject( component );
 	}
 	return false;

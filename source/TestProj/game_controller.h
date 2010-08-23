@@ -1,4 +1,6 @@
 
+#include "GMPhysics.h"
+
 GL_TEST_ENVIROMENT( Simple_Game )
 {
 	bool m_exitFlag;
@@ -14,6 +16,12 @@ GL_TEST_ENVIROMENT( Simple_Game )
 		store.Load( "../../resource/ovf/game_scene.xml", m_objectList);
 		m_mainCamera = m_objectList.GetByName("Camera");
 
+		OvXObjectSPtr ball = m_objectList.GetByName("Ball");
+		if ( ball )
+		{
+			GMPhysicsSPtr simple_physics = OvNew GMPhysics;
+			simple_physics->SetTarget( ball );
+		}
 	}
 
 	GL_ENV_TEAR_DOWN
@@ -45,6 +53,11 @@ public:
 							{
 							case VK_ESCAPE:
 								m_exitFlag = true;
+								break;
+							case VK_INSERT:
+								OvXObjectSPtr ball = m_objectList.GetByName("Ball");
+								OliveValue::Point3* velocity = ball->FindExtraProperty<OliveValue::Point3>( "velocity" );
+								velocity->SetPoint3( velocity->GetPoint3() + OvPoint3(0.1f,0,0) );
 								break;
 							}
 						}

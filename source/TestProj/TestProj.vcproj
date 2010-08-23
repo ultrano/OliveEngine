@@ -223,6 +223,22 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="componnent"
+				>
+				<Filter
+					Name="GMPhysics"
+					>
+					<File
+						RelativePath=".\GMPhysics.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\GMPhysics.h"
+						>
+					</File>
+				</Filter>
+			</Filter>
 		</Filter>
 	</Files>
 	<Globals>

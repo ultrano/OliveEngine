@@ -35,3 +35,13 @@ OvXObjectSPtr	OvXComponent::GetTarget()
 	return m_equippedObject;
 }
 
+
+void OvXComponent::SetUp()
+{
+
+}
+
+void OvXComponent::ShutDown()
+{
+
+}

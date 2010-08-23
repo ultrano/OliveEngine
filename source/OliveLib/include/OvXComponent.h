@@ -23,6 +23,8 @@ public:
 	void			SetTarget(OvXObjectSPtr _pEquippedObject);
 	OvXObjectSPtr	GetTarget();
 
+	virtual void	SetUp();
+	virtual void	ShutDown();
 	virtual void	Update(float _fElapse) = 0;
 
 private:

@@ -19,6 +19,16 @@ namespace OliveValue
 
 	class Value;
 	Value*	Factory(const std::string& valueType);
+	template<typename Type_0>
+	Type_0*	Factory()
+	{
+		OvRTTI* rtti = const_cast<OvRTTI*>(Type_0::GetRTTI());
+		if ( rtti )
+		{
+			return (Type_0*) Factory( rtti->TypeName() );
+		}
+		return NULL;
+	};
 
 	class Value : public OvMemObject
 	{
