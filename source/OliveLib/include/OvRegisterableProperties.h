@@ -1,23 +1,10 @@
 #pragma once
-#include "OvProperty.h"
-
-enum eRegisterable_Prop
-{
-	Prop_bool,
-	Prop_integer,
-	Prop_STL_string,
-	Prop_float,
-	Prop_float2,
-	Prop_float3,
-	Prop_float4,
-	Prop_transform,
-
-};
+#include "OvPropertyAccesser.h"
 
 // bool Property
-class OvProp_bool : public OvProperty
+class OvPropAccesser_bool : public OvPropertyAccesser
 {
-	OvRTTI_DECL(OvProp_bool);
+	OvRTTI_DECL(OvPropAccesser_bool);
 	virtual bool	Extract(OvObject* pObj, OvObjectProperties& rObjStore);
 	virtual bool	Inject(OvObject* pObj, OvObjectProperties& rObjStore);
 };
@@ -25,98 +12,98 @@ class OvProp_bool : public OvProperty
 
 
 // integer Property
-class OvProp_integer : public OvProperty
+class OvPropAccesser_integer : public OvPropertyAccesser
 {
-	OvRTTI_DECL(OvProp_integer);
+	OvRTTI_DECL(OvPropAccesser_integer);
 	virtual bool	Extract(OvObject* pObj, OvObjectProperties& rObjStore);
 	virtual bool	Inject(OvObject* pObj, OvObjectProperties& rObjStore);
 };
 //
 
 // stl::string Property
-class OvProp_STL_string : public OvProperty
+class OvPropAccesser_STL_string : public OvPropertyAccesser
 {
-	OvRTTI_DECL(OvProp_STL_string);
+	OvRTTI_DECL(OvPropAccesser_STL_string);
 	virtual bool	Extract(OvObject* pObj, OvObjectProperties& rObjStore);
 	virtual bool	Inject(OvObject* pObj, OvObjectProperties& rObjStore);
 };
 //
 
 // object_pointer Property
-class OvProp_object_pointer : public OvProperty
+class OvPropAccesser_object_pointer : public OvPropertyAccesser
 {
-	OvRTTI_DECL(OvProp_object_pointer);
+	OvRTTI_DECL(OvPropAccesser_object_pointer);
 	virtual bool	Extract(OvObject* pObj, OvObjectProperties& rObjStore);
 	virtual bool	Inject(OvObject* pObj, OvObjectProperties& rObjStore);
 };
 //
 
-// OvProp_object_smart_pointer Property
-class OvProp_object_smart_pointer : public OvProperty
+// OvPropAccesser_object_smart_pointer Property
+class OvPropAccesser_object_smart_pointer : public OvPropertyAccesser
 {
-	OvRTTI_DECL(OvProp_object_smart_pointer);
+	OvRTTI_DECL(OvPropAccesser_object_smart_pointer);
 	virtual bool	Extract(OvObject* pObj, OvObjectProperties& rObjStore);
 	virtual bool	Inject(OvObject* pObj, OvObjectProperties& rObjStore);
 };
 //
 
 // float Property
-class OvProp_float : public OvProperty
+class OvPropAccesser_float : public OvPropertyAccesser
 {
-	OvRTTI_DECL(OvProp_float);
+	OvRTTI_DECL(OvPropAccesser_float);
 	virtual bool	Extract(OvObject* pObj, OvObjectProperties& rObjStore);
 	virtual bool	Inject(OvObject* pObj, OvObjectProperties& rObjStore);
 };
 //
 
 // float3 Property
-class OvProp_float2 : public OvProperty
+class OvPropAccesser_float2 : public OvPropertyAccesser
 {
-	OvRTTI_DECL(OvProp_float2);
+	OvRTTI_DECL(OvPropAccesser_float2);
 	virtual bool	Extract(OvObject* pObj, OvObjectProperties& rObjStore);
 	virtual bool	Inject(OvObject* pObj, OvObjectProperties& rObjStore);
 };
 
 // float3 Property
-class OvProp_float3 : public OvProperty
+class OvPropAccesser_float3 : public OvPropertyAccesser
 {
-	OvRTTI_DECL(OvProp_float3);
+	OvRTTI_DECL(OvPropAccesser_float3);
 	virtual bool	Extract(OvObject* pObj, OvObjectProperties& rObjStore);
 	virtual bool	Inject(OvObject* pObj, OvObjectProperties& rObjStore);
 };
 //
 
 // float4 Property
-class OvProp_float4 : public OvProperty
+class OvPropAccesser_float4 : public OvPropertyAccesser
 {
-	OvRTTI_DECL(OvProp_float4);
+	OvRTTI_DECL(OvPropAccesser_float4);
 	virtual bool	Extract(OvObject* pObj, OvObjectProperties& rObjStore);
 	virtual bool	Inject(OvObject* pObj, OvObjectProperties& rObjStore);
 };
 //
 
 // transform Property
-class OvProp_transform : public OvProperty
+class OvPropAccesser_transform : public OvPropertyAccesser
 {
-	OvRTTI_DECL(OvProp_transform);
+	OvRTTI_DECL(OvPropAccesser_transform);
 	virtual bool	Extract(OvObject* pObj, OvObjectProperties& rObjStore);
 	virtual bool	Inject(OvObject* pObj, OvObjectProperties& rObjStore);
 };
 //
 
 // extra Property
-class OvProp_extra : public OvProperty
+class OvPropAccesser_extra_data : public OvPropertyAccesser
 {
-	OvRTTI_DECL(OvProp_extra);
+	OvRTTI_DECL(OvPropAccesser_extra_data);
 	virtual bool	Extract(OvObject* pObj, OvObjectProperties& rObjStore);
 	virtual bool	Inject(OvObject* pObj, OvObjectProperties& rObjStore);
 };
 //
 
 // objectcollector Property
-class OvProp_object_collector : public OvProperty
+class OvPropAccesser_object_collector : public OvPropertyAccesser
 {
-	OvRTTI_DECL(OvProp_object_collector);
+	OvRTTI_DECL(OvPropAccesser_object_collector);
 	virtual bool	Extract(OvObject* pObj, OvObjectProperties& rObjStore);
 	virtual bool	Inject(OvObject* pObj, OvObjectProperties& rObjStore);
 };
@@ -124,9 +111,9 @@ class OvProp_object_collector : public OvProperty
 
 //resource Property
 class OvResourceLoader;
-class OvProp_resource : public OvProperty
+class OvPropAccesser_resource : public OvPropertyAccesser
 {
-	OvRTTI_DECL(OvProp_resource);
+	OvRTTI_DECL(OvPropAccesser_resource);
 	virtual bool	Extract(OvObject* pObj, OvObjectProperties& rObjStore);
 	virtual bool	Inject(OvObject* pObj, OvObjectProperties& rObjStore);
 };

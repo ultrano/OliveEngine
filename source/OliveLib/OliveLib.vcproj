@@ -1157,11 +1157,11 @@
 					Name="OvProperty"
 					>
 					<File
-						RelativePath=".\source\OvProperty.cpp"
+						RelativePath=".\source\OvPropertyAccesser.cpp"
 						>
 					</File>
 					<File
-						RelativePath=".\include\OvProperty.h"
+						RelativePath=".\include\OvPropertyAccesser.h"
 						>
 					</File>
 				</Filter>
@@ -1630,6 +1630,10 @@
 					</File>
 				</Filter>
 			</Filter>
+		</Filter>
+		<Filter
+			Name="ÀÛ¾÷·Î"
+			>
 		</Filter>
 		<File
 			RelativePath=".\ReadMe.txt"

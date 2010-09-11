@@ -5,7 +5,7 @@
 //#include "OvRTTI.h"
 //#include "OvPropertyBag.h"
 //#include "OvPropertyNode.h"
-//#include "OvProperty.h"
+//#include "OvPropertyAccesser.h"
 //#include "OvObjectFactory.h"
 //#include "tinyxml.h"
 //using namespace std;
@@ -73,7 +73,7 @@
 //					;kpPropNode != NULL
 //					;kpPropNode = kpPropNode->GetNext())
 //				{
-//					OvProperty* kpProp = kpPropNode->GetProperty();
+//					OvPropertyAccesser* kpProp = kpPropNode->GetProperty();
 //					if (kpProp)
 //					{
 //						kpProp->Extract(pObj.GetRear(),rStore);
@@ -105,7 +105,7 @@
 //					;kpPropNode != NULL
 //					;kpPropNode = kpPropNode->GetNext())
 //				{
-//					OvProperty* kpProp = kpPropNode->GetProperty();
+//					OvPropertyAccesser* kpProp = kpPropNode->GetProperty();
 //					if (kpProp)
 //					{
 //						kpProp->Inject(pObj.GetRear(),rStore);

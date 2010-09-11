@@ -3,15 +3,17 @@
 #include "OvUtility_RTTI.h"
 #include "OvMemObject.h"
 
+#define PROPACCESSER( prop_type ) OvPropAccesser_##prop_type
+
 class OvObject;
 class OvObjectProperties;
-class OvProperty
+class OvPropertyAccesser
 {
-	OvRTTI_DECL_ROOT(OvProperty);
+	OvRTTI_DECL_ROOT(OvPropertyAccesser);
 public:
 
-	OvProperty();
-	virtual ~OvProperty();
+	OvPropertyAccesser();
+	virtual ~OvPropertyAccesser();
 
 	virtual bool	Extract(OvObject* pObj, OvObjectProperties& rXml) = 0;
 	virtual bool	Inject(OvObject* pObj, OvObjectProperties& rXml) = 0;

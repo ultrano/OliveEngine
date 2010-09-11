@@ -1,7 +1,7 @@
 #pragma once
 
 
-class OvProperty;
+class OvPropertyAccesser;
 class OvPropertyNode;
 
 class OvPropertyBag
@@ -14,7 +14,7 @@ public:
 	OvPropertyNode*	BeginProperty();
 	OvPropertyNode*	EndProperty();
 
-	OvPropertyNode*		AddProperty(OvProperty* pProperty);
+	OvPropertyNode*		AddProperty(OvPropertyAccesser* pProperty);
 
 private:
 
@@ -36,7 +36,7 @@ struct __SPropertiesDeclare_##_classname \
 
 //
 
-#define OvPROPERTY_BAG_REGISTER(_prop_type,_property) {OvProperty* kpProp = new _prop_type;\
+#define OvPROPERTY_BAG_REGISTER(_prop_type,_property) {OvPropertyAccesser* kpProp = new _prop_type;\
 	kpProp->SetOffset(offsetof(target_class,_property));\
 	kpProp->SetPropertyName(#_property);\
 	target_class::GetPropertyBag()->AddProperty(kpProp);}

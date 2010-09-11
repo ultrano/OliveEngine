@@ -30,7 +30,7 @@ OvPropertyNode*	OvPropertyBag::EndProperty()
 	return kpListEnd;
 }
 
-OvPropertyNode*		OvPropertyBag::AddProperty(OvProperty* pProperty)
+OvPropertyNode*		OvPropertyBag::AddProperty(OvPropertyAccesser* pProperty)
 {
 	OvPropertyNode* kpNewNode = 0;
 	if (pProperty)

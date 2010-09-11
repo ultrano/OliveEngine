@@ -1,5 +1,5 @@
 #include "OvPropertyNode.h"
-#include "OvProperty.h"
+#include "OvPropertyAccesser.h"
 
 OvPropertyNode::OvPropertyNode()
 :m_pProperty(0)
@@ -8,7 +8,7 @@ OvPropertyNode::OvPropertyNode()
 
 };
 
-OvPropertyNode::OvPropertyNode(OvProperty* pProperty)
+OvPropertyNode::OvPropertyNode(OvPropertyAccesser* pProperty)
 :m_pProperty(pProperty)
 ,m_pNext(0)
 {
@@ -24,7 +24,7 @@ OvPropertyNode::~OvPropertyNode()
 	}
 }
 
-OvProperty*		OvPropertyNode::GetProperty()
+OvPropertyAccesser*		OvPropertyNode::GetProperty()
 {
 	return m_pProperty;
 }

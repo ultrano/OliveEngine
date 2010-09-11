@@ -4,7 +4,7 @@
 #include "OvUtility_RTTI.h"
 #include "OvPropertyBag.h"
 #include "OvPropertyNode.h"
-#include "OvProperty.h"
+#include "OvPropertyAccesser.h"
 #include "OvObject.h"
 #include "OvObjectFactory.h"
 #include "OvRelationLinkBuilder.h"
@@ -115,7 +115,7 @@ void OvStorage::ExportObjectStructure( const char* pFile,const OvRTTI* rtti )
 				;kpPropNode != NULL
 				;kpPropNode = kpPropNode->GetNext())
 			{
-				if (OvProperty* kpProp = kpPropNode->GetProperty())
+				if (OvPropertyAccesser* kpProp = kpPropNode->GetProperty())
 				{
 					TiXmlElement member( kpProp->GetPropertyName().c_str() );
 					root.InsertEndChild( member );
@@ -185,7 +185,7 @@ bool	OvStorage::_extract_property(OvObject* pObj,OvObjectProperties& rStore)
 					;kpPropNode != NULL
 					;kpPropNode = kpPropNode->GetNext())
 				{
-					OvProperty* kpProp = kpPropNode->GetProperty();
+					OvPropertyAccesser* kpProp = kpPropNode->GetProperty();
 					if (kpProp)
 					{
 						kpProp->Extract(pObj,rStore);
@@ -221,7 +221,7 @@ bool	OvStorage::_inject_property(OvObject* pObj,OvObjectProperties& rStore)
 					;kpPropNode != NULL
 					;kpPropNode = kpPropNode->GetNext())
 				{
-					OvProperty* kpProp = kpPropNode->GetProperty();
+					OvPropertyAccesser* kpProp = kpPropNode->GetProperty();
 					if (kpProp)
 					{
 						kpProp->Inject(pObj,rStore);

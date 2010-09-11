@@ -1,18 +1,18 @@
 #pragma once
 
 
-class OvProperty;
+class OvPropertyAccesser;
 
 class OvPropertyNode
 {
 public:
 	OvPropertyNode();
-	OvPropertyNode(OvProperty* pProperty);
+	OvPropertyNode(OvPropertyAccesser* pProperty);
 	~OvPropertyNode();
-	OvProperty*		GetProperty();
+	OvPropertyAccesser*		GetProperty();
 	void			SetNext(OvPropertyNode*);
 	OvPropertyNode*	GetNext();
 private:
-	OvProperty*		m_pProperty;
+	OvPropertyAccesser*		m_pProperty;
 	OvPropertyNode* m_pNext;
 };

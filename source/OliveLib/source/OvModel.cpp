@@ -6,8 +6,8 @@
 
 OvRTTI_IMPL(OvModel)
 OvPROPERTY_BAG_BEGIN(OvModel)
-	OvPROPERTY_BAG_REGISTER( OvProp_resource, m_material )
-	OvPROPERTY_BAG_REGISTER( OvProp_resource, m_resourceMesh )
+	OvPROPERTY_BAG_REGISTER( OvPropAccesser_resource, m_material )
+	OvPROPERTY_BAG_REGISTER( OvPropAccesser_resource, m_resourceMesh )
 OvPROPERTY_BAG_END(OvModel)
 
 OvModel::OvModel()

@@ -5,7 +5,7 @@ OvRTTI_IMPL(OvXComponent);
 
 
 OvPROPERTY_BAG_BEGIN(OvXComponent);
-	OvPROPERTY_BAG_REGISTER( OvProp_object_pointer, m_equippedObject );
+	OvPROPERTY_BAG_REGISTER( OvPropAccesser_object_pointer, m_equippedObject );
 OvPROPERTY_BAG_END(OvXComponent);
 
 

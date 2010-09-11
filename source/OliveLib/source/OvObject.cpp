@@ -2,7 +2,7 @@
 #include "OvObjectManager.h"
 #include "OvStringUtility.h"
 #include "OvStorage.h"
-#include "OvProperty.h"
+#include "OvPropertyAccesser.h"
 #include "OvRegisterableProperties.h"
 #include "OliveValue.h"
 
@@ -12,7 +12,7 @@ using namespace std;
 OvRTTI_IMPL(OvObject);
 
 OvPROPERTY_BAG_BEGIN(OvObject);
-	OvPROPERTY_BAG_REGISTER( OvProp_extra,  m_extraPropertyTable );
+	OvPROPERTY_BAG_REGISTER( OvPropAccesser_extra_data,  m_extraPropertyTable );
 OvPROPERTY_BAG_END(OvObject);
 
 OvObject::OvObject()

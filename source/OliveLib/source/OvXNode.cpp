@@ -9,7 +9,7 @@ using namespace std;
 OvRTTI_IMPL(OvXNode);
 
 OvPROPERTY_BAG_BEGIN(OvXNode);
-	OvPROPERTY_BAG_REGISTER(OvProp_object_collector,m_clectrChildCollect);
+	OvPROPERTY_BAG_REGISTER(OvPropAccesser_object_collector,m_clectrChildCollect);
 OvPROPERTY_BAG_END(OvXNode);
 
 

@@ -3,16 +3,16 @@
 #include "OvXComponent.h"
 #include "OvObjectCollector.h"
 #include "OvStringUtility.h"
-#include "OvProperty.h"
+#include "OvPropertyAccesser.h"
 #include "OvRegisterableProperties.h"
 
 OvRTTI_IMPL(OvXObject);
 OvPROPERTY_BAG_BEGIN(OvXObject);
-	OvPROPERTY_BAG_REGISTER( OvProp_object_pointer, m_pParent );
-	OvPROPERTY_BAG_REGISTER( OvProp_float3,  m_tfLocalTransform.Scale );
-	OvPROPERTY_BAG_REGISTER( OvProp_float3,  m_tfLocalTransform.Position );
-	OvPROPERTY_BAG_REGISTER( OvProp_float4,  m_tfLocalTransform.Quaternion );
-	OvPROPERTY_BAG_REGISTER( OvProp_object_collector,  m_extraComponents );
+	OvPROPERTY_BAG_REGISTER( OvPropAccesser_object_pointer, m_pParent );
+	OvPROPERTY_BAG_REGISTER( OvPropAccesser_float3,  m_tfLocalTransform.Scale );
+	OvPROPERTY_BAG_REGISTER( OvPropAccesser_float3,  m_tfLocalTransform.Position );
+	OvPROPERTY_BAG_REGISTER( OvPropAccesser_float4,  m_tfLocalTransform.Quaternion );
+	OvPROPERTY_BAG_REGISTER( OvPropAccesser_object_collector,  m_extraComponents );
 OvPROPERTY_BAG_END(OvXObject);
 
 OvXObject::OvXObject()
