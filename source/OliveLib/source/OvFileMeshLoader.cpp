@@ -140,21 +140,28 @@ SVertexStreamInfo OvFileMeshLoader::_parseStreamLow()
 	vector< OvPoint3 > tanBuffer;
 
 	vertNum.SetValue( _readLine() );
+	posBuffer.reserve( vertNum.GetInteger() );
 	for ( unsigned i = 0 ; i < vertNum.GetInteger() ; ++i )
 	{
 		OliveValue::Point3 pos( _readLine() );
 		posBuffer.push_back( pos.GetPoint3() );
 	}
+
+	normBuffer.reserve( vertNum.GetInteger() );
 	for ( unsigned i = 0 ; i < vertNum.GetInteger() ; ++i )
 	{
 		OliveValue::Point3 norm( _readLine() );
 		normBuffer.push_back( norm.GetPoint3() );
 	}
+
+	tanBuffer.reserve( vertNum.GetInteger() );
 	for ( unsigned i = 0 ; i < vertNum.GetInteger() ; ++i )
 	{
 		OliveValue::Point3 tan( _readLine() );
 		tanBuffer.push_back( tan.GetPoint3() );
 	}
+
+	bufferLow.reserve( vertNum.GetInteger() );
 	for ( unsigned i = 0 ; i < vertNum.GetInteger() ; ++i )
 	{
 		SVertex_Low vertexLow
@@ -185,6 +192,7 @@ SVertexStreamInfo OvFileMeshLoader::_parseStreamMedium()
 	medium_stream_buffer buffer;
 
 	OliveValue::Integer vertCount( _readLine() );
+	buffer.reserve( vertCount.GetInteger() );
 	for ( unsigned i = 0 ; i < vertCount.GetInteger() ; ++i )
 	{
 		OliveValue::Point2 tvert( _readLine() );
@@ -211,6 +219,7 @@ LPDIRECT3DINDEXBUFFER9 OvFileMeshLoader::_parseIndexStream()
 	OliveValue::Integer faceCount( _readLine() );
 	face_buffer faceBuffer;
 
+	faceBuffer.reserve( faceCount.GetInteger() );
 	for ( size_t i = 0 ; i < faceCount.GetInteger() ; ++i)
 	{
 		OliveValue::Point3 readIndex( _readLine() );
