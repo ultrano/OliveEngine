@@ -24,7 +24,7 @@ private:
 
 #define OvPROPERTY_BAG_DECL(_classname) private:static OvPropertyBag msh_OvPropertyBag;\
 	friend struct __SPropertiesDeclare_##_classname;\
-	public:static OvPropertyBag* GetPropertyBag(){return &msh_OvPropertyBag;};\
+	public:static OvPropertyBag* _getPropertyBag(){return &msh_OvPropertyBag;};\
 //
 
 #define	OvPROPERTY_BAG_BEGIN(_classname) OvPropertyBag _classname::msh_OvPropertyBag;\
@@ -39,11 +39,11 @@ struct __SPropertiesDeclare_##_classname \
 #define OvPROPERTY_BAG_REGISTER(_prop_type,_property) {OvPropertyAccesser* kpProp = new _prop_type;\
 	kpProp->SetOffset(offsetof(target_class,_property));\
 	kpProp->SetPropertyName(#_property);\
-	target_class::GetPropertyBag()->AddProperty(kpProp);}
+	target_class::_getPropertyBag()->AddProperty(kpProp);}
 
 //
 
-#define OvPROPERTY_BAG_END(_classname) ((OvRTTI*)_classname::GetRTTI())->SetPropertyBag(_classname::GetPropertyBag());\
+#define OvPROPERTY_BAG_END(_classname) ((OvRTTI*)_classname::GetRTTI())->SetPropertyBag(_classname::_getPropertyBag());\
 	}\
 }	__SPropertiesDeclare_##_classname##_Instance;
 
