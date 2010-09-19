@@ -211,6 +211,10 @@
 				RelativePath=".\xml_cdata_parse_case.h"
 				>
 			</File>
+			<File
+				RelativePath=".\xml_class_test.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="simple_game"

@@ -1634,6 +1634,30 @@
 		<Filter
 			Name="ÀÛ¾÷·Î"
 			>
+			<Filter
+				Name="OvXmlStreamer"
+				>
+				<File
+					RelativePath=".\source\OvXmlStreamer.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\OvXmlStreamer.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="OvXmlValue"
+				>
+				<File
+					RelativePath=".\source\OvXmlValue.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\OvXmlValue.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<File
 			RelativePath=".\ReadMe.txt"
