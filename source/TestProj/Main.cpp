@@ -10,6 +10,7 @@
 #include "mesh_case.h"
 */
 #include "game_controller.h"
+#include "temporary_testing.h"
 
 int	APIENTRY	WinMain(HINSTANCE hi,HINSTANCE,LPSTR,int)
 {

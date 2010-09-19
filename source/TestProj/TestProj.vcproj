@@ -208,6 +208,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\temporary_testing.h"
+				>
+			</File>
+			<File
 				RelativePath=".\xml_cdata_parse_case.h"
 				>
 			</File>
