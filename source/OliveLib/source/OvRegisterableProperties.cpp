@@ -21,9 +21,10 @@ bool	OvPropAccesser_bool::Extract(OvObject* pObj, OvObjectProperties& rObjStore)
 	if (pObj)
 	{
 		bool* kpProp = (bool*)Access(pObj);
-		if (kpProp)
+		if ( kpProp )
 		{
-			rObjStore.PushValue((*kpProp)?"1":"0");
+			OliveValue::Bool converter = *kpProp;
+			rObjStore.PushValue( converter );
 
 			return true;
 		}
@@ -37,13 +38,12 @@ bool	OvPropAccesser_bool::Inject(OvObject* pObj, OvObjectProperties& rObjStore)
 		bool* kpProp = (bool*)Access(pObj);
 		if (kpProp)
 		{
-			string kstrValue;
-			if (rObjStore.PopValue(kstrValue))
+			OliveValue::Bool converter;
+			if ( rObjStore.PopValue( converter ) )
 			{
-				*kpProp = (string("1") == kstrValue);
-			}
-		
-			return true;
+				*kpProp = converter;
+				return true;
+			}		
 		}
 	}
 	return false;
@@ -60,8 +60,8 @@ bool	OvPropAccesser_integer::Extract(OvObject* pObj, OvObjectProperties& rObjSto
 		int* kpProp = (int*)Access(pObj);
 		if (kpProp)
 		{
-			string kstrValue = OvFormatString("%d",*kpProp);
-			rObjStore.PushValue(kstrValue);
+			OliveValue::Integer converter = *kpProp;
+			rObjStore.PushValue( converter );
 
 			return true;
 		}
@@ -73,15 +73,14 @@ bool	OvPropAccesser_integer::Inject(OvObject* pObj, OvObjectProperties& rObjStor
 	if (pObj)
 	{
 		int* kpProp = (int*)Access(pObj);
-		if (kpProp)
+		if ( kpProp )
 		{
-			string kstrValue;
-			if (rObjStore.PopValue(kstrValue))
+			OliveValue::Integer converter;
+			if (rObjStore.PopValue( converter ))
 			{
-				sscanf_s(kstrValue.data(),"%d",kpProp);
+				*kpProp = converter;
+				return true;
 			}
-
-			return true;
 		}
 	}
 	return false;
@@ -128,7 +127,7 @@ bool	OvPropAccesser_object_pointer::Extract(OvObject* pObj, OvObjectProperties& 
 	if ( kpProp )
 	{
 		OliveValue::ObjectID extractValue;
-		if (*kpProp )
+		if ( *kpProp )
 		{		
 			extractValue.SetObjectID( (*kpProp)->GetObjectID() );
 		}
@@ -221,9 +220,8 @@ bool	OvPropAccesser_float::Extract(OvObject* pObj, OvObjectProperties& rObjStore
 		float* kpProp = (float*)Access(pObj);
 		if (kpProp)
 		{
-			OliveValue::Float extractValue;
-			extractValue.SetFloat(*kpProp);
-			rObjStore.PushValue(extractValue);
+			OliveValue::Float converter = *kpProp;
+			rObjStore.PushValue( converter );
 
 			return true;
 		}
@@ -237,13 +235,12 @@ bool	OvPropAccesser_float::Inject(OvObject* pObj, OvObjectProperties& rObjStore)
 		float* kpProp = (float*)Access(pObj);
 		if (kpProp)
 		{
-			OliveValue::Float extractValue;
-			if (rObjStore.PopValue(extractValue))
+			OliveValue::Float converter;
+			if (rObjStore.PopValue( converter ))
 			{
-				*kpProp = extractValue.GetFloat();
+				*kpProp = converter;
+				return true;
 			}
-
-			return true;
 		}
 	}
 	return false;
@@ -262,9 +259,8 @@ bool	OvPropAccesser_float2::Extract(OvObject* pObj, OvObjectProperties& rObjStor
 	float* kpProp = (float*)Access(pObj);
 	if (kpProp)
 	{
-		OliveValue::Point2 extractValue;
-		extractValue.SetPoint2( (const OvPoint2&)*kpProp );
-		rObjStore.PushValue(extractValue);
+		OliveValue::Point2 converter = (const OvPoint2&)*kpProp;
+		rObjStore.PushValue( converter );
 		return true;
 	}
 	return false;
@@ -274,10 +270,12 @@ bool	OvPropAccesser_float2::Inject(OvObject* pObj, OvObjectProperties& rObjStore
 	float* kpProp = (float*)Access(pObj);
 	if (kpProp)
 	{
-		OliveValue::Point2 injectValue;
-		rObjStore.PopValue(injectValue);
-		*(OvPoint2*)kpProp = injectValue.GetPoint2();
-		return true;
+		OliveValue::Point2 converter;
+		if ( rObjStore.PopValue( converter ) )
+		{
+			*(OvPoint2*)kpProp = converter;
+			return true;
+		}
 	}
 	return false;
 }
@@ -294,9 +292,8 @@ bool	OvPropAccesser_float3::Extract(OvObject* pObj, OvObjectProperties& rObjStor
 	float* kpProp = (float*)Access(pObj);
 	if (kpProp)
 	{
-		OliveValue::Point3 extractValue;
-		extractValue.SetPoint3( (const OvPoint3&)*kpProp );
-		rObjStore.PushValue( extractValue );
+		OliveValue::Point3 converter = (const OvPoint3&)*kpProp;
+		rObjStore.PushValue( converter );
 		return true;
 	}
 	return false;
@@ -306,9 +303,11 @@ bool	OvPropAccesser_float3::Inject(OvObject* pObj, OvObjectProperties& rObjStore
 	float* kpProp = (float*)Access(pObj);
 	if (kpProp)
 	{
-		OliveValue::Point3 injectValue;
-		rObjStore.PopValue( injectValue );
-		*(OvPoint3*)kpProp = injectValue.GetPoint3();
+		OliveValue::Point3 converter;
+		if ( rObjStore.PopValue( converter ) )
+		{
+			*(OvPoint3*)kpProp = converter;
+		}
 		return true;
 	}
 	return false;
@@ -324,11 +323,10 @@ OvRTTI_IMPL(OvPropAccesser_float4)
 bool	OvPropAccesser_float4::Extract(OvObject* pObj, OvObjectProperties& rObjStore)
 {
 	float* kpProp = (float*)Access(pObj);
-	if (kpProp)
+	if ( kpProp )
 	{
-		OliveValue::Quaternion extractValue;
-		extractValue.SetQuaternion( (const OvQuaternion&)*kpProp );
-		rObjStore.PushValue(extractValue);
+		OliveValue::Quaternion converter = (const OvQuaternion&)*kpProp;
+		rObjStore.PushValue( converter );
 		return true;
 	}
 	return false;
@@ -336,12 +334,14 @@ bool	OvPropAccesser_float4::Extract(OvObject* pObj, OvObjectProperties& rObjStor
 bool	OvPropAccesser_float4::Inject(OvObject* pObj, OvObjectProperties& rObjStore)
 {
 	float* kpProp = (float*)Access(pObj);
-	if (kpProp)
+	if ( kpProp )
 	{
-		OliveValue::Quaternion injectValue;
-		rObjStore.PopValue(injectValue);
-		*(OvQuaternion*)kpProp = injectValue.GetQuaternion();
-		return true;
+		OliveValue::Quaternion converter;
+		if ( rObjStore.PopValue( converter ) )
+		{		
+			*(OvQuaternion*)kpProp = converter;
+			return true;
+		}
 	}
 	return false;
 }

@@ -9,13 +9,16 @@
 namespace OliveValue
 {
 
-#define	ACCEPT_STRING_CONSTRUCTOR( type_name )	\
+#define	OLIVE_VALUE_TYPE( type_name )	\
 	private:type_name m_value;\
 	public:\
 	__this_class(){};\
 	__this_class( const char* strValue ){SetValue( string( strValue ) );};\
 	__this_class( string& strValue ){SetValue(strValue);};\
-	__this_class( const type_name& typeValue ){m_value = typeValue;};
+	__this_class( const type_name& typeValue ){m_value = typeValue;};\
+	const __this_class& operator=( const type_name& typeValue ){ m_value = typeValue; return *this; };\
+	operator const type_name& (){ return m_value; };
+
 
 	class Value;
 	Value*	Factory(const std::string& valueType);
@@ -42,10 +45,22 @@ namespace OliveValue
 		virtual string	GetValue() = 0;
 	};
 
+	class Bool : public OliveValue::Value
+	{
+		OvRTTI_DECL(Bool);
+		OLIVE_VALUE_TYPE(bool);
+	public:
+		virtual void	SetValue( const string& expData );
+		virtual string	GetValue();
+	public:
+		void			SetBool( bool expData );
+		bool			GetBool();
+
+	};
 	class Float : public OliveValue::Value
 	{
 		OvRTTI_DECL(Float);
-		ACCEPT_STRING_CONSTRUCTOR(float);
+		OLIVE_VALUE_TYPE(float);
 	public:
 		virtual void	SetValue( const string& expData );
 		virtual string	GetValue();
@@ -57,7 +72,7 @@ namespace OliveValue
 	class Point2 : public OliveValue::Value
 	{
 		OvRTTI_DECL(Point2);
-		ACCEPT_STRING_CONSTRUCTOR(OvPoint2);
+		OLIVE_VALUE_TYPE(OvPoint2);
 	public:
 		virtual void	SetValue( const string& expData );
 		virtual string	GetValue();
@@ -70,7 +85,7 @@ namespace OliveValue
 	class Point3 : public OliveValue::Value
 	{
 		OvRTTI_DECL(Point3);
-		ACCEPT_STRING_CONSTRUCTOR(OvPoint3);
+		OLIVE_VALUE_TYPE(OvPoint3);
 	public:
 		virtual void	SetValue( const string& expData );
 		virtual string	GetValue();
@@ -83,7 +98,7 @@ namespace OliveValue
 	class Quaternion : public OliveValue::Value
 	{
 		OvRTTI_DECL(Quaternion);
-		ACCEPT_STRING_CONSTRUCTOR(OvQuaternion);
+		OLIVE_VALUE_TYPE(OvQuaternion);
 	public:
 		virtual void	SetValue( const string& expData );
 		virtual string	GetValue();
@@ -96,7 +111,7 @@ namespace OliveValue
 	class Integer : public OliveValue::Value
 	{
 		OvRTTI_DECL(Integer);
-		ACCEPT_STRING_CONSTRUCTOR(int);
+		OLIVE_VALUE_TYPE(int);
 	public:
 		virtual void	SetValue( const string& expData );
 		virtual string	GetValue();
@@ -108,7 +123,7 @@ namespace OliveValue
 	class String : public OliveValue::Value
 	{
 		OvRTTI_DECL(String);
-		ACCEPT_STRING_CONSTRUCTOR(string);
+		OLIVE_VALUE_TYPE(string);
 	public:
 		virtual void	SetValue( const string& expData );
 		virtual string	GetValue();
@@ -120,7 +135,7 @@ namespace OliveValue
 	class ObjectID : public OliveValue::Value
 	{
 		OvRTTI_DECL(ObjectID);
-		ACCEPT_STRING_CONSTRUCTOR(OvObjectID);
+		OLIVE_VALUE_TYPE(OvObjectID);
 	public:
 		virtual void	SetValue( const string& expData );
 		virtual string	GetValue();

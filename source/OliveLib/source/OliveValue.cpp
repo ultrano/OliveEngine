@@ -4,6 +4,7 @@
 using namespace OliveValue;
 OvRTTI_IMPL_ROOT(Value);
 
+OvRTTI_IMPL(Bool);
 OvRTTI_IMPL(Float);
 OvRTTI_IMPL(Point2);
 OvRTTI_IMPL(Point3);
@@ -19,6 +20,7 @@ OvRTTI_IMPL(ObjectID);
 #define REGIST_VALUE_TYPE_END	return NULL;};
 //////////////////////////////////////////////////////////////////////////
 REGIST_VALUE_TYPE_BEGINE
+	REGIST_VALUE_TYPE( Bool )
 	REGIST_VALUE_TYPE( Float )
 	REGIST_VALUE_TYPE( Point2 )
 	REGIST_VALUE_TYPE( Point3 )
@@ -38,6 +40,34 @@ Value::Value()
 Value::~Value()
 {
 
+}
+//////////////////////////////////////////////////////////////////////////
+
+void OliveValue::Bool::SetValue( const string& expData )
+{
+	if ( stricmp( "0",expData.c_str() ) == 0 || stricmp( "false",expData.c_str() ) == 0 )
+	{
+		m_value = false;
+	}
+	else if ( stricmp( "1",expData.c_str() ) == 0 || stricmp( "true",expData.c_str() ) == 0 )
+	{
+		m_value = true;
+	}
+}
+
+std::string OliveValue::Bool::GetValue()
+{
+	return boost::lexical_cast<string>(m_value);
+}
+
+void OliveValue::Bool::SetBool( bool expData )
+{
+	m_value = expData;
+}
+
+bool OliveValue::Bool::GetBool()
+{
+	return m_value;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -186,4 +216,3 @@ const OvObjectID& ObjectID::GetObjectID()
 {
 	return m_value;
 }
-//////////////////////////////////////////////////////////////////////////
