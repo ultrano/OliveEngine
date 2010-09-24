@@ -250,8 +250,6 @@ bool	OvPropAccesser_float::Inject(OvObject* pObj, OvObjectProperties& rObjStore)
 ////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////				float2					/////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////
-#define float2_to_string(_float,_string) (_string = string(OvFormatString("%f %f",((_float)[0]),((_float)[1]))))
-#define string_to_float2(_string,_float) (sscanf_s(_string.data(),"%f %f",&((_float)[0]),&((_float)[1])))
 
 OvRTTI_IMPL(OvPropAccesser_float2)
 bool	OvPropAccesser_float2::Extract(OvObject* pObj, OvObjectProperties& rObjStore)
@@ -283,8 +281,6 @@ bool	OvPropAccesser_float2::Inject(OvObject* pObj, OvObjectProperties& rObjStore
 ////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////				float3					/////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////
-#define float3_to_string(_float,_string) (_string = string(OvFormatString("%f %f %f",((_float)[0]),((_float)[1]),((_float)[2]))))
-#define string_to_float3(_string,_float) (sscanf_s(_string.data(),"%f %f %f",&((_float)[0]),&((_float)[1]),&((_float)[2])))
 
 OvRTTI_IMPL(OvPropAccesser_float3)
 bool	OvPropAccesser_float3::Extract(OvObject* pObj, OvObjectProperties& rObjStore)
@@ -316,8 +312,6 @@ bool	OvPropAccesser_float3::Inject(OvObject* pObj, OvObjectProperties& rObjStore
 ////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////				float4					/////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////
-#define float4_to_string(_float,_string) (_string = string(OvFormatString("%f %f %f %f",((_float)[0]),((_float)[1]),((_float)[2]),((_float)[3]))))
-#define string_to_float4(_string,_float) (sscanf_s(_string.data(),"%f %f %f %f",&((_float)[0]),&((_float)[1]),&((_float)[2]),&((_float)[3])))
 
 OvRTTI_IMPL(OvPropAccesser_float4)
 bool	OvPropAccesser_float4::Extract(OvObject* pObj, OvObjectProperties& rObjStore)
@@ -356,16 +350,12 @@ bool	OvPropAccesser_transform::Extract(OvObject* pObj, OvObjectProperties& rObjS
 	OvTransform* kpProp = (OvTransform*)Access(pObj);
 	if (kpProp)
 	{
-		string kstrValue;
 
-		float3_to_string(&(kpProp->Scale),kstrValue);
-		rObjStore.PushValue(kstrValue);
+		rObjStore.PushValue( OliveValue::Point3( kpProp->Scale ) );
 
-		float3_to_string(&(kpProp->Position),kstrValue);
-		rObjStore.PushValue(kstrValue);
+		rObjStore.PushValue( OliveValue::Point3( kpProp->Position ) );
 
-		float4_to_string(&(kpProp->Quaternion),kstrValue);
-		rObjStore.PushValue(kstrValue);
+		rObjStore.PushValue( OliveValue::Quaternion( kpProp->Quaternion ) );
 
 		return true;
 	}
@@ -376,16 +366,17 @@ bool	OvPropAccesser_transform::Inject(OvObject* pObj, OvObjectProperties& rObjSt
 	OvTransform* kpProp = (OvTransform*)Access(pObj);
 	if (kpProp)
 	{
-		string kstrValue;
+		OliveValue::Point3 scale;
+		OliveValue::Point3 position;
+		OliveValue::Quaternion quat;
 
-		rObjStore.PopValue(kstrValue);
-		string_to_float3(kstrValue,	&(kpProp->Scale));
+		rObjStore.PopValue( scale );
+		rObjStore.PopValue( position );
+		rObjStore.PopValue( quat );
 
-		rObjStore.PopValue(kstrValue);
-		string_to_float3(kstrValue,	&(kpProp->Position));
-
-		rObjStore.PopValue(kstrValue);
-		string_to_float3(kstrValue,	&(kpProp->Quaternion));
+		kpProp->Scale = scale;
+		kpProp->Position = position;
+		kpProp->Quaternion = quat;
 
 		return true;
 	}
