@@ -1,10 +1,10 @@
 #include "OvPropertyBag.h"
-#include "OvPropertyNode.h"
+#include "OvPropAccesserNode.h"
 
 OvPropertyBag::~OvPropertyBag()
 {
-	OvPropertyNode* kpDeleteNode = BeginProperty();
-	OvPropertyNode* kpNextNode	= 0;
+	OvPropAccesserNode* kpDeleteNode = BeginAccessNode();
+	OvPropAccesserNode* kpNextNode	= 0;
 	while (kpDeleteNode)
 	{
 		kpNextNode = kpDeleteNode->GetNext();
@@ -13,13 +13,13 @@ OvPropertyBag::~OvPropertyBag()
 	}
 }
 
-OvPropertyNode*	OvPropertyBag::BeginProperty()
+OvPropAccesserNode*	OvPropertyBag::BeginAccessNode()
 {
 	return m_pListBegin;
 };
-OvPropertyNode*	OvPropertyBag::EndProperty()
+OvPropAccesserNode*	OvPropertyBag::EndAccessNode()
 {
-	OvPropertyNode* kpListEnd = m_pListBegin;
+	OvPropAccesserNode* kpListEnd = m_pListBegin;
 	if (kpListEnd)
 	{
 		while (kpListEnd->GetNext())
@@ -30,13 +30,13 @@ OvPropertyNode*	OvPropertyBag::EndProperty()
 	return kpListEnd;
 }
 
-OvPropertyNode*		OvPropertyBag::AddProperty(OvPropertyAccesser* pProperty)
+OvPropAccesserNode*		OvPropertyBag::AddProperty(OvPropertyAccesser* pProperty)
 {
-	OvPropertyNode* kpNewNode = 0;
+	OvPropAccesserNode* kpNewNode = 0;
 	if (pProperty)
 	{
-		kpNewNode = new OvPropertyNode(pProperty);
-		OvPropertyNode* kpListEnd = EndProperty();
+		kpNewNode = new OvPropAccesserNode(pProperty);
+		OvPropAccesserNode* kpListEnd = EndAccessNode();
 		if (kpNewNode && kpListEnd)
 		{
 			kpListEnd->SetNext(kpNewNode);

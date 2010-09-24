@@ -3,7 +3,7 @@
 #include "OvObjectProperties.h"
 #include "OvUtility_RTTI.h"
 #include "OvPropertyBag.h"
-#include "OvPropertyNode.h"
+#include "OvPropAccesserNode.h"
 #include "OvPropertyAccesser.h"
 #include "OvObject.h"
 #include "OvObjectFactory.h"
@@ -81,10 +81,12 @@ bool	OvStorage::Load(const char* pFile, OvObjectCollector& loadedObjects)
 	if ( m_xmlDoc.LoadFile( pFile, TIXML_ENCODING_UTF8 ) )
 	{
 		TiXmlElement* rootElem = m_xmlDoc.RootElement();
-		TiXmlElement* firstObjElem = rootElem->FirstChildElement("Object");
-		if ( firstObjElem )
+
+		for ( TiXmlElement* objElem = rootElem->FirstChildElement("Object")
+			; objElem != NULL
+			; objElem = objElem->NextSiblingElement("Object") )
 		{
-			_restore_object( *firstObjElem );
+			_restore_object( *objElem );
 		}
 		_rebuild_related_link( m_restoreObjectTable, m_linkBuilderList );
 
@@ -110,8 +112,8 @@ void OvStorage::ExportObjectStructure( const char* pFile,const OvRTTI* rtti )
 		OvPropertyBag* kpPropBag = kpRTTI->PropertyBag();
 		if (kpPropBag)
 		{
-			OvPropertyNode* kpPropNode = NULL;
-			for (kpPropNode = kpPropBag->BeginProperty()
+			OvPropAccesserNode* kpPropNode = NULL;
+			for (kpPropNode = kpPropBag->BeginAccessNode()
 				;kpPropNode != NULL
 				;kpPropNode = kpPropNode->GetNext())
 			{
@@ -162,10 +164,6 @@ void	OvStorage::_restore_object( TiXmlElement& objElem )
 			rStore.LinkBuilderListMoveTo( m_linkBuilderList );
 		}
 	}
-	if (TiXmlElement* nextElem = objElem.NextSiblingElement("Object"))
-	{
-		_restore_object( *nextElem );
-	}
 }
 bool	OvStorage::_extract_property(OvObject* pObj,OvObjectProperties& rStore)
 {
@@ -180,8 +178,8 @@ bool	OvStorage::_extract_property(OvObject* pObj,OvObjectProperties& rStore)
 			OvPropertyBag* kpPropBag = kpRTTI->PropertyBag();
 			if (kpPropBag)
 			{
-				OvPropertyNode* kpPropNode = NULL;
-				for (kpPropNode = kpPropBag->BeginProperty()
+				OvPropAccesserNode* kpPropNode = NULL;
+				for (kpPropNode = kpPropBag->BeginAccessNode()
 					;kpPropNode != NULL
 					;kpPropNode = kpPropNode->GetNext())
 				{
@@ -216,8 +214,8 @@ bool	OvStorage::_inject_property(OvObject* pObj,OvObjectProperties& rStore)
 			OvPropertyBag* kpPropBag = kpRTTI->PropertyBag();
 			if (kpPropBag)
 			{
-				OvPropertyNode* kpPropNode = NULL;
-				for (kpPropNode = kpPropBag->BeginProperty()
+				OvPropAccesserNode* kpPropNode = NULL;
+				for (kpPropNode = kpPropBag->BeginAccessNode()
 					;kpPropNode != NULL
 					;kpPropNode = kpPropNode->GetNext())
 				{

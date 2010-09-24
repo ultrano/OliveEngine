@@ -2,7 +2,7 @@
 
 
 class OvPropertyAccesser;
-class OvPropertyNode;
+class OvPropAccesserNode;
 
 class OvPropertyBag
 {
@@ -11,14 +11,14 @@ public:
 	OvPropertyBag():m_pListBegin(0){};
 	~OvPropertyBag();
 
-	OvPropertyNode*	BeginProperty();
-	OvPropertyNode*	EndProperty();
+	OvPropAccesserNode*	BeginAccessNode();
+	OvPropAccesserNode*	EndAccessNode();
 
-	OvPropertyNode*		AddProperty(OvPropertyAccesser* pProperty);
+	OvPropAccesserNode*		AddProperty(OvPropertyAccesser* pProperty);
 
 private:
 
-	OvPropertyNode* m_pListBegin;
+	OvPropAccesserNode* m_pListBegin;
 
 };
 

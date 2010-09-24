@@ -18,8 +18,6 @@ namespace OliveValue
 class OvObjectProperties : public OvMemObject
 {
 public:
-	static OvObjectProperties	INVALID;
-public:
 
 	OvObjectProperties();
 	~OvObjectProperties();

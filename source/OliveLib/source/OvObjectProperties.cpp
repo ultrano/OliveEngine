@@ -2,7 +2,6 @@
 #include "OliveValue.h"
 #include "OvRelationLinkBuilder.h"
 
-OvObjectProperties	OvObjectProperties::INVALID;
 
 OvObjectProperties::OvObjectProperties()
 :m_idObjectID( OvObjectID::INVALID )

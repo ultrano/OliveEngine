@@ -1178,14 +1178,14 @@
 					</File>
 				</Filter>
 				<Filter
-					Name="OvPropertyNode"
+					Name="OvPropAccesserNode"
 					>
 					<File
-						RelativePath=".\source\OvPropertyNode.cpp"
+						RelativePath=".\source\OvPropAccesserNode.cpp"
 						>
 					</File>
 					<File
-						RelativePath=".\include\OvPropertyNode.h"
+						RelativePath=".\include\OvPropAccesserNode.h"
 						>
 					</File>
 				</Filter>
