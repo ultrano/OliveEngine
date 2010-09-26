@@ -69,25 +69,25 @@ void OvResourceManager::ResourceCache( OvResourceSPtr resource )
 }
 void OvResourceManager::_register_loaded_resource( OvResource* resource, const string& location )
 {
-	resource_table::iterator itor = m_resourceTable.find( resource );
-	if ( m_resourceTable.end() != itor )
+	resource_location_table::iterator itor = m_resourceLocationTable.find( resource );
+	if ( m_resourceLocationTable.end() != itor )
 	{
 		itor->second = location;
 	}
 }
 
-void OvResourceManager::_resource_created( OvResource* resource )
+void OvResourceManager::_call_when_resource_created( OvResource* resource )
 {
-	m_resourceTable[ resource ] = "";
+	m_resourceLocationTable[ resource ] = "";
 }
-void OvResourceManager::_resource_deleted( OvResource* resource )
+void OvResourceManager::_call_when_resource_deleted( OvResource* resource )
 {
-	m_resourceTable.erase( resource );
+	m_resourceLocationTable.erase( resource );
 }
 
 OvResourceSPtr OvResourceManager::_find_loaded_resource( const OvRTTI* resourceType, const string& location )
 {
-	for each( const resource_table::value_type& typevalue in m_resourceTable)
+	for each( const resource_location_table::value_type& typevalue in m_resourceLocationTable)
 	{
 		OvResource* resource = typevalue.first;
 		if ( resource->QueryRTTI() == resourceType )
@@ -104,8 +104,8 @@ OvResourceSPtr OvResourceManager::_find_loaded_resource( const OvRTTI* resourceT
 string OvResourceManager::FindFileLocation( OvResource* resource )
 {
 	string fileLocation = "";
-	resource_table::iterator itor = m_resourceTable.find( resource );
-	if ( m_resourceTable.end() != itor )
+	resource_location_table::iterator itor = m_resourceLocationTable.find( resource );
+	if ( m_resourceLocationTable.end() != itor )
 	{
 		fileLocation = itor->second;
 	}

@@ -1,5 +1,5 @@
 #include "OvCameraController.h"
-#include "OvInputDevice.h"
+#include "OvMessageManager.h"
 #include "OvQuaternion.h"
 #include "OvCamera.h"
 #include "OvRegisterableProperties.h"
@@ -29,7 +29,7 @@ bool OvCameraController::MessageListen( HWND hwnd, UINT message, WPARAM wparam, 
 
 			target_camera->SetRotation( yRot * xRot );
 
-			m_accumulatedRotate = ( m_accumulatedRotate + OvInputDevice::GetInstance()->GetMouseInterval() );
+			m_accumulatedRotate = ( m_accumulatedRotate + OvMessageManager::GetInstance()->GetMouseInterval() );
 		}
 		break;
 	case WM_KEYDOWN : 

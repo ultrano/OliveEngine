@@ -8,7 +8,7 @@
 class OvResourceManager : public OvSingletonBase< OvResourceManager >
 {
 	typedef std::map<const OvRTTI*, OvResourceLoaderSPtr>	resource_loader_table;
-	typedef std::map< OvResource*, std::string >			resource_table;
+	typedef std::map< OvResource*, std::string >			resource_location_table;
 	typedef std::list< OvResourceSPtr >						resource_cache_list;
 	friend class OvResource;
 public:
@@ -27,12 +27,13 @@ public:
 private:
 
 	void _register_loaded_resource( OvResource* resource, const string& location );
-	void	_resource_created( OvResource* resource );
-	void	_resource_deleted( OvResource* resource );
 	OvResourceSPtr _find_loaded_resource( const OvRTTI* resourceType, const string& location);
+	void	_call_when_resource_created( OvResource* resource );
+	void	_call_when_resource_deleted( OvResource* resource );
+
 private:
 	resource_loader_table	m_loaderTable;
-	resource_table	m_resourceTable;
+	resource_location_table	m_resourceLocationTable;
 	resource_cache_list m_cacheList;
 };
 

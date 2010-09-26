@@ -2,6 +2,22 @@
 #include "OvRefBase.h"
 #include "OvBitFlags.h"
 
+
+class OvResourceLocation : public OvMemObject
+{
+public:
+	static void SetResourceFolder( const std::string& folder );
+	OvResourceLocation( const char* file);
+	OvResourceLocation( const std::string& file );
+	~OvResourceLocation();
+
+	const std::string& GetCompletedFileLocation();
+
+private:
+	static std::string sm_resourceFolder;
+	std::string m_completedFileLocation;
+};
+
 OvREF_POINTER(OvResource);
 class OvResource : public OvRefBase
 {

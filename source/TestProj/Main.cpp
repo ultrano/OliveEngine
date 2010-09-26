@@ -9,8 +9,8 @@
 #include "math_function_case.h"
 #include "mesh_case.h"
 */
-#include "game_controller.h"
 #include "temporary_testing.h"
+#include "game_controller.h"
 
 int	APIENTRY	WinMain(HINSTANCE hi,HINSTANCE,LPSTR,int)
 {

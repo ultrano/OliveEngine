@@ -44,7 +44,7 @@
 #include "OvModel.h"
 #include "OvTexture.h"
 
-#include "OvInputDevice.h"
+#include "OvMessageManager.h"
 
 #include "OvTextureLoader.h"
 #include "OvXmlMeshLoader.h"

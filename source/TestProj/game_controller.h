@@ -52,7 +52,11 @@ public:
 							switch ( msg.wParam )
 							{
 							case VK_ESCAPE:
-								m_exitFlag = true;
+								if ( m_exitFlag == false)
+								{
+									m_exitFlag = true;
+									RenderToTexture( GetMainCamera(), m_objectList );
+								}
 								break;
 							case VK_INSERT:
 								OvXObjectSPtr ball = m_objectList.GetByName("Ball");
@@ -111,6 +115,36 @@ public:
 		}
 		OvRenderer::GetInstance()->EndTarget();
 		OvRenderer::GetInstance()->PresentTarget();
+	}
+
+	void RenderToTexture( OvCameraSPtr camera, OvObjectCollector objectList )
+	{
+		OvRenderTargetSPtr render_target = CreateRenderTexture(1024,1024,1,D3DFORMAT::D3DFMT_A16B16G16R16);
+		float timeCycle = GetTickCount();
+		timeCycle = timeCycle / 1000.0f;
+
+		OvMatrix view_project = camera->GetViewMatrix() * camera->GetProjectMatrix();
+
+		OvShaderManager::GetInstance()->SetVSConst( OvMatVSConst::ViewProject, view_project );
+		OvShaderManager::GetInstance()->SetVSConst( OvMatVSConst::ViewPos, camera->GetWorldTranslate() );
+
+		OvShaderManager::GetInstance()->SetPSConst( OvMatPSConst::Time, timeCycle);
+		OvShaderManager::GetInstance()->SetVSConst( OvMatVSConst::Time, timeCycle);
+
+		OvRenderer::GetInstance()->ClearTarget();
+		render_target->Begin();
+		for ( int i = 0 ; i < objectList.Count() ; ++i )
+		{
+			OvXObjectSPtr obj = objectList.GetByAt(i);
+			if (OvRTTI_Util::IsKindOf<OvModel>(obj))
+			{
+				OvModelSPtr model = obj;
+				model->Render();
+			}
+		}
+		render_target->End();
+		OvRenderer::GetInstance()->PresentTarget();
+		HRESULT hr = D3DXSaveTextureToFile("../../resource/texture/save_test.bmp",D3DXIMAGE_FILEFORMAT::D3DXIFF_BMP,render_target->ToDxTexture(),NULL);
 	}
 
 };

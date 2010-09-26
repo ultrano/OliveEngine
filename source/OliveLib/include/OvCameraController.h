@@ -1,9 +1,9 @@
 #pragma once
-#include "OvInputEventListener.h"
+#include "OvMessageListener.h"
 #include "OvPoint2.h"
 
 OvREF_POINTER(OvCameraController)
-class OvCameraController : public OvInputEventListener
+class OvCameraController : public OvMessageListener
 {
 	OvRTTI_DECL(OvCameraController);
 public:
