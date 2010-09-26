@@ -2,10 +2,10 @@
 #include "OvXComponent.h"
 #include <list>
 
-class OvInputEventListener : public OvXComponent
+class OvMessageListener : public OvXComponent
 {
-	OvRTTI_DECL(OvInputEventListener);
-	friend class OvInputDevice;
+	OvRTTI_DECL(OvMessageListener);
+	friend class OvMessageManager;
 public:
 	struct InputMessage
 	{
@@ -17,8 +17,8 @@ public:
 		LPARAM lparam;
 	};
 
-	OvInputEventListener();
-	~OvInputEventListener();
+	OvMessageListener();
+	~OvMessageListener();
 
 	virtual bool MessageListen(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) = 0;
 

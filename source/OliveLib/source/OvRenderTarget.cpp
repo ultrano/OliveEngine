@@ -1,108 +1,80 @@
 #include "OvRenderTarget.h"
 #include "OvRenderer.h"
-#include "OvTexture.h"
-#include "OvSurface.h"
-#include <d3dx9.h>
 
-struct OvRenderTarget::OvPimple : OvMemObject
+OvRTTI_IMPL( OvRenderTarget );
+
+OvRenderTarget::OvRenderTarget( LPDIRECT3DTEXTURE9 texture, LPDIRECT3DSURFACE9 depth )
+: OvTexture( texture )
+, m_reservedTargetIndex( -1 )
+, m_oldTargetSurface( NULL )
+, m_newDepthSurface( depth )
+, m_oldDepthSurface( NULL )
 {
-	OvTextureSPtr	mTargetTexture;
-	OvSurfaceSPtr		m_pDepthStencilSurface;
-	bool			m_bIsTargetLocked;
-	LPDIRECT3DSURFACE9				m_pOldRenderTarget;
-	LPDIRECT3DSURFACE9				m_pOldDSBuffer;
-};
-
-OvRenderTarget::OvRenderTarget()
-:m_pPimple(OvNew OvRenderTarget::OvPimple)
-{
-	m_pPimple->m_bIsTargetLocked = false;
-	m_pPimple->mTargetTexture	=	NULL;
-	m_pPimple->m_pDepthStencilSurface	=	NULL;
-	m_pPimple->m_pOldRenderTarget	=	NULL;
-	m_pPimple->m_pOldDSBuffer	=	NULL;
-
 
 }
 
 OvRenderTarget::~OvRenderTarget()
 {
-	m_pPimple->mTargetTexture = NULL;
+
 }
-void	OvRenderTarget::SetRenderTexture(OvTextureSPtr pTexture)
+bool OvRenderTarget::Begin( unsigned targetIndex /*= 0*/ )
 {
-	if ( OvRTTI_Util::IsKindOf< OvTexture >( pTexture ) )
+	LPDIRECT3DDEVICE9 device = OvRenderer::GetInstance()->GetDevice();
+	if ( device )
 	{
-		m_pPimple->mTargetTexture = pTexture;
-	}
-}
-
-OvTextureSPtr OvRenderTarget::GetRenderTexture()
-{
-	return m_pPimple->mTargetTexture;
-}
-
-void	OvRenderTarget::SetDepthStencilSurface(OvSurfaceSPtr pSurface)
-{
-	m_pPimple->m_pDepthStencilSurface = pSurface;
-}
-OvSurfaceSPtr OvRenderTarget::GetDepthStencilSurface()
-{
-	return m_pPimple->m_pDepthStencilSurface;
-}
-
-void	OvRenderTarget::LockTarget()
-{
-	if (IsTargetLocked() == false)
-	{
-		m_pPimple->m_bIsTargetLocked = true;
-		LPDIRECT3DDEVICE9	kpDevice = OvRenderer::GetInstance()->GetDevice();
-		LPDIRECT3DTEXTURE9	kpTexture	=	NULL;
-		if (kpDevice)
+		if ( LPDIRECT3DSURFACE9 newTargetSurface = GetSurface() )
 		{
-			LPDIRECT3DSURFACE9	kpNewSurface = NULL;
-			if (GetRenderTexture())
+			HRESULT hr0 = device->GetRenderTarget( targetIndex, &m_oldTargetSurface );
+			HRESULT hr1 = device->SetRenderTarget( targetIndex, newTargetSurface );
+			if ( SUCCEEDED( hr0 ) && SUCCEEDED( hr1 ) )
 			{
-				kpNewSurface = NULL;
-
-				kpTexture	=	GetRenderTexture()->ToDxTexture();
-				kpDevice->GetRenderTarget(0,&m_pPimple->m_pOldRenderTarget);
-				kpTexture->GetSurfaceLevel(0,&kpNewSurface);
-				kpDevice->SetRenderTarget(0,kpNewSurface);
-			}
-
-			if (GetDepthStencilSurface())
-			{
-				kpNewSurface = NULL;
-
-				kpNewSurface = (LPDIRECT3DSURFACE9)GetDepthStencilSurface()->GetSurface();
-				kpDevice->GetDepthStencilSurface(&m_pPimple->m_pOldDSBuffer);
-				kpDevice->SetDepthStencilSurface(kpNewSurface);
+				m_reservedTargetIndex = targetIndex;
+				return OvRenderer::GetInstance()->BeginTarget();
 			}
 		}
 	}
+	return false;
 }
-void	OvRenderTarget::UnlockTarget()
+
+bool OvRenderTarget::End()
 {
-	if (IsTargetLocked())
+	if ( m_reservedTargetIndex != -1 )
 	{
-		LPDIRECT3DDEVICE9	kpDevice = OvRenderer::GetInstance()->GetDevice();
-		m_pPimple->m_bIsTargetLocked = false;
-		if (m_pPimple->m_pOldRenderTarget)
+		if ( OvRenderer::GetInstance()->EndTarget() )
 		{
-			kpDevice->SetRenderTarget(0,m_pPimple->m_pOldRenderTarget);
-			m_pPimple->m_pOldRenderTarget->Release();
+			LPDIRECT3DDEVICE9 device = OvRenderer::GetInstance()->GetDevice();
+			if ( device && m_oldTargetSurface )
+			{
+				if ( SUCCEEDED( device->SetRenderTarget( m_reservedTargetIndex, m_oldTargetSurface ) ) )
+				{
+					m_oldTargetSurface->Release();
+					m_oldTargetSurface = NULL;
+					m_reservedTargetIndex = -1;
+					return true;
+				}
+			}
 		}
-		if (m_pPimple->m_pOldDSBuffer)
-		{
-			kpDevice->SetDepthStencilSurface(m_pPimple->m_pOldDSBuffer);
-			m_pPimple->m_pOldDSBuffer->Release();
-		}
-		m_pPimple->m_pOldRenderTarget	=	NULL;
-		m_pPimple->m_pOldDSBuffer	=	NULL;
 	}
+	return false;
 }
-bool	OvRenderTarget::IsTargetLocked()
+//////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
+
+
+OvRenderTargetSPtr CreateRenderTexture( unsigned width, unsigned height, unsigned level, D3DFORMAT format )
 {
-	return m_pPimple->m_bIsTargetLocked;
+	OvTextureSPtr return_texture = NULL;
+	LPDIRECT3DDEVICE9 device = OvRenderer::GetInstance()->GetDevice();
+	if ( device )
+	{
+		LPDIRECT3DTEXTURE9 texture = NULL;
+		HRESULT hs = E_FAIL;
+		hs = D3DXCreateTexture( device, width, height, level, D3DUSAGE_RENDERTARGET, format, D3DPOOL_DEFAULT, &texture );
+		if ( SUCCEEDED( hs ) )
+		{
+			return_texture = OvNew OvRenderTarget( texture );
+		}
+	}
+	return return_texture;
 }

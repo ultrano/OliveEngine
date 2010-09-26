@@ -40,7 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="./include;./shader;../SupportLib/tixml/include"
+				AdditionalIncludeDirectories="./include;../SupportLib/tixml/include;./shader"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -491,6 +491,14 @@
 					Name="OvRenderTarget"
 					>
 					<File
+						RelativePath=".\source\Old_OvRenderTarget.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\include\Old_OvRenderTarget.h"
+						>
+					</File>
+					<File
 						RelativePath=".\source\OvRenderTarget.cpp"
 						>
 					</File>
@@ -908,26 +916,26 @@
 					</File>
 				</Filter>
 				<Filter
-					Name="OvInputDevice"
+					Name="OvMessageManager"
 					>
 					<File
-						RelativePath=".\source\OvInputDevice.cpp"
+						RelativePath=".\source\OvMessageManager.cpp"
 						>
 					</File>
 					<File
-						RelativePath=".\include\OvInputDevice.h"
+						RelativePath=".\include\OvMessageManager.h"
 						>
 					</File>
 				</Filter>
 				<Filter
-					Name="OvInputEventListener"
+					Name="OvMessageListener"
 					>
 					<File
-						RelativePath=".\source\OvInputEventListener.cpp"
+						RelativePath=".\source\OvMessageListener.cpp"
 						>
 					</File>
 					<File
-						RelativePath=".\include\OvInputEventListener.h"
+						RelativePath=".\include\OvMessageListener.h"
 						>
 					</File>
 				</Filter>

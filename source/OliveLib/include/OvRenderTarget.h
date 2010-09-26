@@ -1,31 +1,27 @@
 #pragma once
+#include "OvTexture.h"
 
-#include "OvRefBase.h"
-#include "OvAutoPtr.h"
-
-OvREF_POINTER(OvTexture);
-OvREF_POINTER(OvSurface);
-OvREF_POINTER(OvRenderTarget);
-
-class OvRenderTarget : public OvRefBase
+OvREF_POINTER( OvRenderTarget );
+class OvRenderTarget : public OvTexture
 {
+	OvRTTI_DECL( OvRenderTarget );
+
 public:
 
-	OvRenderTarget();
+	OvRenderTarget( LPDIRECT3DTEXTURE9 texture, LPDIRECT3DSURFACE9 depth = NULL );
 	~OvRenderTarget();
 
-	void	SetRenderTexture(OvTextureSPtr pTexture);
-	OvTextureSPtr GetRenderTexture();
-
-	void	SetDepthStencilSurface(OvSurfaceSPtr pSurface);
-	OvSurfaceSPtr GetDepthStencilSurface();
-
-	void	LockTarget();
-	void	UnlockTarget();
-
-	bool	IsTargetLocked();
+	bool Begin( unsigned targetIndex = 0);
+	bool End();
 
 private:
-	struct OvPimple;
-	OvAutoPtr< OvPimple> m_pPimple;
+
+	unsigned m_reservedTargetIndex;
+
+	LPDIRECT3DSURFACE9 m_oldTargetSurface;
+
+	LPDIRECT3DSURFACE9 m_newDepthSurface;
+	LPDIRECT3DSURFACE9 m_oldDepthSurface;
+
 };
+OvRenderTargetSPtr CreateRenderTexture( unsigned width, unsigned height, unsigned level, D3DFORMAT format );

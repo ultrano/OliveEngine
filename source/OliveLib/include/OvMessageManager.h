@@ -5,13 +5,13 @@
 #include <windows.h>
 #include <list>
 
-class OvInputDevice : public OvSingletonBase< OvInputDevice >
+class OvMessageManager : public OvSingletonBase< OvMessageManager >
 {
-	friend class OvInputEventListener;
-	typedef std::list<OvInputEventListener*>	listener_list;
+	friend class OvMessageListener;
+	typedef std::list<OvMessageListener*>	listener_list;
 public:
-	OvInputDevice();
-	~OvInputDevice();
+	OvMessageManager();
+	~OvMessageManager();
 
 public:
 
@@ -25,8 +25,8 @@ public:
 private:
 
 	bool	_listenMessage( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
-	void	_register_listener( OvInputEventListener* listener );
-	void	_remove_listener( OvInputEventListener* listener );
+	void	_register_listener( OvMessageListener* listener );
+	void	_remove_listener( OvMessageListener* listener );
 
 private:
 	listener_list	m_listenerList;
