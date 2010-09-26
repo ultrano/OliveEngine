@@ -46,11 +46,6 @@ LPD3DXBUFFER	CompileShaderFromFile( const string& file, const string& funcName, 
 		if ( compileResult )
 		{
 			OvAssertMsg( ( char* )compileResult->GetBufferPointer() );
-			compileResult->Release();
-		}
-		if ( shaderBuffer )
-		{
-			shaderBuffer->Release();
 		}
 		return NULL;
 	}
@@ -85,11 +80,6 @@ LPD3DXBUFFER	CompileShaderFromCode( const string& code, const string& funcName, 
 		if ( compileResult )
 		{
 			OvAssertMsg( ( char* )compileResult->GetBufferPointer() );
-			compileResult->Release();
-		}
-		if ( shaderBuffer )
-		{
-			shaderBuffer->Release();
 		}
 		return NULL;
 	}
