@@ -1,5 +1,5 @@
 #include "OvRenderer.h"
-#include "OvInputDevice.h"
+#include "OvMessageManager.h"
 
 #include <d3dx9.h>
 #include "OvTexture.h"
@@ -75,7 +75,7 @@ bool		OvRenderer::GenerateRenderer()
 	WndClass.hCursor		=	LoadCursor(NULL,IDC_ARROW);
 	WndClass.hIcon			=	LoadIcon(NULL,IDI_APPLICATION);
 	WndClass.hInstance		=	GetModuleHandle(NULL);
-	WndClass.lpfnWndProc	=	(WNDPROC)OvInputDevice::ListenMessage;
+	WndClass.lpfnWndProc	=	(WNDPROC)OvMessageManager::ListenMessage;
 	WndClass.lpszClassName	=	windowClassName;
 	WndClass.lpszMenuName	=	NULL;
 	WndClass.style			=	CS_HREDRAW | CS_VREDRAW;
@@ -116,9 +116,9 @@ bool		OvRenderer::GenerateRenderer()
 
 	//m_device->SetRenderState(D3DRS_ZENABLE,TRUE);
 
-	m_device->SetSamplerState( 1, D3DSAMP_MINFILTER, D3DTEXF_LINEAR );
-	m_device->SetSamplerState( 1, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR );
-	m_device->SetRenderState(D3DRS_CULLMODE,D3DCULL_CW);
+	// 	m_device->SetSamplerState( 1, D3DSAMP_MINFILTER, D3DTEXF_LINEAR );
+	// 	m_device->SetSamplerState( 1, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR );
+	// 	m_device->SetRenderState(D3DRS_CULLMODE,D3DCULL_CW);
 	//m_device->SetRenderState(D3DRS_LIGHTING,false);
 
 	return SUCCEEDED(hr);

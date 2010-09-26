@@ -14,10 +14,13 @@ class OvTexture : public OvResource
 public:
 
 	OvTexture();
+	OvTexture( LPDIRECT3DTEXTURE9 texture );
 	~OvTexture();
 
 	LPDIRECT3DTEXTURE9 ToDxTexture();
+	LPDIRECT3DSURFACE9 GetSurface( unsigned level = 0 );
 
 private:
 	LPDIRECT3DTEXTURE9 m_texture;
 };
+
