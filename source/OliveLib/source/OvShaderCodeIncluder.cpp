@@ -22,7 +22,7 @@ STDMETHODIMP OvShaderCodeIncluder::Open( THIS_ D3DXINCLUDE_TYPE IncludeType, LPC
 		fileLocation = m_basePath + "/" + pFileName;
 		break;
 	case D3DXINC_LOCAL : 
-		fileLocation = pFileName;
+		fileLocation = OvResourceLocation( pFileName );
 		break;
 	}
 

@@ -58,7 +58,7 @@ struct SAutoStoreCleaner
 	SAutoStoreCleaner(OvStorage* cleanTarget):m_cleanTarget(cleanTarget){};
 	~SAutoStoreCleaner(){if(m_cleanTarget)m_cleanTarget->Clear();};
 };
-bool	OvStorage::Save(const char* pFile, OvObjectCollector& saveObjects )
+bool	OvStorage::Save( const std::string& pFile, OvObjectCollector& saveObjects )
 {
 	SAutoStoreCleaner autoCleaner(this);
 
@@ -71,14 +71,14 @@ bool	OvStorage::Save(const char* pFile, OvObjectCollector& saveObjects )
 		_store_object( streObj.GetRear() );
 	}
 
-	return m_xmlDoc.SaveFile( pFile );
+	return m_xmlDoc.SaveFile( pFile.c_str() );
 }
 
-bool	OvStorage::Load(const char* pFile, OvObjectCollector& loadedObjects)
+bool	OvStorage::Load( const std::string& pFile, OvObjectCollector& loadedObjects)
 {
 	SAutoStoreCleaner autoCleaner(this);
 
-	if ( m_xmlDoc.LoadFile( pFile, TIXML_ENCODING_UTF8 ) )
+	if ( m_xmlDoc.LoadFile( pFile.c_str(), TIXML_ENCODING_UTF8 ) )
 	{
 		TiXmlElement* rootElem = m_xmlDoc.RootElement();
 

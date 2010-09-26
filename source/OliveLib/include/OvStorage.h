@@ -18,8 +18,8 @@ public:
 	OvStorage();
 	~OvStorage();
 
-	bool	Save(const char* pFile, OvObjectCollector& saveObjects);
-	bool	Load(const char* pFile, OvObjectCollector& loadedObjects);
+	bool	Save( const std::string& pFile, OvObjectCollector& saveObjects);
+	bool	Load( const std::string& pFile, OvObjectCollector& loadedObjects);
 
 	void	ExportObjectStructure(const char* pFile,const OvRTTI* rtti);
 

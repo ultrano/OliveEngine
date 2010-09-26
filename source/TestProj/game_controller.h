@@ -11,9 +11,11 @@ GL_TEST_ENVIROMENT( Simple_Game )
 		m_exitFlag = false;
 		OvSingletonPool::StartUp();
 		OvRenderer::GetInstance()->GenerateRenderer();
+		OvResourceLocation::SetResourceFolder( "../../resource" );
 
 		OvStorage store;
-		store.Load( "../../resource/ovf/game_scene.xml", m_objectList);
+
+		store.Load( OvResourceLocation( "ovf/game_scene.xml" ), m_objectList);
 		m_mainCamera = m_objectList.GetByName("Camera");
 
 		OvXObjectSPtr ball = m_objectList.GetByName("Ball");

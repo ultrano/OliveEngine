@@ -11,6 +11,7 @@ public:
 	OvResourceLocation( const std::string& file );
 	~OvResourceLocation();
 
+	operator const std::string& ();
 	const std::string& GetCompletedFileLocation();
 
 private:

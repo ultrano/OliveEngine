@@ -49,3 +49,8 @@ const std::string& OvResourceLocation::GetCompletedFileLocation()
 {
 	return m_completedFileLocation;
 }
+
+OvResourceLocation::operator const std::string&()
+{
+	return m_completedFileLocation;
+}

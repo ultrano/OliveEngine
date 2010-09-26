@@ -3,7 +3,7 @@
     <vertex_shader entry_function="main" complie_version="vs_2_0">
       <![CDATA[
    
-   #include <vertex_common.h>
+   #include "shader/vertex_common.h"
 
 void	main( in input_vertex input, out output_vertex output )
 {
@@ -34,7 +34,7 @@ void	main( in input_vertex input, out output_vertex output )
     <pixel_shader entry_function="main" complie_version="ps_2_0">
       <![CDATA[
     
-#include <pixel_common.h>
+#include "shader/pixel_common.h"
 
 
 
