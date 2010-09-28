@@ -22,35 +22,39 @@ OvResourceSPtr OvResourceLoader::_load_resource( const std::string& fileLocation
 //////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
 
-std::string OvResourceLocation::sm_resourceFolder;
+std::string OvResourceFolder::sm_resourceFolder;
 
-void OvResourceLocation::SetResourceFolder( const std::string& folder )
+void OvResourceFolder::SetFolderRoute( const std::string& folder )
 {
 	sm_resourceFolder = folder;
 }
+const string& OvResourceFolder::GetFolderRoute()
+{
+	return sm_resourceFolder;
+}
 
-OvResourceLocation::OvResourceLocation( const char* file )
+OvResourceFolder::OvResourceFolder( const char* file )
 : m_completedFileLocation( sm_resourceFolder + "/" + std::string( file ) )
 {
 
 }
-OvResourceLocation::OvResourceLocation( const std::string& file )
+OvResourceFolder::OvResourceFolder( const std::string& file )
 : m_completedFileLocation( sm_resourceFolder + "/" + file )
 {
 
 }
 
-OvResourceLocation::~OvResourceLocation()
+OvResourceFolder::~OvResourceFolder()
 {
 
 }
 
-const std::string& OvResourceLocation::GetCompletedFileLocation()
+const std::string& OvResourceFolder::GetCompletedFileLocation()
 {
 	return m_completedFileLocation;
 }
 
-OvResourceLocation::operator const std::string&()
+OvResourceFolder::operator const std::string&()
 {
 	return m_completedFileLocation;
 }

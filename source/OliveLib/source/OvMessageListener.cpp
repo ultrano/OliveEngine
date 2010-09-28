@@ -3,6 +3,7 @@
 OvRTTI_IMPL(OvMessageListener);
 
 OvMessageListener::OvMessageListener()
+: m_messageProcessed( true )
 {
 	OvMessageManager::GetInstance()->_register_listener( this );
 }
@@ -14,22 +15,19 @@ OvMessageListener::~OvMessageListener()
 
 void OvMessageListener::Update( float _fElapse )
 {
-	for each( const InputMessage& message in m_inputQueue )
+	if ( ! m_messageProcessed )
 	{
 		MessageListen
-			( message.hwnd
-			, message.message
-			, message.wparam
-			, message.lparam );
+			( m_message.hwnd
+			, m_message.message
+			, m_message.wparam
+			, m_message.lparam );
+		m_messageProcessed = true;
 	}
-	m_inputQueue.clear();
 }
 
 void OvMessageListener::_push_message( const InputMessage& message )
 {
-	if (m_inputQueue.size() > MSG_QUEUE_SIZE)
-	{
-		m_inputQueue.pop_front();
-	}
-	m_inputQueue.push_back( message );
+	m_messageProcessed = false;
+	m_message = message;
 }

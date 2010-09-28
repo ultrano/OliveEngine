@@ -5,6 +5,8 @@
 #include <list>
 #include <map>
 
+//! 모든 리소스는 resource폴더 밑에 위치하는것으로 간주 한다.(다른 디스크, 외부폴더로의 리소스 유입은 금지한다.)
+//! 리소스 관리를 위한 단계이다.
 class OvResourceManager : public OvSingletonBase< OvResourceManager >
 {
 	typedef std::map<const OvRTTI*, OvResourceLoaderSPtr>	resource_loader_table;

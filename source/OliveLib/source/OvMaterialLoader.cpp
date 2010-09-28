@@ -13,14 +13,16 @@ OvResourceSPtr OvMaterialLoader::Load( const std::string& fileLocation )
 {
 	TiXmlDocument doc("material_doc");
 	
-	doc.LoadFile( fileLocation.c_str() );
-	
+	if ( ! doc.LoadFile( fileLocation.c_str() ) )
+	{	
+		return NULL;
+	}
 	TiXmlElement* root = doc.RootElement();
 
 	//////////////////////////////////////////////////////////////////////////
 	TiXmlElement* shader_elem = root->FirstChildElement( "shader" );
 
-	OvShaderCodeIncluder includer("../OliveLib/shader");
+	OvShaderCodeIncluder includer("../OliveLib/shader", "../../resource");
 	OvVertexShaderSPtr	vertexShader = NULL;
 	OvPixelShaderSPtr	pixelShader	 = NULL;
 	string shader_code;
@@ -70,7 +72,7 @@ OvResourceSPtr OvMaterialLoader::Load( const std::string& fileLocation )
 		
 		TiXmlElement* texture_elem = sampler_elem->FirstChildElement( "texture" );
 
-		OvTextureSPtr image = OvResourceManager::GetInstance()->LoadResource<OvTexture>( texture_elem->GetText() );
+		OvTextureSPtr image = OvResourceManager::GetInstance()->LoadResource<OvTexture>( ( texture_elem->GetText() ) );
 
 		stageImage[ stage ] = image;
 	}

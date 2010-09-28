@@ -15,6 +15,7 @@ namespace OliveValue
 	class Value;
 };
 
+// traverser? 이름을 바꿔줘야 하나?
 class OvObjectProperties : public OvMemObject
 {
 public:

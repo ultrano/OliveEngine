@@ -67,6 +67,7 @@ void main( in input_pixel input, out vector col0 : COLOR0 )
     ]]>]
     </pixel_shader>
   </shader>
+  
   <sampler_stage>
     <sampler stage="0">
       <texture>../../resource/texture/test.jpg</texture>
@@ -80,4 +81,5 @@ void main( in input_pixel input, out vector col0 : COLOR0 )
       </state>
     </sampler>
   </sampler_stage>
+  
 </material>

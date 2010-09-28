@@ -18,9 +18,12 @@ public:
 		OvRenderer::GetInstance()->GenerateRenderer();
 
 		OvStorage store;
-		store.Load( "../../resource/ovf/scene_test.xml", m_loadedObjects);
-		m_mainCamera = m_loadedObjects.GetByName("Camera");		
-
+		if ( ! store.Load( ("../../resource/ovf/scene_test.xml"), m_loadedObjects) )
+		{
+			OvMessageBox("¸ÁÇÞ¾î¿°^_^ ·Îµù ¤¤¤¤","");
+			m_exitFlag = true;
+		}
+		m_mainCamera = m_loadedObjects.GetByName("Camera");
 	};
 	GL_ENV_TEAR_DOWN
 	{
@@ -45,7 +48,7 @@ public:
 				case VK_INSERT : 
 					{
 
-						OvModelSPtr model = m_loadedObjects.GetByName("Model");
+						OvModelSPtr model = m_loadedObjects.GetByName("Ball");
 						if ( model )
 						{
 							OvModelSPtr copymodel = OvNew OvModel;
@@ -61,13 +64,13 @@ public:
 				case VK_END :
 					{
 						OvStorage store;
-						store.Save( "../../resource/ovf/scene_test2.xml", m_loadedObjects);
+						store.Save( ("../../resource/ovf/scene_test2.xml"), m_loadedObjects);
 					}
 					break;
 				case VK_HOME :
 					{
 						OvStorage store;
-						store.Load( "../../resource/ovf/scene_test2.xml", m_loadedObjects);
+						store.Load( ("../../resource/sovf/scene_test2.xml"), m_loadedObjects);
 					}
 					break;
 				}

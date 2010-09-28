@@ -17,7 +17,7 @@ OvRenderTarget::~OvRenderTarget()
 {
 
 }
-bool OvRenderTarget::Begin( unsigned targetIndex /*= 0*/ )
+bool OvRenderTarget::Lock( unsigned targetIndex /*= 0*/ )
 {
 	LPDIRECT3DDEVICE9 device = OvRenderer::GetInstance()->GetDevice();
 	if ( device )
@@ -29,29 +29,26 @@ bool OvRenderTarget::Begin( unsigned targetIndex /*= 0*/ )
 			if ( SUCCEEDED( hr0 ) && SUCCEEDED( hr1 ) )
 			{
 				m_reservedTargetIndex = targetIndex;
-				return OvRenderer::GetInstance()->BeginTarget();
+				return true;
 			}
 		}
 	}
 	return false;
 }
 
-bool OvRenderTarget::End()
+bool OvRenderTarget::Unlock()
 {
 	if ( m_reservedTargetIndex != -1 )
 	{
-		if ( OvRenderer::GetInstance()->EndTarget() )
+		LPDIRECT3DDEVICE9 device = OvRenderer::GetInstance()->GetDevice();
+		if ( device && m_oldTargetSurface )
 		{
-			LPDIRECT3DDEVICE9 device = OvRenderer::GetInstance()->GetDevice();
-			if ( device && m_oldTargetSurface )
+			if ( SUCCEEDED( device->SetRenderTarget( m_reservedTargetIndex, m_oldTargetSurface ) ) )
 			{
-				if ( SUCCEEDED( device->SetRenderTarget( m_reservedTargetIndex, m_oldTargetSurface ) ) )
-				{
-					m_oldTargetSurface->Release();
-					m_oldTargetSurface = NULL;
-					m_reservedTargetIndex = -1;
-					return true;
-				}
+				m_oldTargetSurface->Release();
+				m_oldTargetSurface = NULL;
+				m_reservedTargetIndex = -1;
+				return true;
 			}
 		}
 	}

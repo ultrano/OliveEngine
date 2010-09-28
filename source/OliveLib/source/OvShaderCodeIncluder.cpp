@@ -7,8 +7,9 @@
 using namespace std;
 
 
-OvShaderCodeIncluder::OvShaderCodeIncluder( const std::string& basePath )
-: m_basePath( basePath )
+OvShaderCodeIncluder::OvShaderCodeIncluder( const std::string& systemPath, const std::string& resourcePath )
+: m_systemPath( systemPath )
+, m_resourcePath( resourcePath )
 {
 
 }
@@ -19,10 +20,10 @@ STDMETHODIMP OvShaderCodeIncluder::Open( THIS_ D3DXINCLUDE_TYPE IncludeType, LPC
 	switch ( IncludeType )
 	{
 	case D3DXINC_SYSTEM : 
-		fileLocation = m_basePath + "/" + pFileName;
+		fileLocation = m_systemPath + "/" + pFileName;
 		break;
 	case D3DXINC_LOCAL : 
-		fileLocation = OvResourceLocation( pFileName );
+		fileLocation = m_resourcePath + "/" + pFileName;
 		break;
 	}
 

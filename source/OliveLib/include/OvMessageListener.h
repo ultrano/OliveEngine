@@ -9,6 +9,7 @@ class OvMessageListener : public OvXComponent
 public:
 	struct InputMessage
 	{
+		InputMessage(){};
 		InputMessage(HWND in_hwnd, UINT in_message, WPARAM in_wparam, LPARAM in_lparam)
 			: hwnd(in_hwnd),message(in_message),wparam(in_wparam),lparam(in_lparam){};
 		HWND hwnd;
@@ -29,5 +30,6 @@ private:
 
 private:
 	enum {MSG_QUEUE_SIZE = 10};
-	list<InputMessage>	m_inputQueue;
+	InputMessage m_message;
+	bool m_messageProcessed;
 };

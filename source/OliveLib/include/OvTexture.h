@@ -24,3 +24,4 @@ private:
 	LPDIRECT3DTEXTURE9 m_texture;
 };
 
+bool SaveTexture( const std::string& file, OvTextureSPtr texture, D3DXIMAGE_FILEFORMAT format);

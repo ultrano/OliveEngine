@@ -37,3 +37,9 @@ LPDIRECT3DSURFACE9 OvTexture::GetSurface( unsigned level /*= 0 */ )
 	}
 	return surface;
 }
+
+bool SaveTexture( const std::string& file, OvTextureSPtr texture, D3DXIMAGE_FILEFORMAT format )
+{
+	HRESULT hr = D3DXSaveTextureToFile( file.c_str(), format, texture->ToDxTexture() ,NULL);
+	return SUCCEEDED( hr );
+}

@@ -3,13 +3,14 @@
 #include "OvBitFlags.h"
 
 
-class OvResourceLocation : public OvMemObject
+class OvResourceFolder : public OvMemObject
 {
 public:
-	static void SetResourceFolder( const std::string& folder );
-	OvResourceLocation( const char* file);
-	OvResourceLocation( const std::string& file );
-	~OvResourceLocation();
+	static void SetFolderRoute( const std::string& folder );
+	static const string& GetFolderRoute();
+	OvResourceFolder( const char* file);
+	OvResourceFolder( const std::string& file );
+	~OvResourceFolder();
 
 	operator const std::string& ();
 	const std::string& GetCompletedFileLocation();

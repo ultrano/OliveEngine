@@ -39,6 +39,20 @@ OvMaterialSPtr OvModel::GetMaterial()
 	return m_material;
 }
 
+
+void OvModel::RenderWithoutMaterial()
+{
+	OvShaderManager::GetInstance()->SetVSConst( OvMatVSConst::World, GetWorldMatrix() );
+	OvMatrix view_proj;
+	OvShaderManager::GetInstance()->GetVSConst( OvMatVSConst::ViewProject, view_proj );
+	OvShaderManager::GetInstance()->SetVSConst( OvMatVSConst::WorldViewProject, GetWorldMatrix() * view_proj );
+
+	if ( m_resourceMesh )
+	{
+		m_resourceMesh->Rendering();
+	}
+}
+
 void	OvModel::Render()
 {
 	if ( m_material )

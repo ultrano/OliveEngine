@@ -11,8 +11,8 @@ public:
 	OvRenderTarget( LPDIRECT3DTEXTURE9 texture, LPDIRECT3DSURFACE9 depth = NULL );
 	~OvRenderTarget();
 
-	bool Begin( unsigned targetIndex = 0);
-	bool End();
+	bool Lock( unsigned targetIndex = 0);
+	bool Unlock();
 
 private:
 

@@ -1,0 +1,43 @@
+<ObjectTable>
+    <Object type="OvModel" id="3">
+        <prop>OvMaterial:../../resource/material/test.matf0</prop>
+        <prop>OvMesh:../../resource/mesh/bottom_plane.msf0</prop>
+        <prop>0:</prop>
+        <prop>0</prop>
+        <prop>1.000000,1.000000,1.000000</prop>
+        <prop>0.000000,0.000000,0.000000</prop>
+        <prop>0.000000,0.000000,0.000000,1.000000</prop>
+        <prop>0:</prop>
+        <prop>1:[6-4-11]StringNameBottomPlane</prop>
+    </Object>
+    <Object type="OvModel" id="4">
+      <prop>OvMaterial:../../resource/material/test.matf0</prop>
+      <prop>OvMesh:../../resource/mesh/ball.msf0</prop>
+      <prop>0:</prop>
+      <prop>0</prop>
+      <prop>1.000000,1.000000,1.000000</prop>
+      <prop>0.000000,100.000000,0.000000</prop>
+      <prop>0.000000,0.000000,0.000000,1.000000</prop>
+      <prop>0:</prop>
+      <prop>1:[6-4-4]StringNameBall</prop>
+    </Object>
+    <Object type="OvCamera" id="1">
+        <prop>0</prop>
+        <prop>0</prop>
+        <prop>0.785398006</prop>
+        <prop>1</prop>
+        <prop>1000</prop>
+        <prop>1</prop>
+        <prop>0:</prop>
+        <prop>0</prop>
+        <prop>1.000000,1.000000,1.000000</prop>
+        <prop>0.000000,150.000000,0.000000</prop>
+        <prop>0.000000,0.000000,0.000000,1.000000</prop>
+        <prop>1:2!</prop>
+        <prop>1:[6-4-6]StringNameCamera</prop>
+    </Object>
+    <Object type="OvCameraController" id="2">
+        <prop>1</prop>
+        <prop>0:</prop>
+    </Object>
+</ObjectTable>

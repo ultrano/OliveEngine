@@ -573,7 +573,7 @@ OvRTTI_IMPL(OvPropAccesser_resource);
 bool OvPropAccesser_resource::Extract( OvObject* pObj, OvObjectProperties& rObjStore )
 {
 	OvResourceSPtr* accessProp = (OvResourceSPtr*)Access(pObj);
-	if ( accessProp && (*accessProp) )
+	if ( accessProp )
 	{
 		string typeName = OvRTTI_Util::TypeName( (*accessProp) );
 		string fileLocation = OvResourceManager::GetInstance()->FindFileLocation( (*accessProp).GetRear() );
@@ -602,7 +602,7 @@ bool OvPropAccesser_resource::Inject( OvObject* pObj, OvObjectProperties& rObjSt
 		fileLocation = &(resourceInfo.at( resourceInfo.find(':') + 1 ));
 		resourceType.resize( resourceInfo.find(':') );
 
-		OvResourceSPtr resource = OvResourceManager::GetInstance()->LoadResource( resourceType, OvResourceLocation( fileLocation ));
+		OvResourceSPtr resource = OvResourceManager::GetInstance()->LoadResource( resourceType, ( fileLocation ));
 		(*accessProp) = resource;
 	}
 

@@ -17,8 +17,8 @@ public:
 	OvShaderManager();
 	~OvShaderManager();
 
-	LPDIRECT3DVERTEXSHADER9	CreateVertexShaderFromFile( const string& file, const string& func, const string& version, LPD3DXINCLUDE includer = NULL);
-	LPDIRECT3DPIXELSHADER9	CreatePixelShaderFromFile( const string& file, const string& func, const string& version, LPD3DXINCLUDE includer = NULL);
+	OvVertexShaderSPtr CreateVertexShaderFromFile( const string& file, const string& func, const string& version, LPD3DXINCLUDE includer = NULL);
+	OvPixelShaderSPtr CreatePixelShaderFromFile( const string& file, const string& func, const string& version, LPD3DXINCLUDE includer = NULL);
 
 	OvVertexShaderSPtr CreateVertexShaderFromCode( const string& code, const string& func, const string& version, LPD3DXINCLUDE includer = NULL);
 	OvPixelShaderSPtr CreatePixelShaderFromCode( const string& code, const string& func, const string& version, LPD3DXINCLUDE includer = NULL);

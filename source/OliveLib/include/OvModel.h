@@ -27,6 +27,7 @@ public:
 	void	SetMaterial( OvMaterialSPtr	material );
 	OvMaterialSPtr	GetMaterial();
 
+	void	RenderWithoutMaterial();
 	void	Render();
 
 private:
