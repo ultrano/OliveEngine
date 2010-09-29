@@ -19,6 +19,9 @@ public:
 
 	bool			GenerateRenderer();
 
+	LPDIRECT3DSURFACE9 ChangeRenderTarget( unsigned targetIndex, LPDIRECT3DSURFACE9 renderTarget );
+	LPDIRECT3DSURFACE9 ChangeDepthStencil( LPDIRECT3DSURFACE9 depthStencil );
+
 	bool			ClearTarget();
 	bool			BeginTarget();
 	bool			EndTarget();

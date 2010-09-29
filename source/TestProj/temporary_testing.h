@@ -1,13 +1,13 @@
 #include "OliveValue.h"
 #include "OvTexture.h"
-#include "OvRenderTarget.h"
+#include "OvRenderTexture.h"
 
 GL_TEST_CASE_FUNC( render_texture_test_case )
 {
 	OvSingletonPool::StartUp();
 	{
 		OvRenderer::GetInstance()->GenerateRenderer();
-		OvRenderTargetSPtr render_texture = CreateRenderTexture( 256, 256, 1, D3DFMT_A8B8G8R8 );
+		OvRenderTextureSPtr render_texture = CreateRenderTexture( 256, 256, 1, D3DFMT_A8B8G8R8 );
 		OliveValue::Bool result;
 		result = render_texture->Lock();
 		result = render_texture->Unlock();

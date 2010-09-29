@@ -1,6 +1,7 @@
 
 #include "OvXObject.h"
 #include "OvCameraController.h"
+#include "OvRenderTexture.h"
 
 GL_TEST_ENVIROMENT(OliveLibTest)
 {
@@ -43,7 +44,11 @@ public:
 				switch ( msg.wParam )
 				{
 				case VK_ESCAPE:
-					m_exitFlag = true;
+					if ( !m_exitFlag )
+					{
+						m_exitFlag = true;
+						RenderToTexture( GetMainCamera(), m_loadedObjects );
+					}
 					break;
 				case VK_INSERT : 
 					{
@@ -70,7 +75,7 @@ public:
 				case VK_HOME :
 					{
 						OvStorage store;
-						store.Load( ("../../resource/sovf/scene_test2.xml"), m_loadedObjects);
+						store.Load( ("../../resource/ovf/scene_test2.xml"), m_loadedObjects);
 					}
 					break;
 				}
@@ -78,29 +83,6 @@ public:
 			break;
 		}
 
-
-	}
-	void UpdateAndCommit()
-	{
-
-		float timeCycle = GetTickCount();
-		timeCycle = timeCycle / 1000.0f;
-
-		for (int i=0;i<m_loadedObjects.Count();++i)
-		{
-			OvObjectSPtr obj = m_loadedObjects.GetByAt(i);
-			if ( OvRTTI_Util::IsKindOf<OvXObject>(obj) )
-			{
-				OvXObjectSPtr xobj = obj;
-				xobj->Update(0);
-			}
-		}
-		GetMainCamera()->Update(0);
-		OvMatrix view_project = GetMainCamera()->GetViewMatrix() * GetMainCamera()->GetProjectMatrix();
-		OvShaderManager::GetInstance()->SetPSConst( OvMatPSConst::Time, timeCycle);
-		OvShaderManager::GetInstance()->SetVSConst( OvMatVSConst::Time, timeCycle);
-		OvShaderManager::GetInstance()->SetVSConst( OvMatVSConst::ViewProject, view_project );
-		OvShaderManager::GetInstance()->SetVSConst( OvMatVSConst::ViewPos, GetMainCamera()->GetWorldTranslate() );
 
 	}
 	void RenderSimpleTriangle()
@@ -119,25 +101,70 @@ public:
 					ControlMainCamera( msg );
 				}
 
-				{
-					UpdateAndCommit();
 
-					OvRenderer::GetInstance()->ClearTarget();
-					OvRenderer::GetInstance()->BeginTarget();
-					for (int i=0;i<m_loadedObjects.Count();++i)
-					{
-						OvXObjectSPtr obj = m_loadedObjects.GetByAt(i);
-						if (OvRTTI_Util::IsKindOf<OvModel>(obj))
-						{
-							OvModelSPtr model = obj;
-							model->Render();
-						}
-					}
-					OvRenderer::GetInstance()->EndTarget();
-					OvRenderer::GetInstance()->PresentTarget();
+				{
+					Update( 0, m_loadedObjects );
+					Render( GetMainCamera(), m_loadedObjects );
 				}
 			}
 		}
+	}
+	void	Update( float elapsed, OvObjectCollector objectList  )
+	{
+		for ( int i = 0 ; i < objectList.Count() ; ++i )
+		{
+			OvObjectSPtr obj = objectList.GetByAt(i);
+			if (OvRTTI_Util::IsKindOf<OvXObject>(obj))
+			{
+				OvXObjectSPtr xobj = obj;
+				xobj->Update( elapsed );
+			}
+		}
+	}
+
+	void	Render( OvCameraSPtr camera, OvObjectCollector objectList )
+	{
+		float timeCycle = GetTickCount();
+		timeCycle = timeCycle / 1000.0f;
+
+		OvMatrix view_project = camera->GetViewMatrix() * camera->GetProjectMatrix();
+
+		OvShaderManager::GetInstance()->SetVSConst( OvMatVSConst::ViewProject, view_project );
+		OvShaderManager::GetInstance()->SetVSConst( OvMatVSConst::ViewPos, camera->GetWorldTranslate() );
+
+		OvShaderManager::GetInstance()->SetPSConst( OvMatPSConst::Time, timeCycle);
+		OvShaderManager::GetInstance()->SetVSConst( OvMatVSConst::Time, timeCycle);
+
+		OvRenderer::GetInstance()->ClearTarget();
+		OvRenderer::GetInstance()->BeginTarget();
+		for ( int i = 0 ; i < objectList.Count() ; ++i )
+		{
+			OvXObjectSPtr obj = objectList.GetByAt(i);
+			if (OvRTTI_Util::IsKindOf<OvModel>(obj))
+			{
+				OvModelSPtr model = obj;
+				model->Render();
+			}
+		}
+		OvRenderer::GetInstance()->EndTarget();
+		OvRenderer::GetInstance()->PresentTarget();
+	}
+
+	void RenderToTexture( OvCameraSPtr camera, OvObjectCollector objectList )
+	{
+		OvTextureSPtr render_texture = CreateRenderTexture(1024,1024,1,D3DFORMAT::D3DFMT_A8B8G8R8);
+		OvTextureSPtr depth_stencil = CreateDepthStencilTexture(1024,1024,1,D3DFORMAT::D3DFMT_D16);
+		OvRenderTarget render_target;
+
+		render_target.LockRenderTarget( 0, render_texture->GetSurface() );
+		render_target.LockDepthStencil( depth_stencil->GetSurface() );
+
+ 		Render( camera, objectList );
+
+		render_target.UnlockRenderTarget();
+		render_target.UnlockDepthStencil();
+
+ 		SaveTexture( ( "../../resource/texture/save_test.bmp" ), render_texture, D3DXIFF_BMP);
 	}
 };
 GL_TEST_CASE_ENV( OliveLibTest, mesh_rendering )

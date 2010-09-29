@@ -124,6 +124,36 @@ bool		OvRenderer::GenerateRenderer()
 	return SUCCEEDED(hr);
 
 };
+
+LPDIRECT3DSURFACE9 OvRenderer::ChangeRenderTarget( unsigned targetIndex, LPDIRECT3DSURFACE9 renderTarget )
+{
+	if ( LPDIRECT3DDEVICE9 device = GetDevice() )
+	{
+		LPDIRECT3DSURFACE9 oldRenderTarget = NULL;
+		HRESULT hr0 = device->GetRenderTarget( targetIndex, &oldRenderTarget );
+		HRESULT hr1 = device->SetRenderTarget( targetIndex, renderTarget );
+		if ( SUCCEEDED( hr0 ) && SUCCEEDED( hr1 ) )
+		{
+			return oldRenderTarget;
+		}
+	}
+	return NULL;
+}
+
+LPDIRECT3DSURFACE9 OvRenderer::ChangeDepthStencil( LPDIRECT3DSURFACE9 depthStencil )
+{
+	if ( LPDIRECT3DDEVICE9 device = GetDevice() )
+	{
+		LPDIRECT3DSURFACE9 oldDepthStencil = NULL;
+		HRESULT hr0 = device->GetDepthStencilSurface( &oldDepthStencil );
+		HRESULT hr1 = device->SetDepthStencilSurface( depthStencil );
+		if ( SUCCEEDED( hr0 ) && SUCCEEDED( hr1 ) )
+		{
+			return oldDepthStencil;
+		}
+	}
+	return NULL;
+}
 bool			OvRenderer::ClearTarget()
 {
 

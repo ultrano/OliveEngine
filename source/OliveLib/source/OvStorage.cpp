@@ -15,7 +15,6 @@
 #include "OvCamera.h"
 #include "OvXNode.h"
 #include "OvModel.h"
-#include "OvPointLight.h"
 #include "OvMaterial.h"
 #include "OvCameraController.h"
 OvObject* TemporaryFactoryFunction(const string& typeName)
@@ -32,10 +31,10 @@ OvObject* TemporaryFactoryFunction(const string& typeName)
 	{
 		return OvNew OvModel;
 	}
-	else if ("OvPointLight" == typeName)
-	{
-		return OvNew OvPointLight;
-	}
+// 	else if ("OvPointLight" == typeName)
+// 	{
+// 		return OvNew OvPointLight;
+// 	}
 	else if ("OvCameraController" == typeName)
 	{
 		return OvNew OvCameraController;

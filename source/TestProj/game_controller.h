@@ -120,7 +120,7 @@ public:
 
 	void RenderToTexture( OvCameraSPtr camera, OvObjectCollector objectList )
 	{
-		OvRenderTargetSPtr render_target = CreateRenderTexture(800,600,1,D3DFORMAT::D3DFMT_A16B16G16R16);
+		OvRenderTextureSPtr render_target = CreateRenderTexture(800,600,1,D3DFORMAT::D3DFMT_A16B16G16R16);
 		render_target->Lock();
 		Render( camera, objectList );
 		render_target->Unlock();
