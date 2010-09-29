@@ -1,0 +1,22 @@
+
+sampler SAMPLER_0	: register(s0);
+
+struct vert_shader_output
+{
+	vector pos  : POSITION;
+	float2 tex0 : TEXCOORD0;
+};
+
+void Vmain( in float3 pos : POSITION0
+		  , in float2 tex0 : TEXCOORD0
+		  , out vert_shader_output output )
+{
+	output.pos = float4( pos, 1 );
+	output.tex0 = tex0;
+};
+
+void Pmain( in float2 tex0 : TEXCOORD0, out vector col0 : COLOR0 )
+{
+	//col0 = 1;
+	col0 = tex2D( SAMPLER_0, tex0 ) + 0.5f;
+};

@@ -2,11 +2,14 @@
 #include "OvXObject.h"
 #include "OvCameraController.h"
 #include "OvRenderTexture.h"
+#include "OvShaderCodeIncluder.h"
 
 GL_TEST_ENVIROMENT(OliveLibTest)
 {
 private:
 protected:
+	OvPoint3 m_lightPos;
+	list<OvPoint3> m_lights;
 	OvCameraSPtr m_mainCamera;
 	OvObjectCollector m_loadedObjects;
 	OvCameraSPtr GetMainCamera(){return m_mainCamera;};
@@ -43,6 +46,9 @@ public:
 			{
 				switch ( msg.wParam )
 				{
+				case VK_SPACE : 
+					m_lights.push_back( GetMainCamera()->GetWorldTranslate() );
+					break;
 				case VK_ESCAPE:
 					if ( !m_exitFlag )
 					{
@@ -132,7 +138,6 @@ public:
 		OvShaderManager::GetInstance()->SetVSConst( OvMatVSConst::ViewProject, view_project );
 		OvShaderManager::GetInstance()->SetVSConst( OvMatVSConst::ViewPos, camera->GetWorldTranslate() );
 
-		OvShaderManager::GetInstance()->SetPSConst( OvMatPSConst::Time, timeCycle);
 		OvShaderManager::GetInstance()->SetVSConst( OvMatVSConst::Time, timeCycle);
 
 		OvRenderer::GetInstance()->ClearTarget();
@@ -150,21 +155,57 @@ public:
 		OvRenderer::GetInstance()->PresentTarget();
 	}
 
+	void RenderDepthMap( OvCameraSPtr camera, OvObjectCollector objectList )
+	{
+		OvTextureSPtr depth_map = CreateRenderTexture(800,600,1,D3DFORMAT::D3DFMT_R16F);
+		OvRenderTarget render_target;
+
+		render_target.LockRenderTarget( 0, depth_map->GetSurface() );
+
+		OvShaderCodeIncluder includer("../OliveLib/shader", "../../resource");
+		OvRenderer::GetInstance()->SetVertexShader
+			( 
+			OvShaderManager::GetInstance()->CreateVertexShaderFromFile("../../resource/shader/depth.shacode","Vmain","vs_2_0", &includer )
+			);
+		OvRenderer::GetInstance()->SetPixelShader
+			( 
+			OvShaderManager::GetInstance()->CreatePixelShaderFromFile("../../resource/shader/depth.shacode","Pmain","ps_2_0", &includer )
+			);
+
+		OvMatrix view_project = camera->GetViewMatrix() * camera->GetProjectMatrix();
+
+		OvShaderManager::GetInstance()->SetVSConst( OvMatVSConst::ViewProject, view_project );
+		OvShaderManager::GetInstance()->SetVSConst( OvMatVSConst::ViewPos, camera->GetWorldTranslate() );
+
+		OvRenderer::GetInstance()->ClearTarget();
+		OvRenderer::GetInstance()->BeginTarget();
+		for ( int i = 0 ; i < objectList.Count() ; ++i )
+		{
+			OvXObjectSPtr obj = objectList.GetByAt(i);
+			if (OvRTTI_Util::IsKindOf<OvModel>(obj))
+			{
+				OvModelSPtr model = obj;
+				model->RenderWithoutMaterial();
+			}
+		}
+		OvRenderer::GetInstance()->EndTarget();
+
+		render_target.UnlockRenderTarget();
+
+		SaveTexture( ( "../../resource/texture/save_depth.jpg" ), depth_map, D3DXIFF_JPG);
+
+	}
 	void RenderToTexture( OvCameraSPtr camera, OvObjectCollector objectList )
 	{
-		OvTextureSPtr render_texture = CreateRenderTexture(1024,1024,1,D3DFORMAT::D3DFMT_A8B8G8R8);
-		OvTextureSPtr depth_stencil = CreateDepthStencilTexture(1024,1024,1,D3DFORMAT::D3DFMT_D16);
+		OvTextureSPtr render_texture = CreateRenderTexture(800,600,1,D3DFORMAT::D3DFMT_A8B8G8R8);
 		OvRenderTarget render_target;
 
 		render_target.LockRenderTarget( 0, render_texture->GetSurface() );
-		render_target.LockDepthStencil( depth_stencil->GetSurface() );
-
  		Render( camera, objectList );
-
 		render_target.UnlockRenderTarget();
-		render_target.UnlockDepthStencil();
 
- 		SaveTexture( ( "../../resource/texture/save_test.bmp" ), render_texture, D3DXIFF_BMP);
+ 		SaveTexture( ( "../../resource/texture/save_test.jpg" ), render_texture, D3DXIFF_JPG);
+		RenderDepthMap( camera, objectList );
 	}
 };
 GL_TEST_CASE_ENV( OliveLibTest, mesh_rendering )

@@ -267,17 +267,6 @@ bool	OvShaderManager::_GetPSConstF(const OvShaderConstInfo& rConstInfo,float* pC
 	return false;
 
 }
-bool	OvShaderManager::SetTexture(UINT uiSamplerIndex,OvTextureSPtr pTexture)
-{
-	LPDIRECT3DDEVICE9 kpDevice =  OvRenderer::GetInstance()->GetDevice();
-	if (kpDevice && pTexture)
-	{
-		HRESULT kHs = E_FAIL;
-		kHs = kpDevice->SetTexture( uiSamplerIndex, pTexture->ToDxTexture() );
-		return SUCCEEDED(kHs);
-	}
-	return false;
-}
 ////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////
 

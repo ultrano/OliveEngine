@@ -9,8 +9,8 @@
         <prop>0:</prop>
         <prop>0</prop>
         <prop>1.000000,1.000000,1.000000</prop>
-        <prop>0.000000,150.000000,0.000000</prop>
-        <prop>-0.205693,0.783616,0.335127,0.480965</prop>
+        <prop>63.384705,74.047081,-42.794968</prop>
+        <prop>-0.608401,-0.265371,-0.226494,0.712831</prop>
         <prop>1:4!</prop>
         <prop>1:[6-4-6]StringNameCamera</prop>
     </Object>
@@ -40,7 +40,48 @@
         <prop>0:</prop>
         <prop>1:[6-4-4]StringNameBall</prop>
     </Object>
-    <Object type="OvModel" id="5">
+    <Object type="OvModel" id="7">
+        <prop>OvMaterial:../../resource/material/test.matf0</prop>
+        <prop>OvMesh:../../resource/mesh/bottom_plane.msf0</prop>
+        <prop>0:</prop>
+        <prop>0</prop>
+        <prop>1.000000,1.000000,1.000000</prop>
+        <prop>0.000000,0.000000,0.000000</prop>
+        <prop>0.000000,0.000000,0.000000,1.000000</prop>
+        <prop>0:</prop>
+        <prop>1:[6-4-11]StringNameBottomPlane</prop>
+    </Object>
+    <Object type="OvModel" id="8">
+        <prop>OvMaterial:../../resource/material/test.matf0</prop>
+        <prop>OvMesh:../../resource/mesh/ball.msf0</prop>
+        <prop>0:</prop>
+        <prop>0</prop>
+        <prop>1.000000,1.000000,1.000000</prop>
+        <prop>0.000000,100.000000,0.000000</prop>
+        <prop>0.000000,0.000000,0.000000,1.000000</prop>
+        <prop>0:</prop>
+        <prop>1:[6-4-4]StringNameBall</prop>
+    </Object>
+    <Object type="OvCamera" id="5">
+        <prop>0</prop>
+        <prop>0</prop>
+        <prop>0.785398006</prop>
+        <prop>1</prop>
+        <prop>1000</prop>
+        <prop>1</prop>
+        <prop>0:</prop>
+        <prop>0</prop>
+        <prop>1.000000,1.000000,1.000000</prop>
+        <prop>54.274872,73.171219,53.870636</prop>
+        <prop>-0.248149,-0.735711,-0.526014,0.347075</prop>
+        <prop>1:6!</prop>
+        <prop>1:[6-4-6]StringNameCamera</prop>
+    </Object>
+    <Object type="OvCameraController" id="6">
+        <prop>5</prop>
+        <prop>0:</prop>
+    </Object>
+    <Object type="OvModel" id="9">
         <prop>OvMaterial:../../resource/material/test.matf0</prop>
         <prop>OvMesh:../../resource/mesh/ball.msf0</prop>
         <prop>0:</prop>
@@ -51,7 +92,7 @@
         <prop>0:</prop>
         <prop>0:</prop>
     </Object>
-    <Object type="OvModel" id="6">
+    <Object type="OvModel" id="10">
         <prop>OvMaterial:../../resource/material/test.matf0</prop>
         <prop>OvMesh:../../resource/mesh/ball.msf0</prop>
         <prop>0:</prop>
@@ -62,7 +103,7 @@
         <prop>0:</prop>
         <prop>0:</prop>
     </Object>
-    <Object type="OvModel" id="7">
+    <Object type="OvModel" id="11">
         <prop>OvMaterial:../../resource/material/test.matf0</prop>
         <prop>OvMesh:../../resource/mesh/ball.msf0</prop>
         <prop>0:</prop>
@@ -73,7 +114,7 @@
         <prop>0:</prop>
         <prop>0:</prop>
     </Object>
-    <Object type="OvModel" id="8">
+    <Object type="OvModel" id="12">
         <prop>OvMaterial:../../resource/material/test.matf0</prop>
         <prop>OvMesh:../../resource/mesh/ball.msf0</prop>
         <prop>0:</prop>
@@ -84,7 +125,7 @@
         <prop>0:</prop>
         <prop>0:</prop>
     </Object>
-    <Object type="OvModel" id="9">
+    <Object type="OvModel" id="13">
         <prop>OvMaterial:../../resource/material/test.matf0</prop>
         <prop>OvMesh:../../resource/mesh/ball.msf0</prop>
         <prop>0:</prop>
@@ -95,7 +136,7 @@
         <prop>0:</prop>
         <prop>0:</prop>
     </Object>
-    <Object type="OvModel" id="10">
+    <Object type="OvModel" id="14">
         <prop>OvMaterial:../../resource/material/test.matf0</prop>
         <prop>OvMesh:../../resource/mesh/ball.msf0</prop>
         <prop>0:</prop>
@@ -106,7 +147,7 @@
         <prop>0:</prop>
         <prop>0:</prop>
     </Object>
-    <Object type="OvModel" id="11">
+    <Object type="OvModel" id="15">
         <prop>OvMaterial:../../resource/material/test.matf0</prop>
         <prop>OvMesh:../../resource/mesh/ball.msf0</prop>
         <prop>0:</prop>
@@ -117,7 +158,7 @@
         <prop>0:</prop>
         <prop>0:</prop>
     </Object>
-    <Object type="OvModel" id="12">
+    <Object type="OvModel" id="16">
         <prop>OvMaterial:../../resource/material/test.matf0</prop>
         <prop>OvMesh:../../resource/mesh/ball.msf0</prop>
         <prop>0:</prop>
@@ -128,7 +169,7 @@
         <prop>0:</prop>
         <prop>0:</prop>
     </Object>
-    <Object type="OvModel" id="13">
+    <Object type="OvModel" id="17">
         <prop>OvMaterial:../../resource/material/test.matf0</prop>
         <prop>OvMesh:../../resource/mesh/ball.msf0</prop>
         <prop>0:</prop>
@@ -139,7 +180,7 @@
         <prop>0:</prop>
         <prop>0:</prop>
     </Object>
-    <Object type="OvModel" id="14">
+    <Object type="OvModel" id="18">
         <prop>OvMaterial:../../resource/material/test.matf0</prop>
         <prop>OvMesh:../../resource/mesh/ball.msf0</prop>
         <prop>0:</prop>
@@ -150,7 +191,7 @@
         <prop>0:</prop>
         <prop>0:</prop>
     </Object>
-    <Object type="OvModel" id="15">
+    <Object type="OvModel" id="19">
         <prop>OvMaterial:../../resource/material/test.matf0</prop>
         <prop>OvMesh:../../resource/mesh/ball.msf0</prop>
         <prop>0:</prop>
@@ -161,7 +202,7 @@
         <prop>0:</prop>
         <prop>0:</prop>
     </Object>
-    <Object type="OvModel" id="16">
+    <Object type="OvModel" id="20">
         <prop>OvMaterial:../../resource/material/test.matf0</prop>
         <prop>OvMesh:../../resource/mesh/ball.msf0</prop>
         <prop>0:</prop>
@@ -169,6 +210,380 @@
         <prop>1.000000,1.000000,1.000000</prop>
         <prop>70.070923,78.657654,-0.579640</prop>
         <prop>-0.266555,0.657190,0.268769,0.651776</prop>
+        <prop>0:</prop>
+        <prop>0:</prop>
+    </Object>
+    <Object type="OvModel" id="21">
+        <prop>OvMaterial:../../resource/material/test.matf0</prop>
+        <prop>OvMesh:../../resource/mesh/ball.msf0</prop>
+        <prop>0:</prop>
+        <prop>0</prop>
+        <prop>1.000000,1.000000,1.000000</prop>
+        <prop>-2.588181,38.384514,-29.340164</prop>
+        <prop>-0.375301,-0.619497,-0.433928,0.535798</prop>
+        <prop>0:</prop>
+        <prop>0:</prop>
+    </Object>
+    <Object type="OvModel" id="22">
+        <prop>OvMaterial:../../resource/material/test.matf0</prop>
+        <prop>OvMesh:../../resource/mesh/ball.msf0</prop>
+        <prop>0:</prop>
+        <prop>0</prop>
+        <prop>1.000000,1.000000,1.000000</prop>
+        <prop>-3.282753,41.375904,-32.445992</prop>
+        <prop>-0.372521,-0.624425,-0.444829,0.522924</prop>
+        <prop>0:</prop>
+        <prop>0:</prop>
+    </Object>
+    <Object type="OvModel" id="23">
+        <prop>OvMaterial:../../resource/material/test.matf0</prop>
+        <prop>OvMesh:../../resource/mesh/ball.msf0</prop>
+        <prop>0:</prop>
+        <prop>0</prop>
+        <prop>1.000000,1.000000,1.000000</prop>
+        <prop>4.378403,41.375904,-58.318886</prop>
+        <prop>-0.313021,-0.685772,-0.488531,0.439401</prop>
+        <prop>0:</prop>
+        <prop>0:</prop>
+    </Object>
+    <Object type="OvModel" id="24">
+        <prop>OvMaterial:../../resource/material/test.matf0</prop>
+        <prop>OvMesh:../../resource/mesh/ball.msf0</prop>
+        <prop>0:</prop>
+        <prop>0</prop>
+        <prop>1.000000,1.000000,1.000000</prop>
+        <prop>15.650948,39.875858,-75.993019</prop>
+        <prop>-0.245670,-0.740165,-0.518450,0.350731</prop>
+        <prop>0:</prop>
+        <prop>0:</prop>
+    </Object>
+    <Object type="OvModel" id="25">
+        <prop>OvMaterial:../../resource/material/test.matf0</prop>
+        <prop>OvMesh:../../resource/mesh/ball.msf0</prop>
+        <prop>0:</prop>
+        <prop>0</prop>
+        <prop>1.000000,1.000000,1.000000</prop>
+        <prop>19.439140,39.875851,-80.622650</prop>
+        <prop>-0.237388,-0.745653,-0.522294,0.338907</prop>
+        <prop>0:</prop>
+        <prop>0:</prop>
+    </Object>
+    <Object type="OvModel" id="26">
+        <prop>OvMaterial:../../resource/material/test.matf0</prop>
+        <prop>OvMesh:../../resource/mesh/ball.msf0</prop>
+        <prop>0:</prop>
+        <prop>0</prop>
+        <prop>1.000000,1.000000,1.000000</prop>
+        <prop>48.093002,36.902199,-101.549530</prop>
+        <prop>-0.122174,-0.808181,-0.547128,0.180468</prop>
+        <prop>0:</prop>
+        <prop>0:</prop>
+    </Object>
+    <Object type="OvModel" id="27">
+        <prop>OvMaterial:../../resource/material/test.matf0</prop>
+        <prop>OvMesh:../../resource/mesh/ball.msf0</prop>
+        <prop>0:</prop>
+        <prop>0</prop>
+        <prop>1.000000,1.000000,1.000000</prop>
+        <prop>67.415695,36.902203,-108.818596</prop>
+        <prop>-0.060588,-0.823234,-0.557319,0.089497</prop>
+        <prop>0:</prop>
+        <prop>0:</prop>
+    </Object>
+    <Object type="OvModel" id="28">
+        <prop>OvMaterial:../../resource/material/test.matf0</prop>
+        <prop>OvMesh:../../resource/mesh/ball.msf0</prop>
+        <prop>0:</prop>
+        <prop>0</prop>
+        <prop>1.000000,1.000000,1.000000</prop>
+        <prop>86.390160,36.902206,-111.588493</prop>
+        <prop>-0.002712,-0.828075,-0.560596,0.004006</prop>
+        <prop>0:</prop>
+        <prop>0:</prop>
+    </Object>
+    <Object type="OvModel" id="29">
+        <prop>OvMaterial:../../resource/material/test.matf0</prop>
+        <prop>OvMesh:../../resource/mesh/ball.msf0</prop>
+        <prop>0:</prop>
+        <prop>0</prop>
+        <prop>1.000000,1.000000,1.000000</prop>
+        <prop>103.979797,35.429310,-110.036926</prop>
+        <prop>0.041367,-0.830195,-0.552449,-0.062165</prop>
+        <prop>0:</prop>
+        <prop>0:</prop>
+    </Object>
+    <Object type="OvModel" id="30">
+        <prop>OvMaterial:../../resource/material/test.matf0</prop>
+        <prop>OvMesh:../../resource/mesh/ball.msf0</prop>
+        <prop>0:</prop>
+        <prop>0</prop>
+        <prop>1.000000,1.000000,1.000000</prop>
+        <prop>118.071854,33.966175,-106.110336</prop>
+        <prop>0.092728,-0.824805,-0.539441,-0.141781</prop>
+        <prop>0:</prop>
+        <prop>0:</prop>
+    </Object>
+    <Object type="OvModel" id="31">
+        <prop>OvMaterial:../../resource/material/test.matf0</prop>
+        <prop>OvMesh:../../resource/mesh/ball.msf0</prop>
+        <prop>0:</prop>
+        <prop>0</prop>
+        <prop>1.000000,1.000000,1.000000</prop>
+        <prop>149.001602,35.429302,-89.929085</prop>
+        <prop>0.195790,-0.778794,-0.518244,-0.294225</prop>
+        <prop>0:</prop>
+        <prop>0:</prop>
+    </Object>
+    <Object type="OvModel" id="32">
+        <prop>OvMaterial:../../resource/material/test.matf0</prop>
+        <prop>OvMesh:../../resource/mesh/ball.msf0</prop>
+        <prop>0:</prop>
+        <prop>0</prop>
+        <prop>1.000000,1.000000,1.000000</prop>
+        <prop>162.355576,35.429295,-76.341812</prop>
+        <prop>0.244312,-0.747193,-0.497215,-0.367141</prop>
+        <prop>0:</prop>
+        <prop>0:</prop>
+    </Object>
+    <Object type="OvModel" id="33">
+        <prop>OvMaterial:../../resource/material/test.matf0</prop>
+        <prop>OvMesh:../../resource/mesh/ball.msf0</prop>
+        <prop>0:</prop>
+        <prop>0</prop>
+        <prop>1.000000,1.000000,1.000000</prop>
+        <prop>176.642853,33.966171,-49.294975</prop>
+        <prop>0.323258,-0.675360,-0.441701,-0.494261</prop>
+        <prop>0:</prop>
+        <prop>0:</prop>
+    </Object>
+    <Object type="OvModel" id="34">
+        <prop>OvMaterial:../../resource/material/test.matf0</prop>
+        <prop>OvMesh:../../resource/mesh/ball.msf0</prop>
+        <prop>0:</prop>
+        <prop>0</prop>
+        <prop>1.000000,1.000000,1.000000</prop>
+        <prop>182.268829,35.429298,-25.136730</prop>
+        <prop>0.384486,-0.599374,-0.398850,-0.577789</prop>
+        <prop>0:</prop>
+        <prop>0:</prop>
+    </Object>
+    <Object type="OvModel" id="35">
+        <prop>OvMaterial:../../resource/material/test.matf0</prop>
+        <prop>OvMesh:../../resource/mesh/ball.msf0</prop>
+        <prop>0:</prop>
+        <prop>0</prop>
+        <prop>1.000000,1.000000,1.000000</prop>
+        <prop>178.850830,35.429302,6.814072</prop>
+        <prop>0.448080,-0.489574,-0.325784,-0.673354</prop>
+        <prop>0:</prop>
+        <prop>0:</prop>
+    </Object>
+    <Object type="OvModel" id="36">
+        <prop>OvMaterial:../../resource/material/test.matf0</prop>
+        <prop>OvMesh:../../resource/mesh/ball.msf0</prop>
+        <prop>0:</prop>
+        <prop>0</prop>
+        <prop>1.000000,1.000000,1.000000</prop>
+        <prop>156.234619,32.513168,43.786812</prop>
+        <prop>0.501710,-0.313570,-0.201537,-0.780605</prop>
+        <prop>0:</prop>
+        <prop>0:</prop>
+    </Object>
+    <Object type="OvModel" id="37">
+        <prop>OvMaterial:../../resource/material/test.matf0</prop>
+        <prop>OvMesh:../../resource/mesh/ball.msf0</prop>
+        <prop>0:</prop>
+        <prop>0</prop>
+        <prop>1.000000,1.000000,1.000000</prop>
+        <prop>144.320633,32.513161,54.324074</prop>
+        <prop>0.513515,-0.263273,-0.169211,-0.798972</prop>
+        <prop>0:</prop>
+        <prop>0:</prop>
+    </Object>
+    <Object type="OvModel" id="38">
+        <prop>OvMaterial:../../resource/material/test.matf0</prop>
+        <prop>OvMesh:../../resource/mesh/ball.msf0</prop>
+        <prop>0:</prop>
+        <prop>0</prop>
+        <prop>1.000000,1.000000,1.000000</prop>
+        <prop>156.705780,33.966171,44.233849</prop>
+        <prop>0.495759,-0.354709,-0.231988,-0.758015</prop>
+        <prop>0:</prop>
+        <prop>0:</prop>
+    </Object>
+    <Object type="OvModel" id="39">
+        <prop>OvMaterial:../../resource/material/test.matf0</prop>
+        <prop>OvMesh:../../resource/mesh/ball.msf0</prop>
+        <prop>0:</prop>
+        <prop>0</prop>
+        <prop>1.000000,1.000000,1.000000</prop>
+        <prop>187.765961,52.086132,-16.189987</prop>
+        <prop>0.441426,-0.554311,-0.450683,-0.542925</prop>
+        <prop>0:</prop>
+        <prop>0:</prop>
+    </Object>
+    <Object type="OvModel" id="40">
+        <prop>OvMaterial:../../resource/material/test.matf0</prop>
+        <prop>OvMesh:../../resource/mesh/ball.msf0</prop>
+        <prop>0:</prop>
+        <prop>0</prop>
+        <prop>1.000000,1.000000,1.000000</prop>
+        <prop>184.366669,67.825188,-52.019020</prop>
+        <prop>0.382105,-0.604757,-0.568231,-0.406667</prop>
+        <prop>0:</prop>
+        <prop>0:</prop>
+    </Object>
+    <Object type="OvModel" id="41">
+        <prop>OvMaterial:../../resource/material/test.matf0</prop>
+        <prop>OvMesh:../../resource/mesh/ball.msf0</prop>
+        <prop>0:</prop>
+        <prop>0</prop>
+        <prop>1.000000,1.000000,1.000000</prop>
+        <prop>165.343750,75.778816,-84.829430</prop>
+        <prop>0.280565,-0.640104,-0.661738,-0.271392</prop>
+        <prop>0:</prop>
+        <prop>0:</prop>
+    </Object>
+    <Object type="OvModel" id="42">
+        <prop>OvMaterial:../../resource/material/test.matf0</prop>
+        <prop>OvMesh:../../resource/mesh/ball.msf0</prop>
+        <prop>0:</prop>
+        <prop>0</prop>
+        <prop>1.000000,1.000000,1.000000</prop>
+        <prop>76.698624,86.884254,-117.066505</prop>
+        <prop>-0.093053,-0.655077,-0.745337,0.081784</prop>
+        <prop>0:</prop>
+        <prop>0:</prop>
+    </Object>
+    <Object type="OvModel" id="43">
+        <prop>OvMaterial:../../resource/material/test.matf0</prop>
+        <prop>OvMesh:../../resource/mesh/ball.msf0</prop>
+        <prop>0:</prop>
+        <prop>0</prop>
+        <prop>1.000000,1.000000,1.000000</prop>
+        <prop>0.144608,86.884262,-60.266342</prop>
+        <prop>-0.444642,-0.532065,-0.605376,0.390795</prop>
+        <prop>0:</prop>
+        <prop>0:</prop>
+    </Object>
+    <Object type="OvModel" id="44">
+        <prop>OvMaterial:../../resource/material/test.matf0</prop>
+        <prop>OvMesh:../../resource/mesh/ball.msf0</prop>
+        <prop>0:</prop>
+        <prop>0</prop>
+        <prop>1.000000,1.000000,1.000000</prop>
+        <prop>-5.605431,78.960052,9.265980</prop>
+        <prop>-0.588705,-0.398878,-0.412359,0.569458</prop>
+        <prop>0:</prop>
+        <prop>0:</prop>
+    </Object>
+    <Object type="OvModel" id="45">
+        <prop>OvMaterial:../../resource/material/test.matf0</prop>
+        <prop>OvMesh:../../resource/mesh/ball.msf0</prop>
+        <prop>0:</prop>
+        <prop>0</prop>
+        <prop>1.000000,1.000000,1.000000</prop>
+        <prop>5.295311,72.595879,33.919991</prop>
+        <prop>-0.616153,-0.341219,-0.336303,0.625160</prop>
+        <prop>0:</prop>
+        <prop>0:</prop>
+    </Object>
+    <Object type="OvModel" id="46">
+        <prop>OvMaterial:../../resource/material/test.matf0</prop>
+        <prop>OvMesh:../../resource/mesh/ball.msf0</prop>
+        <prop>0:</prop>
+        <prop>0</prop>
+        <prop>1.000000,1.000000,1.000000</prop>
+        <prop>36.989223,58.337215,64.346992</prop>
+        <prop>-0.610779,-0.194164,-0.157865,0.751218</prop>
+        <prop>0:</prop>
+        <prop>0:</prop>
+    </Object>
+    <Object type="OvModel" id="47">
+        <prop>OvMaterial:../../resource/material/test.matf0</prop>
+        <prop>OvMesh:../../resource/mesh/ball.msf0</prop>
+        <prop>0:</prop>
+        <prop>0</prop>
+        <prop>1.000000,1.000000,1.000000</prop>
+        <prop>80.826584,25.413349,68.045158</prop>
+        <prop>-0.499380,-0.039851,-0.023002,0.865161</prop>
+        <prop>0:</prop>
+        <prop>0:</prop>
+    </Object>
+    <Object type="OvModel" id="48">
+        <prop>OvMaterial:../../resource/material/test.matf0</prop>
+        <prop>OvMesh:../../resource/mesh/ball.msf0</prop>
+        <prop>0:</prop>
+        <prop>0</prop>
+        <prop>1.000000,1.000000,1.000000</prop>
+        <prop>85.079231,22.657173,66.806412</prop>
+        <prop>-0.492778,-0.026196,-0.014844,0.869634</prop>
+        <prop>0:</prop>
+        <prop>0:</prop>
+    </Object>
+    <Object type="OvModel" id="49">
+        <prop>OvMaterial:../../resource/material/test.matf0</prop>
+        <prop>OvMesh:../../resource/mesh/ball.msf0</prop>
+        <prop>0:</prop>
+        <prop>0</prop>
+        <prop>1.000000,1.000000,1.000000</prop>
+        <prop>41.519722,17.303711,47.556564</prop>
+        <prop>-0.429041,-0.341618,-0.179462,0.816709</prop>
+        <prop>0:</prop>
+        <prop>0:</prop>
+    </Object>
+    <Object type="OvModel" id="50">
+        <prop>OvMaterial:../../resource/material/test.matf0</prop>
+        <prop>OvMesh:../../resource/mesh/ball.msf0</prop>
+        <prop>0:</prop>
+        <prop>0</prop>
+        <prop>1.000000,1.000000,1.000000</prop>
+        <prop>9.633331,17.303703,-2.020803</prop>
+        <prop>-0.353738,-0.574716,-0.301915,0.673364</prop>
+        <prop>0:</prop>
+        <prop>0:</prop>
+    </Object>
+    <Object type="OvModel" id="51">
+        <prop>OvMaterial:../../resource/material/test.matf0</prop>
+        <prop>OvMesh:../../resource/mesh/ball.msf0</prop>
+        <prop>0:</prop>
+        <prop>0</prop>
+        <prop>1.000000,1.000000,1.000000</prop>
+        <prop>5.789970,22.657173,-33.883419</prop>
+        <prop>-0.304339,-0.684463,-0.387851,0.537085</prop>
+        <prop>0:</prop>
+        <prop>0:</prop>
+    </Object>
+    <Object type="OvModel" id="52">
+        <prop>OvMaterial:../../resource/material/test.matf0</prop>
+        <prop>OvMesh:../../resource/mesh/ball.msf0</prop>
+        <prop>0:</prop>
+        <prop>0</prop>
+        <prop>1.000000,1.000000,1.000000</prop>
+        <prop>7.692047,29.639145,-53.655914</prop>
+        <prop>-0.291640,-0.708255,-0.447285,0.461798</prop>
+        <prop>0:</prop>
+        <prop>0:</prop>
+    </Object>
+    <Object type="OvModel" id="53">
+        <prop>OvMaterial:../../resource/material/test.matf0</prop>
+        <prop>OvMesh:../../resource/mesh/ball.msf0</prop>
+        <prop>0:</prop>
+        <prop>0</prop>
+        <prop>1.000000,1.000000,1.000000</prop>
+        <prop>6.833412,39.875858,-62.126907</prop>
+        <prop>-0.301270,-0.696065,-0.495863,0.422906</prop>
+        <prop>0:</prop>
+        <prop>0:</prop>
+    </Object>
+    <Object type="OvModel" id="54">
+        <prop>OvMaterial:../../resource/material/test.matf0</prop>
+        <prop>OvMesh:../../resource/mesh/ball.msf0</prop>
+        <prop>0:</prop>
+        <prop>0</prop>
+        <prop>1.000000,1.000000,1.000000</prop>
+        <prop>0.115784,56.767494,-58.554131</prop>
+        <prop>-0.375156,-0.619352,-0.537194,0.432532</prop>
         <prop>0:</prop>
         <prop>0:</prop>
     </Object>

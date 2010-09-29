@@ -118,7 +118,7 @@ bool		OvRenderer::GenerateRenderer()
 
 	// 	m_device->SetSamplerState( 1, D3DSAMP_MINFILTER, D3DTEXF_LINEAR );
 	// 	m_device->SetSamplerState( 1, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR );
-	 	m_device->SetRenderState(D3DRS_CULLMODE,D3DCULL_CW);
+	 	m_device->SetRenderState(D3DRS_CULLMODE,D3DCULL_NONE);
 	//m_device->SetRenderState(D3DRS_LIGHTING,false);
 
 	return SUCCEEDED(hr);
@@ -210,7 +210,11 @@ void OvRenderer::SetPixelShader( OvPixelShaderSPtr shader )
 {
 	if ( m_device && shader )
 	{
-		m_device->SetPixelShader( shader->ToDirectShader() );
+		HRESULT hr = m_device->SetPixelShader( shader->ToDirectShader() );
+		if ( FAILED( hr ) )
+		{
+			OvAssertMsg("Failed SetPixelShader");
+		}
 	}
 }
 
@@ -218,22 +222,35 @@ void OvRenderer::SetVertexShader( OvVertexShaderSPtr shader )
 {
 	if ( m_device && shader )
 	{
-		m_device->SetVertexShader( shader->ToDirectShader() );
+		HRESULT hr = m_device->SetVertexShader( shader->ToDirectShader() );
+		if ( FAILED( hr ) )
+		{
+			OvAssertMsg("Failed SetVertexShader");
+		}
 	}
 }
 
-void OvRenderer::SetVertexStream( WORD streamIndex, SVertexStreamInfo* streamInfo )
+bool OvRenderer::SetTexture(UINT uiSamplerIndex,OvTextureSPtr pTexture)
+{
+	LPDIRECT3DDEVICE9 kpDevice =  GetDevice();
+	if (kpDevice && pTexture)
+	{
+		HRESULT kHs = E_FAIL;
+		kHs = kpDevice->SetTexture( uiSamplerIndex, pTexture->ToDxTexture() );
+		return SUCCEEDED(kHs);
+	}
+	return false;
+}
+
+void OvRenderer::SetVertexStream( WORD streamIndex, const SVertexStreamInfo& streamInfo )
 {
 	if ( m_device )
 	{		
 		LPDIRECT3DVERTEXBUFFER9 Stream = NULL;
 		size_t Stride = 0;
 		
-		if (streamInfo)
-		{
-			Stream = streamInfo->vertexStream;
-			Stride = streamInfo->vertexStride;
-		}
+		Stream = streamInfo.vertexStream;
+		Stride = streamInfo.vertexStride;
 
 		HRESULT hr = m_device->SetStreamSource( streamIndex, Stream, 0, Stride );
 		OvAssert( SUCCEEDED( hr ) );
@@ -268,6 +285,39 @@ bool OvRenderer::DrawPrimitive( D3DPRIMITIVETYPE primitiveType, size_t primCount
 		return SUCCEEDED( hr );
 	}
 	return false;
+}
+
+void OvRenderer::RenderUnitRect()
+{
+	struct SScreenRect
+	{
+		OvPoint3 pos; OvPoint2 tex;
+	};
+	static D3DVERTEXELEMENT9 rect_elem[] =
+	{
+		{ 0, 0
+		, D3DDECLTYPE_FLOAT3
+		, D3DDECLMETHOD_DEFAULT
+		, D3DDECLUSAGE_POSITION, 0 },
+
+		{ 0, 12
+		, D3DDECLTYPE_FLOAT2
+		, D3DDECLMETHOD_DEFAULT
+		, D3DDECLUSAGE_TEXCOORD, 0 },
+		D3DDECL_END()
+	};
+	static SScreenRect rect[] = 
+	{ {OvPoint3(-1,-1,0),OvPoint2(0,1)}
+	, {OvPoint3(-1,+1,0),OvPoint2(0,0)}
+	, {OvPoint3(+1,+1,0),OvPoint2(1,0)}
+	, {OvPoint3(+1,-1,0),OvPoint2(1,1)}};
+
+	static LPDIRECT3DVERTEXBUFFER9 rectVertBuffer = CreateVertexStream( (void*)&rect[0], sizeof( SScreenRect ), 4 );
+	static LPDIRECT3DVERTEXDECLARATION9 rectDecl = CreateVertexDeclaration( rect_elem );
+
+	SetVertexStream( 0, SVertexStreamInfo( rectVertBuffer, sizeof( SScreenRect ), 0) );
+	SetVertexDeclaration( rectDecl );
+	DrawPrimitive( D3DPRIMITIVETYPE::D3DPT_TRIANGLEFAN, 2);
 }
 
 LPDIRECT3DDEVICE9	OvRenderer::GetDevice()

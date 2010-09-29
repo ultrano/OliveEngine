@@ -45,7 +45,7 @@ void OvMaterial::ApplyMaterial()
 		; i < TextureStage::MaxStage 
 		; ++i )
 	{
-		OvShaderManager::GetInstance()->SetTexture( i , m_stageTexture[i] );
+		OvRenderer::GetInstance()->SetTexture( i , m_stageTexture[i] );
 	}
 
 }

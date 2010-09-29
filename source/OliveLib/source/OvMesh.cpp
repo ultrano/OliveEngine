@@ -43,7 +43,7 @@ void	OvMesh::Rendering( StreamStage meshDetail )
 		; i < StreamStage::STAGE_MAX
 		; ++i)
 	{
-		OvRenderer::GetInstance()->SetVertexStream( i, &(m_renderData->vertStreamInfo[ i ]) );
+		OvRenderer::GetInstance()->SetVertexStream( i, (m_renderData->vertStreamInfo[ i ]) );
 	}
 
 	OvRenderer::GetInstance()->SetIndexStream( m_renderData->faceStream );

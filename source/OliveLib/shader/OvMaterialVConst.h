@@ -10,6 +10,7 @@ CONST_DECL_FLOAT(float4,Time,12,1)
 CONST_DECL_FLOAT(float4x3,World,13,3)
 CONST_DECL_FLOAT_ARRAY(float4x3,MatrixPalette,25,13,3)
 
+CONST_DECL_FLOAT(float3,LightPos,88,1);
 CONST_DECL_FLOAT(float,Float_LastRegister,88,1)
 
 CONST_GROUP_END

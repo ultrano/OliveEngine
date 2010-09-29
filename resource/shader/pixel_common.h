@@ -11,6 +11,7 @@ struct input_pixel
 	float3 eye2pos	: TEXCOORD3;
 	float3 light	: TEXCOORD4;
 	float4 time		: TEXCOORD5;
+	float4 depth	: TEXCOORD6;
 };
 
 float4 texturesampler_0( float2 tex )

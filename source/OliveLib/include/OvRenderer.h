@@ -8,6 +8,7 @@
 
 OvREF_POINTER(OvPixelShader);
 OvREF_POINTER(OvVertexShader);
+OvREF_POINTER(OvTexture);
 
 class OvRenderer : public OvSingletonBase< OvRenderer >
 {
@@ -29,11 +30,14 @@ public:
 
 	void			SetPixelShader( OvPixelShaderSPtr shader );
 	void			SetVertexShader( OvVertexShaderSPtr shader );
+	bool			SetTexture(UINT uiSamplerIndex,OvTextureSPtr pTexture);
 
-	void			SetVertexStream( WORD streamIndex, SVertexStreamInfo* streamInfo );
+	void			SetVertexStream( WORD streamIndex, const SVertexStreamInfo& streamInfo );
 	void			SetIndexStream( LPDIRECT3DINDEXBUFFER9 streamBuffer );
 	void			SetVertexDeclaration( LPDIRECT3DVERTEXDECLARATION9 decl );
 	bool			DrawPrimitive( D3DPRIMITIVETYPE primitiveType, size_t primCount );
+
+	void			RenderUnitRect();
 
 //////////////////////////////////////////////////////////////////////////
 

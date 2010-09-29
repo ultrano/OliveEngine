@@ -17,6 +17,13 @@ typedef std::vector< SFaceIndex > face_buffer;
 struct SVertexStreamInfo
 {
 	SVertexStreamInfo(): vertexStream( NULL ), vertexStride( 0 ), streamOffset( 0 ){};
+	SVertexStreamInfo( 
+		LPDIRECT3DVERTEXBUFFER9 _vertexStream,
+		size_t	_vertexStride,
+		size_t	_streamOffset)
+		: vertexStream( _vertexStream )
+		, vertexStride( _vertexStride )
+		, streamOffset( _streamOffset ){};
 	LPDIRECT3DVERTEXBUFFER9 vertexStream;
 	size_t	vertexStride;
 	size_t	streamOffset;
