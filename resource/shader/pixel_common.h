@@ -1,4 +1,4 @@
-#include <OvMaterialPConst.h>
+#include <OvPShaderConst.h>
 
 sampler SAMPLER_0	: register(s0);
 sampler SAMPLER_1	: register(s1);

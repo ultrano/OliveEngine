@@ -6,10 +6,6 @@
 
 #include "OvSingleton.h"
 
-#define CONST_DECLARE_IN_APPLICATION
-#include "OvMaterialPConst.h"
-#include "OvMaterialVConst.h"
-#undef CONST_DECLARE_IN_APPLICATION
 
 struct OvShaderConstInfo;
 class OvMatrix;

@@ -97,11 +97,11 @@ public:
 
 		OvMatrix view_project = camera->GetViewMatrix() * camera->GetProjectMatrix();
 		
-		OvShaderManager::GetInstance()->SetVSConst( OvMatVSConst::ViewProject, view_project );
-		OvShaderManager::GetInstance()->SetVSConst( OvMatVSConst::ViewPos, camera->GetWorldTranslate() );
+		OvShaderManager::GetInstance()->SetVSConst( OvVShaderConst::ViewProject, view_project );
+		OvShaderManager::GetInstance()->SetVSConst( OvVShaderConst::ViewPos, camera->GetWorldTranslate() );
 
-		OvShaderManager::GetInstance()->SetPSConst( OvMatPSConst::Time, timeCycle);
-		OvShaderManager::GetInstance()->SetVSConst( OvMatVSConst::Time, timeCycle);
+		OvShaderManager::GetInstance()->SetPSConst( OvPShaderConst::Time, timeCycle);
+		OvShaderManager::GetInstance()->SetVSConst( OvVShaderConst::Time, timeCycle);
 
 		OvRenderer::GetInstance()->ClearTarget();
 		OvRenderer::GetInstance()->BeginTarget();

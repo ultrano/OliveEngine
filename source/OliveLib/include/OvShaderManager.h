@@ -113,3 +113,7 @@ bool	OvShaderManager::GetPSConst(const OvShaderConstInfo& rConstInfo,Type_0& rTy
 {
 	return _GetPSConstF(rConstInfo,(float*)&(rType),sizeof(Type_0));
 }
+#define CONST_DECLARE_IN_APPLICATION
+#include "OvPShaderConst.h"
+#include "OvVShaderConst.h"
+#undef CONST_DECLARE_IN_APPLICATION

@@ -8,11 +8,30 @@ GL_TEST_ENVIROMENT(OliveLibTest)
 {
 private:
 protected:
-	OvPoint3 m_lightPos;
-	list<OvPoint3> m_lights;
+	OvRenderTarget m_renderTarget;
+	OvTextureSPtr m_diffuseScene;
+	OvTextureSPtr m_lightDepthScene;
+	OvTextureSPtr m_shadowProjectedScene;
+	OvCubeTextureSPtr m_pointLightDepthScene;
+
+	OvVertexShaderSPtr m_depthVS;
+	OvPixelShaderSPtr m_depthPS;
+
+	OvVertexShaderSPtr m_shadowProjVS;
+	OvPixelShaderSPtr m_shadowProjPS;
+
+	OvVertexShaderSPtr m_pointShadowVS;
+	OvPixelShaderSPtr m_pointShadowPS;
+
+	OvVertexShaderSPtr m_rectVS;
+	OvPixelShaderSPtr m_rectPS;
+
 	OvCameraSPtr m_mainCamera;
+	OvCameraSPtr m_lightCamera;
+	OvXComponentSPtr m_cameraControler;
+
 	OvObjectCollector m_loadedObjects;
-	OvCameraSPtr GetMainCamera(){return m_mainCamera;};
+
 	bool m_exitFlag;
 public:
 	GL_ENV_SET_UP
@@ -28,32 +47,124 @@ public:
 			m_exitFlag = true;
 		}
 		m_mainCamera = m_loadedObjects.GetByName("Camera");
+		m_lightCamera = m_loadedObjects.GetByName("Light");
+		m_lightCamera->SetFOV( D3DX_PI/2.0f );
+
+		OvObjectCollector components;
+		m_mainCamera->GetComponents( components );
+		m_cameraControler = components.GetByAt(0);
+
+		//////////////////////////////////////////////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////
+		m_diffuseScene = CreateRenderTexture( 800, 600, 1, D3DFMT_A8B8G8R8 );
+		m_lightDepthScene = CreateRenderTexture( 512, 512, 1, D3DFMT_R32F );
+		m_shadowProjectedScene = CreateRenderTexture( 800, 600, 1, D3DFMT_A8B8G8R8 );
+		m_pointLightDepthScene = CreateRenderCubeTexture( 512, 1, D3DFMT_R32F);
+
+		OvShaderCodeIncluder includer("../OliveLib/shader", "../../resource");
+
+		//////////////////////////////////////////////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////
+
+		m_depthVS = OvShaderManager::GetInstance()->CreateVertexShaderFromFile
+			( "../../resource/shader/depth.shacode", "Vmain", "vs_2_0", &includer );
+
+		m_depthPS = OvShaderManager::GetInstance()->CreatePixelShaderFromFile
+			( "../../resource/shader/depth.shacode", "Pmain", "ps_2_0", &includer );
+
+		//////////////////////////////////////////////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////
+
+		m_shadowProjVS = OvShaderManager::GetInstance()->CreateVertexShaderFromFile
+			( "../../resource/shader/shadow_project.shacode", "Vmain", "vs_2_0", &includer );
+
+		m_shadowProjPS = OvShaderManager::GetInstance()->CreatePixelShaderFromFile
+			( "../../resource/shader/shadow_project.shacode", "Pmain", "ps_2_0", &includer );
+
+		//////////////////////////////////////////////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////
+
+		m_pointShadowVS = OvShaderManager::GetInstance()->CreateVertexShaderFromFile
+			( "../../resource/shader/point_light_shadow.shacode", "Vmain", "vs_2_0", &includer );
+
+		m_pointShadowPS = OvShaderManager::GetInstance()->CreatePixelShaderFromFile
+			( "../../resource/shader/point_light_shadow.shacode", "Pmain", "ps_2_0", &includer );
+
+		//////////////////////////////////////////////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////
+
+		m_rectVS = OvShaderManager::GetInstance()->CreateVertexShaderFromFile
+			( "../../resource/shader/rect.shacode", "Vmain", "vs_2_0", &includer );
+
+		m_rectPS = OvShaderManager::GetInstance()->CreatePixelShaderFromFile
+			( "../../resource/shader/rect.shacode", "Pmain", "ps_2_0", &includer );
+
+		//////////////////////////////////////////////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////
+
+		
+		//////////////////////////////////////////////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////
 	};
 	GL_ENV_TEAR_DOWN
 	{
+		m_lightCamera = NULL;
 		m_mainCamera = NULL;
+		m_cameraControler = NULL;
 		m_loadedObjects.Clear();
+
+		m_diffuseScene = NULL;
+		m_lightDepthScene = NULL;
+		m_shadowProjectedScene = NULL;
+		m_pointLightDepthScene = NULL;
+
+		m_depthVS = NULL;
+		m_depthPS = NULL;
+
+		m_shadowProjVS = NULL;
+		m_shadowProjPS = NULL;
+
+		m_pointShadowVS = NULL;
+		m_pointShadowPS = NULL;
+
+		m_rectVS = NULL;
+		m_rectPS = NULL;
 
 		OvSingletonPool::ShutDown();
 	}
 public:
 	void ControlMainCamera( MSG msg )
 	{
-		OvPoint3 curPos = GetMainCamera()->GetTranslate();
+		OvPoint3 curPos = m_mainCamera->GetTranslate();
 		switch ( msg.message )
 		{
 		case WM_KEYDOWN : 
 			{
 				switch ( msg.wParam )
 				{
-				case VK_SPACE : 
-					m_lights.push_back( GetMainCamera()->GetWorldTranslate() );
+				case VK_SPACE:
+					{
+						if ( m_cameraControler->GetTarget() == m_mainCamera )
+						{
+							m_cameraControler->SetTarget( m_lightCamera );
+						}
+						else if ( m_cameraControler->GetTarget() == m_lightCamera )
+						{
+							m_cameraControler->SetTarget( m_mainCamera );
+						}
+					}
 					break;
 				case VK_ESCAPE:
 					if ( !m_exitFlag )
 					{
 						m_exitFlag = true;
-						RenderToTexture( GetMainCamera(), m_loadedObjects );
 					}
 					break;
 				case VK_INSERT : 
@@ -65,8 +176,8 @@ public:
 							OvModelSPtr copymodel = OvNew OvModel;
 							copymodel->SetMesh( model->GetMesh() );
 							copymodel->SetMaterial( model->GetMaterial() );
-							copymodel->SetTranslate( (GetMainCamera()->GetLocalLookDirection() * 100.0f) + GetMainCamera()->GetTranslate() );
-							copymodel->SetRotation( GetMainCamera()->GetRotation() );
+							copymodel->SetTranslate( (m_mainCamera->GetLocalLookDirection() * 100.0f) + m_mainCamera->GetTranslate() );
+							copymodel->SetRotation( m_mainCamera->GetRotation() );
 							m_loadedObjects.AddObject( copymodel );
 						}
 
@@ -110,7 +221,7 @@ public:
 
 				{
 					Update( 0, m_loadedObjects );
-					Render( GetMainCamera(), m_loadedObjects );
+					Render( m_mainCamera, m_loadedObjects );
 				}
 			}
 		}
@@ -128,17 +239,16 @@ public:
 		}
 	}
 
-	void	Render( OvCameraSPtr camera, OvObjectCollector objectList )
+	void	RenderDiffuse( OvCameraSPtr camera, OvObjectCollector objectList )
 	{
-		float timeCycle = GetTickCount();
-		timeCycle = timeCycle / 1000.0f;
-
 		OvMatrix view_project = camera->GetViewMatrix() * camera->GetProjectMatrix();
+		OvShaderManager::GetInstance()->SetVSConst( OvVShaderConst::ViewProject, view_project );
 
-		OvShaderManager::GetInstance()->SetVSConst( OvMatVSConst::ViewProject, view_project );
-		OvShaderManager::GetInstance()->SetVSConst( OvMatVSConst::ViewPos, camera->GetWorldTranslate() );
+		LPDIRECT3DDEVICE9 device = OvRenderer::GetInstance()->GetDevice();
+		device->SetSamplerState( 0, D3DSAMP_ADDRESSU, D3DTADDRESS_WRAP );
+		device->SetSamplerState( 0, D3DSAMP_ADDRESSV, D3DTADDRESS_WRAP );
 
-		OvShaderManager::GetInstance()->SetVSConst( OvMatVSConst::Time, timeCycle);
+		m_renderTarget.LockRenderTarget( 0, m_diffuseScene->GetSurface() );
 
 		OvRenderer::GetInstance()->ClearTarget();
 		OvRenderer::GetInstance()->BeginTarget();
@@ -152,30 +262,16 @@ public:
 			}
 		}
 		OvRenderer::GetInstance()->EndTarget();
-		OvRenderer::GetInstance()->PresentTarget();
+		m_renderTarget.UnlockRenderTarget();
 	}
 
-	void RenderDepthMap( OvCameraSPtr camera, OvObjectCollector objectList )
+	void	RenderDepth( const OvMatrix& view_project, OvObjectCollector objectList )
 	{
-		OvTextureSPtr depth_map = CreateRenderTexture(800,600,1,D3DFORMAT::D3DFMT_R16F);
-		OvRenderTarget render_target;
+		OvShaderManager::GetInstance()->SetVSConst( OvVShaderConst::ViewProject, view_project );
 
-		render_target.LockRenderTarget( 0, depth_map->GetSurface() );
+		OvRenderer::GetInstance()->SetVertexShader( m_depthVS );
+		OvRenderer::GetInstance()->SetPixelShader( m_depthPS );
 
-		OvShaderCodeIncluder includer("../OliveLib/shader", "../../resource");
-		OvRenderer::GetInstance()->SetVertexShader
-			( 
-			OvShaderManager::GetInstance()->CreateVertexShaderFromFile("../../resource/shader/depth.shacode","Vmain","vs_2_0", &includer )
-			);
-		OvRenderer::GetInstance()->SetPixelShader
-			( 
-			OvShaderManager::GetInstance()->CreatePixelShaderFromFile("../../resource/shader/depth.shacode","Pmain","ps_2_0", &includer )
-			);
-
-		OvMatrix view_project = camera->GetViewMatrix() * camera->GetProjectMatrix();
-
-		OvShaderManager::GetInstance()->SetVSConst( OvMatVSConst::ViewProject, view_project );
-		OvShaderManager::GetInstance()->SetVSConst( OvMatVSConst::ViewPos, camera->GetWorldTranslate() );
 
 		OvRenderer::GetInstance()->ClearTarget();
 		OvRenderer::GetInstance()->BeginTarget();
@@ -190,22 +286,123 @@ public:
 		}
 		OvRenderer::GetInstance()->EndTarget();
 
-		render_target.UnlockRenderTarget();
+	}
+	void	RenderSpotLightDepth( OvCameraSPtr camera, OvObjectCollector objectList )
+	{
+		OvMatrix light_project = m_lightCamera->GetViewMatrix() * m_lightCamera->GetProjectMatrix();
+		m_renderTarget.LockRenderTarget( 0, m_lightDepthScene->GetSurface() );
+		
+		RenderDepth( light_project, objectList );
 
-		SaveTexture( ( "../../resource/texture/save_depth.jpg" ), depth_map, D3DXIFF_JPG);
+		m_renderTarget.UnlockRenderTarget();
 
 	}
-	void RenderToTexture( OvCameraSPtr camera, OvObjectCollector objectList )
+	void	RenderPointLightDepth( OvCameraSPtr camera, OvObjectCollector objectList )
 	{
-		OvTextureSPtr render_texture = CreateRenderTexture(800,600,1,D3DFORMAT::D3DFMT_A8B8G8R8);
-		OvRenderTarget render_target;
+		OvShaderManager::GetInstance()->SetVSConst( OvVShaderConst::ViewPos, m_lightCamera->GetWorldTranslate() );
+		for ( unsigned i = 0 ; i < 6 ; ++i )
+		{
+			D3DCUBEMAP_FACES face_index = (D3DCUBEMAP_FACES)i;
+			LPDIRECT3DSURFACE9 surface = m_pointLightDepthScene->GetCubeSurface( face_index, 0 );
+			m_renderTarget.LockRenderTarget( 0, surface );
 
-		render_target.LockRenderTarget( 0, render_texture->GetSurface() );
- 		Render( camera, objectList );
-		render_target.UnlockRenderTarget();
+			OvMatrix light_face_project = m_renderTarget.CubeFaceMatrix( face_index, m_lightCamera->GetWorldTranslate() ) * m_lightCamera->GetProjectMatrix();
+			RenderDepth( light_face_project, objectList );
 
- 		SaveTexture( ( "../../resource/texture/save_test.jpg" ), render_texture, D3DXIFF_JPG);
-		RenderDepthMap( camera, objectList );
+			m_renderTarget.UnlockRenderTarget();
+		}
+	}
+	void	RenderShadowProjected( OvCameraSPtr camera, OvObjectCollector objectList )
+	{
+		static OvMatrix bias = OvMatrix().Scale( 0.5f, -0.5f, 0 ) * OvMatrix().Translate( 0.5f, 0.5f, 0 );
+		OvMatrix light_project = m_lightCamera->GetViewMatrix() * m_lightCamera->GetProjectMatrix();
+		OvMatrix view_project = camera->GetViewMatrix() * camera->GetProjectMatrix();
+		OvShaderManager::GetInstance()->SetVSConst( OvVShaderConst::ViewProject, view_project );
+
+		LPDIRECT3DDEVICE9 device = OvRenderer::GetInstance()->GetDevice();
+		device->SetSamplerState( 0, D3DSAMP_ADDRESSU, D3DTADDRESS_BORDER );
+		device->SetSamplerState( 0, D3DSAMP_ADDRESSV, D3DTADDRESS_BORDER );
+
+
+		OvRenderer::GetInstance()->SetVertexShader( m_shadowProjVS );
+		OvRenderer::GetInstance()->SetPixelShader( m_shadowProjPS );
+		OvRenderer::GetInstance()->SetTexture( 0, m_lightDepthScene );
+
+		m_renderTarget.LockRenderTarget( 0, m_shadowProjectedScene->GetSurface() );
+
+		OvRenderer::GetInstance()->ClearTarget();
+		OvRenderer::GetInstance()->BeginTarget();
+		for ( int i = 0 ; i < objectList.Count() ; ++i )
+		{
+			OvXObjectSPtr obj = objectList.GetByAt(i);
+			if (OvRTTI_Util::IsKindOf<OvModel>(obj))
+			{
+				OvModelSPtr model = obj;
+
+				OvMatrix world_light_project = model->GetWorldMatrix() * light_project;
+				OvShaderManager::GetInstance()->SetVSConst( OvVShaderConst::WorldLightProject, world_light_project );
+				OvShaderManager::GetInstance()->SetVSConst( OvVShaderConst::WorldLightProjectBias, world_light_project * bias );
+				model->RenderWithoutMaterial();
+			}
+		}
+		OvRenderer::GetInstance()->EndTarget();
+		m_renderTarget.UnlockRenderTarget();
+	}
+
+	void	RenderPointShadow( OvCameraSPtr camera, OvObjectCollector objectList )
+	{
+		OvMatrix view_project = camera->GetViewMatrix() * camera->GetProjectMatrix();
+		OvShaderManager::GetInstance()->SetVSConst( OvVShaderConst::ViewProject, view_project );
+		OvShaderManager::GetInstance()->SetVSConst( OvVShaderConst::Project, camera->GetProjectMatrix());
+		OvShaderManager::GetInstance()->SetVSConst( OvVShaderConst::LightPos, m_lightCamera->GetWorldTranslate() );
+		OvMatrix light_project = m_lightCamera->GetViewMatrix() * m_lightCamera->GetProjectMatrix();
+
+		LPDIRECT3DDEVICE9 device = OvRenderer::GetInstance()->GetDevice();
+		device->SetSamplerState( 0, D3DSAMP_ADDRESSU, D3DTADDRESS_CLAMP );
+		device->SetSamplerState( 0, D3DSAMP_ADDRESSV, D3DTADDRESS_CLAMP );
+
+		OvRenderer::GetInstance()->SetVertexShader( m_pointShadowVS );
+		OvRenderer::GetInstance()->SetPixelShader( m_pointShadowPS );
+		OvRenderer::GetInstance()->SetCubeTexture( 0, m_pointLightDepthScene );
+
+		m_renderTarget.LockRenderTarget( 0, m_shadowProjectedScene->GetSurface() );
+
+		OvRenderer::GetInstance()->ClearTarget();
+		OvRenderer::GetInstance()->BeginTarget();
+		for ( int i = 0 ; i < objectList.Count() ; ++i )
+		{
+			OvXObjectSPtr obj = objectList.GetByAt(i);
+			if (OvRTTI_Util::IsKindOf<OvModel>(obj))
+			{
+				OvModelSPtr model = obj;
+
+				OvMatrix world_light_project = model->GetWorldMatrix() * light_project;
+				OvShaderManager::GetInstance()->SetVSConst( OvVShaderConst::WorldLightProject, world_light_project );
+				model->RenderWithoutMaterial();
+			}
+		}
+		OvRenderer::GetInstance()->EndTarget();
+		m_renderTarget.UnlockRenderTarget();
+	}
+	void	Render( OvCameraSPtr camera, OvObjectCollector objectList )
+	{
+		RenderDiffuse( camera, objectList );
+		//RenderSpotLightDepth( camera, objectList );
+		RenderPointLightDepth( camera, objectList );
+		RenderPointShadow( camera, objectList );
+		//RenderShadowProjected( camera, objectList );
+
+		OvRenderer::GetInstance()->SetVertexShader( m_rectVS );
+		OvRenderer::GetInstance()->SetPixelShader( m_rectPS );
+		OvRenderer::GetInstance()->SetTexture( 0, m_diffuseScene );
+		OvRenderer::GetInstance()->SetTexture( 1, m_shadowProjectedScene );
+
+		OvRenderer::GetInstance()->ClearTarget();
+		OvRenderer::GetInstance()->BeginTarget();
+		OvRenderer::GetInstance()->RenderUnitRect();
+		OvRenderer::GetInstance()->EndTarget();
+		OvRenderer::GetInstance()->PresentTarget();
+
 	}
 };
 GL_TEST_CASE_ENV( OliveLibTest, mesh_rendering )

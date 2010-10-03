@@ -9,6 +9,7 @@
 OvREF_POINTER(OvPixelShader);
 OvREF_POINTER(OvVertexShader);
 OvREF_POINTER(OvTexture);
+OvREF_POINTER(OvCubeTexture);
 
 class OvRenderer : public OvSingletonBase< OvRenderer >
 {
@@ -31,6 +32,7 @@ public:
 	void			SetPixelShader( OvPixelShaderSPtr shader );
 	void			SetVertexShader( OvVertexShaderSPtr shader );
 	bool			SetTexture(UINT uiSamplerIndex,OvTextureSPtr pTexture);
+	bool			SetCubeTexture(UINT uiSamplerIndex,OvCubeTextureSPtr pTexture);
 
 	void			SetVertexStream( WORD streamIndex, const SVertexStreamInfo& streamInfo );
 	void			SetIndexStream( LPDIRECT3DINDEXBUFFER9 streamBuffer );

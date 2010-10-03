@@ -1,5 +1,6 @@
 
 sampler SAMPLER_0	: register(s0);
+sampler SAMPLER_1	: register(s1);
 
 struct vert_shader_output
 {
@@ -17,6 +18,7 @@ void Vmain( in float3 pos : POSITION0
 
 void Pmain( in float2 tex0 : TEXCOORD0, out vector col0 : COLOR0 )
 {
-	//col0 = 1;
-	col0 = tex2D( SAMPLER_0, tex0 ) + 0.5f;
+	float4 texcolor0 = tex2D( SAMPLER_0, tex0 );
+	float4 texcolor1 = tex2D( SAMPLER_1, tex0 );
+	col0 = texcolor1;//texcolor0 * texcolor1;
 };

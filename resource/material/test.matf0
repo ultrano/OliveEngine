@@ -10,17 +10,9 @@ void	main( in input_vertex input, out output_vertex output )
 	output.pos = mul( vector( input.geom.pos, 1.0 ), WorldViewProject );
 	
 	float3 worldpos = mul( vector( input.geom.pos, 1.0 ), World );
-  float3 lightdir = LightPos - worldpos;
-  
+
 	float3 norm = normalize( mul( input.geom.norm, World) );
-	float3 tan = normalize( mul( input.geom.tan, World) );
-	float3 binorm = normalize( cross( norm, tan) );
-	
 	output.norm = norm;
-	output.light.x = dot( lightdir, tan );
-	output.light.y = dot( lightdir, binorm );
-	output.light.z = dot( lightdir, norm );
-	
 	output.tex0 = input.tex.tex0;
 	output.eye = ViewPos;
 	output.eye2pos = normalize( input.geom.pos - ViewPos );
@@ -42,22 +34,10 @@ void main( in input_pixel input, out vector col0 : COLOR0 )
 
 	// collecting channels
 	output.diffuse		= texturesampler_0( input.tex0 );
-	output.emissive		= texturesampler_0( input.tex0 ) / 2.0f;
-	output.normal		= texturesampler_1( input.tex0 );
-	output.specular_pow = 10;
 	//
 	
 	// manufaturing channels
-	
-	output.normal = normalize( 2.0f * output.normal - 1.0f );
-	
-	float3 eye2pos	= normalize( input.eye2pos );
-	float3 light	= normalize( input.light );
-
-	float3 reflection = normalize( reflect( output.normal, eye2pos ) );
-
-	float4 specular = max( 0, dot( light, reflection));
-	col0 = output.emissive + ( output.diffuse * pow( specular, output.specular_pow) );
+  col0 = output.diffuse;
 	//
 	
 }

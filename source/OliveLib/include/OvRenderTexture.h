@@ -2,6 +2,8 @@
 #include "OvTexture.h"
 
 OvREF_POINTER( OvRenderTarget );
+class OvMatrix;
+class OvPoint3;
 
 // 음... 굳이 이런 클레스가 필요 없을거 같다라는 느낌이 온다...
 // OvRenderer의 ChangeRenderTarget, ChangeDepthStencil 메소드로 충분한 해결이 가능할것 같은데...?
@@ -19,6 +21,9 @@ public:
 	bool	LockDepthStencil( LPDIRECT3DSURFACE9 depthStencil );
 	bool	UnlockDepthStencil();
 
+	// test method
+	const OvMatrix& CubeFaceMatrix( D3DCUBEMAP_FACES face_index, const OvPoint3& pt );
+
 private:
 	int m_reservedRenderTargetIndex;
 	LPDIRECT3DSURFACE9 m_oldRenderTarget;
@@ -27,3 +32,4 @@ private:
 };
 OvTextureSPtr CreateRenderTexture( unsigned width, unsigned height, unsigned level, D3DFORMAT format );
 OvTextureSPtr CreateDepthStencilTexture( unsigned width, unsigned height, unsigned level, D3DFORMAT format );
+OvCubeTextureSPtr CreateRenderCubeTexture( unsigned size, unsigned level, D3DFORMAT format );

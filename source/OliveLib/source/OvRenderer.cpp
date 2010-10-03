@@ -242,6 +242,18 @@ bool OvRenderer::SetTexture(UINT uiSamplerIndex,OvTextureSPtr pTexture)
 	return false;
 }
 
+bool OvRenderer::SetCubeTexture(UINT uiSamplerIndex,OvCubeTextureSPtr pTexture)
+{
+	LPDIRECT3DDEVICE9 kpDevice =  GetDevice();
+	if ( kpDevice && pTexture )
+	{
+		HRESULT kHs = E_FAIL;
+		kHs = kpDevice->SetTexture( uiSamplerIndex, pTexture->ToDxCubeTexture() );
+		return SUCCEEDED(kHs);
+	}
+	return false;
+}
+
 void OvRenderer::SetVertexStream( WORD streamIndex, const SVertexStreamInfo& streamInfo )
 {
 	if ( m_device )

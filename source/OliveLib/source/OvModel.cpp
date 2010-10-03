@@ -42,10 +42,12 @@ OvMaterialSPtr OvModel::GetMaterial()
 
 void OvModel::RenderWithoutMaterial()
 {
-	OvShaderManager::GetInstance()->SetVSConst( OvMatVSConst::World, GetWorldMatrix() );
-	OvMatrix view_proj;
-	OvShaderManager::GetInstance()->GetVSConst( OvMatVSConst::ViewProject, view_proj );
-	OvShaderManager::GetInstance()->SetVSConst( OvMatVSConst::WorldViewProject, GetWorldMatrix() * view_proj );
+	OvShaderManager::GetInstance()->SetVSConst( OvVShaderConst::World, GetWorldMatrix() );
+
+	OvMatrix temp_mat;
+	
+	OvShaderManager::GetInstance()->GetVSConst( OvVShaderConst::ViewProject, temp_mat );
+	OvShaderManager::GetInstance()->SetVSConst( OvVShaderConst::WorldViewProject, GetWorldMatrix() * temp_mat );
 
 	if ( m_resourceMesh )
 	{
@@ -59,10 +61,10 @@ void	OvModel::Render()
 	{
 		m_material->ApplyMaterial();
 	}
-	OvShaderManager::GetInstance()->SetVSConst( OvMatVSConst::World, GetWorldMatrix() );
+	OvShaderManager::GetInstance()->SetVSConst( OvVShaderConst::World, GetWorldMatrix() );
 	OvMatrix view_proj;
-	OvShaderManager::GetInstance()->GetVSConst( OvMatVSConst::ViewProject, view_proj );
-	OvShaderManager::GetInstance()->SetVSConst( OvMatVSConst::WorldViewProject, GetWorldMatrix() * view_proj );
+	OvShaderManager::GetInstance()->GetVSConst( OvVShaderConst::ViewProject, view_proj );
+	OvShaderManager::GetInstance()->SetVSConst( OvVShaderConst::WorldViewProject, GetWorldMatrix() * view_proj );
 
 	if ( m_resourceMesh )
 	{

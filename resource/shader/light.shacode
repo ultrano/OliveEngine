@@ -1,0 +1,35 @@
+#include "shader/vertex_common.h"
+#include "shader/pixel_common.h"
+
+void Vmain( in input_vertex input, out output_vertex output )
+{
+	output.pos = mul( vector( input.geom.pos, 1.0 ), WorldViewProject );
+	
+	float3 worldpos = mul( vector( input.geom.pos, 1.0 ), World );
+	float3 lightdir = normalize(worldpos - LightPos);
+	
+	float3 norm = normalize( mul( input.geom.norm, World) );
+	float3 tan = normalize( mul( input.geom.tan, World) );
+	float3 binorm = normalize( cross( norm, tan) );
+	
+	output.norm = norm;
+	output.light.x = dot( lightdir, tan );
+	output.light.y = dot( lightdir, binorm );
+	output.light.z = dot( lightdir, norm );
+	output.light = normalize( output.light );
+	
+	output.tex0 = input.tex.tex0;
+	output.eye = ViewPos;
+	output.eye2pos = normalize( input.geom.pos - ViewPos );
+	output.depth = output.pos;
+};
+
+void Pmain( in input_pixel input, out vector col0 : COLOR0 )
+{
+	pixel_channel output = (pixel_channel)0;
+	output.normal		= texturesampler_1( input.tex0 );
+	output.normal = -normalize( 2.0f * output.normal - 1.0f );
+	
+	float3 reflection = normalize( reflect( output.normal, normalize(input.eye2pos) ) );
+	col0 = max( 0, dot( normalize(input.light), normalize(reflection) ) );
+}
