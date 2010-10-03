@@ -387,10 +387,10 @@ public:
 	void	Render( OvCameraSPtr camera, OvObjectCollector objectList )
 	{
 		RenderDiffuse( camera, objectList );
-		//RenderSpotLightDepth( camera, objectList );
-		RenderPointLightDepth( camera, objectList );
-		RenderPointShadow( camera, objectList );
-		//RenderShadowProjected( camera, objectList );
+		RenderSpotLightDepth( camera, objectList );
+		//RenderPointLightDepth( camera, objectList );
+		//RenderPointShadow( camera, objectList );
+		RenderShadowProjected( camera, objectList );
 
 		OvRenderer::GetInstance()->SetVertexShader( m_rectVS );
 		OvRenderer::GetInstance()->SetPixelShader( m_rectPS );

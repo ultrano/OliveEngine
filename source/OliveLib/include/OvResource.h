@@ -43,3 +43,21 @@ private:
 	friend class OvResourceManager;
 	OvResourceSPtr _load_resource( const std::string& fileLocation );
 };
+
+OvREF_POINTER(OvResourceTicket);
+class OvResourceTicket : public OvRefBase
+{
+	friend class OvResourceManager;
+public:
+	~OvResourceTicket();
+
+	OvResourceSPtr CheckOut();
+
+private:
+
+	OvResourceTicket( OvResource* resource );
+	void _called_when_resource_reloaded( OvResource* resource );
+
+private:
+	OvResourceSPtr m_resource;
+};

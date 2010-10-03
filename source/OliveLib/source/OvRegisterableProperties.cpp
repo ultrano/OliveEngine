@@ -576,7 +576,7 @@ bool OvPropAccesser_resource::Extract( OvObject* pObj, OvObjectProperties& rObjS
 	if ( accessProp )
 	{
 		string typeName = OvRTTI_Util::TypeName( (*accessProp) );
-		string fileLocation = OvResourceManager::GetInstance()->FindFileLocation( (*accessProp).GetRear() );
+		string fileLocation = OvResourceManager::GetInstance()->FindFileLocation( (*accessProp) );
 
 		string resourceInfo;
 		resourceInfo += typeName;

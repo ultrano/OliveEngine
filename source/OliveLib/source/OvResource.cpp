@@ -6,12 +6,12 @@ OvRTTI_IMPL(OvResourceLoader);
 
 OvResource::OvResource()
 {
-	OvResourceManager::GetInstance()->_call_when_resource_created( this );
+	OvResourceManager::GetInstance()->_called_when_resource_created( this );
 }
 
 OvResource::~OvResource()
 {
-	OvResourceManager::GetInstance()->_call_when_resource_deleted( this );
+	OvResourceManager::GetInstance()->_called_when_resource_deleted( this );
 }
 
 OvResourceSPtr OvResourceLoader::_load_resource( const std::string& fileLocation )
@@ -57,4 +57,26 @@ const std::string& OvResourceFolder::GetCompletedFileLocation()
 OvResourceFolder::operator const std::string&()
 {
 	return m_completedFileLocation;
+}
+
+OvResourceTicket::OvResourceTicket( OvResource* resource )
+: m_resource( resource )
+{
+	OvResourceManager::GetInstance()->_called_when_ticket_created( this );
+}
+
+OvResourceTicket::~OvResourceTicket()
+{
+	OvResourceManager::GetInstance()->_called_when_ticket_deleted( this );
+	m_resource = NULL;
+}
+
+OvResourceSPtr OvResourceTicket::CheckOut()
+{
+	return m_resource;
+}
+
+void OvResourceTicket::_called_when_resource_reloaded( OvResource* resource )
+{
+	m_resource = resource;
 }

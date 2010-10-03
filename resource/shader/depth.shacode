@@ -1,13 +1,12 @@
-#include <OvVShaderConst.h>
-#include <OvPShaderConst.h>
+#include "shader/vertex_common.h"
+#include "shader/pixel_common.h"
 
-void Vmain( in float3 pos : POSITION, out vector output : POSITION, out float3 depth : TEXCOORD0 )
+void Vmain( in input_vertex input, out output_vertex output )
 {
-	output			= mul( vector( pos, 1 ), WorldViewProject );
-	float3 worldpos = mul( pos, World);
-	depth = ViewPos - worldpos;
+	output.pos = mul( vector( input.geom.pos, 1.0 ), WorldViewProject );
+	output.depth = output.pos;
 };
-void Pmain( in float3 depth : TEXCOORD0, out vector col0 : COLOR0 )
+void Pmain( in input_pixel input, out vector col0 : COLOR0 )
 {
-	col0 = abs(length(depth));
+	col0 = input.depth.z / input.depth.w;
 }

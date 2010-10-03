@@ -4,6 +4,37 @@
 #include "OvResourceManager.h"
 #include "OvShaderCodeIncluder.h"
 
+GL_TEST_CASE_FUNC( excuted_location_test )
+{
+	string excuted_location;
+	excuted_location.resize( 1024 );
+	GetModuleFileName(NULL,(LPCH)excuted_location.c_str(),excuted_location.size());
+	excuted_location.data();
+
+	std::string	directory = OvGetDirectoryInFullFilePath( excuted_location );
+	std::string	file_name = OvGetFileNameInFullFilePath( excuted_location );
+	std::string	file_ext = OvGetExtentionInFullFilePath( excuted_location );
+}
+GL_TEST_CASE_FUNC( resource_reload_and_ticket_test )
+{
+	OvSingletonPool::StartUp();
+	{
+		const string file_location = "../../resource/texture/test.jpg";
+		OvRenderer::GetInstance()->GenerateRenderer();
+		OvTextureSPtr resource = OvResourceManager::GetInstance()->LoadResource<OvTexture>( file_location );
+
+		OvResourceTicketSPtr ticket = OvResourceManager::GetInstance()->CheckIn( resource );
+
+		OvResourceSPtr old_resource = ticket->CheckOut();
+
+		OvResourceManager::GetInstance()->ReloadResource( file_location );
+
+		OvResourceSPtr new_resource = ticket->CheckOut();
+
+	}
+	OvSingletonPool::ShutDown();
+}
+
 GL_TEST_CASE_FUNC( render_screen_rect_text )
 {
 	OvSingletonPool::StartUp();
