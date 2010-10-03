@@ -40,7 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="./include;../SupportLib/tixml/include;./shader;../boost_1_44_0"
+				AdditionalIncludeDirectories="./include;../SupportLib/tixml/include;./shader"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
