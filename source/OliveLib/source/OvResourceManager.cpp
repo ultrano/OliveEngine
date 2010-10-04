@@ -12,6 +12,17 @@ OvResourceManager::OvResourceManager()
 	m_loaderTable[ OvTexture		::GetRTTI() ]	= OvNew OvTextureLoader;
 	m_loaderTable[ OvShaderCode		::GetRTTI() ]	= OvNew OvShaderCodeLoader;
 	m_loaderTable[ OvMaterial		::GetRTTI() ]	= OvNew OvMaterialLoader;
+
+	m_resourceDirectory.resize( 1024 );
+	GetModuleFileName( NULL, (LPCH)m_resourceDirectory.c_str(), m_resourceDirectory.size() );
+
+	m_resourceDirectory = OvGetDirectoryInFullFilePath( m_resourceDirectory );
+	m_resourceDirectory = OvGetDirectoryInFullFilePath( m_resourceDirectory );
+	m_resourceDirectory = OvGetDirectoryInFullFilePath( m_resourceDirectory );
+	m_resourceDirectory += "\\resource";
+
+	m_resourceDirectory.resize( m_resourceDirectory.length() );
+
 }
 
 OvResourceManager::~OvResourceManager()
@@ -190,4 +201,14 @@ OvResourceSPtr OvResourceManager::_force_load_resouroce( const OvRTTI* resourceT
 		}
 	}
 	return resource;
+}
+
+const string& OvResourceManager::ResourceDirectory()
+{
+	return m_resourceDirectory;
+}
+
+std::string ResDirPath( const std::string& file )
+{
+	return OvResourceManager::GetInstance()->ResourceDirectory() + "\\" + file;
 }

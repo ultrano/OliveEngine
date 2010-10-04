@@ -32,6 +32,8 @@ public:
 
 	OvResourceTicketSPtr	CheckIn(  OvResourceSPtr resource );
 
+	const string&	ResourceDirectory();
+
 private:
 
 	void _register_loaded_resource( OvResource* resource, const string& location );
@@ -47,6 +49,7 @@ private:
 	resource_location_table	m_resourceLocationTable;
 	resource_cache_list		m_cacheList;
 	resource_ticket_table	m_resourceTicketTable;
+	std::string				m_resourceDirectory;
 };
 
 template<typename Type_0>
@@ -55,3 +58,5 @@ OvResourceManager::LoadResource( const string& fileLocation )
 {
 	return LoadResource( Type_0::GetRTTI(), fileLocation );
 };
+
+string	ResDirPath( const std::string& file );

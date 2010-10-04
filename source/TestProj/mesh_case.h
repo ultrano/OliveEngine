@@ -62,7 +62,7 @@ public:
 		m_shadowProjectedScene = CreateRenderTexture( 800, 600, 1, D3DFMT_A8B8G8R8 );
 		m_pointLightDepthScene = CreateRenderCubeTexture( 512, 1, D3DFMT_R32F);
 
-		OvShaderCodeIncluder includer("../OliveLib/shader", "../../resource");
+		OvShaderCodeIncluder includer;
 
 		//////////////////////////////////////////////////////////////////////////
 		//////////////////////////////////////////////////////////////////////////

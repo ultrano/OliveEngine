@@ -1,5 +1,5 @@
-#include "shader/vertex_common.h"
-#include "shader/pixel_common.h"
+#include "vertex_common.h"
+#include "pixel_common.h"
 
 void Vmain( in input_vertex input, out output_vertex output )
 {

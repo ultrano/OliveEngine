@@ -40,7 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="../OliveLib/include;../OliveLib/shader;../SupportLib/vld/include;../SupportLib/tixml/include;../GloryUnitTestKit/include"
+				AdditionalIncludeDirectories="../OliveLib/include;../SupportLib/vld/include;../SupportLib/tixml/include;../GloryUnitTestKit/include;../../resource/shader"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"

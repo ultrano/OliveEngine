@@ -602,7 +602,7 @@ bool OvPropAccesser_resource::Inject( OvObject* pObj, OvObjectProperties& rObjSt
 		fileLocation = &(resourceInfo.at( resourceInfo.find(':') + 1 ));
 		resourceType.resize( resourceInfo.find(':') );
 
-		OvResourceSPtr resource = OvResourceManager::GetInstance()->LoadResource( resourceType, ( fileLocation ));
+		OvResourceSPtr resource = OvResourceManager::GetInstance()->LoadResource( resourceType, ResDirPath( fileLocation ) );
 		(*accessProp) = resource;
 	}
 

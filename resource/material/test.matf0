@@ -3,7 +3,7 @@
     <vertex_shader entry_function="main" complie_version="vs_2_0">
       <![CDATA[
    
-   #include "shader/vertex_common.h"
+   #include "vertex_common.h"
 
 void	main( in input_vertex input, out output_vertex output )
 {
@@ -24,7 +24,7 @@ void	main( in input_vertex input, out output_vertex output )
     <pixel_shader entry_function="main" complie_version="ps_2_0">
       <![CDATA[
     
-#include "shader/pixel_common.h"
+#include "pixel_common.h"
 
 
 
@@ -47,13 +47,13 @@ void main( in input_pixel input, out vector col0 : COLOR0 )
   
   <sampler_stage>
     <sampler stage="0">
-      <texture>../../resource/texture/test.jpg</texture>
+      <texture>texture/test.jpg</texture>
       <state>
       </state>
 
     </sampler>
     <sampler stage="1">
-      <texture>../../resource/texture/normal.jpg</texture>
+      <texture>texture/normal.jpg</texture>
       <state>
       </state>
     </sampler>

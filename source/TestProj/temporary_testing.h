@@ -6,22 +6,28 @@
 
 GL_TEST_CASE_FUNC( excuted_location_test )
 {
-	string excuted_location;
-	excuted_location.resize( 1024 );
-	GetModuleFileName(NULL,(LPCH)excuted_location.c_str(),excuted_location.size());
-	excuted_location.data();
+	OvSingletonPool::StartUp();
+	{
+		string excuted_location;
+		excuted_location.resize( 1024 );
+		GetModuleFileName(NULL,(LPCH)excuted_location.c_str(),excuted_location.size());
+		excuted_location.data();
 
-	std::string	directory = OvGetDirectoryInFullFilePath( excuted_location );
-	std::string	file_name = OvGetFileNameInFullFilePath( excuted_location );
-	std::string	file_ext = OvGetExtentionInFullFilePath( excuted_location );
+		std::string	directory = OvGetDirectoryInFullFilePath( excuted_location );
+		directory = OvGetDirectoryInFullFilePath( directory );
+		directory = OvGetDirectoryInFullFilePath( directory );
+		std::string	file_name = OvGetFileNameInFullFilePath( excuted_location );
+		std::string	file_ext = OvGetExtentionInFullFilePath( excuted_location );
+	}
+	OvSingletonPool::ShutDown();
 }
 GL_TEST_CASE_FUNC( resource_reload_and_ticket_test )
 {
 	OvSingletonPool::StartUp();
 	{
-		const string file_location = "../../resource/texture/test.jpg";
+		const string file_location = "texture/test.jpg";
 		OvRenderer::GetInstance()->GenerateRenderer();
-		OvTextureSPtr resource = OvResourceManager::GetInstance()->LoadResource<OvTexture>( file_location );
+		OvTextureSPtr resource = OvResourceManager::GetInstance()->LoadResource<OvTexture>( ResDirPath( file_location ) );
 
 		OvResourceTicketSPtr ticket = OvResourceManager::GetInstance()->CheckIn( resource );
 
@@ -40,9 +46,9 @@ GL_TEST_CASE_FUNC( render_screen_rect_text )
 	OvSingletonPool::StartUp();
 	{
 		OvRenderer::GetInstance()->GenerateRenderer();
-		OvTextureSPtr testtex = OvResourceManager::GetInstance()->LoadResource<OvTexture>("../../resource/texture/save_test.jpg");
+		OvTextureSPtr testtex = OvResourceManager::GetInstance()->LoadResource<OvTexture>( ResDirPath("texture/save_test.jpg") );
 
-		OvShaderCodeIncluder includer("../OliveLib/shader", "../../resource");
+		OvShaderCodeIncluder includer;
 		OvVertexShaderSPtr rectVertShader = OvShaderManager::GetInstance()->CreateVertexShaderFromFile
 			( "../../resource/shader/rect.shacode"
 			, "Vmain"
