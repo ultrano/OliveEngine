@@ -608,3 +608,50 @@ bool OvPropAccesser_resource::Inject( OvObject* pObj, OvObjectProperties& rObjSt
 
 	return false;
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////				resource_ticket     		/////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
+
+OvRTTI_IMPL(OvPropAccesser_resource_ticket);
+
+bool OvPropAccesser_resource_ticket::Extract( OvObject* pObj, OvObjectProperties& rObjStore )
+{
+	OvResourceTicketSPtr* accessProp = (OvResourceTicketSPtr*)Access(pObj);
+	if ( accessProp )
+	{
+		OvResourceTicketSPtr ticket = (*accessProp);
+		OvResourceSPtr resource = ticket->CheckOut();
+		string typeName = OvRTTI_Util::TypeName( resource );
+		string fileLocation = OvResourceManager::GetInstance()->FindFileLocation( resource );
+
+		string resourceInfo;
+		resourceInfo += typeName;
+		resourceInfo += ":";
+		resourceInfo += fileLocation;
+		rObjStore.PushValue( resourceInfo );
+		return true;
+	}
+	return false;
+}
+
+bool OvPropAccesser_resource_ticket::Inject( OvObject* pObj, OvObjectProperties& rObjStore )
+{
+	OvResourceTicketSPtr* accessProp = (OvResourceTicketSPtr*)Access(pObj);
+	if ( accessProp )
+	{
+		string resourceInfo;
+		string resourceType;
+		string fileLocation;
+		rObjStore.PopValue( resourceInfo );
+
+		resourceType = resourceInfo;
+		fileLocation = &(resourceInfo.at( resourceInfo.find(':') + 1 ));
+		resourceType.resize( resourceInfo.find(':') );
+
+		OvResourceSPtr resource = OvResourceManager::GetInstance()->LoadResource( resourceType, ResDirPath( fileLocation ) );
+		(*accessProp) = OvResourceManager::GetInstance()->CheckIn( resource );
+	}
+
+	return false;
+}

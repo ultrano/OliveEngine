@@ -1,6 +1,7 @@
 #include "OvRenderTexture.h"
 #include "OvRenderer.h"
 #include "OvMatrix.h"
+#include "OvTransform.h"
  
 OvRenderTarget::OvRenderTarget()
 : m_reservedRenderTargetIndex( -1 )
@@ -68,50 +69,40 @@ bool OvRenderTarget::UnlockDepthStencil()
 	return false;
 }
 
-const OvMatrix& OvRenderTarget::CubeFaceMatrix( D3DCUBEMAP_FACES face_index, const OvPoint3& pt )
+void OvRenderTarget::CubeFaceMatrix( D3DCUBEMAP_FACES face_index, const OvPoint3& cube_pos, OvMatrix& outMat )
 {
-	OvPoint3 krWorldPoint(pt);
-	OvPoint3 krLookDir;
-	OvPoint3 krUpDir;
+	OvPoint3 lookDir;
+	OvPoint3 upDir;
 
 	switch( face_index )
 	{
 	case D3DCUBEMAP_FACE_POSITIVE_X:
-		krLookDir = OvPoint3( 1.0f, 0.0f, 0.0f );
-		krUpDir   = OvPoint3( 0.0f, 1.0f, 0.0f );
+		lookDir = OvPoint3( 1.0f, 0.0f, 0.0f );
+		upDir   = OvPoint3( 0.0f, 1.0f, 0.0f );
 		break;
 	case D3DCUBEMAP_FACE_NEGATIVE_X:
-		krLookDir = OvPoint3(-1.0f, 0.0f, 0.0f );
-		krUpDir   = OvPoint3( 0.0f, 1.0f, 0.0f );
+		lookDir = OvPoint3(-1.0f, 0.0f, 0.0f );
+		upDir   = OvPoint3( 0.0f, 1.0f, 0.0f );
 		break;
 	case D3DCUBEMAP_FACE_POSITIVE_Y:
-		krLookDir = OvPoint3( 0.0f, 1.0f, 0.0f );
-		krUpDir   = OvPoint3( 0.0f, 0.0f,-1.0f );
+		lookDir = OvPoint3( 0.0f, 1.0f, 0.0f );
+		upDir   = OvPoint3( 0.0f, 0.0f,-1.0f );
 		break;
 	case D3DCUBEMAP_FACE_NEGATIVE_Y:
-		krLookDir = OvPoint3( 0.0f,-1.0f, 0.0f );
-		krUpDir   = OvPoint3( 0.0f, 0.0f, 1.0f );
+		lookDir = OvPoint3( 0.0f,-1.0f, 0.0f );
+		upDir   = OvPoint3( 0.0f, 0.0f, 1.0f );
 		break;
 	case D3DCUBEMAP_FACE_POSITIVE_Z:
-		krLookDir = OvPoint3( 0.0f, 0.0f, 1.0f );
-		krUpDir   = OvPoint3( 0.0f, 1.0f, 0.0f );
+		lookDir = OvPoint3( 0.0f, 0.0f, 1.0f );
+		upDir   = OvPoint3( 0.0f, 1.0f, 0.0f );
 		break;
 	case D3DCUBEMAP_FACE_NEGATIVE_Z:
-		krLookDir = OvPoint3( 0.0f, 0.0f,-1.0f );
-		krUpDir   = OvPoint3( 0.0f, 1.0f, 0.0f );
+		lookDir = OvPoint3( 0.0f, 0.0f,-1.0f );
+		upDir   = OvPoint3( 0.0f, 1.0f, 0.0f );
 		break;
 	}
 
-	OvPoint3 krRightDir	= OvPoint3CrossProduct( krUpDir, krLookDir );
-
-	static OvMatrix test;
-	test = OvMatrix
-		(krRightDir.x,krUpDir.x,krLookDir.x,0
-		,krRightDir.y,krUpDir.y,krLookDir.y,0
-		,krRightDir.z,krUpDir.z,krLookDir.z,0
-		,-krRightDir.DotProduct(krWorldPoint),-krUpDir.DotProduct(krWorldPoint),-krLookDir.DotProduct(krWorldPoint),1);
-
-	return test;
+	MakeViewMatrix( lookDir, upDir, cube_pos, outMat );
 
 }
 // 

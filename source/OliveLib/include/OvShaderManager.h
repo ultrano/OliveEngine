@@ -17,12 +17,6 @@ public:
 	OvShaderManager();
 	~OvShaderManager();
 
-	OvVertexShaderSPtr CreateVertexShaderFromFile( const string& file, const string& func, const string& version, LPD3DXINCLUDE includer = NULL);
-	OvPixelShaderSPtr CreatePixelShaderFromFile( const string& file, const string& func, const string& version, LPD3DXINCLUDE includer = NULL);
-
-	OvVertexShaderSPtr CreateVertexShaderFromCode( const string& code, const string& func, const string& version, LPD3DXINCLUDE includer = NULL);
-	OvPixelShaderSPtr CreatePixelShaderFromCode( const string& code, const string& func, const string& version, LPD3DXINCLUDE includer = NULL);
-
 	////////////////////////////////////////////////////////////////////////////////////////////////
 	/////////////////////////*  버텍스 쉐이더 관련 함수들 */////////////////////////////////////
 	////////////////////////////////////////////////////////////////////////////////////////////////

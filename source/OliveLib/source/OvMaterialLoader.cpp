@@ -6,6 +6,7 @@
 #include "OvResourceManager.h"
 #include "OvShaderManager.h"
 #include "OvShaderCodeIncluder.h"
+#include "OvShaderCode.h"
 #include <map>
 using namespace std;
 
@@ -37,11 +38,7 @@ OvResourceSPtr OvMaterialLoader::Load( const std::string& fileLocation )
 	entry_function	= vertex_shader_elem->Attribute("entry_function");
 	complie_version	= vertex_shader_elem->Attribute("complie_version");
 
-	vertexShader = OvShaderManager::GetInstance()->CreateVertexShaderFromCode
-		( shader_code
-		, entry_function
-		, complie_version
-		, &includer );
+	vertexShader = OvShaderCode( shader_code ).CreateVertexShader( entry_function, complie_version );
 
 	//////////////////////////////////////////////////////////////////////////
 
@@ -52,11 +49,8 @@ OvResourceSPtr OvMaterialLoader::Load( const std::string& fileLocation )
 	entry_function	= pixel_shader_elem->Attribute("entry_function");
 	complie_version	= pixel_shader_elem->Attribute("complie_version");
 
-	pixelShader = OvShaderManager::GetInstance()->CreatePixelShaderFromCode
-		( shader_code
-		, entry_function
-		, complie_version
-		, &includer );
+	pixelShader = OvShaderCode( shader_code ).CreatePixelShader( entry_function, complie_version );
+
 	//////////////////////////////////////////////////////////////////////////
 
 	//////////////////////////////////////////////////////////////////////////

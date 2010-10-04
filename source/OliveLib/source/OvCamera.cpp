@@ -138,20 +138,7 @@ void			OvCamera::UpdateProjection()
 
 void			OvCamera::UpdateView()
 {
-
-	OvMatrix& krViewMat = m_mxViewMatrix;
-
-	OvPoint3& krWorldPoint = (OvPoint3&)GetWorldTranslate();
-	OvPoint3& krLookDir		= (OvPoint3&)GetWorldLookDirection();
-	OvPoint3& krRightDir	= (OvPoint3&)GetWorldRightDirection();
-	OvPoint3& krUpDir		= (OvPoint3&)GetWorldUpDirection();
-
-	krViewMat = OvMatrix
-		(krRightDir.x,krUpDir.x,krLookDir.x,0
-		,krRightDir.y,krUpDir.y,krLookDir.y,0
-		,krRightDir.z,krUpDir.z,krLookDir.z,0
-		,-krRightDir.DotProduct(krWorldPoint),-krUpDir.DotProduct(krWorldPoint),-krLookDir.DotProduct(krWorldPoint),1);
-
+	MakeViewMatrix( GetWorldLookDirection(), GetWorldUpDirection(), GetWorldTranslate(), m_mxViewMatrix );
 }
 
 void			OvCamera::UpdateLookAt()

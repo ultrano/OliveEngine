@@ -20,5 +20,5 @@ void Pmain( in float2 tex0 : TEXCOORD0, out vector col0 : COLOR0 )
 {
 	float4 texcolor0 = tex2D( SAMPLER_0, tex0 );
 	float4 texcolor1 = tex2D( SAMPLER_1, tex0 );
-	col0 = texcolor1*0.1f + 0.5f;//texcolor0 * texcolor1;
+	col0 = texcolor0 * texcolor1;
 };

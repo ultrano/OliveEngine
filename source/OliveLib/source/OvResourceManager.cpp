@@ -56,21 +56,23 @@ OvResourceSPtr OvResourceManager::LoadResource( const string& resourceType, cons
 
 OvResourceSPtr OvResourceManager::ReloadResource( const string& fileLocation )
 {
-	OvResourceSPtr resource = NULL;
-
 	for each( const resource_location_table::value_type& table_pair in m_resourceLocationTable )
 	{
 		if ( fileLocation == table_pair.second )
 		{
-			resource = table_pair.first;
-			break;
+			return ReloadResource( table_pair.first );
 		}
 	}
+	return NULL;
+}
 
+OvResourceSPtr OvResourceManager::ReloadResource( OvResourceSPtr resource )
+{
 	if ( resource )
 	{
+		std::string fileLocation = FindFileLocation( resource );
 		const OvRTTI* resourceType = resource->QueryRTTI();
-		if ( resourceType )
+		if ( !fileLocation.empty() && resourceType )
 		{
 			m_resourceLocationTable.erase( resource.GetRear() );
 			resource = _force_load_resouroce( resourceType, fileLocation );
@@ -89,7 +91,22 @@ OvResourceSPtr OvResourceManager::ReloadResource( const string& fileLocation )
 	}
 	return resource;
 }
+void OvResourceManager::ReloadResourceAll()
+{
+	vector< OvResourceSPtr > res_holder;
+	res_holder.reserve( m_resourceLocationTable.size() );
 
+	for each ( resource_location_table::value_type table_value in m_resourceLocationTable )
+	{
+		res_holder.push_back( table_value.first );
+	}
+
+	for each ( OvResourceSPtr resource in res_holder )
+	{
+		ReloadResource( resource );
+	}
+
+}
 void OvResourceManager::ResourceCache( OvResourceSPtr resource )
 {
 	if ( resource )
@@ -167,10 +184,13 @@ OvResourceSPtr OvResourceManager::_find_loaded_resource( const OvRTTI* resourceT
 string OvResourceManager::FindFileLocation( OvResourceSPtr resource )
 {
 	string fileLocation = "";
-	resource_location_table::iterator itor = m_resourceLocationTable.find( resource.GetRear() );
-	if ( m_resourceLocationTable.end() != itor )
+	if ( resource )
 	{
-		fileLocation = itor->second;
+		resource_location_table::iterator itor = m_resourceLocationTable.find( resource.GetRear() );
+		if ( m_resourceLocationTable.end() != itor )
+		{
+			fileLocation = itor->second;
+		}
 	}
 	return fileLocation;
 }

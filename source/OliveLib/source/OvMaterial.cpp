@@ -6,6 +6,20 @@
 
 OvRTTI_IMPL( OvMaterial );
 
+
+OvMaterial::OvMaterial()
+: m_vertexShader( NULL )
+, m_pixelShader( NULL )
+{
+
+}
+
+OvMaterial::~OvMaterial()
+{
+	m_vertexShader = NULL;
+	m_pixelShader = NULL;
+}
+
 void OvMaterial::SetVertexShader( OvVertexShaderSPtr shader )
 {
 	m_vertexShader = shader;

@@ -25,6 +25,8 @@ public:
 	OvResourceSPtr	LoadResource( const string& resourceType, const string& fileLocation );
 
 	OvResourceSPtr	ReloadResource( const string& fileLocation );
+	OvResourceSPtr	ReloadResource( OvResourceSPtr resource );
+	void			ReloadResourceAll();
 
 	void			ResourceCache( OvResourceSPtr resource );
 

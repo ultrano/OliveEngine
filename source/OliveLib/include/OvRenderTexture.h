@@ -22,7 +22,7 @@ public:
 	bool	UnlockDepthStencil();
 
 	// test method
-	const OvMatrix& CubeFaceMatrix( D3DCUBEMAP_FACES face_index, const OvPoint3& pt );
+	void	CubeFaceMatrix( D3DCUBEMAP_FACES face_index, const OvPoint3& cube_pos, OvMatrix& outMat );
 
 private:
 	int m_reservedRenderTargetIndex;

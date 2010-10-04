@@ -3,14 +3,16 @@
 #include "OvRegisterableProperties.h"
 #include "OvFileMeshLoader.h"
 #include "OvTextureLoader.h"
+#include "OvResourceManager.h"
 
 OvRTTI_IMPL(OvModel)
 OvPROPERTY_BAG_BEGIN(OvModel)
-	OvPROPERTY_BAG_REGISTER( OvPropAccesser_resource, m_material )
+	OvPROPERTY_BAG_REGISTER( OvPropAccesser_resource_ticket, m_material )
 	OvPROPERTY_BAG_REGISTER( OvPropAccesser_resource, m_resourceMesh )
 OvPROPERTY_BAG_END(OvModel)
 
 OvModel::OvModel()
+: m_material( NULL )
 {
 
 }
@@ -31,12 +33,12 @@ OvMeshSPtr OvModel::GetMesh()
 
 void OvModel::SetMaterial( OvMaterialSPtr material )
 {
-	m_material = material;
+	m_material = OvResourceManager::GetInstance()->CheckIn( material );
 }
 
 OvMaterialSPtr OvModel::GetMaterial()
 {
-	return m_material;
+	return m_material->CheckOut();
 }
 
 
@@ -57,9 +59,9 @@ void OvModel::RenderWithoutMaterial()
 
 void	OvModel::Render()
 {
-	if ( m_material )
+	if ( OvMaterialSPtr	material = GetMaterial() )
 	{
-		m_material->ApplyMaterial();
+		material->ApplyMaterial();
 	}
 	OvShaderManager::GetInstance()->SetVSConst( OvVShaderConst::World, GetWorldMatrix() );
 	OvMatrix view_proj;

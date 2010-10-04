@@ -23,6 +23,9 @@ public:
 		MaxStage
 	};
 
+	OvMaterial();
+	~OvMaterial();
+
 	void	SetVertexShader( OvVertexShaderSPtr shader );
 	OvVertexShaderSPtr GetVertexShader();
 
