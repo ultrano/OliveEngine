@@ -15,14 +15,11 @@ protected:
 	OvTextureSPtr m_shadowProjectedScene;
 	OvCubeTextureSPtr m_pointLightDepthScene;
 
-	OvVertexShaderSPtr m_depthVS;
-	OvPixelShaderSPtr m_depthPS;
+	
+	OvShaderCodeSPtr m_depthCode;
+	OvShaderCodeSPtr m_shadowProjCode;
+	OvShaderCodeSPtr m_rectCode;
 
-	OvVertexShaderSPtr m_shadowProjVS;
-	OvPixelShaderSPtr m_shadowProjPS;
-
-	OvVertexShaderSPtr m_rectVS;
-	OvPixelShaderSPtr m_rectPS;
 	OvResourceTicketSPtr m_rectVSTicket;
 	OvResourceTicketSPtr m_rectPSTicket;
 
@@ -68,25 +65,25 @@ public:
 		//////////////////////////////////////////////////////////////////////////
 		//////////////////////////////////////////////////////////////////////////
 
-		shader_code = OvResourceManager::GetInstance()->LoadResource<OvShaderCode>( ResDirPath("shader/depth.shacode") );
-		m_depthVS = shader_code->CreateVertexShader( "Vmain", "vs_2_0" );
-		m_depthPS = shader_code->CreatePixelShader( "Pmain", "ps_2_0" );
+		m_depthCode = OvResourceManager::GetInstance()->LoadResource<OvShaderCode>( ResDirPath("shader/depth.shacode") );
+		m_depthCode->CompileVertexShader( "Vmain", "vs_2_0" );
+		m_depthCode->CompilePixelShader( "Pmain", "ps_2_0" );
 
 		//////////////////////////////////////////////////////////////////////////
 		//////////////////////////////////////////////////////////////////////////
 		//////////////////////////////////////////////////////////////////////////
 
-		shader_code = OvResourceManager::GetInstance()->LoadResource<OvShaderCode>( ResDirPath("shader/shadow_project.shacode") );
-		m_shadowProjVS = shader_code->CreateVertexShader( "Vmain", "vs_2_0" );
-		m_shadowProjPS = shader_code->CreatePixelShader( "Pmain", "ps_2_0" );
+		m_shadowProjCode = OvResourceManager::GetInstance()->LoadResource<OvShaderCode>( ResDirPath("shader/shadow_project.shacode") );
+		m_shadowProjCode->CompileVertexShader( "Vmain", "vs_2_0" );
+		m_shadowProjCode->CompilePixelShader( "Pmain", "ps_2_0" );
 
 		//////////////////////////////////////////////////////////////////////////
 		//////////////////////////////////////////////////////////////////////////
 		//////////////////////////////////////////////////////////////////////////
 
-		shader_code = OvResourceManager::GetInstance()->LoadResource<OvShaderCode>( ResDirPath("shader/rect.shacode") );
-		m_rectVS = shader_code->CreateVertexShader( "Vmain", "vs_2_0" );
-		m_rectPS = shader_code->CreatePixelShader( "Pmain", "ps_2_0" );
+		m_rectCode = OvResourceManager::GetInstance()->LoadResource<OvShaderCode>( ResDirPath("shader/rect.shacode") );
+		m_rectCode->CompileVertexShader( "Vmain", "vs_2_0" );
+		m_rectCode->CompilePixelShader( "Pmain", "ps_2_0" );
 
 		//////////////////////////////////////////////////////////////////////////
 		//////////////////////////////////////////////////////////////////////////
@@ -109,14 +106,9 @@ public:
 		m_shadowProjectedScene = NULL;
 		m_pointLightDepthScene = NULL;
 
-		m_depthVS = NULL;
-		m_depthPS = NULL;
-
-		m_shadowProjVS = NULL;
-		m_shadowProjPS = NULL;
-
-		m_rectVS = NULL;
-		m_rectPS = NULL;
+		m_depthCode = NULL;
+		m_shadowProjCode = NULL;
+		m_rectCode = NULL;
 
 		OvSingletonPool::ShutDown();
 	}
@@ -252,8 +244,8 @@ public:
 	{
 		OvShaderManager::GetInstance()->SetVSConst( OvVShaderConst::ViewProject, view_project );
 
-		OvRenderer::GetInstance()->SetVertexShader( m_depthVS );
-		OvRenderer::GetInstance()->SetPixelShader( m_depthPS );
+		OvRenderer::GetInstance()->SetVertexShader( m_depthCode->FindShader( "Vmain", "vs_2_0" ) );
+		OvRenderer::GetInstance()->SetPixelShader( m_depthCode->FindShader( "Pmain", "ps_2_0" ) );
 
 
 		OvRenderer::GetInstance()->ClearTarget();
@@ -292,8 +284,8 @@ public:
 		device->SetSamplerState( 0, D3DSAMP_ADDRESSV, D3DTADDRESS_BORDER );
 
 
-		OvRenderer::GetInstance()->SetVertexShader( m_shadowProjVS );
-		OvRenderer::GetInstance()->SetPixelShader( m_shadowProjPS );
+		OvRenderer::GetInstance()->SetVertexShader( m_shadowProjCode->FindShader( "Vmain", "vs_2_0" ) );
+		OvRenderer::GetInstance()->SetPixelShader( m_shadowProjCode->FindShader( "Pmain", "ps_2_0" ) );
 		OvRenderer::GetInstance()->SetTexture( 0, m_lightDepthScene );
 
 		m_renderTarget.LockRenderTarget( 0, m_shadowProjectedScene->GetSurface() );
@@ -322,8 +314,8 @@ public:
 		RenderSpotLightDepth( camera, objectList );
 		RenderShadowProjected( camera, objectList );
 
-		OvRenderer::GetInstance()->SetVertexShader( m_rectVS );
-		OvRenderer::GetInstance()->SetPixelShader( m_rectPS );
+		OvRenderer::GetInstance()->SetVertexShader( m_rectCode->FindShader( "Vmain", "vs_2_0" ) );
+		OvRenderer::GetInstance()->SetPixelShader( m_rectCode->FindShader( "Pmain", "ps_2_0" ) );
 		OvRenderer::GetInstance()->SetTexture( 0, m_diffuseScene );
 		OvRenderer::GetInstance()->SetTexture( 1, m_shadowProjectedScene );
 

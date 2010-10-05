@@ -18,9 +18,12 @@ public:
 	void*			GetCodeBuffer();
 	size_t			GetCodeSize();
 
-	OvVertexShaderSPtr	CreateVertexShader( const std::string& entry_func, const std::string& compile_version );
-	OvPixelShaderSPtr	CreatePixelShader( const std::string& entry_func, const std::string& compile_version );
+	OvVertexShaderSPtr	CompileVertexShader( const std::string& entry_func, const std::string& compile_version );
+	OvPixelShaderSPtr	CompilePixelShader( const std::string& entry_func, const std::string& compile_version );
 
+	OvShaderSPtr	FindShader( const std::string& entry_func, const std::string& compile_version );
+
+	void			RefreshShader( OvShaderSPtr shader );
 private:
 
 	OvShaderSPtr	_find_precompiled_shader( const std::string& entry_func, const std::string& compile_version );

@@ -38,7 +38,7 @@ OvResourceSPtr OvMaterialLoader::Load( const std::string& fileLocation )
 	entry_function	= vertex_shader_elem->Attribute("entry_function");
 	complie_version	= vertex_shader_elem->Attribute("complie_version");
 
-	vertexShader = OvShaderCode( shader_code ).CreateVertexShader( entry_function, complie_version );
+	vertexShader = OvShaderCode( shader_code ).CompileVertexShader( entry_function, complie_version );
 
 	//////////////////////////////////////////////////////////////////////////
 
@@ -49,7 +49,7 @@ OvResourceSPtr OvMaterialLoader::Load( const std::string& fileLocation )
 	entry_function	= pixel_shader_elem->Attribute("entry_function");
 	complie_version	= pixel_shader_elem->Attribute("complie_version");
 
-	pixelShader = OvShaderCode( shader_code ).CreatePixelShader( entry_function, complie_version );
+	pixelShader = OvShaderCode( shader_code ).CompilePixelShader( entry_function, complie_version );
 
 	//////////////////////////////////////////////////////////////////////////
 

@@ -73,7 +73,7 @@ size_t OvShaderCode::GetCodeSize()
 	return m_code.size();
 }
 
-OvVertexShaderSPtr OvShaderCode::CreateVertexShader( const string& entry_func, const string& compile_version )
+OvVertexShaderSPtr OvShaderCode::CompileVertexShader( const string& entry_func, const string& compile_version )
 {
 	OvShaderCodeIncluder includer;
 	OvVertexShaderSPtr outShader = _find_precompiled_shader( entry_func, compile_version );
@@ -97,7 +97,7 @@ OvVertexShaderSPtr OvShaderCode::CreateVertexShader( const string& entry_func, c
 	}
 	return outShader;
 }
-OvPixelShaderSPtr	OvShaderCode::CreatePixelShader( const string& entry_func, const string& compile_version )
+OvPixelShaderSPtr	OvShaderCode::CompilePixelShader( const string& entry_func, const string& compile_version )
 {
 	OvShaderCodeIncluder includer;
 	OvPixelShaderSPtr outShader = _find_precompiled_shader( entry_func, compile_version );
@@ -120,6 +120,11 @@ OvPixelShaderSPtr	OvShaderCode::CreatePixelShader( const string& entry_func, con
 		}
 	}
 	return outShader;
+}
+
+OvShaderSPtr OvShaderCode::FindShader( const std::string& entry_func, const std::string& compile_version )
+{
+	return _find_precompiled_shader( entry_func, compile_version );
 }
 
 OvShaderSPtr OvShaderCode::_find_precompiled_shader( const std::string& entry_func, const std::string& compile_version )
