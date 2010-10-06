@@ -11,7 +11,7 @@ class OvResourceManager : public OvSingletonBase< OvResourceManager >
 {
 	typedef std::map<const OvRTTI*, OvResourceLoaderSPtr>	resource_loader_table;
 	typedef std::map< OvResource*, std::string >			resource_location_table;
-	typedef std::map< std::string, std::list<OvResourceTicket*> > resource_ticket_table;
+	typedef std::map< std::string, OvResourceTicket* >		resource_ticket_table;
 	typedef std::list< OvResourceSPtr >						resource_cache_list;	
 	friend class OvResource;
 	friend class OvResourceTicket;

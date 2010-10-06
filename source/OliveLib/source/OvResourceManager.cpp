@@ -81,8 +81,7 @@ OvResourceSPtr OvResourceManager::ReloadResource( OvResourceSPtr resource )
 			resource_ticket_table::iterator itor = m_resourceTicketTable.find( fileLocation );
 			if ( itor != m_resourceTicketTable.end() )
 			{
-				resource_ticket_table::referent_type& ticket_list = itor->second;
-				for each( OvResourceTicket* ticket in ticket_list )
+				if ( OvResourceTicket* ticket = itor->second )
 				{
 					ticket->_called_when_resource_reloaded( resource.GetRear() );
 				}
@@ -145,24 +144,14 @@ void OvResourceManager::_called_when_ticket_created( OvResourceTicket* ticket )
 	const string& file_location = FindFileLocation( ticket->m_resource.GetRear() );
 	if ( ! file_location.empty() )
 	{
-		resource_ticket_table::referent_type& ticket_list = m_resourceTicketTable[ file_location ];
-		ticket_list.push_back( ticket );
+		m_resourceTicketTable[ file_location ] = ticket;
 	}
 }
 
 void OvResourceManager::_called_when_ticket_deleted( OvResourceTicket* ticket )
 {
 	const string& file_location = FindFileLocation( ticket->m_resource );
-	resource_ticket_table::iterator itor = m_resourceTicketTable.find( file_location );
-	if ( itor != m_resourceTicketTable.end() )
-	{
-		resource_ticket_table::referent_type& ticket_list = itor->second;
-		resource_ticket_table::referent_type::iterator found_itor = find( ticket_list.begin(), ticket_list.end(), ticket );
-		if ( found_itor != ticket_list.end() )
-		{
-			ticket_list.erase( found_itor );
-		}
-	}
+	m_resourceTicketTable.erase( file_location );
 }
 
 OvResourceSPtr OvResourceManager::_find_loaded_resource( const OvRTTI* resourceType, const string& location )
@@ -197,9 +186,14 @@ string OvResourceManager::FindFileLocation( OvResourceSPtr resource )
 
 OvResourceTicketSPtr OvResourceManager::CheckIn( OvResourceSPtr resource )
 {
-	OvResourceTicketSPtr ticket = NULL;
-	ticket = OvNew OvResourceTicket( resource.GetRear() );
-	return ticket;
+	string location = FindFileLocation( resource );
+	resource_ticket_table::iterator itor = m_resourceTicketTable.find( location );
+	if ( itor != m_resourceTicketTable.end() )
+	{
+		return itor->second;
+	}
+
+	return ( OvNew OvResourceTicket( resource.GetRear() ) );
 }
 
 OvResourceSPtr OvResourceManager::_force_load_resouroce( const OvRTTI* resourceType, const string& fileLocation )

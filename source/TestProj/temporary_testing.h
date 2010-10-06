@@ -40,39 +40,6 @@ GL_TEST_CASE_FUNC( resource_reload_and_ticket_test )
 	}
 	OvSingletonPool::ShutDown();
 }
-
-GL_TEST_CASE_FUNC( render_screen_rect_text )
-{
-	OvSingletonPool::StartUp();
-	{
-		OvRenderer::GetInstance()->GenerateRenderer();
-		OvTextureSPtr testtex = OvResourceManager::GetInstance()->LoadResource<OvTexture>( ResDirPath("texture/save_test.jpg") );
-
-		OvShaderCodeIncluder includer;
-		OvVertexShaderSPtr rectVertShader = OvShaderManager::GetInstance()->CreateVertexShaderFromFile
-			( "../../resource/shader/rect.shacode"
-			, "Vmain"
-			, "vs_2_0"
-			, &includer );
-		OvPixelShaderSPtr rectPixelShader = OvShaderManager::GetInstance()->CreatePixelShaderFromFile
-			( "../../resource/shader/rect.shacode"
-			, "Pmain"
-			, "ps_2_0"
-			, &includer );
-		OvRenderer::GetInstance()->SetVertexShader( rectVertShader );
-		OvRenderer::GetInstance()->SetPixelShader( rectPixelShader );
-		OvRenderer::GetInstance()->SetTexture( 0, testtex );
-		while ( !( GetAsyncKeyState( VK_ESCAPE ) & 0x8000 ) )
-		{
-			OvRenderer::GetInstance()->ClearTarget();
-			OvRenderer::GetInstance()->BeginTarget();
-			OvRenderer::GetInstance()->RenderUnitRect();
-			OvRenderer::GetInstance()->EndTarget();
-			OvRenderer::GetInstance()->PresentTarget();
-		}
-	}
-	OvSingletonPool::ShutDown();
-}
 GL_TEST_CASE_FUNC( olive_value_addtional_operator_test )
 {
 

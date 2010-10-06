@@ -13,18 +13,22 @@ protected:
 	OvTextureSPtr m_diffuseScene;
 	OvTextureSPtr m_lightDepthScene;
 	OvTextureSPtr m_shadowProjectedScene;
+	OvTextureSPtr m_shadowAccumulatedScene;
+	OvTextureSPtr m_spot_shape;
 	OvCubeTextureSPtr m_pointLightDepthScene;
 
 	
 	OvShaderCodeSPtr m_depthCode;
 	OvShaderCodeSPtr m_shadowProjCode;
 	OvShaderCodeSPtr m_rectCode;
+	OvShaderCodeSPtr m_simplerectCode;
 
 	OvResourceTicketSPtr m_rectVSTicket;
 	OvResourceTicketSPtr m_rectPSTicket;
 
 	OvCameraSPtr m_mainCamera;
 	OvCameraSPtr m_lightCamera;
+	list<OvCameraSPtr> m_lights;
 	OvXComponentSPtr m_cameraControler;
 
 	OvObjectCollector m_loadedObjects;
@@ -46,6 +50,7 @@ public:
 		m_mainCamera = m_loadedObjects.GetByName("Camera");
 		m_lightCamera = m_loadedObjects.GetByName("Light");
 		m_lightCamera->SetFOV( D3DX_PI/2.0f );
+		m_mainCamera->SetFOV( D3DX_PI/2.0f );
 
 		OvObjectCollector components;
 		m_mainCamera->GetComponents( components );
@@ -58,6 +63,9 @@ public:
 		m_lightDepthScene = CreateRenderTexture( 512, 512, 1, D3DFMT_R32F );
 		m_shadowProjectedScene = CreateRenderTexture( 800, 600, 1, D3DFMT_A8B8G8R8 );
 		m_pointLightDepthScene = CreateRenderCubeTexture( 512, 1, D3DFMT_R32F);
+		m_shadowAccumulatedScene = CreateRenderTexture( 800, 600, 1, D3DFMT_A8B8G8R8 );
+
+		m_spot_shape = OvResourceManager::GetInstance()->LoadResource<OvTexture>( ResDirPath("texture/spot_shape.jpg") );
 
 		OvShaderCodeSPtr shader_code = NULL;
 
@@ -89,7 +97,10 @@ public:
 		//////////////////////////////////////////////////////////////////////////
 		//////////////////////////////////////////////////////////////////////////
 
-		
+		m_simplerectCode = OvResourceManager::GetInstance()->LoadResource<OvShaderCode>( ResDirPath("shader/shadow_accumulating.shacode") );
+		m_simplerectCode->CompileVertexShader( "Vmain", "vs_2_0" );
+		m_simplerectCode->CompilePixelShader( "Pmain", "ps_2_0" );
+
 		//////////////////////////////////////////////////////////////////////////
 		//////////////////////////////////////////////////////////////////////////
 		//////////////////////////////////////////////////////////////////////////
@@ -98,6 +109,7 @@ public:
 	{
 		m_lightCamera = NULL;
 		m_mainCamera = NULL;
+		m_lights.clear();
 		m_cameraControler = NULL;
 		m_loadedObjects.Clear();
 
@@ -105,10 +117,13 @@ public:
 		m_lightDepthScene = NULL;
 		m_shadowProjectedScene = NULL;
 		m_pointLightDepthScene = NULL;
+		m_shadowAccumulatedScene = NULL;
+		m_spot_shape = NULL;
 
 		m_depthCode = NULL;
 		m_shadowProjCode = NULL;
 		m_rectCode = NULL;
+		m_simplerectCode = NULL;
 
 		OvSingletonPool::ShutDown();
 	}
@@ -124,14 +139,13 @@ public:
 				{
 				case VK_SPACE:
 					{
-						if ( m_cameraControler->GetTarget() == m_mainCamera )
-						{
-							m_cameraControler->SetTarget( m_lightCamera );
-						}
-						else if ( m_cameraControler->GetTarget() == m_lightCamera )
-						{
-							m_cameraControler->SetTarget( m_mainCamera );
-						}
+							OvCameraSPtr light = OvNew OvCamera;
+							light->SetTranslate( m_mainCamera->GetTranslate() );
+							light->SetRotation( m_mainCamera->GetRotation() );
+							light->SetFOV( m_mainCamera->GetFOV() );
+							light->Update(0);
+							m_loadedObjects.AddObject( light );
+							m_lights.push_back( light );
 					}
 					break;
 				case VK_ESCAPE:
@@ -142,12 +156,9 @@ public:
 					break;
 				case VK_INSERT : 
 					{
-
-
 						OvModelSPtr model = m_loadedObjects.GetByName("Ball");
 						if ( model )
 						{
-							OvResourceManager::GetInstance()->ReloadResourceAll();
 							OvModelSPtr copymodel = OvNew OvModel;
 							copymodel->SetMesh( model->GetMesh() );
 							copymodel->SetMaterial( model->GetMaterial() );
@@ -247,7 +258,6 @@ public:
 		OvRenderer::GetInstance()->SetVertexShader( m_depthCode->FindShader( "Vmain", "vs_2_0" ) );
 		OvRenderer::GetInstance()->SetPixelShader( m_depthCode->FindShader( "Pmain", "ps_2_0" ) );
 
-
 		OvRenderer::GetInstance()->ClearTarget();
 		OvRenderer::GetInstance()->BeginTarget();
 		for ( int i = 0 ; i < objectList.Count() ; ++i )
@@ -259,12 +269,27 @@ public:
 				model->RenderWithoutMaterial();
 			}
 		}
+
+		OvRenderer::GetInstance()->SetVertexShader( m_simplerectCode->FindShader( "Vmain", "vs_2_0" ) );
+		OvRenderer::GetInstance()->SetPixelShader( m_simplerectCode->FindShader( "Pmain", "ps_2_0" ) );
+		OvRenderer::GetInstance()->SetTexture( 0, m_spot_shape );
+
+		LPDIRECT3DDEVICE9 device = OvRenderer::GetInstance()->GetDevice();
+		device->SetRenderState( D3DRS_ALPHABLENDENABLE, true);
+		device->SetRenderState( D3DRS_BLENDOP, D3DBLENDOP_ADD );
+		device->SetRenderState( D3DRS_SRCBLEND, D3DBLEND_ZERO );
+		device->SetRenderState( D3DRS_DESTBLEND, D3DBLEND_SRCCOLOR );
+
+		OvRenderer::GetInstance()->RenderUnitRect();
+
+		device->SetRenderState( D3DRS_ALPHABLENDENABLE, false);
+
 		OvRenderer::GetInstance()->EndTarget();
 
 	}
-	void	RenderSpotLightDepth( OvCameraSPtr camera, OvObjectCollector objectList )
+	void	RenderSpotLightDepth( OvCameraSPtr camera, OvCameraSPtr light,OvObjectCollector objectList )
 	{
-		OvMatrix light_project = m_lightCamera->GetViewMatrix() * m_lightCamera->GetProjectMatrix();
+		OvMatrix light_project = light->GetViewMatrix() * light->GetProjectMatrix();
 		m_renderTarget.LockRenderTarget( 0, m_lightDepthScene->GetSurface() );
 		
 		RenderDepth( light_project, objectList );
@@ -272,10 +297,10 @@ public:
 		m_renderTarget.UnlockRenderTarget();
 
 	}
-	void	RenderShadowProjected( OvCameraSPtr camera, OvObjectCollector objectList )
+	void	RenderShadowProjected( OvCameraSPtr camera, OvCameraSPtr light,OvObjectCollector objectList )
 	{
 		static OvMatrix bias = OvMatrix().Scale( 0.5f, -0.5f, 0 ) * OvMatrix().Translate( 0.5f, 0.5f, 0 );
-		OvMatrix light_project = m_lightCamera->GetViewMatrix() * m_lightCamera->GetProjectMatrix();
+		OvMatrix light_project = light->GetViewMatrix() * light->GetProjectMatrix();
 		OvMatrix view_project = camera->GetViewMatrix() * camera->GetProjectMatrix();
 		OvShaderManager::GetInstance()->SetVSConst( OvVShaderConst::ViewProject, view_project );
 
@@ -308,20 +333,54 @@ public:
 		OvRenderer::GetInstance()->EndTarget();
 		m_renderTarget.UnlockRenderTarget();
 	}
+	void	RenderShadowAccumulated()
+	{
+
+		OvRenderer::GetInstance()->SetVertexShader( m_simplerectCode->FindShader( "Vmain", "vs_2_0" ) );
+		OvRenderer::GetInstance()->SetPixelShader( m_simplerectCode->FindShader( "Pmain", "ps_2_0" ) );
+		OvRenderer::GetInstance()->SetTexture( 0, m_shadowProjectedScene );
+
+		LPDIRECT3DDEVICE9 device = OvRenderer::GetInstance()->GetDevice();
+		device->SetRenderState( D3DRS_ALPHABLENDENABLE, true);
+		device->SetRenderState( D3DRS_BLENDOP, D3DBLENDOP_ADD );
+		device->SetRenderState( D3DRS_SRCBLEND, D3DBLEND_ONE );
+		device->SetRenderState( D3DRS_DESTBLEND, D3DBLEND_ONE );
+
+		m_renderTarget.LockRenderTarget( 0, m_shadowAccumulatedScene->GetSurface() );
+
+		OvRenderer::GetInstance()->BeginTarget();
+
+		OvRenderer::GetInstance()->RenderUnitRect();
+
+		OvRenderer::GetInstance()->EndTarget();
+
+		m_renderTarget.UnlockRenderTarget();
+		device->SetRenderState( D3DRS_ALPHABLENDENABLE, false);
+
+	}
 	void	Render( OvCameraSPtr camera, OvObjectCollector objectList )
 	{
 		RenderDiffuse( camera, objectList );
-		RenderSpotLightDepth( camera, objectList );
-		RenderShadowProjected( camera, objectList );
+		m_renderTarget.LockRenderTarget( 0, m_shadowAccumulatedScene->GetSurface() );
+		OvRenderer::GetInstance()->ClearTarget();
+		m_renderTarget.UnlockRenderTarget();
+		for each ( OvCameraSPtr light in m_lights )
+		{
+			RenderSpotLightDepth( camera, light, objectList );
+			RenderShadowProjected( camera, light, objectList );
+			RenderShadowAccumulated();
+		}
 
 		OvRenderer::GetInstance()->SetVertexShader( m_rectCode->FindShader( "Vmain", "vs_2_0" ) );
 		OvRenderer::GetInstance()->SetPixelShader( m_rectCode->FindShader( "Pmain", "ps_2_0" ) );
 		OvRenderer::GetInstance()->SetTexture( 0, m_diffuseScene );
-		OvRenderer::GetInstance()->SetTexture( 1, m_shadowProjectedScene );
+		OvRenderer::GetInstance()->SetTexture( 1, m_shadowAccumulatedScene );
 
 		OvRenderer::GetInstance()->ClearTarget();
 		OvRenderer::GetInstance()->BeginTarget();
+
 		OvRenderer::GetInstance()->RenderUnitRect();
+
 		OvRenderer::GetInstance()->EndTarget();
 		OvRenderer::GetInstance()->PresentTarget();
 

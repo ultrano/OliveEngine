@@ -36,7 +36,7 @@ bool OvCameraController::MessageListen( HWND hwnd, UINT message, WPARAM wparam, 
 		{
 			OvPoint3 direction;
 			OvPoint3 velocity;
-			float moveSpeed = 1.0f;
+			float moveSpeed = 10.0f;
 			switch ( wparam )
 			{
 			case VK_UP :
