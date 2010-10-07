@@ -9,10 +9,7 @@ void	main( in input_vertex input, out output_vertex output )
 {
 	output.pos = mul( vector( input.geom.pos, 1.0 ), WorldViewProject );
 	
-	float3 worldpos = mul( vector( input.geom.pos, 1.0 ), World );
-
-	float3 norm = normalize( mul( input.geom.norm, World) );
-	output.norm = norm;
+	output.norm = normalize( mul( input.geom.norm, World) );
 	output.tex0 = input.tex.tex0;
 	output.eye = ViewPos;
 	output.eye2pos = normalize( input.geom.pos - ViewPos );

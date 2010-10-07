@@ -4,6 +4,10 @@
 #include "OvRenderingCommon.h"
 #include "OvBitFlags.h"
 
+
+// 메쉬 포맷을 3단계로 고정시키자
+// 유연해봐야 쓰지도 않는다.
+
 OvREF_POINTER(OvMesh)
 class OvMesh : public OvResource
 {

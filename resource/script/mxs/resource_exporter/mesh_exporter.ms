@@ -13,10 +13,9 @@ struct mesh_exporter
 		local file_handle = createfile file_location;
 		if resource != undefined and canconvertto resource editable_mesh then
 		(
-			progressstart "mesh exporting"
+			local mesh_exporting = "mesh exporting";
 			
-			progressupdate 0
-			
+						
 			local mesh_data = resource.mesh;
 			
 			local face_count = getnumfaces mesh_data;
@@ -30,6 +29,8 @@ struct mesh_exporter
 			
 			-- descript vertex count
 			format "%\n" vertex_count to: file_handle;
+			
+			progressstart mesh_exporting + "[1/5]" 
 			for i=1 to face_count do
 			(
 				progressupdate (( 100.0 * i ) / face_count);
@@ -43,8 +44,11 @@ struct mesh_exporter
 				position = getvert mesh_data face[3];
 				format "%,%,%\n" position.x position.z position.y to: file_handle;
 			)
+			progressupdate 100
+			progressend();
 			
-			progressupdate 20
+			
+			progressstart mesh_exporting + "[2/5]" 
 			
 			for i=1 to face_count do
 			(
@@ -59,8 +63,10 @@ struct mesh_exporter
 				normal = getnormal mesh_data face[3];
 				format "%,%,%\n" normal.x normal.z normal.y to: file_handle;
 			)
+			progressupdate 100
+			progressend();
 			
-			progressupdate 40
+			progressstart mesh_exporting + "[3/5]" 
 			
 			for i=1 to face_count do
 			(
@@ -89,9 +95,10 @@ struct mesh_exporter
 				tangent = gettangent norm3 pt1 pt2 pt3 uv1.x uv2.x uv3.x;
 				format "%,%,%\n" tangent.x tangent.z tangent.y to: file_handle;
 			)
+			progressupdate 100
+			progressend();
 			
-			progressupdate 60
-			
+			progressstart mesh_exporting + "[4/5]" 
 			-- descript texcoord0 count
 			format "%\n" vertex_count to: file_handle;
 			for i=1 to face_count do
@@ -107,8 +114,10 @@ struct mesh_exporter
 				texcoord = gettvert mesh_data tface[3];
 				format "%,%\n" texcoord.x (1.0 - texcoord.y) to: file_handle;
 			)
+			progressupdate 100
+			progressend();
 			
-			progressupdate 90
+			progressstart mesh_exporting + "[5/5]" 
 			
 			-- descript face count
 			format "%\n" face_count to: file_handle;

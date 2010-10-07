@@ -31,7 +31,7 @@
     </Object>
     <Object type="OvModel" id="2">
         <prop>OvMaterial:../../resource/material/test.matf0</prop>
-        <prop>OvMesh:../../resource/mesh/ball.msf0</prop>
+        <prop>OvMesh:../../resource/mesh/box.msf0</prop>
         <prop>0:</prop>
         <prop>0</prop>
         <prop>1.000000,1.000000,1.000000</prop>

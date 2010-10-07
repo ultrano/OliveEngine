@@ -29,8 +29,8 @@ public:
 	virtual ~OvObject(); 
 
 	//! Object Name
-	void		SetName(const char* _pName);
-	const string& GetName();
+	void			SetName(const char* _pName);
+	const string&	GetName();
 
 	//! ID of Object
 	OvObjectID		GetObjectID();
