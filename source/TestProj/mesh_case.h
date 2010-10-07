@@ -1,4 +1,7 @@
 
+#include "NxPhysics.h"
+
+#include "include_header.h"
 #include "OvXObject.h"
 #include "OvCameraController.h"
 #include "OvRenderTexture.h"
@@ -8,10 +11,31 @@
 class testcomponent : public OvXComponent
 {
 public:
-	testcomponent():m_radian(0){};
+	testcomponent(NxScene * scene, OvPoint3& vel )
+	: m_radian( 0 )
+	, m_actor( NULL )	
+	, m_scene( scene )
+	, m_vel( vel ){};
 	virtual void SetUp() override
 	{
-		m_startpt = GetTarget()->GetTranslate();
+		if(m_scene == NULL) return;	
+
+		// Create body
+		NxBodyDesc bodyDesc;
+		bodyDesc.angularDamping	= 0.5f;
+		bodyDesc.linearVelocity = NxVec3(m_vel.x,m_vel.y,m_vel.z);
+
+		OvPoint3 scale = GetTarget()->GetScale();
+		NxSphereShapeDesc desc;
+		desc.radius = scale.x;
+
+		NxVec3 pos(GetTarget()->GetTranslate().x,GetTarget()->GetTranslate().y,GetTarget()->GetTranslate().z);
+		NxActorDesc actorDesc;
+		actorDesc.shapes.pushBack(&desc);
+		actorDesc.body			= &bodyDesc;
+		actorDesc.density		= 10.0f;
+		actorDesc.globalPose.t  = pos;
+		m_actor = m_scene->createActor(actorDesc);
 	}
 	virtual void Update(float _fElapse) override
 	{
@@ -20,11 +44,21 @@ public:
 		//GetTarget()->SetTranslate( m_startpt + dir * 5 );
 		
 		//GetTarget()->SetRotation(GetTarget()->GetRotation()*OvQuaternion().MakeQuaternion(0,1,0,(D3DX_PI/180.0f)));
+		NxVec3 nx_pos = m_actor->getGlobalPosition();
+		OvPoint3 ov_pos(nx_pos.x,nx_pos.y,nx_pos.z);
+		NxQuat nx_qut = m_actor->getGlobalOrientationQuat();
+		OvQuaternion ov_qut(nx_qut.x,nx_qut.y,nx_qut.z,nx_qut.w);
+
+		GetTarget()->SetTranslate( ov_pos );
+		GetTarget()->SetRotation( ov_qut );
 
 	}
 private:
 	OvPoint3 m_startpt;
 	float m_radian;
+	NxActor * m_actor;
+	NxScene * m_scene;
+	OvPoint3 m_vel;
 };
 
 GL_TEST_ENVIROMENT(OliveLibTest)
@@ -47,10 +81,39 @@ protected:
 
 	OvObjectCollector m_loadedObjects;
 
+	NxPhysicsSDK*	m_physicsSDK;
+	NxScene*		m_scene;
+
 	bool m_exitFlag;
 public:
 	GL_ENV_SET_UP
 	{
+		//////////////////////////////////////////////////////////////////////////
+		NxPhysicsSDKDesc desc;
+		NxSDKCreateError errorCode = NXCE_NO_ERROR;
+		m_physicsSDK = NxCreatePhysicsSDK(NX_PHYSICS_SDK_VERSION);
+		m_physicsSDK->setParameter(NX_SKIN_WIDTH, 0.05f);
+
+		// Create a scene
+		NxSceneDesc sceneDesc;
+		sceneDesc.gravity				= NxVec3(0.0f, -9.81f, 0.0f);
+		m_scene = m_physicsSDK->createScene(sceneDesc);
+		
+
+		// Set default material
+		NxMaterial* defaultMaterial = m_scene->getMaterialFromIndex(0);
+		defaultMaterial->setRestitution(0.0f);
+		defaultMaterial->setStaticFriction(0.5f);
+		defaultMaterial->setDynamicFriction(0.5f);
+
+		// Create ground plane
+		NxPlaneShapeDesc planeDesc;
+		NxActorDesc actorDesc;
+		actorDesc.shapes.pushBack(&planeDesc);
+		m_scene->createActor(actorDesc);
+		////////////////////////////////////////////////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////
 		m_exitFlag = false;
 		OvSingletonPool::StartUp();
 		OvRenderer::GetInstance()->GenerateRenderer();
@@ -112,6 +175,10 @@ public:
 
 		m_shader_code = NULL;
 
+		m_physicsSDK->releaseScene( *m_scene );
+		NxReleasePhysicsSDK( m_physicsSDK );
+		m_physicsSDK = NULL;
+
 		OvSingletonPool::ShutDown();
 	}
 public:
@@ -132,19 +199,8 @@ public:
 							light->SetFOV( m_mainCamera->GetFOV() );
 							light->Update(0);
 							light->SetFarClip(800);
-							(OvNew testcomponent)->SetTarget( light );
 							m_loadedObjects.AddObject( light );
 							m_lights.push_back( light );
-							OvModelSPtr model = m_loadedObjects.GetByName("Light");
-							if ( model )
-							{
-								OvModelSPtr copymodel = OvNew OvModel;
-								copymodel->SetMesh( model->GetMesh() );
-								copymodel->SetMaterial( model->GetMaterial() );
-								copymodel->SetScale( model->GetScale() );
-								light->AttachChild( copymodel );
-								m_loadedObjects.AddObject( copymodel );
-							}
 					}
 					break;
 				case VK_ESCAPE:
@@ -163,6 +219,7 @@ public:
 							copymodel->SetMaterial( model->GetMaterial() );
 							copymodel->SetTranslate( (m_mainCamera->GetLocalLookDirection() * 5.0f) + m_mainCamera->GetTranslate() );
 							copymodel->SetScale( model->GetScale() );
+							(OvNew testcomponent(m_scene,m_mainCamera->GetLocalLookDirection() * 15))->SetTarget( copymodel );
 							m_loadedObjects.AddObject( copymodel );
  						}
 
@@ -213,6 +270,7 @@ public:
 	}
 	void	Update( float elapsed, OvObjectCollector objectList  )
 	{
+		m_scene->simulate(1.0f/6.0f);
 		for ( int i = 0 ; i < objectList.Count() ; ++i )
 		{
 			OvObjectSPtr obj = objectList.GetByAt(i);
@@ -222,6 +280,9 @@ public:
 				xobj->Update( elapsed );
 			}
 		}
+		m_scene->flushStream();
+		m_scene->fetchResults(NX_RIGID_BODY_FINISHED, true);
+
 	}
 
 	void	RenderDiffuse( OvCameraSPtr camera, OvObjectCollector objectList )

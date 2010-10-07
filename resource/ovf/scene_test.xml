@@ -12,10 +12,10 @@
     </Object>
     <Object type="OvModel" id="4">
       <prop>OvMaterial:material/test.matf0</prop>
-      <prop>OvMesh:mesh/teapot.msf0</prop>
+      <prop>OvMesh:mesh/sphere.msf0</prop>
       <prop>0:</prop>
       <prop>0</prop>
-      <prop>1.000000,1.000000,1.000000</prop>
+      <prop>3.000000,3.000000,3.000000</prop>
       <prop>0.000000,5.000000,0.000000</prop>
       <prop>0.000000,0.000000,0.000000,1.000000</prop>
       <prop>0:</prop>

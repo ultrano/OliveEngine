@@ -1,0 +1,106 @@
+#include "OvVShaderConst.h"
+#include "OvPShaderConst.h"
+
+
+
+sampler light_depth_sampler	: register(s0);
+sampler SAMPLER_0	: register(s0);
+sampler SAMPLER_1	: register(s1);
+
+struct vertex_input
+{
+	float3 pos			: POSITION;
+};
+
+struct vertex_output
+{
+	float4 pos			: POSITION;
+	float4 depth_tex0	: TEXCOORD0;
+	float4 light_depth	: TEXCOORD1;
+};
+
+struct pixel_input
+{
+	float4 depth_tex0	: TEXCOORD0;
+	float4 light_depth	: TEXCOORD1;
+};
+
+void v_spot_shadow( in vertex_input input
+				 , out vertex_output output )
+{
+	vector pos = vector( input.pos, 1.0 );
+	
+	output.pos			= mul( pos, WorldViewProject );
+	output.depth_tex0	= mul( pos, WorldLightProjectBias );
+	output.light_depth	= mul( pos, WorldLightProject );	
+};
+
+void p_spot_shadow( in pixel_input input
+				 , out vector col0 : COLOR0 )
+{
+	float shadow = tex2Dproj( light_depth_sampler, input.depth_tex0 ).x;
+	
+	float biasZ = input.light_depth.z - 0.03f;
+	float depth =  biasZ / input.light_depth.w;
+	col0 = ( shadow < depth)? 0 : pow(1-depth,2) * 1000;
+	col0 = ( depth < 0.0 || depth > 1.0 )? 0 : col0 ;
+};
+
+
+///
+///
+///
+
+void rectV( in float3 in_pos : POSITION
+		  , in float2 in_tex0 : TEXCOORD0
+		  ,	out float4 out_pos  : POSITION
+		  ,	out float2 out_tex0 : TEXCOORD0 )
+{
+	out_pos = float4( in_pos, 1 );
+	out_tex0 = in_tex0;
+};
+
+void rectP( in float2 tex0 : TEXCOORD0, out vector col0 : COLOR0 )
+{
+	float4 texcolor0 = tex2D( SAMPLER_0, tex0 );
+	float4 texcolor1 = tex2D( SAMPLER_1, tex0 );
+	col0 = texcolor0 * texcolor1 ;
+};
+
+
+///
+///
+///
+
+
+void depthV( in float3 in_pos : POSITION 
+		  ,	out float4 out_pos : POSITION
+		  ,	out float4 out_tex0 : TEXCOORD0 )
+{
+	out_pos = mul( vector( in_pos, 1.0 ), WorldViewProject );
+	out_tex0 = out_pos;
+};
+void depthP( in float4 out_tex0 : TEXCOORD0
+		  ,	out vector col0 : COLOR0 )
+{
+	col0 = out_tex0.z / out_tex0.w;
+};
+
+//
+//
+//
+
+void accumulateV( in float3 in_pos : POSITION0
+				, in float2 in_tex0 : TEXCOORD0
+		  		,	out float4 out_pos : POSITION
+		  		,	out float2 out_tex0 : TEXCOORD0  )
+{
+	out_pos = float4( in_pos, 1 );
+	out_tex0 = in_tex0;
+};
+
+void accumulateP( in float2 tex0 : TEXCOORD0, out vector col0 : COLOR0 )
+{
+	float4 texcolor0 = tex2D( SAMPLER_0, tex0 );
+	col0 = texcolor0;
+};
