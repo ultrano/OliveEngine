@@ -10,9 +10,10 @@ CONST_DECL_FLOAT(float3			,LightPos, 11, 1 )
 CONST_DECL_FLOAT(float4			,Time, 12, 1 )
 CONST_DECL_FLOAT(float4x3		,World, 13, 3 )
 CONST_DECL_FLOAT_ARRAY(float4x3	,MatrixPalette, 25, 13, 3 )
-CONST_DECL_FLOAT(matrix			,WorldLightProject, 17, 4 )
-CONST_DECL_FLOAT(matrix			,WorldLightProjectBias, 21, 4 )
-CONST_DECL_FLOAT(matrix			,Project, 25, 4 )
+CONST_DECL_FLOAT(matrix			,LightProject, 17, 4 )
+CONST_DECL_FLOAT(matrix			,WorldLightProject, 21, 4 )
+CONST_DECL_FLOAT(matrix			,WorldLightProjectBias, 25, 4 )
+CONST_DECL_FLOAT(matrix			,Project, 29, 4 )
 
 CONST_DECL_FLOAT(float,Float_LastRegister,88,1)
 
