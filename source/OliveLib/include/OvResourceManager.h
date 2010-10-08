@@ -62,3 +62,4 @@ OvResourceManager::LoadResource( const string& fileLocation )
 };
 
 string	ResDirPath( const std::string& file );
+bool	ClampPathIfResDir( std::string& file );

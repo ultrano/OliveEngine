@@ -434,14 +434,14 @@
 					</File>
 				</Filter>
 				<Filter
-					Name="OvRenderEffector"
+					Name="OvSceneEffector"
 					>
 					<File
-						RelativePath=".\source\OvRenderEffector.cpp"
+						RelativePath=".\source\OvSceneEffector.cpp"
 						>
 					</File>
 					<File
-						RelativePath=".\include\OvRenderEffector.h"
+						RelativePath=".\include\OvSceneEffector.h"
 						>
 					</File>
 				</Filter>
@@ -730,6 +730,18 @@
 					</File>
 					<File
 						RelativePath=".\include\OvXUIPick.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="OvScene"
+					>
+					<File
+						RelativePath=".\source\OvScene.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\include\OvScene.h"
 						>
 					</File>
 				</Filter>

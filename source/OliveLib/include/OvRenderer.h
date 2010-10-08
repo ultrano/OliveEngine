@@ -39,7 +39,7 @@ public:
 	void			SetVertexDeclaration( LPDIRECT3DVERTEXDECLARATION9 decl );
 	bool			DrawPrimitive( D3DPRIMITIVETYPE primitiveType, size_t primCount );
 
-	void			RenderUnitRect();
+	void			RenderUnitRect( OvVertexShaderSPtr v_shader = NULL , OvPixelShaderSPtr p_shader = NULL );
 
 //////////////////////////////////////////////////////////////////////////
 

@@ -26,10 +26,17 @@ OvXNode::~OvXNode()
 
 void OvXNode::_update_system( float _fElapse )
 {
-	for (int i=0;i<m_clectrChildCollect.Count();++i)
+	//! 자식의 업데이트중 자식 리스트에서 임의의 자식을
+	//! 때어달라는 요청을 할수 있다.
+	//! 그렇게 되면 
+	//! 업데이트 순서가 엉킬수 있기 때문에
+	//! 업데이트시에 카피본을 뜨고 그걸로 업데이스틑 시행한다.
+
+	OvObjectCollector update_copy = m_clectrChildCollect;
+	for (int i = 0 ; i < update_copy.Count() ; ++i )
 	{
-		OvXObjectSPtr kpChild = m_clectrChildCollect.GetByAt(i);
-		kpChild->Update(_fElapse);
+		OvXObjectSPtr child = update_copy.GetByAt(i);
+		child->Update(_fElapse);
 	}
 }
 

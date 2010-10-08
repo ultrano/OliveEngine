@@ -63,11 +63,12 @@ bool			OvObjectCollector::AddObject(OvObjectSPtr pObj)
 
 bool			OvObjectCollector::AddObject(OvObjectCollector& pObjContainer)
 {
+	m_tdObjArray.reserve( pObjContainer.Count() );
 	for (int i=0;i<pObjContainer.Count();++i)
 	{
-		AddObject(pObjContainer.GetByAt(i));
+		m_tdObjArray.push_back( pObjContainer.GetByAt(i) );
 	}
-	return pObjContainer.Count();
+	return m_tdObjArray.size();
 }
 
 OvObjectSPtr	OvObjectCollector::RemoveObject(OvObjectSPtr pObj)

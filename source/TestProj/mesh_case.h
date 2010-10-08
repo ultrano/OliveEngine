@@ -12,7 +12,7 @@ class testcomponent : public OvXComponent
 {
 public:
 	testcomponent(NxScene * scene, OvPoint3& vel )
-	: m_radian( 0 )
+	: m_time( 0 )
 	, m_actor( NULL )	
 	, m_scene( scene )
 	, m_vel( vel ){};
@@ -39,29 +39,34 @@ public:
 	}
 	virtual void Update(float _fElapse) override
 	{
-		m_radian += (D3DX_PI/180.0f);
-		//OvPoint3 dir( cosf(m_radian),0,sinf(m_radian));
-		//GetTarget()->SetTranslate( m_startpt + dir * 5 );
-		
-		//GetTarget()->SetRotation(GetTarget()->GetRotation()*OvQuaternion().MakeQuaternion(0,1,0,(D3DX_PI/180.0f)));
-		NxVec3 nx_pos = m_actor->getGlobalPosition();
-		OvPoint3 ov_pos(nx_pos.x,nx_pos.y,nx_pos.z);
-		NxQuat nx_qut = m_actor->getGlobalOrientationQuat();
-		OvQuaternion ov_qut(nx_qut.x,nx_qut.y,nx_qut.z,nx_qut.w);
+		m_time++;
+		if ( m_time < 500 )
+		{
+			NxVec3 nx_pos = m_actor->getGlobalPosition();
+			OvPoint3 ov_pos(nx_pos.x,nx_pos.y,nx_pos.z);
+			NxQuat nx_qut = m_actor->getGlobalOrientationQuat();
+			OvQuaternion ov_qut(nx_qut.x,nx_qut.y,nx_qut.z,nx_qut.w);
 
-		GetTarget()->SetTranslate( ov_pos );
-		GetTarget()->SetRotation( ov_qut );
+			GetTarget()->SetTranslate( ov_pos );
+			GetTarget()->SetRotation( ov_qut );
+		}
+		else
+		{
+			m_scene->releaseActor( *m_actor );
+			GetTarget()->SetControlFlag(OvXObject::UPDATABLE,false);
+			GetTarget()->SetControlFlag(OvXObject::VISIBLE,false);
+		}
 
 	}
 private:
 	OvPoint3 m_startpt;
-	float m_radian;
+	float m_time;
 	NxActor * m_actor;
 	NxScene * m_scene;
 	OvPoint3 m_vel;
 };
 
-GL_TEST_ENVIROMENT(OliveLibTest)
+GL_TEST_ENVIROMENT( OliveLibTest )
 {
 private:
 protected:
@@ -193,12 +198,7 @@ public:
 				{
 				case VK_SPACE:
 					{
-							OvCameraSPtr light = OvNew OvCamera;
-							light->SetTranslate( m_mainCamera->GetTranslate() );
-							light->SetRotation( m_mainCamera->GetRotation() );
-							light->SetFOV( m_mainCamera->GetFOV() );
-							light->Update(0);
-							light->SetFarClip(800);
+							OvCameraSPtr light = m_mainCamera->Clone();
 							m_loadedObjects.AddObject( light );
 							m_lights.push_back( light );
 					}
@@ -214,11 +214,8 @@ public:
 						OvModelSPtr model = m_loadedObjects.GetByName("Ball");
 						if ( model )
 						{
-							OvModelSPtr copymodel = OvNew OvModel;
-							copymodel->SetMesh( model->GetMesh() );
-							copymodel->SetMaterial( model->GetMaterial() );
+							OvModelSPtr copymodel = model->Clone();
 							copymodel->SetTranslate( (m_mainCamera->GetLocalLookDirection() * 5.0f) + m_mainCamera->GetTranslate() );
-							copymodel->SetScale( model->GetScale() );
 							(OvNew testcomponent(m_scene,m_mainCamera->GetLocalLookDirection() * 15))->SetTarget( copymodel );
 							m_loadedObjects.AddObject( copymodel );
  						}
@@ -263,14 +260,19 @@ public:
 
 				{
 					Update( 0, m_loadedObjects );
+					
+					m_scene->simulate(1.0f/6.0f);
+					
 					Render( m_mainCamera, m_loadedObjects );
+
+					m_scene->flushStream();
+					m_scene->fetchResults(NX_RIGID_BODY_FINISHED, true);
 				}
 			}
 		}
 	}
 	void	Update( float elapsed, OvObjectCollector objectList  )
 	{
-		m_scene->simulate(1.0f/6.0f);
 		for ( int i = 0 ; i < objectList.Count() ; ++i )
 		{
 			OvObjectSPtr obj = objectList.GetByAt(i);
@@ -280,9 +282,6 @@ public:
 				xobj->Update( elapsed );
 			}
 		}
-		m_scene->flushStream();
-		m_scene->fetchResults(NX_RIGID_BODY_FINISHED, true);
-
 	}
 
 	void	RenderDiffuse( OvCameraSPtr camera, OvObjectCollector objectList )
@@ -330,15 +329,14 @@ public:
 			}
 		}
 
-		OvRenderer::GetInstance()->RenderUnitRect();
-
 
 		OvRenderer::GetInstance()->EndTarget();
 
 	}
 	void	RenderSpotLightDepth( OvCameraSPtr camera, OvCameraSPtr light,OvObjectCollector objectList )
 	{
-		OvMatrix light_project = light->GetViewMatrix() * light->GetProjectMatrix();
+		OvMatrix light_project;
+		OvShaderManager::GetInstance()->GetVSConst(OvVShaderConst::LightProject,light_project);
 		m_renderTarget.LockRenderTarget( 0, m_lightDepthScene->GetSurface() );
 		
 		RenderDepth( light_project, objectList );
@@ -349,7 +347,8 @@ public:
 	void	RenderShadowProjected( OvCameraSPtr camera, OvCameraSPtr light,OvObjectCollector objectList )
 	{
 		static OvMatrix bias = OvMatrix().Scale( 0.5f, -0.5f, 0 ) * OvMatrix().Translate( 0.5f, 0.5f, 0 );
-		OvMatrix light_project = light->GetViewMatrix() * light->GetProjectMatrix();
+		OvMatrix light_project;
+		OvShaderManager::GetInstance()->GetVSConst(OvVShaderConst::LightProject,light_project);
 		OvMatrix view_project = camera->GetViewMatrix() * camera->GetProjectMatrix();
 		OvShaderManager::GetInstance()->SetVSConst( OvVShaderConst::ViewProject, view_project );
 
@@ -383,8 +382,6 @@ public:
 	}
 	void	RenderShadowAccumulated()
 	{
-		OvRenderer::GetInstance()->SetVertexShader( m_shader_code->FindShader( "accumulateV", "vs_2_0" ) );
-		OvRenderer::GetInstance()->SetPixelShader( m_shader_code->FindShader( "accumulateP", "ps_2_0" ) );
 		OvRenderer::GetInstance()->SetTexture( 0, m_shadowProjectedScene );
 
 		LPDIRECT3DDEVICE9 device = OvRenderer::GetInstance()->GetDevice();
@@ -397,7 +394,9 @@ public:
 
 		OvRenderer::GetInstance()->BeginTarget();
 
-		OvRenderer::GetInstance()->RenderUnitRect();
+		OvRenderer::GetInstance()->RenderUnitRect
+			( m_shader_code->FindShader( "accumulateV", "vs_2_0" )
+			, m_shader_code->FindShader( "accumulateP", "ps_2_0" ) );
 
 		OvRenderer::GetInstance()->EndTarget();
 
@@ -413,20 +412,22 @@ public:
 		m_renderTarget.UnlockRenderTarget();
 		for each ( OvCameraSPtr light in m_lights )
 		{
+			OvMatrix light_project = light->GetViewMatrix() * light->GetProjectMatrix();
+			OvShaderManager::GetInstance()->SetVSConst( OvVShaderConst::LightProject, light_project );
 			RenderSpotLightDepth( camera, light, objectList );
 			RenderShadowProjected( camera, light, objectList );
 			RenderShadowAccumulated();
 		}
 
-		OvRenderer::GetInstance()->SetVertexShader( m_shader_code->FindShader( "rectV", "vs_2_0" ) );
-		OvRenderer::GetInstance()->SetPixelShader( m_shader_code->FindShader( "rectP", "ps_2_0" ) );
 		OvRenderer::GetInstance()->SetTexture( 0, m_diffuseScene );
 		OvRenderer::GetInstance()->SetTexture( 1, m_shadowAccumulatedScene );
 
 		OvRenderer::GetInstance()->ClearTarget();
 		OvRenderer::GetInstance()->BeginTarget();
 
-		OvRenderer::GetInstance()->RenderUnitRect();
+		OvRenderer::GetInstance()->RenderUnitRect
+			( m_shader_code->FindShader( "rectV", "vs_2_0" ) 
+			, m_shader_code->FindShader( "rectP", "ps_2_0" ) );
 
 		OvRenderer::GetInstance()->EndTarget();
 		OvRenderer::GetInstance()->PresentTarget();

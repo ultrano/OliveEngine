@@ -186,14 +186,18 @@ string OvResourceManager::FindFileLocation( OvResourceSPtr resource )
 
 OvResourceTicketSPtr OvResourceManager::CheckIn( OvResourceSPtr resource )
 {
-	string location = FindFileLocation( resource );
-	resource_ticket_table::iterator itor = m_resourceTicketTable.find( location );
-	if ( itor != m_resourceTicketTable.end() )
+	if ( resource )
 	{
-		return itor->second;
-	}
+		string location = FindFileLocation( resource );
+		resource_ticket_table::iterator itor = m_resourceTicketTable.find( location );
+		if ( itor != m_resourceTicketTable.end() )
+		{
+			return itor->second;
+		}
 
-	return ( OvNew OvResourceTicket( resource.GetRear() ) );
+		return ( OvNew OvResourceTicket( resource.GetRear() ) );
+	}
+	return NULL;
 }
 
 OvResourceSPtr OvResourceManager::_force_load_resouroce( const OvRTTI* resourceType, const string& fileLocation )
@@ -225,4 +229,16 @@ const string& OvResourceManager::ResourceDirectory()
 std::string ResDirPath( const std::string& file )
 {
 	return OvResourceManager::GetInstance()->ResourceDirectory() + "\\" + file;
+}
+
+bool ClampPathIfResDir( std::string& file )
+{
+	string output;
+	output = OvResourceManager::GetInstance()->ResourceDirectory() + "\\";
+	if ( strncmp( output.c_str(), file.c_str(), output.size() ) == 0 )
+	{
+		file = &file.at( output.length() );
+		return true;
+	}
+	return false;
 }

@@ -299,7 +299,7 @@ bool OvRenderer::DrawPrimitive( D3DPRIMITIVETYPE primitiveType, size_t primCount
 	return false;
 }
 
-void OvRenderer::RenderUnitRect()
+void OvRenderer::RenderUnitRect( OvVertexShaderSPtr v_shader , OvPixelShaderSPtr p_shader )
 {
 	struct SScreenRect
 	{
@@ -327,6 +327,8 @@ void OvRenderer::RenderUnitRect()
 	static LPDIRECT3DVERTEXBUFFER9 rectVertBuffer = CreateVertexStream( (void*)&rect[0], sizeof( SScreenRect ), 4 );
 	static LPDIRECT3DVERTEXDECLARATION9 rectDecl = CreateVertexDeclaration( rect_elem );
 
+	if ( v_shader ) SetVertexShader( v_shader );
+	if ( p_shader ) SetPixelShader( p_shader );
 	SetVertexStream( 0, SVertexStreamInfo( rectVertBuffer, sizeof( SScreenRect ), 0) );
 	SetVertexDeclaration( rectDecl );
 	DrawPrimitive( D3DPRIMITIVETYPE::D3DPT_TRIANGLEFAN, 2);

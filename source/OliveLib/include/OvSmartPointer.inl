@@ -165,3 +165,26 @@ bool	operator != (const Type_0* _copy0,const OvSmartPointer<Type_1>& _copy1)
 {
 	return ((void*)_copy0 != (void*)_copy1.GetRear());
 }
+
+
+template<typename Type_0,typename Type_1>
+bool	operator == (const OvSmartPointer<Type_0>& _copy0, Type_1* _copy1)
+{
+	return ((void*)_copy0.GetRear() == (void*)_copy1);
+}
+template<typename Type_0,typename Type_1>
+bool	operator != (const OvSmartPointer<Type_0>& _copy0, Type_1* _copy1)
+{
+	return ((void*)_copy0.GetRear() != (void*)_copy1);
+}
+
+template<typename Type_0,typename Type_1>
+bool	operator == ( Type_0* _copy0,const OvSmartPointer<Type_1>& _copy1)
+{
+	return ((void*)_copy0 == (void*)_copy1.GetRear());
+}
+template<typename Type_0,typename Type_1>
+bool	operator != ( Type_0* _copy0,const OvSmartPointer<Type_1>& _copy1)
+{
+	return ((void*)_copy0 != (void*)_copy1.GetRear());
+}

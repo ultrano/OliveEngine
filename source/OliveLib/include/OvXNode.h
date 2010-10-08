@@ -28,7 +28,6 @@ private:
 
 private:
 
-
 	OvObjectCollector	m_clectrChildCollect;
 
 };

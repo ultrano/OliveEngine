@@ -577,6 +577,7 @@ bool OvPropAccesser_resource::Extract( OvObject* pObj, OvObjectProperties& rObjS
 	{
 		string typeName = OvRTTI_Util::TypeName( (*accessProp) );
 		string fileLocation = OvResourceManager::GetInstance()->FindFileLocation( (*accessProp) );
+		ClampPathIfResDir( fileLocation );
 
 		string resourceInfo;
 		resourceInfo += typeName;
@@ -624,6 +625,7 @@ bool OvPropAccesser_resource_ticket::Extract( OvObject* pObj, OvObjectProperties
 		OvResourceSPtr resource = ticket->CheckOut();
 		string typeName = OvRTTI_Util::TypeName( resource );
 		string fileLocation = OvResourceManager::GetInstance()->FindFileLocation( resource );
+		ClampPathIfResDir( fileLocation );
 
 		string resourceInfo;
 		resourceInfo += typeName;
