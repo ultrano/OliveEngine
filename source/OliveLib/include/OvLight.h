@@ -1,5 +1,5 @@
 #pragma once
-#include "OvRenderEffector.h"
+#include "OvSceneEffector.h"
 
 class OvLight : public OvSceneEffector
 {

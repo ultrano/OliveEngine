@@ -135,16 +135,6 @@ public:
 							(OvNew testcomponent)->SetTarget( light );
 							m_loadedObjects.AddObject( light );
 							m_lights.push_back( light );
-							OvModelSPtr model = m_loadedObjects.GetByName("Light");
-							if ( model )
-							{
-								OvModelSPtr copymodel = OvNew OvModel;
-								copymodel->SetMesh( model->GetMesh() );
-								copymodel->SetMaterial( model->GetMaterial() );
-								copymodel->SetScale( model->GetScale() );
-								light->AttachChild( copymodel );
-								m_loadedObjects.AddObject( copymodel );
-							}
 					}
 					break;
 				case VK_ESCAPE:
@@ -158,11 +148,8 @@ public:
 						OvModelSPtr model = m_loadedObjects.GetByName("Ball");
 						if ( model )
 						{
-							OvModelSPtr copymodel = OvNew OvModel;
-							copymodel->SetMesh( model->GetMesh() );
-							copymodel->SetMaterial( model->GetMaterial() );
+							OvModelSPtr copymodel = model->Clone();
 							copymodel->SetTranslate( (m_mainCamera->GetLocalLookDirection() * 5.0f) + m_mainCamera->GetTranslate() );
-							copymodel->SetScale( model->GetScale() );
 							m_loadedObjects.AddObject( copymodel );
  						}
 
@@ -269,15 +256,14 @@ public:
 			}
 		}
 
-		OvRenderer::GetInstance()->RenderUnitRect();
-
 
 		OvRenderer::GetInstance()->EndTarget();
 
 	}
 	void	RenderSpotLightDepth( OvCameraSPtr camera, OvCameraSPtr light,OvObjectCollector objectList )
 	{
-		OvMatrix light_project = light->GetViewMatrix() * light->GetProjectMatrix();
+		OvMatrix light_project;
+		OvShaderManager::GetInstance()->GetVSConst(OvVShaderConst::LightProject,light_project);
 		m_renderTarget.LockRenderTarget( 0, m_lightDepthScene->GetSurface() );
 		
 		RenderDepth( light_project, objectList );
@@ -288,7 +274,8 @@ public:
 	void	RenderShadowProjected( OvCameraSPtr camera, OvCameraSPtr light,OvObjectCollector objectList )
 	{
 		static OvMatrix bias = OvMatrix().Scale( 0.5f, -0.5f, 0 ) * OvMatrix().Translate( 0.5f, 0.5f, 0 );
-		OvMatrix light_project = light->GetViewMatrix() * light->GetProjectMatrix();
+		OvMatrix light_project;
+		OvShaderManager::GetInstance()->GetVSConst(OvVShaderConst::LightProject,light_project);
 		OvMatrix view_project = camera->GetViewMatrix() * camera->GetProjectMatrix();
 		OvShaderManager::GetInstance()->SetVSConst( OvVShaderConst::ViewProject, view_project );
 
@@ -322,8 +309,6 @@ public:
 	}
 	void	RenderShadowAccumulated()
 	{
-		OvRenderer::GetInstance()->SetVertexShader( m_shader_code->FindShader( "accumulateV", "vs_2_0" ) );
-		OvRenderer::GetInstance()->SetPixelShader( m_shader_code->FindShader( "accumulateP", "ps_2_0" ) );
 		OvRenderer::GetInstance()->SetTexture( 0, m_shadowProjectedScene );
 
 		LPDIRECT3DDEVICE9 device = OvRenderer::GetInstance()->GetDevice();
@@ -336,7 +321,9 @@ public:
 
 		OvRenderer::GetInstance()->BeginTarget();
 
-		OvRenderer::GetInstance()->RenderUnitRect();
+		OvRenderer::GetInstance()->RenderUnitRect
+			( m_shader_code->FindShader( "accumulateV", "vs_2_0" )
+			, m_shader_code->FindShader( "accumulateP", "ps_2_0" ) );
 
 		OvRenderer::GetInstance()->EndTarget();
 
@@ -352,20 +339,22 @@ public:
 		m_renderTarget.UnlockRenderTarget();
 		for each ( OvCameraSPtr light in m_lights )
 		{
+			OvMatrix light_project = light->GetViewMatrix() * light->GetProjectMatrix();
+			OvShaderManager::GetInstance()->SetVSConst( OvVShaderConst::LightProject, light_project );
 			RenderSpotLightDepth( camera, light, objectList );
 			RenderShadowProjected( camera, light, objectList );
 			RenderShadowAccumulated();
 		}
 
-		OvRenderer::GetInstance()->SetVertexShader( m_shader_code->FindShader( "rectV", "vs_2_0" ) );
-		OvRenderer::GetInstance()->SetPixelShader( m_shader_code->FindShader( "rectP", "ps_2_0" ) );
 		OvRenderer::GetInstance()->SetTexture( 0, m_diffuseScene );
 		OvRenderer::GetInstance()->SetTexture( 1, m_shadowAccumulatedScene );
 
 		OvRenderer::GetInstance()->ClearTarget();
 		OvRenderer::GetInstance()->BeginTarget();
 
-		OvRenderer::GetInstance()->RenderUnitRect();
+		OvRenderer::GetInstance()->RenderUnitRect
+			( m_shader_code->FindShader( "rectV", "vs_2_0" ) 
+			, m_shader_code->FindShader( "rectP", "ps_2_0" ) );
 
 		OvRenderer::GetInstance()->EndTarget();
 		OvRenderer::GetInstance()->PresentTarget();

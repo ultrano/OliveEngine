@@ -226,3 +226,10 @@ std::string ResDirPath( const std::string& file )
 {
 	return OvResourceManager::GetInstance()->ResourceDirectory() + "\\" + file;
 }
+
+std::string ClampPathIfResDir( const std::string& file )
+{
+	return "";
+	/*const string& res_dir = OvResourceManager::GetInstance()->ResourceDirectory();
+	strncmp( res_dir.c_str(), file.c_str(), res_dir.size() );*/
+}

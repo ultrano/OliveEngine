@@ -1,2 +1,2 @@
-#include "OvRenderEffector.h"
+#include "OvSceneEffector.h"
 OvRTTI_IMPL(OvSceneEffector);
