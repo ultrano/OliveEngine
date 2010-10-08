@@ -28,6 +28,9 @@ public:
 	OvObject(OvStorage& rStorage);
 	virtual ~OvObject(); 
 
+	//! Clone Object
+	OvObjectSPtr Clone();
+
 	//! Object Name
 	void			SetName(const char* _pName);
 	const string&	GetName();
@@ -62,6 +65,9 @@ Type_0* OvObject::FindExtraProperty( const string& propName )
 	}
 	return NULL;
 }
+class OvObjectProperties;
+void ExtractProperties( OvObject* obj, OvObjectProperties& prop );
+void InjectProperties( OvObject* obj, OvObjectProperties& prop );
 
 #define OvFACTORY_MEMBER(__class_name) friend class OvObjectFactory;\
 __class_name(OvObjectID& objID){objID = GetObjectID();};\

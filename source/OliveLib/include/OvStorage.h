@@ -47,3 +47,4 @@ private:
 	link_builder_list		m_linkBuilderList;
 
 };
+OvObject* TemporaryFactoryFunction(const string& typeName);

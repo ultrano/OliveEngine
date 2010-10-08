@@ -4,8 +4,6 @@
 #include "OvFileMeshLoader.h"
 #include "OvTextureLoader.h"
 #include "OvResourceManager.h"
-#include "OvObjectProperties.h"
-#include "OvPropAccesserNode.h"
 
 OvRTTI_IMPL(OvModel)
 OvPROPERTY_BAG_BEGIN(OvModel)
@@ -83,53 +81,4 @@ void	OvModel::Render()
 	m_materialResource->
 
 	*/
-}
-
-OvObjectSPtr OvModel::Clone()
-{
-
-	OvObjectProperties store;
-	for ( OvRTTI * rtti = const_cast<OvRTTI*>(QueryRTTI())
-		; NULL != rtti
-		; rtti = const_cast<OvRTTI*>(rtti->GetBaseRTTI()))
-	{
-		OvPropertyBag* prop_bag = rtti->PropertyBag();
-		if (prop_bag)
-		{
-			OvPropAccesserNode* prop_node = NULL;
-			for (prop_node = prop_bag->BeginAccessNode()
-				;prop_node != NULL
-				;prop_node = prop_node->GetNext())
-			{
-				OvPropertyAccesser* prop_acces = prop_node->GetProperty();
-				if (prop_acces)
-				{
-					prop_acces->Extract( this, store );
-				}
-			}
-		}		
-	}
-
-	OvModelSPtr clone = OvNew OvModel();
-	for ( OvRTTI * rtti = const_cast<OvRTTI*>(QueryRTTI())
-		; NULL != rtti
-		; rtti = const_cast<OvRTTI*>(rtti->GetBaseRTTI()))
-	{
-		OvPropertyBag* prop_bag = rtti->PropertyBag();
-		if (prop_bag)
-		{
-			OvPropAccesserNode* prop_node = NULL;
-			for (prop_node = prop_bag->BeginAccessNode()
-				;prop_node != NULL
-				;prop_node = prop_node->GetNext())
-			{
-				OvPropertyAccesser* prop_acces = prop_node->GetProperty();
-				if (prop_acces)
-				{
-					prop_acces->Inject( clone.GetRear(), store );
-				}
-			}
-		}		
-	}
-	return clone;
 }

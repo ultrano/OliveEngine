@@ -1,4 +1,5 @@
 
+#include "include_header.h"
 #include "OvXObject.h"
 #include "OvCameraController.h"
 #include "OvRenderTexture.h"
@@ -27,7 +28,7 @@ private:
 	float m_radian;
 };
 
-GL_TEST_ENVIROMENT(OliveLibTest)
+GL_TEST_ENVIROMENT( OliveLibTest )
 {
 private:
 protected:
