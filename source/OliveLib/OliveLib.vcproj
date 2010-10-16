@@ -1174,18 +1174,6 @@
 					</File>
 				</Filter>
 				<Filter
-					Name="OvPropAccesserNode"
-					>
-					<File
-						RelativePath=".\source\OvPropAccesserNode.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\include\OvPropAccesserNode.h"
-						>
-					</File>
-				</Filter>
-				<Filter
 					Name="OvQuaternion"
 					>
 					<File

@@ -3,7 +3,6 @@
 #include "OvObjectProperties.h"
 #include "OvUtility_RTTI.h"
 #include "OvPropertyBag.h"
-#include "OvPropAccesserNode.h"
 #include "OvPropertyAccesser.h"
 #include "OvObject.h"
 #include "OvObjectFactory.h"
@@ -98,36 +97,6 @@ bool	OvStorage::Load( const std::string& pFile, OvObjectCollector& loadedObjects
 	return false;
 }
 
-void OvStorage::ExportObjectStructure( const char* pFile,const OvRTTI* rtti )
-{
-	TiXmlDocument doc("Export Structure");
-	TiXmlElement root( const_cast<OvRTTI*>(rtti)->TypeName().c_str() );
-
-	OvRTTI* kpRTTI = NULL;
-	for (kpRTTI = const_cast<OvRTTI*>(rtti)
-		;NULL != kpRTTI 
-		;kpRTTI = const_cast<OvRTTI*>(kpRTTI->GetBaseRTTI()))
-	{
-		OvPropertyBag* kpPropBag = kpRTTI->PropertyBag();
-		if (kpPropBag)
-		{
-			OvPropAccesserNode* kpPropNode = NULL;
-			for (kpPropNode = kpPropBag->BeginAccessNode()
-				;kpPropNode != NULL
-				;kpPropNode = kpPropNode->GetNext())
-			{
-				if (OvPropertyAccesser* kpProp = kpPropNode->GetProperty())
-				{
-					TiXmlElement member( kpProp->GetPropertyName().c_str() );
-					root.InsertEndChild( member );
-				}
-			}
-		}		
-	}
-	doc.InsertEndChild( root );
-	doc.SaveFile( pFile );
-}
-
 void	OvStorage::_store_object(OvObject* pObj)
 {
 	OvObjectProperties rStore;
@@ -169,27 +138,7 @@ bool	OvStorage::_extract_property(OvObject* pObj,OvObjectProperties& rStore)
 	if (pObj && m_storeObjectTable.IsCollected(pObj) == false )
 	{
 
-		OvRTTI* kpRTTI = NULL;
-		for ( kpRTTI = const_cast<OvRTTI*>(pObj->QueryRTTI())
-			; NULL != kpRTTI
-			; kpRTTI = const_cast<OvRTTI*>(kpRTTI->GetBaseRTTI()))
-		{
-			OvPropertyBag* kpPropBag = kpRTTI->PropertyBag();
-			if (kpPropBag)
-			{
-				OvPropAccesserNode* kpPropNode = NULL;
-				for (kpPropNode = kpPropBag->BeginAccessNode()
-					;kpPropNode != NULL
-					;kpPropNode = kpPropNode->GetNext())
-				{
-					OvPropertyAccesser* kpProp = kpPropNode->GetProperty();
-					if (kpProp)
-					{
-						kpProp->Extract(pObj,rStore);
-					}
-				}
-			}		
-		}
+		ExtractProperties( pObj, rStore );
 		string typeName = OvRTTI_Util::TypeName( pObj );
 		rStore.SetObjectType( typeName );
 		rStore.SetObjectID(pObj->GetObjectID());
@@ -204,28 +153,7 @@ bool	OvStorage::_inject_property(OvObject* pObj,OvObjectProperties& rStore)
 {
 	if (pObj)
 	{
-
-		OvRTTI* kpRTTI = NULL;
-		for ( kpRTTI = const_cast<OvRTTI*>(pObj->QueryRTTI())
-			; NULL != kpRTTI
-			; kpRTTI = const_cast<OvRTTI*>(kpRTTI->GetBaseRTTI()))
-		{
-			OvPropertyBag* kpPropBag = kpRTTI->PropertyBag();
-			if (kpPropBag)
-			{
-				OvPropAccesserNode* kpPropNode = NULL;
-				for (kpPropNode = kpPropBag->BeginAccessNode()
-					;kpPropNode != NULL
-					;kpPropNode = kpPropNode->GetNext())
-				{
-					OvPropertyAccesser* kpProp = kpPropNode->GetProperty();
-					if (kpProp)
-					{
-						kpProp->Inject(pObj,rStore);
-					}
-				}
-			}
-		}		
+		InjectProperties( pObj, rStore );
 		return true;
 	}
 	return false;

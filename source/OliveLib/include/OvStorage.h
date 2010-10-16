@@ -21,8 +21,6 @@ public:
 	bool	Save( const std::string& pFile, OvObjectCollector& saveObjects);
 	bool	Load( const std::string& pFile, OvObjectCollector& loadedObjects);
 
-	void	ExportObjectStructure(const char* pFile,const OvRTTI* rtti);
-
 	void	Clear();
 
 private:
