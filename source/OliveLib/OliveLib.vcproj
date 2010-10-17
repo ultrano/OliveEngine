@@ -302,6 +302,18 @@
 						RelativePath=".\include\OvLight.h"
 						>
 					</File>
+					<Filter
+						Name="OvSpotLight"
+						>
+						<File
+							RelativePath=".\source\OvSpotLight.cpp"
+							>
+						</File>
+						<File
+							RelativePath=".\include\OvSpotLight.h"
+							>
+						</File>
+					</Filter>
 				</Filter>
 				<Filter
 					Name="OvMainRenderViewWindow"
@@ -596,18 +608,6 @@
 					</File>
 					<File
 						RelativePath=".\include\OvShaderManager.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="OvSpotLight"
-					>
-					<File
-						RelativePath=".\source\OvSpotLight.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\include\OvSpotLight.h"
 						>
 					</File>
 				</Filter>
