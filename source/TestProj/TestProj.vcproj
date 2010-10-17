@@ -40,7 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="../OliveLib/include;../SupportLib/vld/include;../SupportLib/tixml/include;../GloryUnitTestKit/include;../../resource/shader"
+				AdditionalIncludeDirectories="../OliveLib/include;../SupportLib/vld/include;../SupportLib/tixml/include;../GloryUnitTestKit/include;../../resource/shader;&quot;$(SolutionDir)PhysxSDK\Cooking\include&quot;;&quot;$(SolutionDir)PhysxSDK\Foundation\include&quot;;&quot;$(SolutionDir)PhysxSDK\NxCharacter\include&quot;;&quot;$(SolutionDir)PhysxSDK\Physics\include&quot;;&quot;$(SolutionDir)PhysxSDK\PhysXLoader\include&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -61,9 +61,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="d3dx9d.lib d3d9.lib GloryLib.lib OliveLib.lib tinyxmld.lib"
+				AdditionalDependencies="d3dx9d.lib d3d9.lib GloryLib.lib OliveLib.lib tinyxmld.lib PhysXLoader.lib NxCooking.lib NxCharacter.lib"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="../SupportLib/vld/lib_d;../SupportLib/tixml/lib;../debug"
+				AdditionalLibraryDirectories="../SupportLib/vld/lib_d;../SupportLib/tixml/lib;../debug;&quot;$(SolutionDir)PhysxSDK\lib\Win32&quot;"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				TargetMachine="1"
