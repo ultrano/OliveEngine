@@ -6,7 +6,6 @@
 #include "OvRegisterableProperties.h"
 #include "OliveValue.h"
 #include "OvObjectProperties.h"
-#include "OvPropAccesserNode.h"
 #include "OvStorage.h"
 
 #include <string>
@@ -106,16 +105,10 @@ void ExtractProperties( OvObject* obj, OvObjectProperties& prop )
 			OvPropertyBag* prop_bag = rtti->PropertyBag();
 			if (prop_bag)
 			{
-				OvPropAccesserNode* prop_node = NULL;
-				for (prop_node = prop_bag->BeginAccessNode()
-					;prop_node != NULL
-					;prop_node = prop_node->GetNext())
+				OvPropertyAccesser* prop_acces = NULL;
+				for ( unsigned i = 0 ; prop_acces = prop_bag->GetPropertyAt( i ) ; ++i )
 				{
-					OvPropertyAccesser* prop_acces = prop_node->GetProperty();
-					if (prop_acces)
-					{
-						prop_acces->Extract( obj, prop );
-					}
+					prop_acces->Extract( obj, prop );
 				}
 			}		
 		}
@@ -134,16 +127,10 @@ void InjectProperties( OvObject* obj, OvObjectProperties& prop )
 			OvPropertyBag* prop_bag = rtti->PropertyBag();
 			if (prop_bag)
 			{
-				OvPropAccesserNode* prop_node = NULL;
-				for (prop_node = prop_bag->BeginAccessNode()
-					;prop_node != NULL
-					;prop_node = prop_node->GetNext())
+				OvPropertyAccesser* prop_acces = NULL;
+				for ( unsigned i = 0 ; prop_acces = prop_bag->GetPropertyAt( i ) ; ++i )
 				{
-					OvPropertyAccesser* prop_acces = prop_node->GetProperty();
-					if (prop_acces)
-					{
-						prop_acces->Inject( obj, prop );
-					}
+					prop_acces->Inject( obj, prop );
 				}
 			}		
 		}

@@ -9,6 +9,7 @@
 namespace OliveValue
 {
 
+// 유틸리티 매크로, 자주 쓰이는 몇몇 생성자와 함수형태,멤버 형태를 지정한다.
 #define	OLIVE_VALUE_TYPE( type_name )	\
 	private:type_name m_value;\
 	public:\
@@ -143,5 +144,10 @@ namespace OliveValue
 		void			SetObjectID( const OvObjectID& expValue );
 		const OvObjectID&	GetObjectID();
 	};
+
+// 	class ValueTuple : public OliveValue::Value
+// 	{
+// 
+// 	};
 
 }

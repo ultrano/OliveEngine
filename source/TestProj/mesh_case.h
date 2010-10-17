@@ -216,6 +216,7 @@ public:
 						{
 							OvModelSPtr copymodel = model->Clone();
 							copymodel->SetTranslate( (m_mainCamera->GetLocalLookDirection() * 5.0f) + m_mainCamera->GetTranslate() );
+							copymodel->SetScale( model->GetScale() );
 							(OvNew testcomponent(m_scene,m_mainCamera->GetLocalLookDirection() * 15))->SetTarget( copymodel );
 							m_loadedObjects.AddObject( copymodel );
  						}

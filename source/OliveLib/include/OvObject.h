@@ -9,6 +9,7 @@
 #include "OvObjectID.h"
 
 class OvStorage;
+class OvObjectProperties;
 OvREF_POINTER(OvObject);
 namespace OliveValue
 {
@@ -65,10 +66,5 @@ Type_0* OvObject::FindExtraProperty( const string& propName )
 	}
 	return NULL;
 }
-class OvObjectProperties;
 void ExtractProperties( OvObject* obj, OvObjectProperties& prop );
 void InjectProperties( OvObject* obj, OvObjectProperties& prop );
-
-#define OvFACTORY_MEMBER(__class_name) friend class OvObjectFactory;\
-__class_name(OvObjectID& objID){objID = GetObjectID();};\
-static OvObjectSPtr	FactoryCallback(OvObjectID& objID){return (new __class_name(objID));};

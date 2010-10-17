@@ -81,6 +81,8 @@ public :
 	//! Get Parent
 	OvXNodeSPtr			GetAttachedNode();
 
+	template<typename Type_0>
+	OvSmartPointer<Type_0>	GetFirstComponent();
 	bool				GetComponents( OvObjectCollector& extraComponents );
 	OvXComponentSPtr	RemoveComponent( const OvObjectSPtr component );
 	OvXComponentSPtr	RemoveComponent( const OvObjectID& compoentID );
@@ -126,3 +128,23 @@ private:
 	Ov8SetFlags	m_controlFlags;
 
 };
+
+template<typename Type_0>
+OvSmartPointer<Type_0>
+OvXObject::GetFirstComponent()
+{
+	OvObjectCollector extraComponents;
+	if ( GetComponents( extraComponents ) )
+	{
+		OvXComponentSPtr component = NULL;
+		for ( unsigned i = 0 ; i < extraComponents.Count() ; ++i )
+		{
+			component = extraComponents.GetByAt( i );
+			if ( component = OvRTTI_Util::IsTypeOf<Type_0>( component.GetRear() ) )
+			{
+				return component;
+			}
+		}
+	}
+	return NULL;
+}
