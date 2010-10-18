@@ -18,13 +18,28 @@ OvPROPERTY_BAG_END(OvXObject);
 OvXObject::OvXObject()
 :m_pParent(NULL)
 {
+	m_controlFlags.Clear( true );
 }
 OvXObject::~OvXObject()
 {
 }
 
+void OvXObject::SetControlFlag( CONTROL_FLAG flag, bool check )
+{
+	m_controlFlags.SetFlag( flag, check );
+}
+
+bool OvXObject::GetControlFlag( CONTROL_FLAG flag )
+{
+	return m_controlFlags.GetFlag( flag );
+}
+
 void OvXObject::Update(float _fElapse)
 {
+	if ( false == GetControlFlag( CONTROL_FLAG::UPDATABLE ) )
+	{
+		return ;
+	}
 	OvTransform&	krLocalTransform = m_tfLocalTransform;
 	OvTransform&	krWorldTransform = m_tfWorldTransform;
 

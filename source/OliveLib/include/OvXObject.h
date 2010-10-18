@@ -6,6 +6,7 @@
 #include "OvTransform.h"
 #include "OvSphere.h"
 #include "OvObjectCollector.h"
+#include "OvBitFlags.h"
 
 // OvXObject -> eXtentionObject 
 // 활동적인 오브젝트 (공간상의 객체역할)
@@ -30,9 +31,16 @@ class OvXObject : public OvObject
 	friend class OvXComponent;
 
 public :
-
+	enum CONTROL_FLAG
+	{
+		UPDATABLE,
+		VISIBLE,
+	};
 	OvXObject();
 	virtual ~OvXObject();
+
+	void			SetControlFlag( CONTROL_FLAG flag, bool check );
+	bool			GetControlFlag( CONTROL_FLAG flag );
 
 	//! Update
 	void			Update(float _fElapse);
@@ -116,6 +124,8 @@ private:
 	OvMatrix	m_worldBuildMatrix;
 
 	OvObjectCollector	m_extraComponents;
+
+	Ov8SetFlags	m_controlFlags;
 
 };
 
