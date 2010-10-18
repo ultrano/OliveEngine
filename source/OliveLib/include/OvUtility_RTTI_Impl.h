@@ -14,6 +14,7 @@ private:\
 public:\
 	static const OvRTTI*	GetRTTI(){return &classname::msh_OvRTTI;};\
 	virtual const OvRTTI* QueryRTTI()const{return &msh_OvRTTI;};\
+	classname*				_this_pointer(){ return this; };\
 	typedef classname __this_class;
 
 //////////////////////////////////////////////////////////////////////////
@@ -32,6 +33,7 @@ public:\
 	static const OvRTTI*	GetRTTI(){return &classname::msh_OvRTTI;};\
 	static const OvRTTI*	GetBaseRTTI(){return __super::GetRTTI();};\
 	virtual const OvRTTI*	QueryRTTI()const{return &classname::msh_OvRTTI;};\
+	classname*				_this_pointer(){ return this; };\
 	typedef classname __this_class;
 
 //////////////////////////////////////////////////////////////////////////
@@ -85,23 +87,22 @@ bool	IsSame( Type_1 typePointer0, Type_1 typePointer1 )
 }
 
 //////////////////////////////////////////////////////////////////////////
-
-//////////////////////////////////////////////////////////////////////////
-
 template<typename Type_0, typename Type_1>
 Type_0*	IsTypeOf(const Type_1 typePointer)
 {
-	if ( NULL != typePointer && Type_0::GetRTTI() == typePointer->QueryRTTI() )
+	if ( NULL != typePointer->_this_pointer() && Type_0::GetRTTI() == typePointer->QueryRTTI() )
 	{
-		return static_cast<Type_0*>(typePointer);
+		return static_cast<Type_0*>( typePointer->_this_pointer() );
 	}
 	return NULL;
 }
+//////////////////////////////////////////////////////////////////////////
+
 
 template<typename Type_0, typename Type_1>
 Type_0*	IsKindOf(Type_1 typePointer)
 {
-	if( NULL == typePointer)
+	if( NULL == typePointer->_this_pointer() )
 		return NULL;
 
 	const OvRTTI* kpRTTI = typePointer->QueryRTTI();

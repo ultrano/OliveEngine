@@ -18,7 +18,7 @@ namespace OvUtility
 		bool	IsSame( Type_1 typePointer0, Type_1 typePointer1 );
 
 		template<typename Type_0, typename Type_1>
-		Type_0*	IsTypeOf( Type_1 typePointer );
+		Type_0*	IsTypeOf(const Type_1 typePointer);
 
 		template<typename Type_0, typename Type_1>
 		Type_0*	IsKindOf( Type_1 typePointer );
