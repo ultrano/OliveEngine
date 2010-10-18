@@ -1,9 +1,20 @@
+
+#include "include_header.h"
 #include "OliveValue.h"
 #include "OvTexture.h"
 #include "OvRenderTexture.h"
 #include "OvResourceManager.h"
 #include "OvShaderCodeIncluder.h"
 
+GL_TEST_CASE_FUNC( rtti_modify )
+{
+	OvSingletonPool::StartUp();
+	{
+		OvXObjectSPtr obj = OvNew OvXObject;
+		OvModelSPtr model = OvRTTI_Util::IsTypeOf<OvModel>(obj);
+	}
+	OvSingletonPool::ShutDown();
+}
 GL_TEST_CASE_FUNC( excuted_location_test )
 {
 	OvSingletonPool::StartUp();

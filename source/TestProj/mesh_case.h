@@ -81,6 +81,8 @@ protected:
 	OvCameraSPtr m_mainCamera;
 	OvObjectCollector m_loadedObjects;
 
+	OvXNodeSPtr	m_root;
+
 	NxPhysicsSDK*	m_physicsSDK;
 	NxScene*		m_scene;
 
@@ -97,6 +99,15 @@ public:
 		{
 			OvMessageBox("¸ÁÇÞ¾î¿°^_^ ·Îµù ¤¤¤¤","");
 			m_exitFlag = true;
+		}
+		m_root = OvNew OvXNode;
+		for ( unsigned i = 0 ; i < m_loadedObjects.Count() ; ++i )
+		{
+			OvObjectSPtr obj = m_loadedObjects.GetByAt(i);
+			if ( OvRTTI_Util::IsKindOf<OvXObject>(obj) )
+			{
+				m_root->AttachChild( obj );
+			}
 		}
 		m_mainCamera = m_loadedObjects.GetByName("Camera");
 		m_mainCamera->SetFOV( D3DX_PI/2.0f );
@@ -152,6 +163,8 @@ public:
 
 		m_shader_code = NULL;
 
+		m_root = NULL;
+
 		m_physicsSDK->releaseScene( *m_scene );
 		NxReleasePhysicsSDK( m_physicsSDK );
 		m_physicsSDK = NULL;
@@ -182,7 +195,7 @@ public:
 							OvModelSPtr copymodel = model->Clone();
 							copymodel->SetTranslate( (m_mainCamera->GetLocalLookDirection() * 5.0f) + m_mainCamera->GetTranslate() );
 							(OvNew testcomponent(m_scene,m_mainCamera->GetLocalLookDirection() * 15))->SetTarget( copymodel );
-							m_loadedObjects.AddObject( copymodel );
+							m_root->AttachChild( copymodel );
  						}
 					}
 					break;
@@ -211,29 +224,17 @@ public:
 
 
 				{
-					Update( 0, m_loadedObjects );
-					Render( m_mainCamera, m_loadedObjects );
+					Update(  m_root );
+					m_scene->simulate(1.0f/6.0f);
+					Render( m_mainCamera, m_root );
+					m_scene->flushStream();
+					m_scene->fetchResults(NX_RIGID_BODY_FINISHED, true);
 				}
 			}
 		}
 	}
-	void	Update( float elapsed, OvObjectCollector objectList  )
-	{
-		m_scene->simulate(1.0f/6.0f);
-		for ( int i = 0 ; i < objectList.Count() ; ++i )
-		{
-			OvObjectSPtr obj = objectList.GetByAt(i);
-			if (OvRTTI_Util::IsKindOf<OvXObject>(obj))
-			{
-				OvXObjectSPtr xobj = obj;
-				xobj->Update( elapsed );
-			}
-		}
-		m_scene->flushStream();
-		m_scene->fetchResults(NX_RIGID_BODY_FINISHED, true);
-	}
 
-	void	RenderDiffuse( OvCameraSPtr camera, OvObjectCollector objectList )
+	void	RenderDiffuse( OvCameraSPtr camera, OvXObjectSPtr xobj )
 	{
 		OvMatrix view_project = camera->GetViewMatrix() * camera->GetProjectMatrix();
 		OvShaderManager::GetInstance()->SetVSConst( OvVShaderConst::ViewProject, view_project );
@@ -246,21 +247,15 @@ public:
 
 		OvRenderer::GetInstance()->ClearTarget();
 		OvRenderer::GetInstance()->BeginTarget();
-		for ( int i = 0 ; i < objectList.Count() ; ++i )
-		{
-			OvXObjectSPtr obj = objectList.GetByAt(i);
-			if (OvRTTI_Util::IsKindOf<OvModel>(obj))
-			{
-				OvModelSPtr model = obj;
-				model->Render();
-			}
-		}
+		
+		Draw( xobj );
+
 		OvRenderer::GetInstance()->EndTarget();
 		m_renderTarget.UnlockRenderTarget();
 	}
-	void	Render( OvCameraSPtr camera, OvObjectCollector objectList )
+	void	Render( OvCameraSPtr camera, OvXObjectSPtr xobj )
 	{
-		RenderDiffuse( camera, objectList );
+		RenderDiffuse( camera, xobj );
 
 		OvRenderer::GetInstance()->SetTexture( 0, m_diffuseScene );
 
@@ -274,6 +269,42 @@ public:
 		OvRenderer::GetInstance()->EndTarget();
 		OvRenderer::GetInstance()->PresentTarget();
 
+	}
+	void	Update( OvXObjectSPtr xobj )
+	{
+		if ( xobj )
+		{
+			xobj->Update( 0 );
+			if ( OvRTTI_Util::IsTypeOf<OvXNode>(xobj) )
+			{
+				OvXObjectSPtr child = NULL;
+				OvXNodeSPtr xnode = xobj;
+				for ( unsigned i = 0 ; child = xnode->GetChildeAt(i) ; ++i )
+				{
+					Update( child );
+				}
+			}
+		}
+	}
+	void	Draw( OvXObjectSPtr xobj )
+	{
+		if ( xobj )
+		{
+			if ( OvRTTI_Util::IsTypeOf<OvModel>(xobj) )
+			{
+				OvModelSPtr model = xobj;
+				model->Render();
+			}
+			if ( OvRTTI_Util::IsTypeOf<OvXNode>(xobj) )
+			{
+				OvXObjectSPtr child = NULL;
+				OvXNodeSPtr xnode = xobj;
+				for ( unsigned i = 0 ; child = xnode->GetChildeAt(i) ; ++i )
+				{
+					Draw( child );
+				}
+			}
+		}
 	}
 };
 GL_TEST_CASE_ENV( OliveLibTest, mesh_rendering )
