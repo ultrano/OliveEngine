@@ -57,6 +57,11 @@ public:
 			m_scene->releaseActor( *m_actor );
 			GetTarget()->SetControlFlag(OvXObject::UPDATABLE,false);
 			GetTarget()->SetControlFlag(OvXObject::VISIBLE,false);
+			OvXNodeSPtr xnode = GetTarget()->GetAttachedNode();
+			if ( xnode )
+			{
+				xnode->DettachChild( GetTarget() );
+			}
 		}
 
 	}
@@ -194,7 +199,7 @@ public:
 						{
 							OvModelSPtr copymodel = model->Clone();
 							copymodel->SetTranslate( (m_mainCamera->GetLocalLookDirection() * 5.0f) + m_mainCamera->GetTranslate() );
-							(OvNew testcomponent(m_scene,m_mainCamera->GetLocalLookDirection() * 15))->SetTarget( copymodel );
+							(OvNew testcomponent(m_scene,m_mainCamera->GetLocalLookDirection() * (rand()%50)))->SetTarget( copymodel );
 							m_root->AttachChild( copymodel );
  						}
 					}
