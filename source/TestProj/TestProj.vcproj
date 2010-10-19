@@ -192,57 +192,13 @@
 				>
 			</File>
 			<File
-				RelativePath=".\math_function_case.h"
-				>
-			</File>
-			<File
 				RelativePath=".\mesh_case.h"
-				>
-			</File>
-			<File
-				RelativePath=".\next_term_material_text_case.h"
-				>
-			</File>
-			<File
-				RelativePath=".\stream_case.h"
 				>
 			</File>
 			<File
 				RelativePath=".\temporary_testing.h"
 				>
 			</File>
-			<File
-				RelativePath=".\xml_cdata_parse_case.h"
-				>
-			</File>
-		</Filter>
-		<Filter
-			Name="simple_game"
-			>
-			<Filter
-				Name="game_controller"
-				>
-				<File
-					RelativePath=".\game_controller.h"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="componnent"
-				>
-				<Filter
-					Name="GMPhysics"
-					>
-					<File
-						RelativePath=".\GMPhysics.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\GMPhysics.h"
-						>
-					</File>
-				</Filter>
-			</Filter>
 		</Filter>
 	</Files>
 	<Globals>

@@ -2,7 +2,6 @@
 #include "tinyxml.h"
 #include "OvMesh.h"
 #include "OvXNode.h"
-#include "OvMath.h"
 #include "OvRenderer.h"
 #include <map>
 

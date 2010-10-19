@@ -968,26 +968,6 @@
 					</File>
 				</Filter>
 				<Filter
-					Name="OvMath"
-					>
-					<File
-						RelativePath=".\include\OvMath.h"
-						>
-					</File>
-					<Filter
-						Name="OvMathFunc"
-						>
-						<File
-							RelativePath=".\source\OvMathFunc.cpp"
-							>
-						</File>
-						<File
-							RelativePath=".\include\OvMathFunc.h"
-							>
-						</File>
-					</Filter>
-				</Filter>
-				<Filter
 					Name="OvMatrix"
 					>
 					<File

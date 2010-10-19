@@ -31,30 +31,36 @@ public:
 		NxSphereShapeDesc desc;
 		desc.radius = scale.x;
 
-		NxVec3 pos(GetTarget()->GetTranslate().x,GetTarget()->GetTranslate().y,GetTarget()->GetTranslate().z);
 		NxActorDesc actorDesc;
 		actorDesc.shapes.pushBack(&desc);
 		actorDesc.body			= &bodyDesc;
 		actorDesc.density		= 10.0f;
-		actorDesc.globalPose.t  = pos;
+		actorDesc.globalPose.t  = OvConvert::xyz<NxVec3>( GetTarget()->GetTranslate() );
 		m_actor = m_scene->createActor(actorDesc);
+		if ( NULL == m_actor )
+		{
+			OvXNodeSPtr xnode = GetTarget()->GetAttachedNode();
+			if ( xnode )
+			{
+				xnode->DettachChild( GetTarget() );
+			}
+		}
 	}
 	virtual void Update(float _fElapse) override
 	{
 		m_time++;
-		if ( m_time < 500 )
+		if ( m_time < 1500 && m_actor )
 		{
-			NxVec3 nx_pos = m_actor->getGlobalPosition();
-			OvPoint3 ov_pos(nx_pos.x,nx_pos.y,nx_pos.z);
-			NxQuat nx_qut = m_actor->getGlobalOrientationQuat();
-			OvQuaternion ov_qut(nx_qut.x,nx_qut.y,nx_qut.z,nx_qut.w);
-
-			GetTarget()->SetTranslate( ov_pos );
-			GetTarget()->SetRotation( ov_qut );
+			GetTarget()->SetTranslate( OvConvert::xyz<OvPoint3>( m_actor->getGlobalPosition() ) );
+			GetTarget()->SetRotation( OvConvert::xyzw<OvQuaternion>( m_actor->getGlobalOrientationQuat() ) );
 		}
 		else
 		{
-			m_scene->releaseActor( *m_actor );
+			if ( m_actor )
+			{
+				m_scene->releaseActor( *m_actor );
+				m_actor = NULL;
+			}
 			GetTarget()->SetControlFlag(OvXObject::UPDATABLE,false);
 			GetTarget()->SetControlFlag(OvXObject::VISIBLE,false);
 			OvXNodeSPtr xnode = GetTarget()->GetAttachedNode();
@@ -199,6 +205,7 @@ public:
 						{
 							OvModelSPtr copymodel = model->Clone();
 							copymodel->SetTranslate( (m_mainCamera->GetLocalLookDirection() * 5.0f) + m_mainCamera->GetTranslate() );
+							copymodel->SetScale( rand()&30 + 5 );
 							(OvNew testcomponent(m_scene,m_mainCamera->GetLocalLookDirection() * (rand()%50)))->SetTarget( copymodel );
 							m_root->AttachChild( copymodel );
  						}
@@ -243,10 +250,6 @@ public:
 	{
 		OvMatrix view_project = camera->GetViewMatrix() * camera->GetProjectMatrix();
 		OvShaderManager::GetInstance()->SetVSConst( OvVShaderConst::ViewProject, view_project );
-
-		LPDIRECT3DDEVICE9 device = OvRenderer::GetInstance()->GetDevice();
-		device->SetSamplerState( 0, D3DSAMP_ADDRESSU, D3DTADDRESS_WRAP );
-		device->SetSamplerState( 0, D3DSAMP_ADDRESSV, D3DTADDRESS_WRAP );
 
 		m_renderTarget.LockRenderTarget( 0, m_diffuseScene->GetSurface() );
 
