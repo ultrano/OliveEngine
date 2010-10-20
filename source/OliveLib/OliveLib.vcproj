@@ -760,18 +760,6 @@
 					</File>
 				</Filter>
 				<Filter
-					Name="Ov2DBuffer"
-					>
-					<File
-						RelativePath=".\source\Ov2DBuffer.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\include\Ov2DBuffer.h"
-						>
-					</File>
-				</Filter>
-				<Filter
 					Name="OvAutoPtr"
 					>
 					<File
@@ -796,66 +784,10 @@
 					</File>
 				</Filter>
 				<Filter
-					Name="OvClassProperty"
-					>
-					<File
-						RelativePath=".\include\OvClassProperty.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="OvComponentLinkInfo"
-					>
-					<File
-						RelativePath=".\source\OvComponentLinkInfo.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\include\OvComponentLinkInfo.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="OvConstructDesc"
-					>
-					<File
-						RelativePath=".\source\OvConstructDesc.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\include\OvConstructDesc.h"
-						>
-					</File>
-				</Filter>
-				<Filter
 					Name="OvConvert"
 					>
 					<File
 						RelativePath=".\include\OvConvert.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="OvCoreCommander"
-					>
-					<File
-						RelativePath=".\source\OvCoreCommander.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\include\OvCoreCommander.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="OvCoreCommandProxy"
-					>
-					<File
-						RelativePath=".\source\OvCoreCommandProxy.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\include\OvCoreCommandProxy.h"
 						>
 					</File>
 				</Filter>
@@ -868,26 +800,6 @@
 					</File>
 					<File
 						RelativePath=".\include\OvFileMeshLoader.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="OvGate"
-					>
-					<File
-						RelativePath=".\source\OvGate.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\include\OvGate.h"
-						>
-					</File>
-					<File
-						RelativePath=".\source\OvGateKey.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\include\OvGateKey.h"
 						>
 					</File>
 				</Filter>
@@ -944,18 +856,6 @@
 					</File>
 					<File
 						RelativePath=".\include\OvLuaUtil.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="OvLumpCollector"
-					>
-					<File
-						RelativePath=".\source\OvLumpCollector.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\include\OvLumpCollector.h"
 						>
 					</File>
 				</Filter>
@@ -1166,18 +1066,6 @@
 					</File>
 				</Filter>
 				<Filter
-					Name="OvRect"
-					>
-					<File
-						RelativePath=".\source\OvRect.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\include\OvRect.h"
-						>
-					</File>
-				</Filter>
-				<Filter
 					Name="OvRefBase"
 					>
 					<File
@@ -1282,82 +1170,10 @@
 					</File>
 				</Filter>
 				<Filter
-					Name="OvStoreData"
-					>
-					<File
-						RelativePath=".\source\OvStoreData.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\include\OvStoreData.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="OvStoreNode"
-					>
-					<File
-						RelativePath=".\source\OvStoreNode.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\include\OvStoreNode.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="OvStoreObject"
-					>
-					<File
-						RelativePath=".\source\OvStoreObject.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\include\OvStoreObject.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="OvStoreUtility"
-					>
-					<File
-						RelativePath=".\source\OvStoreUtility.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\include\OvStoreUtility.h"
-						>
-					</File>
-				</Filter>
-				<Filter
 					Name="OvStreamCommon"
 					>
 					<File
 						RelativePath=".\include\OvStreamCommon.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="OvStreamer"
-					>
-					<File
-						RelativePath=".\source\OvStreamer.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\include\OvStreamer.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="OvStreamingContainer"
-					>
-					<File
-						RelativePath=".\source\OvStreamingContainer.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\include\OvStreamingContainer.h"
 						>
 					</File>
 				</Filter>
@@ -1386,18 +1202,6 @@
 					</File>
 				</Filter>
 				<Filter
-					Name="OvTestStoreClass"
-					>
-					<File
-						RelativePath=".\source\OvTestStoreClass.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\include\OvTestStoreClass.h"
-						>
-					</File>
-				</Filter>
-				<Filter
 					Name="OvThreadSync"
 					>
 					<File
@@ -1418,46 +1222,10 @@
 					</File>
 				</Filter>
 				<Filter
-					Name="OvUnhandleTerminal"
-					>
-					<File
-						RelativePath=".\include\OvUnhandleTerminal.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="OvUserInterface"
-					>
-					<File
-						RelativePath=".\source\OvUserInterface.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\include\OvUserInterface.h"
-						>
-					</File>
-				</Filter>
-				<Filter
 					Name="OvUtility"
 					>
 					<File
 						RelativePath=".\include\OvUtility.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="OvValueKey"
-					>
-					<File
-						RelativePath=".\source\OvValueKey.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\include\OvValueKey.h"
-						>
-					</File>
-					<File
-						RelativePath=".\include\OvValueKey.inl"
 						>
 					</File>
 				</Filter>
@@ -1470,42 +1238,6 @@
 					</File>
 					<File
 						RelativePath=".\include\OvValueKeyCollector.inl"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="OvValueKeyNode"
-					>
-					<File
-						RelativePath=".\source\OvValueKeyNode.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\include\OvValueKeyNode.h"
-						>
-					</File>
-					<File
-						RelativePath=".\include\OvValueKeyNode.inl"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="OvValueStream"
-					>
-					<File
-						RelativePath=".\source\OvValueStream.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\include\OvValueStream.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="OvWDObject"
-					>
-					<File
-						RelativePath=".\include\OvWDObject.h"
 						>
 					</File>
 				</Filter>
@@ -1534,18 +1266,6 @@
 					</File>
 				</Filter>
 				<Filter
-					Name="OvXmlUtility"
-					>
-					<File
-						RelativePath=".\source\OvXmlUtility.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\include\OvXmlUtility.h"
-						>
-					</File>
-				</Filter>
-				<Filter
 					Name="OvXNode"
 					>
 					<File
@@ -1566,30 +1286,6 @@
 					</File>
 					<File
 						RelativePath=".\include\OvXObject.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="StreamingUtility"
-					>
-					<File
-						RelativePath=".\source\StreamingUtility.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\include\StreamingUtility.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="StreamUtility"
-					>
-					<File
-						RelativePath=".\source\StreamUtility.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\include\StreamUtility.h"
 						>
 					</File>
 				</Filter>
