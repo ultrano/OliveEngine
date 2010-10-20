@@ -30,14 +30,14 @@ void	OvErrorMgrBox(const char* _file,const char* _block,const char* _msg )
 {
 	char k_code_location[1024] = {0,};
 
-	strcat(k_code_location,"File : ");
-	strcat(k_code_location,_file);
+	strcat_s(k_code_location,"File : ");
+	strcat_s(k_code_location,_file);
 
-	strcat(k_code_location,"\nBlock : ");
-	strcat(k_code_location,_block);
+	strcat_s(k_code_location,"\nBlock : ");
+	strcat_s(k_code_location,_block);
 
-	strcat(k_code_location,"\nAdditionMsg : ");
-	strcat(k_code_location,_msg);
+	strcat_s(k_code_location,"\nAdditionMsg : ");
+	strcat_s(k_code_location,_msg);
 
 	MessageBox(NULL, k_code_location ,"[Run time error]",MB_OK);
 

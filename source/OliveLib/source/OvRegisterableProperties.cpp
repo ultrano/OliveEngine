@@ -453,7 +453,7 @@ bool	OvPropAccesser_extra_data::Inject(OvObject* pObj, OvObjectProperties& rObjS
 
 		rObjStore.PopValue( extraInfo );
 
-		sscanf( extraInfo.c_str(), "%d:%s", &count, &extraInfo[0] );
+		sscanf_s( extraInfo.c_str(), "%d:%s", &count, &(extraInfo[0]), extraInfo.size() );
 
 		string propInfo;
 		propInfo = extraInfo;
@@ -468,7 +468,7 @@ bool	OvPropAccesser_extra_data::Inject(OvObject* pObj, OvObjectProperties& rObjS
 			unsigned int nameLength = 0;
 			unsigned int valueLength = 0;
 
-			sscanf( propInfo.c_str(), "[%d-%d-%d]%s", &typeLength, &nameLength, &valueLength, &propInfo[0] );
+			sscanf_s( propInfo.c_str(), "[%d-%d-%d]%s", &typeLength, &nameLength, &valueLength, &propInfo[0], propInfo.length() );
 
 			string extra_type = propInfo;
 			extra_type.resize( typeLength );
@@ -537,7 +537,7 @@ bool OvPropAccesser_object_collector::Inject(OvObject* pObj, OvObjectProperties&
 
 		rObjStore.PopValue( data );
 
-		sscanf( data.c_str(), "%d:%s", &count, &data[0] );
+		sscanf_s( data.c_str(), "%d:%s", &count, &data[0], data.size() );
 
 		if ( count )
 		{
@@ -549,7 +549,7 @@ bool OvPropAccesser_object_collector::Inject(OvObject* pObj, OvObjectProperties&
 
 			for ( unsigned i = 0 ; i < count ; ++i)
 			{
-				sscanf( data.c_str(), "%d!%s", &id, &data[0] );
+				sscanf_s( data.c_str(), "%d!%s", &id, &data[0], data.size() );
 				OliveValue::ObjectID formerID( id );
 				linkBuilder->AddRelatedObjectID( formerID.GetObjectID() );
 			}

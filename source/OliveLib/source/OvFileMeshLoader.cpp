@@ -87,7 +87,9 @@ OvFileMeshLoader::~OvFileMeshLoader()
 
 OvResourceSPtr OvFileMeshLoader::Load( const std::string& fileLocation )
 {
-	FILE* meshFile = m_file = fopen( fileLocation.c_str(), "r" );
+	FILE* meshFile = m_file = NULL;
+	fopen_s( &meshFile, fileLocation.c_str(), "r" );
+	m_file = meshFile;
 	if ( NULL == meshFile )
 	{
 		return NULL;

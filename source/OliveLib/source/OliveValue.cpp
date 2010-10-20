@@ -42,11 +42,11 @@ Value::~Value()
 
 void OliveValue::Bool::SetValue( const string& expData )
 {
-	if ( stricmp( "0",expData.c_str() ) == 0 || stricmp( "false",expData.c_str() ) == 0 )
+	if ( _stricmp( "0",expData.c_str() ) == 0 || _stricmp( "false",expData.c_str() ) == 0 )
 	{
 		m_value = false;
 	}
-	else if ( stricmp( "1",expData.c_str() ) == 0 || stricmp( "true",expData.c_str() ) == 0 )
+	else if ( _stricmp( "1",expData.c_str() ) == 0 || _stricmp( "true",expData.c_str() ) == 0 )
 	{
 		m_value = true;
 	}

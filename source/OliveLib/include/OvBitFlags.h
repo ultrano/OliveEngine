@@ -27,7 +27,7 @@ inline void	OvBitFlags<Type0>::SetFlag(int _flag_bit,bool _set)
 template<typename Type0>
 inline bool	OvBitFlags<Type0>::GetFlag(int _flag_bit)
 {
-	return (( m_flags & ( 1 << _flag_bit ) ) == 1);
+	return (( m_flags & ( 1 << _flag_bit ) ) != 0);
 }
 
 template<typename Type0>

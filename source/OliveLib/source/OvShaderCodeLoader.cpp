@@ -3,7 +3,8 @@
 OvResourceSPtr OvShaderCodeLoader::Load( const std::string& fileLocation )
 {
 
-	FILE* file = fopen( fileLocation.c_str(), "r" );
+	FILE* file = NULL;
+	fopen_s( &file, fileLocation.c_str(), "r" );
 
 	if ( file )
 	{
