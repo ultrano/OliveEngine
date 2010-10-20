@@ -208,42 +208,6 @@
 				Name="Graphic"
 				>
 				<Filter
-					Name="OvAddMaterial"
-					>
-					<File
-						RelativePath=".\source\OvAddMaterial.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\include\OvAddMaterial.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="OvAnimateController"
-					>
-					<File
-						RelativePath=".\source\OvAnimateController.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\include\OvAnimateController.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="OvAnimateTable"
-					>
-					<File
-						RelativePath=".\source\OvAnimateTable.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\include\OvAnimateTable.h"
-						>
-					</File>
-				</Filter>
-				<Filter
 					Name="OvCamera"
 					>
 					<File
@@ -264,30 +228,6 @@
 					</File>
 					<File
 						RelativePath=".\include\OvCameraController.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="OvDiffuseMaterial"
-					>
-					<File
-						RelativePath=".\source\OvDiffuseMaterial.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\include\OvDiffuseMaterial.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="OvInterpolator"
-					>
-					<File
-						RelativePath=".\source\OvInterpolator.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\include\OvInterpolator.h"
 						>
 					</File>
 				</Filter>
@@ -316,18 +256,6 @@
 					</Filter>
 				</Filter>
 				<Filter
-					Name="OvMainRenderViewWindow"
-					>
-					<File
-						RelativePath=".\source\OvMainRenderViewWindow.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\include\OvMainRenderViewWindow.h"
-						>
-					</File>
-				</Filter>
-				<Filter
 					Name="OvMaterial"
 					>
 					<File
@@ -348,18 +276,6 @@
 					</File>
 					<File
 						RelativePath=".\include\OvMaterialLoader.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="OvMaterialManager"
-					>
-					<File
-						RelativePath=".\source\OvMaterialManager.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\include\OvMaterialManager.h"
 						>
 					</File>
 				</Filter>
@@ -412,14 +328,6 @@
 					</File>
 				</Filter>
 				<Filter
-					Name="OvNSMeshDescription"
-					>
-					<File
-						RelativePath=".\include\OvNSMeshDescription.h"
-						>
-					</File>
-				</Filter>
-				<Filter
 					Name="OvPixelShader"
 					>
 					<File
@@ -428,18 +336,6 @@
 					</File>
 					<File
 						RelativePath=".\include\OvPixelShader.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="OvRenderableObject"
-					>
-					<File
-						RelativePath=".\source\OvRenderableObject.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\include\OvRenderableObject.h"
 						>
 					</File>
 				</Filter>
@@ -476,22 +372,14 @@
 					</File>
 				</Filter>
 				<Filter
-					Name="OvRenderTexture"
+					Name="OvRenderTarget"
 					>
 					<File
-						RelativePath=".\source\Old_OvRenderTarget.cpp"
+						RelativePath=".\source\OvRenderTarget.cpp"
 						>
 					</File>
 					<File
-						RelativePath=".\include\Old_OvRenderTarget.h"
-						>
-					</File>
-					<File
-						RelativePath=".\source\OvRenderTexture.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\include\OvRenderTexture.h"
+						RelativePath=".\include\OvRenderTarget.h"
 						>
 					</File>
 				</Filter>
@@ -516,26 +404,6 @@
 					</File>
 					<File
 						RelativePath=".\include\OvResourceManager.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="OvSceneBuilder"
-					>
-					<File
-						RelativePath=".\source\OvSceneBuilder.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\include\OvSceneBuilder.h"
-						>
-					</File>
-					<File
-						RelativePath=".\source\OvSceneNode.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\include\OvSceneNode.h"
 						>
 					</File>
 				</Filter>
@@ -588,18 +456,6 @@
 					</File>
 				</Filter>
 				<Filter
-					Name="OvShaderConstantTable"
-					>
-					<File
-						RelativePath=".\source\OvShaderConstantTable.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\include\OvShaderConstantTable.h"
-						>
-					</File>
-				</Filter>
-				<Filter
 					Name="OvShaderManager"
 					>
 					<File
@@ -608,18 +464,6 @@
 					</File>
 					<File
 						RelativePath=".\include\OvShaderManager.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="OvSurface"
-					>
-					<File
-						RelativePath=".\source\OvSurface.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\include\OvSurface.h"
 						>
 					</File>
 				</Filter>
@@ -656,78 +500,6 @@
 					</File>
 					<File
 						RelativePath=".\include\OvVertexShader.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="OvVertexStream"
-					>
-					<File
-						RelativePath=".\source\OvVertexStream.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\include\OvVertexStream.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="OvVisibleText"
-					>
-					<File
-						RelativePath=".\source\OvVisibleText.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\include\OvVisibleText.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="OvXmlMeshLoader"
-					>
-					<File
-						RelativePath=".\source\OvXmlMeshLoader.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\include\OvXmlMeshLoader.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="OvXUIClip"
-					>
-					<File
-						RelativePath=".\source\OvXUIClip.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\include\OvXUIClip.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="OvXUIObject"
-					>
-					<File
-						RelativePath=".\source\OvXUIObject.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\include\OvXUIObject.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="OvXUIPick"
-					>
-					<File
-						RelativePath=".\source\OvXUIPick.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\include\OvXUIPick.h"
 						>
 					</File>
 				</Filter>

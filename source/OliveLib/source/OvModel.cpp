@@ -1,9 +1,9 @@
 #include "OvModel.h"
-#include "OvMaterialManager.h"
 #include "OvRegisterableProperties.h"
 #include "OvFileMeshLoader.h"
 #include "OvTextureLoader.h"
 #include "OvResourceManager.h"
+#include "OvShaderManager.h"
 
 OvRTTI_IMPL(OvModel)
 OvPROPERTY_BAG_BEGIN(OvModel)

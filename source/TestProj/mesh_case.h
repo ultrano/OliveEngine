@@ -4,7 +4,7 @@
 #include "include_header.h"
 #include "OvXObject.h"
 #include "OvCameraController.h"
-#include "OvRenderTexture.h"
+#include "OvRenderTarget.h"
 #include "OvShaderCodeIncluder.h"
 #include "OvShaderCode.h"
 
@@ -204,7 +204,7 @@ public:
 						if ( model )
 						{
 							OvModelSPtr copymodel = model->Clone();
-							copymodel->SetTranslate( (m_mainCamera->GetLocalLookDirection() * 5.0f) + m_mainCamera->GetTranslate() );
+							copymodel->SetTranslate( (m_mainCamera->GetLocalLookDirection() * 15.0f) + m_mainCamera->GetTranslate() );
 							copymodel->SetScale( rand()&30 + 5 );
 							(OvNew testcomponent(m_scene,m_mainCamera->GetLocalLookDirection() * (rand()%50)))->SetTarget( copymodel );
 							m_root->AttachChild( copymodel );

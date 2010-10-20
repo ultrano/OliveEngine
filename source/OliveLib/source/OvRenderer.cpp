@@ -6,7 +6,6 @@
 #include "OvVertexShader.h"
 #include "OvPixelShader.h"
 
-#include "OvSurface.h"
 #include "OvCamera.h"
 #include <queue>
 #include <map>

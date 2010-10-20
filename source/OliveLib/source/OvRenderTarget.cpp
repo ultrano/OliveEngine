@@ -1,4 +1,4 @@
-#include "OvRenderTexture.h"
+#include "OvRenderTarget.h"
 #include "OvRenderer.h"
 #include "OvMatrix.h"
 #include "OvTransform.h"
