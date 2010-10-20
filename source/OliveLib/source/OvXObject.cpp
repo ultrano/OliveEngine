@@ -36,7 +36,7 @@ bool OvXObject::GetControlFlag( CONTROL_FLAG flag )
 
 void OvXObject::Update(float _fElapse)
 {
-	if ( false == GetControlFlag( CONTROL_FLAG::UPDATABLE ) )
+	if ( false == GetControlFlag( UPDATABLE ) )
 	{
 		return ;
 	}
@@ -59,7 +59,7 @@ void OvXObject::Update(float _fElapse)
 
 	m_tfWorldTransform = ExtractTransformFromMatrix( m_worldBuildMatrix );
 
-	for (int i = 0 ; i < m_extraComponents.Count() ; ++i)
+	for ( unsigned i = 0 ; i < m_extraComponents.Count() ; ++i)
 	{
 		OvXComponentSPtr	kpController = m_extraComponents.GetByAt( i );
 		if ( kpController )
@@ -68,7 +68,7 @@ void OvXObject::Update(float _fElapse)
 		}
 	}
 
-	for ( int i = 0 ; i < m_extraComponents.Count() ; ++i )
+	for ( unsigned i = 0 ; i < m_extraComponents.Count() ; ++i )
 	{
 		OvXComponentSPtr component = m_extraComponents.GetByAt( i );
 		if ( component )
@@ -196,7 +196,7 @@ const OvMatrix&		OvXObject::GetWorldMatrix()
 
 bool OvXObject::IsNode()
 {
-	return OvRTTI_Util::IsKindOf< OvXNode >( this );
+	return ( OvRTTI_Util::IsKindOf< OvXNode >( this ) != NULL );
 }
 
 bool OvXObject::IsLeaf()

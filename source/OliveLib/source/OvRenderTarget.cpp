@@ -32,7 +32,7 @@ bool OvRenderTarget::LockRenderTarget( unsigned render_target_index, LPDIRECT3DS
 		if ( m_oldRenderTarget )
 		{
 			m_reservedRenderTargetIndex = render_target_index;
-			return m_oldRenderTarget;
+			return ( m_oldRenderTarget != NULL );
 		}
 	}
 	return false;
@@ -54,7 +54,7 @@ bool OvRenderTarget::UnlockRenderTarget()
 bool OvRenderTarget::LockDepthStencil( LPDIRECT3DSURFACE9 depthStencil )
 {
 	m_oldDepthStencil = OvRenderer::GetInstance()->ChangeDepthStencil( depthStencil );
-	return m_oldDepthStencil;
+	return ( m_oldDepthStencil != NULL );
 }
 
 bool OvRenderTarget::UnlockDepthStencil()

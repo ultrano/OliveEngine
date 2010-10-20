@@ -15,9 +15,9 @@ OvMeshSPtr OvMeshLoaderBase::_buildMesh( SVertexStreamInfo& streamLow
 								 , SVertexStreamInfo& streamMedium
 								 , SVertexStreamInfo& streamHigh
 								 , LPDIRECT3DVERTEXDECLARATION9 declVert
-								 , size_t countVert
+								 , UINT countVert
 								 , LPDIRECT3DINDEXBUFFER9 streamFace
-								 , size_t countFace )
+								 , UINT countFace )
 {
 	OvAutoPtr< OvMesh::SRenderData > renderData = OvNew OvMesh::SRenderData;
 

@@ -33,7 +33,7 @@ void OvXNode::_update_system( float _fElapse )
 	//! 업데이트시에 카피본을 뜨고 그걸로 업데이스틑 시행한다.
 
 	OvObjectCollector update_copy = m_clectrChildCollect;
-	for (int i = 0 ; i < update_copy.Count() ; ++i )
+	for ( unsigned i = 0 ; i < update_copy.Count() ; ++i )
 	{
 		OvXObjectSPtr child = update_copy.GetByAt(i);
 		child->Update(_fElapse);

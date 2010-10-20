@@ -23,7 +23,7 @@ STDMETHODIMP OvShaderCodeIncluder::Open( THIS_ D3DXINCLUDE_TYPE IncludeType, LPC
 	{
 		OvResourceManager::GetInstance()->ResourceCache( code_resource );
 		*ppData = code_resource->GetCodeBuffer();
-		*pBytes = code_resource->GetCodeSize();
+		*pBytes = (UINT)code_resource->GetCodeSize();
 		return S_OK;
 	}
 	return S_FALSE;

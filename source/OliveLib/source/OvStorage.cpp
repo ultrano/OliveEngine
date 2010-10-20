@@ -63,7 +63,7 @@ bool	OvStorage::Save( const std::string& pFile, OvObjectCollector& saveObjects )
 	TiXmlElement rootElement("ObjectTable");
 	m_xmlDoc.InsertEndChild(rootElement);
 
-	for (int i = 0 ; i < saveObjects.Count() ; ++i)
+	for ( unsigned i = 0 ; i < saveObjects.Count() ; ++i)
 	{
 		OvObjectSPtr streObj = saveObjects.GetByAt(i);
 		_store_object( streObj.GetRear() );

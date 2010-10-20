@@ -14,7 +14,7 @@ OvResourceManager::OvResourceManager()
 	m_loaderTable[ OvMaterial		::GetRTTI() ]	= OvNew OvMaterialLoader;
 
 	m_resourceDirectory.resize( 1024 );
-	GetModuleFileName( NULL, (LPCH)m_resourceDirectory.c_str(), m_resourceDirectory.size() );
+	GetModuleFileName( NULL, (LPCH)m_resourceDirectory.c_str(), (DWORD)m_resourceDirectory.size() );
 
 	m_resourceDirectory = OvGetDirectoryInFullFilePath( m_resourceDirectory );
 	m_resourceDirectory = OvGetDirectoryInFullFilePath( m_resourceDirectory );

@@ -26,9 +26,9 @@ public:
 		SRenderData():faceStream(NULL), vertDecl(NULL), vertexCount(0), faceCount(0){};
 		SVertexStreamInfo	vertStreamInfo[ STAGE_MAX ];
 		LPDIRECT3DVERTEXDECLARATION9 vertDecl;
-		size_t	vertexCount;
+		UINT	vertexCount;
 		LPDIRECT3DINDEXBUFFER9	faceStream;
-		size_t	faceCount;
+		UINT	faceCount;
 	};
 
 	OvMesh();

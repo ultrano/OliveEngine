@@ -37,14 +37,14 @@ public:
 	void			SetVertexStream( WORD streamIndex, const SVertexStreamInfo& streamInfo );
 	void			SetIndexStream( LPDIRECT3DINDEXBUFFER9 streamBuffer );
 	void			SetVertexDeclaration( LPDIRECT3DVERTEXDECLARATION9 decl );
-	bool			DrawPrimitive( D3DPRIMITIVETYPE primitiveType, size_t primCount );
+	bool			DrawPrimitive( D3DPRIMITIVETYPE primitiveType, UINT primCount );
 
 	void			RenderUnitRect( OvVertexShaderSPtr v_shader = NULL , OvPixelShaderSPtr p_shader = NULL );
 
 //////////////////////////////////////////////////////////////////////////
 
-	LPDIRECT3DVERTEXBUFFER9 CreateVertexStream( void* buffer, size_t stride, size_t count );
-	LPDIRECT3DINDEXBUFFER9	CreateIndexStream( void* buffer, size_t stride, size_t count);
+	LPDIRECT3DVERTEXBUFFER9 CreateVertexStream( void* buffer, UINT stride, UINT count );
+	LPDIRECT3DINDEXBUFFER9	CreateIndexStream( void* buffer, UINT stride, UINT count);
 	LPDIRECT3DVERTEXDECLARATION9 CreateVertexDeclaration( D3DVERTEXELEMENT9* vertElement );
 
 	LPDIRECT3DDEVICE9	GetDevice();

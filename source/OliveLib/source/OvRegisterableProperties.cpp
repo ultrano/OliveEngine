@@ -398,7 +398,7 @@ bool	OvPropAccesser_extra_data::Extract(OvObject* pObj, OvObjectProperties& rObj
 	{
 		OvObject::extra_property_table& extraTable = *kpProp;
 
-		OliveValue::Integer extraCount( extraTable.size() );
+		OliveValue::Integer extraCount( (int)extraTable.size() );
 		
 		unsigned savedPropCount = 0;
 		string extraInfo;
@@ -409,9 +409,9 @@ bool	OvPropAccesser_extra_data::Extract(OvObject* pObj, OvObjectProperties& rObj
 
 			string typeName = OvRTTI_Util::TypeName( extraValue );
 
-			OliveValue::Integer typeLength( typeName.size() );
-			OliveValue::Integer nameLength( extraProp.first.size() );
-			OliveValue::Integer valueLength( extraValue->GetValue().size() );
+			OliveValue::Integer typeLength( (int)typeName.size() );
+			OliveValue::Integer nameLength( (int)extraProp.first.size() );
+			OliveValue::Integer valueLength( (int)extraValue->GetValue().size() );
 
 			if ( valueLength.GetInteger() )
 			{
@@ -458,7 +458,7 @@ bool	OvPropAccesser_extra_data::Inject(OvObject* pObj, OvObjectProperties& rObjS
 		string propInfo;
 		propInfo = extraInfo;
 
-		for (int i = 0 ; i < count ; ++i)
+		for ( unsigned i = 0 ; i < count ; ++i)
 		{
 			// [9-5-1]somethingtest0
 			// type: something
@@ -547,7 +547,7 @@ bool OvPropAccesser_object_collector::Inject(OvObject* pObj, OvObjectProperties&
 
 			linkBuilder->SetDestinateCollector( kpProp );
 
-			for (int i = 0 ; i < count ; ++i)
+			for ( unsigned i = 0 ; i < count ; ++i)
 			{
 				sscanf( data.c_str(), "%d!%s", &id, &data[0] );
 				OliveValue::ObjectID formerID( id );

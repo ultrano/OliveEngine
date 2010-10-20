@@ -44,7 +44,7 @@ OvMaterialSPtr OvModel::GetMaterial()
 
 void OvModel::RenderWithoutMaterial()
 {
-	if ( false == GetControlFlag( CONTROL_FLAG::VISIBLE ) )
+	if ( false == GetControlFlag( VISIBLE ) )
 	{
 		return ;
 	}
@@ -64,7 +64,7 @@ void OvModel::RenderWithoutMaterial()
 
 void	OvModel::Render()
 {
-	if ( false == GetControlFlag( CONTROL_FLAG::VISIBLE ) )
+	if ( false == GetControlFlag( VISIBLE ) )
 	{
 		return ;
 	}

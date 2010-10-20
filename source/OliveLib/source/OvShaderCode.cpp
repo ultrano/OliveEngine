@@ -23,7 +23,7 @@ LPD3DXBUFFER	CompileShaderFromCode( const string& code, const string& funcName, 
 	LPD3DXBUFFER	compileResult = NULL;
 	HRESULT hr = D3DXCompileShader
 		( code.c_str()
-		, code.size()
+		, (UINT)code.size()
 		, NULL
 		, includer
 		, funcName.c_str()

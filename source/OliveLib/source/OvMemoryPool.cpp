@@ -52,7 +52,6 @@ void	OvMemoryPool::_destructor()
 #ifdef _OvMEMORY_DEBUG_
 	report_abnormal_memory_release(m_pPoolList);
 #endif
-	int kiTest = MEM_POOL_SIZE;
 	// 별거 없다.
 	OvPoolHeader*	k_next	=	m_pPoolList;
 	OvPoolHeader*	k_header	=	NULL;

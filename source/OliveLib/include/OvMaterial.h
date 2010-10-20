@@ -41,6 +41,6 @@ private:
 
 	OvVertexShaderSPtr m_vertexShader;
 	OvPixelShaderSPtr m_pixelShader;
-	OvTextureSPtr	m_stageTexture[ TextureStage::MaxStage ];
+	OvTextureSPtr	m_stageTexture[ MaxStage ];
 
 };

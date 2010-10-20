@@ -51,7 +51,8 @@ const string& OvObject::GetName()
 			}
 		}
 	}
-	return "";
+	static string emptyName = "";
+	return emptyName;
 }
 
 OvObjectID		OvObject::GetObjectID()

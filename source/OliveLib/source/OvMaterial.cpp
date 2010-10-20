@@ -56,7 +56,7 @@ void OvMaterial::ApplyMaterial()
 	OvRenderer::GetInstance()->SetPixelShader( m_pixelShader );
 
 	for ( int i = 0 
-		; i < TextureStage::MaxStage 
+		; i < MaxStage 
 		; ++i )
 	{
 		OvRenderer::GetInstance()->SetTexture( i , m_stageTexture[i] );

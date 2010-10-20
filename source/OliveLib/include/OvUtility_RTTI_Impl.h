@@ -69,7 +69,8 @@ const string&	TypeName( Type_0 typePointer )
 	{
 		return (const_cast<OvRTTI*>(typePointer->QueryRTTI()))->TypeName();
 	}
-	return NULL;
+	static string emptyName = "";
+	return emptyName;
 }
 
 //////////////////////////////////////////////////////////////////////////

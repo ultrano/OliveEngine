@@ -258,7 +258,7 @@ void OvRenderer::SetVertexStream( WORD streamIndex, const SVertexStreamInfo& str
 	if ( m_device )
 	{		
 		LPDIRECT3DVERTEXBUFFER9 Stream = NULL;
-		size_t Stride = 0;
+		UINT Stride = 0;
 		
 		Stream = streamInfo.vertexStream;
 		Stride = streamInfo.vertexStride;
@@ -285,7 +285,7 @@ void OvRenderer::SetVertexDeclaration( LPDIRECT3DVERTEXDECLARATION9 decl )
 		OvAssert( SUCCEEDED( hr ) );
 	}
 }
-bool OvRenderer::DrawPrimitive( D3DPRIMITIVETYPE primitiveType, size_t primCount )
+bool OvRenderer::DrawPrimitive( D3DPRIMITIVETYPE primitiveType, UINT primCount )
 {
 	if ( m_device )
 	{
@@ -330,7 +330,7 @@ void OvRenderer::RenderUnitRect( OvVertexShaderSPtr v_shader , OvPixelShaderSPtr
 	if ( p_shader ) SetPixelShader( p_shader );
 	SetVertexStream( 0, SVertexStreamInfo( rectVertBuffer, sizeof( SScreenRect ), 0) );
 	SetVertexDeclaration( rectDecl );
-	DrawPrimitive( D3DPRIMITIVETYPE::D3DPT_TRIANGLEFAN, 2);
+	DrawPrimitive( D3DPT_TRIANGLEFAN, 2);
 }
 
 LPDIRECT3DDEVICE9	OvRenderer::GetDevice()
@@ -338,12 +338,12 @@ LPDIRECT3DDEVICE9	OvRenderer::GetDevice()
 	return m_device;
 }
 
-LPDIRECT3DVERTEXBUFFER9 OvRenderer::CreateVertexStream( void* buffer, size_t stride, size_t count )
+LPDIRECT3DVERTEXBUFFER9 OvRenderer::CreateVertexStream( void* buffer, UINT stride, UINT count )
 {
 	if ( m_device )
 	{
 		LPDIRECT3DVERTEXBUFFER9 vertexStream = NULL;
-		size_t streamSize = count * stride;
+		UINT streamSize = count * stride;
 		HRESULT hr = m_device->CreateVertexBuffer
 			( streamSize
 			, 0
@@ -366,12 +366,12 @@ LPDIRECT3DVERTEXBUFFER9 OvRenderer::CreateVertexStream( void* buffer, size_t str
 	return NULL;
 }
 
-LPDIRECT3DINDEXBUFFER9 OvRenderer::CreateIndexStream( void* buffer, size_t stride, size_t count )
+LPDIRECT3DINDEXBUFFER9 OvRenderer::CreateIndexStream( void* buffer, UINT stride, UINT count )
 {
 	if ( m_device )
 	{
 		LPDIRECT3DINDEXBUFFER9	streamBuffer = NULL;
-		size_t streamSize = count * stride;
+		UINT streamSize = count * stride;
 		HRESULT hr = m_device->CreateIndexBuffer
 			( streamSize
 			, 0

@@ -54,7 +54,7 @@ void OliveValue::Bool::SetValue( const string& expData )
 
 std::string OliveValue::Bool::GetValue()
 {
-	return OvFormatString( "%d", m_value );
+	return std::string( OvFormatString( "%d", m_value ) );
 }
 
 void OliveValue::Bool::SetBool( bool expData )
@@ -74,7 +74,7 @@ void			Float::SetValue( const string& expData )
 }
 string			Float::GetValue()
 {
-	return OvFormatString( "%f", m_value );
+	return string( OvFormatString( "%f", m_value ) );
 }
 void			Float::SetFloat( float expValue )
 {
@@ -165,7 +165,7 @@ void			Integer::SetValue( const string& expData )
 }
 string			Integer::GetValue()
 {
-	return OvFormatString( "%d", m_value );
+	return string( OvFormatString( "%d", m_value ) );
 }
 void			Integer::SetInteger( int expValue )
 {
@@ -205,7 +205,7 @@ void			ObjectID::SetValue( const string& expData )
 }
 string			ObjectID::GetValue()
 {
-	return OvFormatString( "%d", m_value );
+	return string( OvFormatString( "%d", m_value ) );
 }
 void			ObjectID::SetObjectID( const OvObjectID& expValue )
 {
