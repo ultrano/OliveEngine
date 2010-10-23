@@ -11,7 +11,7 @@ OvPoint3 OvPoint3::AXIS_Z(0,0,1);
 OvPoint3 OvPoint3::Normalize()
 {
 	float kfLength = Length();
-	return OvPoint3(x/kfLength,y/kfLength,z/kfLength);
+	return kfLength? OvPoint3(x/kfLength,y/kfLength,z/kfLength) : *this;
 }
 float	OvPoint3::DotProduct(const OvPoint3& _rPt)
 {

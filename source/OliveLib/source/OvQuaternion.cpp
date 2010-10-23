@@ -132,10 +132,7 @@ OvQuaternion&		OvQuaternion::MakeQuaternion(float _fAxisX,float _fAxisY,float _f
 OvQuaternion&		OvQuaternion::MakeQuaternion(const OvPoint3& _rAxis,float _fAngleRadian)
 {
 	OvPoint3 kNormAxis = ((OvPoint3&)_rAxis).Normalize();
-	kNormAxis = kNormAxis * sinf(_fAngleRadian/2.0f);
-	x = kNormAxis.x;
-	y = kNormAxis.y;
-	z = kNormAxis.z;
+	*((OvPoint3*)this) = kNormAxis * sinf(_fAngleRadian/2.0f);
 	w = cosf(_fAngleRadian/2.0f);
 	return *this;
 }
@@ -154,11 +151,23 @@ OvQuaternion	OvQuaternionSphericalInterpolate(float fRate,const OvQuaternion& cr
 OvQuaternion	OvEulerToQuaternion(float fX_Rotation,float fY_Rotation,float fZ_Rotation)
 {
 	OvQuaternion	kQuat;
-		
-	kQuat.w		=	cosf(fX_Rotation/2.0f)*cosf(fY_Rotation/2.0f)*cosf(fZ_Rotation/2.0f) - sinf(fX_Rotation/2.0f)*sinf(fY_Rotation/2.0f)*sinf(fZ_Rotation/2.0f);
-	kQuat.x		=	-sinf(fX_Rotation/2.0f)*cosf(fY_Rotation/2.0f)*cosf(fZ_Rotation/2.0f) - cosf(fX_Rotation/2.0f)*sinf(fY_Rotation/2.0f)*sinf(fZ_Rotation/2.0f);
-	kQuat.y		=	-cosf(fX_Rotation/2.0f)*sinf(fY_Rotation/2.0f)*cosf(fZ_Rotation/2.0f) + sinf(fX_Rotation/2.0f)*cosf(fY_Rotation/2.0f)*sinf(fZ_Rotation/2.0f);
-	kQuat.z		=	-cosf(fX_Rotation/2.0f)*cosf(fY_Rotation/2.0f)*sinf(fZ_Rotation/2.0f) - sinf(fX_Rotation/2.0f)*sinf(fY_Rotation/2.0f)*cosf(fZ_Rotation/2.0f);
+	float half_x = fX_Rotation / 2.0f;
+	float half_y = fY_Rotation / 2.0f;
+	float half_z = fZ_Rotation / 2.0f;
+
+	float sin_x = sinf( half_x );
+	float cos_x = cosf( half_x );
+
+	float sin_y = sinf( half_y );
+	float cos_y = cosf( half_y );
+
+	float sin_z = sinf( half_z );
+	float cos_z = cosf( half_z );
+
+	kQuat.w		=	(+cos_x * cos_y * cos_z) - (sin_x * sin_y * sin_z);
+	kQuat.x		=	(-sin_x * cos_y * cos_z) - (cos_x * sin_y * sin_z);
+	kQuat.y		=	(+sin_x * cos_y * sin_z) - (cos_x * sin_y * cos_z);
+	kQuat.z		=	(-cos_x * cos_y * sin_z) - (sin_x * sin_y * cos_z);
 
 	return kQuat;
 

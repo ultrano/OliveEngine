@@ -59,18 +59,10 @@ void OvXObject::Update(float _fElapse)
 
 	m_tfWorldTransform = ExtractTransformFromMatrix( m_worldBuildMatrix );
 
-	for ( unsigned i = 0 ; i < m_extraComponents.Count() ; ++i)
+	OvObjectCollector	extraComponents = m_extraComponents;
+	for ( unsigned i = 0 ; i < extraComponents.Count() ; ++i )
 	{
-		OvXComponentSPtr	kpController = m_extraComponents.GetByAt( i );
-		if ( kpController )
-		{
-			kpController->Update(_fElapse);
-		}
-	}
-
-	for ( unsigned i = 0 ; i < m_extraComponents.Count() ; ++i )
-	{
-		OvXComponentSPtr component = m_extraComponents.GetByAt( i );
+		OvXComponentSPtr component = extraComponents.GetByAt( i );
 		if ( component )
 		{
 			component->Update( _fElapse );
@@ -257,4 +249,20 @@ OvXComponentSPtr OvXObject::RemoveComponent( const OvObjectID& compoentID )
 	OvXComponentSPtr removedComponent = m_extraComponents.RemoveObject( compoentID );
 	removedComponent->SetTarget( NULL );
 	return removedComponent;
+}
+
+OvXComponentSPtr OvXObject::RemoveComponent( const char* name )
+{
+	if ( NULL == name ) return NULL;
+	OvXComponentSPtr removedComponent = NULL;
+	for ( unsigned i = 0 ; i < m_extraComponents.Count() ; ++i )
+	{
+		removedComponent = m_extraComponents.GetByAt( i );
+		if ( removedComponent->GetName() == std::string( name ) )
+		{
+			removedComponent->SetTarget( NULL );
+			return removedComponent;
+		}
+	}
+	return NULL;
 }

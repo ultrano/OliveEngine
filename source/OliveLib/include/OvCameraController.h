@@ -1,19 +1,21 @@
 #pragma once
-#include "OvMessageListener.h"
+#include "OvXComponent.h"
 #include "OvPoint2.h"
+#include "OvPoint3.h"
 
 OvREF_POINTER(OvCameraController)
-class OvCameraController : public OvMessageListener
+class OvCameraController : public OvXComponent
 {
 	OvRTTI_DECL(OvCameraController);
 public:
 	OvCameraController();
 	~OvCameraController();
-	virtual bool MessageListen(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam);
+	virtual void Update(float _fElapse);
 
 private:
 	OvPoint2 m_lastMoustPt;
 	OvPoint2 m_currentMoustPt;
 	OvPoint2 m_moustMoveInterval;
 	OvPoint2 m_accumulatedRotate;
+	OvPoint2 m_liatMousePos;
 };

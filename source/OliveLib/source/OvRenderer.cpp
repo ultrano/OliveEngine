@@ -74,7 +74,7 @@ bool		OvRenderer::GenerateRenderer()
 	WndClass.hCursor		=	LoadCursor(NULL,IDC_ARROW);
 	WndClass.hIcon			=	LoadIcon(NULL,IDI_APPLICATION);
 	WndClass.hInstance		=	GetModuleHandle(NULL);
-	WndClass.lpfnWndProc	=	(WNDPROC)OvMessageManager::ListenMessage;
+	WndClass.lpfnWndProc	=	(WNDPROC)OvWinMsgManager::ListenMessage;
 	WndClass.lpszClassName	=	windowClassName;
 	WndClass.lpszMenuName	=	NULL;
 	WndClass.style			=	CS_HREDRAW | CS_VREDRAW;

@@ -1,4 +1,5 @@
 #pragma once
+#include "OvGlobalFunc.h"
 #include "OvMacro.h"
 template<class Type_0>
 class OvSingletonBase

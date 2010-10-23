@@ -5,13 +5,13 @@
 #include <windows.h>
 #include <list>
 
-class OvMessageManager : public OvSingletonBase< OvMessageManager >
+class OvWinMsgManager : public OvSingletonBase< OvWinMsgManager >
 {
 	friend class OvMessageListener;
 	typedef std::list<OvMessageListener*>	listener_list;
 public:
-	OvMessageManager();
-	~OvMessageManager();
+	OvWinMsgManager();
+	~OvWinMsgManager();
 
 public:
 

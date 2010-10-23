@@ -50,6 +50,7 @@ public:
 private:
 
 	OvObjectID		m_idObjectID;
+	std::string		m_name;
 
 	extra_property_table	m_extraPropertyTable;
 

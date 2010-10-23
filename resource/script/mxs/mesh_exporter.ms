@@ -30,7 +30,7 @@ struct mesh_exporter
 			-- descript vertex count
 			format "%\n" vertex_count to: file_handle;
 			
-			progressstart mesh_exporting + "[1/5]" 
+			progressstart (mesh_exporting + "[1/5]" )
 			for i=1 to face_count do
 			(
 				progressupdate (( 100.0 * i ) / face_count);
@@ -48,7 +48,7 @@ struct mesh_exporter
 			progressend();
 			
 			
-			progressstart mesh_exporting + "[2/5]" 
+			progressstart (mesh_exporting + "[2/5]" )
 			
 			for i=1 to face_count do
 			(
@@ -66,7 +66,7 @@ struct mesh_exporter
 			progressupdate 100
 			progressend();
 			
-			progressstart mesh_exporting + "[3/5]" 
+			progressstart (mesh_exporting + "[3/5]" )
 			
 			for i=1 to face_count do
 			(
@@ -98,7 +98,7 @@ struct mesh_exporter
 			progressupdate 100
 			progressend();
 			
-			progressstart mesh_exporting + "[4/5]" 
+			progressstart (mesh_exporting + "[4/5]" )
 			-- descript texcoord0 count
 			format "%\n" vertex_count to: file_handle;
 			for i=1 to face_count do
@@ -117,7 +117,7 @@ struct mesh_exporter
 			progressupdate 100
 			progressend();
 			
-			progressstart mesh_exporting + "[5/5]" 
+			progressstart (mesh_exporting + "[5/5]" )
 			
 			-- descript face count
 			format "%\n" face_count to: file_handle;

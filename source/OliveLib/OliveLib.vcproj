@@ -1061,6 +1061,18 @@
 						>
 					</File>
 				</Filter>
+				<Filter
+					Name="OvInputManager"
+					>
+					<File
+						RelativePath=".\source\OvInputManager.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\include\OvInputManager.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 		</Filter>
 		<Filter

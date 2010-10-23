@@ -86,6 +86,7 @@ public :
 	bool				GetComponents( OvObjectCollector& extraComponents );
 	OvXComponentSPtr	RemoveComponent( const OvObjectSPtr component );
 	OvXComponentSPtr	RemoveComponent( const OvObjectID& compoentID );
+	OvXComponentSPtr	RemoveComponent( const char* name );
 
 private:
 

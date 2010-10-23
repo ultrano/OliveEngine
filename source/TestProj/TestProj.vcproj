@@ -200,6 +200,22 @@
 				>
 			</File>
 		</Filter>
+		<Filter
+			Name="PhysxTest"
+			>
+			<Filter
+				Name="OxCameraController"
+				>
+				<File
+					RelativePath=".\OxCameraController.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\OxCameraController.h"
+					>
+				</File>
+			</Filter>
+		</Filter>
 	</Files>
 	<Globals>
 	</Globals>

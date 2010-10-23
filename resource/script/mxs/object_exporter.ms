@@ -1,98 +1,82 @@
 
-fn ovobject_property obj data_structure = 
+fn print_vec3 arg data_stream = 
 (
-	append data_structure obj.name;
-	append data_structure "0:";
+	format "%,%,%\n" arg.x arg.y arg.z to: data_stream;
+)
+fn print_vec4 arg data_stream = 
+(
+	format "%,%,%,%\n" arg.x arg.y arg.z arg.w to: data_stream;
 )
 
-fn ovxobject_property obj data_structure = 
+fn ovobject_property obj data_stream = 
+(
+	print (obj.name) to: data_stream;
+	print ("0:") to: data_stream;
+);
+
+fn ovxobject_property obj data_stream = 
 (
 	local parent_handle = 0;
+	if obj.parent != undefined then parent_handle = obj.parent.handle;
+	print parent_handle to: data_stream
 	
-	if obj.parent != undefined then
-		parent_handle = obj.parent.handle;
+	print_vec3 obj.scale data_stream
 	
-	append data_structure (parent_handle as string);
-	
-	local data = "";
-	
-	data = "";
-	data = data as stringstream;
-	format "%,%,%" obj.scale.x obj.scale.z obj.scale.y to: data;
-	append data_structure (data);
-	
-	data = "";
-	data = data as stringstream;
-	format "%,%,%" obj.pos.x obj.pos.z obj.pos.y to: data;
-	append data_structure (data);
-	
-	data = "";
-	data = data as stringstream;
-	format "%,%,%,%" obj.rotation.x obj.rotation.z obj.rotation.y -obj.rotation.w to: data;
-	append data_structure (data);
-	
-	data = "";
-	data = data as stringstream;
-	format "0:" to: data;
-	append data_structure (data);
-	
-	---------------------------------------------------------------
-	---------------- inheritance property ----------------------------	
-	ovobject_property obj data_structure;	
-	---------------------------------------------------------------
-	---------------------------------------------------------------
-)
-
-fn ovxnode_property obj data_structure =
-(
-	append data_structure ("0:");
-	
-	---------------------------------------------------------------
-	---------------- inheritance property ----------------------------	
-	ovxobject_property obj data_structure	
-	---------------------------------------------------------------
-	---------------------------------------------------------------
-	
-)
-
-fn ovcamera_property obj data_structure =
-(
-	
-	local data = "";
-	
-	data = "";
-	data = data as stringstream;
-	format "0" to: data; -- <m_spLookTarget />
-	append data_structure (data);
-	
-	data = "";
-	data = data as stringstream;
-	format "0" to: data; -- <m_eCameraType />
-	append data_structure (data);
-	
-	data = "";
-	data = data as stringstream;
-	format "%" (obj.fov*(pi/180.0)) to:data; -- <m_fFOV />
-	append data_structure (data);
-	
-	data = "";
-	data = data as stringstream;
-	format "%" obj.nearclip to:data; -- <m_fNearClip />
-	append data_structure (data);
-	
-	data = "";
-	data = data as stringstream;
-	format "%" obj.farclip to:data; -- <m_fFarClip />
-	append data_structure (data);
-	
-	data = "";
-	data = data as stringstream;
-	format "1.0" to:data; -- <m_aspect />
-	append data_structure (data);
+	print_vec3 obj.pos data_stream
 		
+	print_vec4 obj.rotation data_stream
+
+	print "0:" to: data_stream
+	
 	---------------------------------------------------------------
 	---------------- inheritance property ----------------------------	
-	ovxnode_property obj data_structure	
+	ovobject_property obj data_stream;	
 	---------------------------------------------------------------
 	---------------------------------------------------------------
-)
+);
+
+fn ovxnode_property obj data_stream =
+(
+	print "0:" to: data_stream
+	
+	---------------------------------------------------------------
+	---------------- inheritance property ----------------------------	
+	ovxobject_property obj data_stream	
+	---------------------------------------------------------------
+	---------------------------------------------------------------
+	
+);
+
+fn ovcamera_property obj data_stream =
+(
+	print "0:" to: data_stream
+	
+	print "0:" to: data_stream
+	
+	print (obj.fov*(pi/180.0)) to: data_stream
+	
+	print obj.nearclip to: data_stream
+	
+	print obj.farclip to: data_stream
+	
+	print "1.0" to: data_stream
+
+	---------------------------------------------------------------
+	---------------- inheritance property ----------------------------	
+	ovxnode_property obj data_stream	
+	---------------------------------------------------------------
+	---------------------------------------------------------------
+);
+
+fn test_export = 
+(
+	export_location = getsavefilename caption:"export" types:"mesh file version_0(*.msf0)|*.msf0";
+	file_handle = createfile export_location;
+
+	ovcamera_property cameras[1] file_handle;
+
+	flush file_handle;
+	close file_handle;
+);
+test_export();
+

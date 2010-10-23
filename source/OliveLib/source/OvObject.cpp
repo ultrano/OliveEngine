@@ -14,7 +14,8 @@ using namespace std;
 OvRTTI_IMPL(OvObject);
 
 OvPROPERTY_BAG_BEGIN(OvObject);
-	OvPROPERTY_BAG_REGISTER( OvPropAccesser_extra_data,  m_extraPropertyTable );
+	OvPROPERTY_BAG_REGISTER( OvPropAccesser_STL_string, m_name );
+	OvPROPERTY_BAG_REGISTER( OvPropAccesser_extra_data, m_extraPropertyTable );
 OvPROPERTY_BAG_END(OvObject);
 
 OvObject::OvObject()
@@ -34,25 +35,11 @@ OvObject::~OvObject()
 
 void	OvObject::SetName( const char* _pName )
 {
-	if ( OliveValue::Value* nameProp = FindExtraProperty( "Name" ) )
-	{
-		nameProp->SetValue( _pName );
-	}
+	m_name = _pName;
 }
 const string& OvObject::GetName()
 {
-	if ( OliveValue::Value* nameProp = FindExtraProperty( "Name" ) )
-	{
-		if ( OvRTTI_Util::IsTypeOf<OliveValue::String>( nameProp ) )
-		{
-			if ( OliveValue::String* name = static_cast<OliveValue::String*>( nameProp ) )
-			{
-				return name->GetString();
-			}
-		}
-	}
-	static string emptyName = "";
-	return emptyName;
+	return m_name;
 }
 
 OvObjectID		OvObject::GetObjectID()
