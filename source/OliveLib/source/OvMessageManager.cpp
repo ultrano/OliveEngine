@@ -2,6 +2,7 @@
 #include "OvXObject.h"
 #include "OliveValue.h"
 #include "OvMessageListener.h"
+#include "OvInputManager.h"
 #include <algorithm>
 using namespace std;
 
@@ -21,6 +22,41 @@ bool	OvWinMsgManager::ListenMessage( HWND hWnd, UINT message, WPARAM wParam, LPA
 
 bool	OvWinMsgManager::_listenMessage( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
+	switch ( message )
+	{
+	case WM_LBUTTONDOWN : 
+		OvInputManager::GetInstance()->_notify_mouse_state( L_BUTTON, PRESSED );
+		break;
+	case WM_MBUTTONDOWN : 
+		OvInputManager::GetInstance()->_notify_mouse_state( M_BUTTON, PRESSED );
+		break;
+	case WM_RBUTTONDOWN : 
+		OvInputManager::GetInstance()->_notify_mouse_state( R_BUTTON, PRESSED );
+		break;
+
+	case WM_LBUTTONUP : 
+		OvInputManager::GetInstance()->_notify_mouse_state( L_BUTTON, RELEASED );
+		break;
+	case WM_MBUTTONUP : 
+		OvInputManager::GetInstance()->_notify_mouse_state( M_BUTTON, RELEASED );
+		break;
+	case WM_RBUTTONUP : 
+		OvInputManager::GetInstance()->_notify_mouse_state( R_BUTTON, RELEASED );
+		break;
+
+	case WM_LBUTTONDBLCLK : 
+		OvInputManager::GetInstance()->_notify_mouse_state( L_BUTTON, DBCLICKED );
+		break;
+	case WM_MBUTTONDBLCLK : 
+		OvInputManager::GetInstance()->_notify_mouse_state( M_BUTTON, DBCLICKED );
+		break;
+	case WM_RBUTTONDBLCLK : 
+		OvInputManager::GetInstance()->_notify_mouse_state( R_BUTTON, DBCLICKED );
+
+	default:
+		OvInputManager::GetInstance()->_clear_click_state();
+		break;
+	}
 
 	for each( OvMessageListener* listener in m_listenerList )
 	{

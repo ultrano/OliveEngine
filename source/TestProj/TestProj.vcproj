@@ -183,7 +183,7 @@
 			</File>
 		</Filter>
 		<Filter
-			Name="리소스 파일"
+			Name="test_cases"
 			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav"
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
@@ -192,7 +192,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\mesh_case.h"
+				RelativePath=".\physx_case.h"
 				>
 			</File>
 			<File
@@ -216,10 +216,14 @@
 				</File>
 			</Filter>
 			<Filter
-				Name="mesh_case"
+				Name="OxTestPhysx"
 				>
 				<File
-					RelativePath=".\mesh_case.h"
+					RelativePath=".\OxTestPhysx.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\OxTestPhysx.h"
 					>
 				</File>
 			</Filter>
@@ -232,6 +236,18 @@
 				</File>
 				<File
 					RelativePath=".\OxGameController.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="OxBoxMovement"
+				>
+				<File
+					RelativePath=".\OxBoxMovement.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\OxBoxMovement.h"
 					>
 				</File>
 			</Filter>

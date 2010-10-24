@@ -44,7 +44,7 @@
 //-------------------------------------------------------------------
 //
 //! 이녀석은 Assert로 바꾸자
-#define OvAssertMsg(__add_mgr)		OvErrorMgrBox(__FILE__,__FUNCTION__,__add_mgr)
+#define OvAssertMsg(__add_msg)		OvErrorMsgBox(__FILE__,__FUNCTION__,__add_msg)
 //
 //-------------------------------------------------------------------
 //

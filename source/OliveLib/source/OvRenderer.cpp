@@ -77,7 +77,7 @@ bool		OvRenderer::GenerateRenderer()
 	WndClass.lpfnWndProc	=	(WNDPROC)OvWinMsgManager::ListenMessage;
 	WndClass.lpszClassName	=	windowClassName;
 	WndClass.lpszMenuName	=	NULL;
-	WndClass.style			=	CS_HREDRAW | CS_VREDRAW;
+	WndClass.style			=	CS_HREDRAW | CS_VREDRAW | CS_DBLCLKS ;
 
 	RegisterClass(&WndClass);
 

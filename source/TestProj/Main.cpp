@@ -12,7 +12,7 @@
 #include "game_controller.h"
 #include "temporary_testing.h"
 */
-#include "mesh_case.h"
+#include "physx_case.h"
 
 int	APIENTRY	WinMain(HINSTANCE hi,HINSTANCE,LPSTR,int)
 {

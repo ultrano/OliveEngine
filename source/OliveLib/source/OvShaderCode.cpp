@@ -3,6 +3,9 @@
 #include "OvPixelShader.h"
 #include "OvShaderCodeIncluder.h"
 #include "OvRenderer.h"
+#include "OvStringUtility.h"
+#include "OvGlobalFunc.h"
+#include "OvMacro.h"
 #include <d3dx9.h>
 using namespace std;
 OvRTTI_IMPL( OvShaderCode );
@@ -124,7 +127,16 @@ OvPixelShaderSPtr	OvShaderCode::CompilePixelShader( const string& entry_func, co
 
 OvShaderSPtr OvShaderCode::FindShader( const std::string& entry_func, const std::string& compile_version )
 {
-	return _find_precompiled_shader( entry_func, compile_version );
+	OvShaderSPtr precompiled_shader = _find_precompiled_shader( entry_func, compile_version );
+	if ( NULL == precompiled_shader )
+	{
+		OvAssertMsg( 
+			OvFormatString("[func: %s, compile_version: %s] can't found, maybe not complied"
+			,entry_func.c_str()
+			, compile_version.c_str() ) 
+			);
+	}
+	return precompiled_shader;
 }
 
 OvShaderSPtr OvShaderCode::_find_precompiled_shader( const std::string& entry_func, const std::string& compile_version )
@@ -132,14 +144,13 @@ OvShaderSPtr OvShaderCode::_find_precompiled_shader( const std::string& entry_fu
 	OvShaderSPtr precompiled_shader = NULL;
 	
 	precompiled_shader_table::key_type search_key( entry_func, compile_version );
-	
+
 	precompiled_shader_table::iterator itor = m_precompiledShaderTable.find( search_key );
 
 	if ( m_precompiledShaderTable.end() != itor )
 	{
 		precompiled_shader = itor->second;
 	}
-
 	return precompiled_shader;
 }
 

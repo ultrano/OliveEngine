@@ -26,7 +26,7 @@ void	OvMessageBox(const char* _msg,const char* _caption)
 	MessageBox(NULL,_msg,_caption,MB_OK);
 }
 
-void	OvErrorMgrBox(const char* _file,const char* _block,const char* _msg )
+void	OvErrorMsgBox(const char* _file,const char* _block,const char* _msg )
 {
 	char k_code_location[1024] = {0,};
 

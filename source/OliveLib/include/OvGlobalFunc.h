@@ -6,7 +6,7 @@ void	OvGetLastError();
 
 void	OvMessageBox(const char* _msg,const char* _caption);
 
-void	OvErrorMgrBox(const char* _file,const char* _block,const char* _msg = NULL);
+void	OvErrorMsgBox(const char* _file,const char* _block,const char* _msg = NULL);
 
 bool	OvStringAllocator(LPTSTR* _lpp_dest,LPCTSTR lp_src);
 
