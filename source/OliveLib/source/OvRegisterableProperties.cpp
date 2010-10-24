@@ -7,7 +7,7 @@
 #include "OvTransform.h"
 #include "OliveValue.h"
 #include "OvObjectCollector.h"
-#include "OvRelationLinkBuilder.h"
+#include "OvAssociatedLinkConnector.h"
 #include "OvResourceManager.h"
 using namespace std;
 
@@ -136,7 +136,7 @@ bool	OvPropAccesser_object_pointer::Extract(OvObject* pObj, OvObjectProperties& 
 			extractValue.SetObjectID( OvObjectID::INVALID );
 		}
 		rObjStore.PushValue(extractValue);
-		rObjStore.PushComponentObject(*kpProp);
+		rObjStore.PushAssociatedObject(*kpProp);
 		return true;
 	}
 	return false;
@@ -149,7 +149,7 @@ bool	OvPropAccesser_object_pointer::Inject(OvObject* pObj, OvObjectProperties& r
 		OliveValue::ObjectID injectValue;
 		if ( rObjStore.PopValue(injectValue) && injectValue.GetObjectID() != OvObjectID::INVALID )
 		{
-			OvPointLinkBuilder* linkBuilder = OvNew OvPointLinkBuilder;
+			OvPointerLinkConnector* linkBuilder = OvNew OvPointerLinkConnector;
 
 			linkBuilder->SetFormerID( injectValue.GetObjectID() );
 			linkBuilder->SetDestination( kpProp );
@@ -182,7 +182,7 @@ bool	OvPropAccesser_object_smart_pointer::Extract(OvObject* pObj, OvObjectProper
 			extractValue.SetObjectID( OvObjectID::INVALID );
 		}
 		rObjStore.PushValue(extractValue);
-		rObjStore.PushComponentObject( kpProp->GetRear() );
+		rObjStore.PushAssociatedObject( kpProp->GetRear() );
 		return true;
 	}
 	return false;
@@ -195,7 +195,7 @@ bool	OvPropAccesser_object_smart_pointer::Inject(OvObject* pObj, OvObjectPropert
 		OliveValue::ObjectID injectValue;
 		if ( rObjStore.PopValue(injectValue) && injectValue.GetObjectID() != OvObjectID::INVALID )
 		{
-			OvSmartLinkBuilder* linkBuilder = OvNew OvSmartLinkBuilder;
+			OvSmartPtrLinkConnector* linkBuilder = OvNew OvSmartPtrLinkConnector;
 
 			linkBuilder->SetFormerID( injectValue.GetObjectID() );
 			linkBuilder->SetSmartDestination( kpProp );			
@@ -518,7 +518,7 @@ bool OvPropAccesser_object_collector::Extract(OvObject* pObj, OvObjectProperties
 			{
 				OliveValue::ObjectID relationID( relatedObj->GetObjectID() );
 				collectedInfo += relationID.GetValue() + "!";
-				rObjStore.PushComponentObject( relatedObj.GetRear() );
+				rObjStore.PushAssociatedObject( relatedObj.GetRear() );
 			}
 		}
 		rObjStore.PushValue( collectedInfo );
@@ -543,7 +543,7 @@ bool OvPropAccesser_object_collector::Inject(OvObject* pObj, OvObjectProperties&
 		{
 			unsigned int id = 0;
 
-			OvObjectCollectorLinkBuilder* linkBuilder = OvNew OvObjectCollectorLinkBuilder;
+			OvCollectedObjectsLinkConnector* linkBuilder = OvNew OvCollectedObjectsLinkConnector;
 
 			linkBuilder->SetDestinateCollector( kpProp );
 

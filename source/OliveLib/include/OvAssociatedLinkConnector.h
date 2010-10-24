@@ -8,25 +8,25 @@
 
 OvREF_POINTER(OvObject);
 
-class OvRelationLinkBuilder : public OvMemObject
+class OvAssociatedLinkConnector : public OvMemObject
 {
-	OvRTTI_DECL_ROOT(OvRelationLinkBuilder);
+	OvRTTI_DECL_ROOT(OvAssociatedLinkConnector);
 public:
 
-	OvRelationLinkBuilder();
-	virtual ~OvRelationLinkBuilder();
+	OvAssociatedLinkConnector();
+	virtual ~OvAssociatedLinkConnector();
 
 	virtual bool	BuildLink( restore_object_table& restoreTable ) = 0;
 
 };
 
-class OvPointLinkBuilder : public OvRelationLinkBuilder
+class OvPointerLinkConnector : public OvAssociatedLinkConnector
 {
-	OvRTTI_DECL(OvPointLinkBuilder);
+	OvRTTI_DECL(OvPointerLinkConnector);
 public:
 	
-	OvPointLinkBuilder();
-	~OvPointLinkBuilder();
+	OvPointerLinkConnector();
+	~OvPointerLinkConnector();
 	
 	void	SetDestination(OvObject** destination);
 	OvObject** GetDestination();
@@ -41,13 +41,13 @@ private:
 	OvObject** m_destination;
 };
 
-class OvSmartLinkBuilder : public OvRelationLinkBuilder
+class OvSmartPtrLinkConnector : public OvAssociatedLinkConnector
 {
-	OvRTTI_DECL(OvSmartLinkBuilder);
+	OvRTTI_DECL(OvSmartPtrLinkConnector);
 public:
 
-	OvSmartLinkBuilder();
-	~OvSmartLinkBuilder();
+	OvSmartPtrLinkConnector();
+	~OvSmartPtrLinkConnector();
 
 	void	SetSmartDestination( OvObjectSPtr* destination );
 	OvObjectSPtr* GetSmartDestination();
@@ -65,13 +65,13 @@ private:
 };
 
 class OvObjectCollector;
-class OvObjectCollectorLinkBuilder : public OvRelationLinkBuilder
+class OvCollectedObjectsLinkConnector : public OvAssociatedLinkConnector
 {
-	OvRTTI_DECL(OvObjectCollectorLinkBuilder);
+	OvRTTI_DECL(OvCollectedObjectsLinkConnector);
 public:
 
-	OvObjectCollectorLinkBuilder();
-	~OvObjectCollectorLinkBuilder();
+	OvCollectedObjectsLinkConnector();
+	~OvCollectedObjectsLinkConnector();
 
 	void	SetDestinateCollector( OvObjectCollector* destination );
 	OvObjectCollector* GetDestinateCollector();

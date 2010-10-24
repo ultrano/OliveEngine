@@ -69,7 +69,7 @@ void OxCameraController::Update( float _fElapse )
 
 	OvPoint3 direction;
 	OvPoint3 velocity;
-	float moveSpeed = 30.0f;
+	float moveSpeed = 50.0f;
 	if ( OvInputManager::IsPushed( VK_SHIFT ))
 	{
 		moveSpeed = moveSpeed * 2;

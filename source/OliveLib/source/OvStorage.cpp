@@ -6,7 +6,7 @@
 #include "OvPropertyAccesser.h"
 #include "OvObject.h"
 #include "OvObjectFactory.h"
-#include "OvRelationLinkBuilder.h"
+#include "OvAssociatedLinkConnector.h"
 #include "OvObjectID.h"
 #include "tinyxml.h"
 
@@ -207,7 +207,7 @@ void	OvStorage::_rebuild_related_link( restore_object_table& restoreTable, link_
 {
 	if ( restoreTable.size() && linkBuilderList.size() )
 	{
-		for each( OvRelationLinkBuilder* linkBuilder in linkBuilderList )
+		for each( OvAssociatedLinkConnector* linkBuilder in linkBuilderList )
 		{
 			if (linkBuilder)
 			{
@@ -225,7 +225,7 @@ void	OvStorage::Clear()
 
 	if ( m_linkBuilderList.size() )
 	{
-		for each( OvRelationLinkBuilder* linkBuilder in m_linkBuilderList )
+		for each( OvAssociatedLinkConnector* linkBuilder in m_linkBuilderList )
 		{
 			if (linkBuilder)
 			{

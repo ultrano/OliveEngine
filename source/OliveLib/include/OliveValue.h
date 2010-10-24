@@ -145,6 +145,19 @@ namespace OliveValue
 		const OvObjectID&	GetObjectID();
 	};
 
+	class UserData : public OliveValue::Value
+	{
+		typedef void* void_pointer;
+		OvRTTI_DECL(UserData);
+		OLIVE_VALUE_TYPE(void_pointer);
+	public:
+		virtual void	SetValue( const string& expData );
+		virtual string	GetValue();
+	public:
+		void			SetUserData( void* userData );
+		void*			GetUserData();
+	};
+
 // 	class ValueTuple : public OliveValue::Value
 // 	{
 // 

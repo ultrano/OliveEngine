@@ -215,6 +215,26 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="mesh_case"
+				>
+				<File
+					RelativePath=".\mesh_case.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="OxGameController"
+				>
+				<File
+					RelativePath=".\OxGameController.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\OxGameController.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 	</Files>
 	<Globals>

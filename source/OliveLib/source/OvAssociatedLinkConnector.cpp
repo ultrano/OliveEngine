@@ -1,14 +1,14 @@
-#include "OvRelationLinkBuilder.h"
+#include "OvAssociatedLinkConnector.h"
 #include "OvObjectCollector.h"
 #include "OvObject.h"
 #include "OvObjectID.h"
 
-OvRTTI_IMPL_ROOT(OvRelationLinkBuilder);
-OvRelationLinkBuilder::OvRelationLinkBuilder()
+OvRTTI_IMPL_ROOT(OvAssociatedLinkConnector);
+OvAssociatedLinkConnector::OvAssociatedLinkConnector()
 {
 
 }
-OvRelationLinkBuilder::~OvRelationLinkBuilder()
+OvAssociatedLinkConnector::~OvAssociatedLinkConnector()
 {
 
 }
@@ -16,29 +16,29 @@ OvRelationLinkBuilder::~OvRelationLinkBuilder()
 //////////////////////////////////////////////////////////////////////////
 
 //////////////////////////////////////////////////////////////////////////
-OvRTTI_IMPL(OvPointLinkBuilder);
+OvRTTI_IMPL(OvPointerLinkConnector);
 
-OvPointLinkBuilder::OvPointLinkBuilder()
+OvPointerLinkConnector::OvPointerLinkConnector()
 :m_destination( NULL )
 ,m_formerID( OvObjectID::INVALID )
 {
 
 }
-OvPointLinkBuilder::~OvPointLinkBuilder()
+OvPointerLinkConnector::~OvPointerLinkConnector()
 {
 
 }
 
-void	OvPointLinkBuilder::SetDestination(OvObject** destination)
+void	OvPointerLinkConnector::SetDestination(OvObject** destination)
 {
 	m_destination = destination;
 }
-OvObject** OvPointLinkBuilder::GetDestination()
+OvObject** OvPointerLinkConnector::GetDestination()
 {
 	return m_destination;
 }
 
-bool OvPointLinkBuilder::BuildLink( restore_object_table &restoreTable)
+bool OvPointerLinkConnector::BuildLink( restore_object_table &restoreTable)
 {
 	restore_object_table::iterator tableIter = restoreTable.find( GetFormerID() );
 	
@@ -55,40 +55,40 @@ bool OvPointLinkBuilder::BuildLink( restore_object_table &restoreTable)
 	return false;
 }
 
-void	OvPointLinkBuilder::SetFormerID( const OvObjectID& objID )
+void	OvPointerLinkConnector::SetFormerID( const OvObjectID& objID )
 {
 	m_formerID = objID;
 }
-const OvObjectID& OvPointLinkBuilder::GetFormerID()
+const OvObjectID& OvPointerLinkConnector::GetFormerID()
 {
 	return m_formerID;
 }
 //////////////////////////////////////////////////////////////////////////
 
 //////////////////////////////////////////////////////////////////////////
-OvRTTI_IMPL(OvSmartLinkBuilder);
+OvRTTI_IMPL(OvSmartPtrLinkConnector);
 
-OvSmartLinkBuilder::OvSmartLinkBuilder()
+OvSmartPtrLinkConnector::OvSmartPtrLinkConnector()
 :m_destination( NULL )
 ,m_formerID( OvObjectID::INVALID )
 {
 
 }
-OvSmartLinkBuilder::~OvSmartLinkBuilder()
+OvSmartPtrLinkConnector::~OvSmartPtrLinkConnector()
 {
 
 }
 
-void	OvSmartLinkBuilder::SetSmartDestination( OvObjectSPtr* destination )
+void	OvSmartPtrLinkConnector::SetSmartDestination( OvObjectSPtr* destination )
 {
 	m_destination = destination;
 }
-OvObjectSPtr* OvSmartLinkBuilder::GetSmartDestination()
+OvObjectSPtr* OvSmartPtrLinkConnector::GetSmartDestination()
 {
 	return m_destination;
 }
 
-bool OvSmartLinkBuilder::BuildLink( restore_object_table& restoreTable )
+bool OvSmartPtrLinkConnector::BuildLink( restore_object_table& restoreTable )
 {
 	restore_object_table::iterator tableIter = restoreTable.find( GetFormerID() );
 
@@ -104,41 +104,41 @@ bool OvSmartLinkBuilder::BuildLink( restore_object_table& restoreTable )
 	}
 	return false;
 }
-void	OvSmartLinkBuilder::SetFormerID( const OvObjectID& objID )
+void	OvSmartPtrLinkConnector::SetFormerID( const OvObjectID& objID )
 {
 	m_formerID = objID;
 }
-const OvObjectID& OvSmartLinkBuilder::GetFormerID()
+const OvObjectID& OvSmartPtrLinkConnector::GetFormerID()
 {
 	return m_formerID;
 }
 //////////////////////////////////////////////////////////////////////////
 
 //////////////////////////////////////////////////////////////////////////
-OvRTTI_IMPL(OvObjectCollectorLinkBuilder);
+OvRTTI_IMPL(OvCollectedObjectsLinkConnector);
 
-OvObjectCollectorLinkBuilder::OvObjectCollectorLinkBuilder()
+OvCollectedObjectsLinkConnector::OvCollectedObjectsLinkConnector()
 {
 	m_destination = NULL;
 	m_relatedObjects.clear();
 }
-OvObjectCollectorLinkBuilder::~OvObjectCollectorLinkBuilder()
+OvCollectedObjectsLinkConnector::~OvCollectedObjectsLinkConnector()
 {
 	m_destination = NULL;
 	m_relatedObjects.clear();
 }
 
-void	OvObjectCollectorLinkBuilder::SetDestinateCollector( OvObjectCollector* destination )
+void	OvCollectedObjectsLinkConnector::SetDestinateCollector( OvObjectCollector* destination )
 {
 	m_destination = destination;
 }
-OvObjectCollector* OvObjectCollectorLinkBuilder::GetDestinateCollector()
+OvObjectCollector* OvCollectedObjectsLinkConnector::GetDestinateCollector()
 {
 	return m_destination;
 }
 
 
-void	OvObjectCollectorLinkBuilder::AddRelatedObjectID( const OvObjectID& objectID )
+void	OvCollectedObjectsLinkConnector::AddRelatedObjectID( const OvObjectID& objectID )
 {
 	if ( OvObjectID::INVALID != objectID )
 	{
@@ -146,7 +146,7 @@ void	OvObjectCollectorLinkBuilder::AddRelatedObjectID( const OvObjectID& objectI
 	}
 }
 
-bool OvObjectCollectorLinkBuilder::BuildLink( restore_object_table& restoreTable )
+bool OvCollectedObjectsLinkConnector::BuildLink( restore_object_table& restoreTable )
 {
 	OvObjectCollector* destAddress = GetDestinateCollector();
 	if (destAddress)

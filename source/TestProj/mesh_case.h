@@ -35,13 +35,18 @@ public:
 		NxActorDesc actorDesc;
 		actorDesc.shapes.pushBack(&desc);
 		actorDesc.body			= &bodyDesc;
-		actorDesc.density		= 10.001f;
+		actorDesc.density		= 10.0f;
 		m_actor = m_scene->createActor( actorDesc );
+
 		if ( m_actor )
 		{
 			m_actor->setGlobalPosition( OvConvert::xyz<NxVec3>( GetTarget()->GetTranslate() ) );
 			m_actor->setGlobalOrientationQuat( OvConvert::xyzw<NxQuat>( GetTarget()->GetRotation() ) );
-			m_actor->addForce( OvConvert::xyz<NxVec3>( m_vel * 5 ) );
+			m_actor->addForce( OvConvert::xyz<NxVec3>( m_vel * 20000 ) );
+
+			OliveValue::UserData* actorData = OliveValue::Factory<OliveValue::UserData>();
+			actorData->SetUserData( (void*)m_actor );
+			GetTarget()->RegisterExtraProperty( "PhysxActor", actorData );
 		}
 		else
 		{
@@ -54,14 +59,11 @@ public:
 	}
 	virtual void Update(float _fElapse) override
 	{
+		if( NULL == m_actor ) return ;
 		m_time++;
-		if ( m_time < 1500 && m_actor )
-		{
-			GetTarget()->SetTranslate( OvConvert::xyz<OvPoint3>( m_actor->getGlobalPosition() ) );
-			GetTarget()->SetRotation( OvConvert::xyzw<OvQuaternion>( m_actor->getGlobalOrientationQuat() ) );
-			//
-		}
-		else
+		GetTarget()->SetTranslate( OvConvert::xyz<OvPoint3>( m_actor->getGlobalPosition() ) );
+		GetTarget()->SetRotation( OvConvert::xyzw<OvQuaternion>( m_actor->getGlobalOrientationQuat() ) );
+		if( m_time >= 1500 )
 		{
 			if ( m_actor )
 			{
@@ -119,7 +121,6 @@ public:
 		NxSceneDesc sceneDesc;
 		sceneDesc.gravity				= NxVec3(0.0f, -9.81f, 0.0f);
 		m_scene = m_physicsSDK->createScene(sceneDesc);
-
 
 		// Set default material
 		NxMaterial* defaultMaterial = m_scene->getMaterialFromIndex(0);

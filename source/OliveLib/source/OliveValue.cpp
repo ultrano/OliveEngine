@@ -12,6 +12,7 @@ OvRTTI_IMPL(Quaternion);
 OvRTTI_IMPL(Integer);
 OvRTTI_IMPL(String);
 OvRTTI_IMPL(ObjectID);
+OvRTTI_IMPL(UserData);
 
 //////////////////////////////////////////////////////////////////////////
 #define REGIST_VALUE_TYPE_BEGINE OliveValue::Value*	OliveValue::Factory(const std::string& valueType){\
@@ -27,6 +28,8 @@ REGIST_VALUE_TYPE_BEGINE
 	REGIST_VALUE_TYPE( Quaternion )
 	REGIST_VALUE_TYPE( Integer )
 	REGIST_VALUE_TYPE( String )
+	REGIST_VALUE_TYPE( ObjectID )
+	REGIST_VALUE_TYPE( UserData )
 REGIST_VALUE_TYPE_END
 //////////////////////////////////////////////////////////////////////////
 
@@ -212,6 +215,29 @@ void			ObjectID::SetObjectID( const OvObjectID& expValue )
 	m_value = expValue;
 }
 const OvObjectID& ObjectID::GetObjectID()
+{
+	return m_value;
+}
+//////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////
+
+void OliveValue::UserData::SetValue( const string& expData )
+{
+	sscanf_s( expData.c_str(), "%p", &m_value );
+}
+
+std::string OliveValue::UserData::GetValue()
+{
+	return string( OvFormatString( "%p", m_value ) );
+}
+
+void OliveValue::UserData::SetUserData( void* userData )
+{
+	m_value = userData;
+}
+
+void* OliveValue::UserData::GetUserData()
 {
 	return m_value;
 }

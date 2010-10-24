@@ -35,10 +35,10 @@ public:
 	void	PushValue( OliveValue::Value& rValue );
 	bool	PopValue( OliveValue::Value& rValue );
 
-	void	PushComponentObject(OvObject* pObject);
+	void	PushAssociatedObject(OvObject* pObject);
 	OvObject*	PopComponentObject();
 
-	void	CollectLinkBuilder( OvRelationLinkBuilder* linkBuilder);
+	void	CollectLinkBuilder( OvAssociatedLinkConnector* linkBuilder);
 	void	LinkBuilderListMoveTo( link_builder_list& builderList );
 
 private:

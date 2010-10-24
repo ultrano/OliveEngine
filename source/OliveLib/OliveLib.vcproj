@@ -866,14 +866,14 @@
 					</File>
 				</Filter>
 				<Filter
-					Name="OvRelationLinkBuilder"
+					Name="OvAssociatedLinkConnector"
 					>
 					<File
-						RelativePath=".\source\OvRelationLinkBuilder.cpp"
+						RelativePath=".\source\OvAssociatedLinkConnector.cpp"
 						>
 					</File>
 					<File
-						RelativePath=".\include\OvRelationLinkBuilder.h"
+						RelativePath=".\include\OvAssociatedLinkConnector.h"
 						>
 					</File>
 				</Filter>

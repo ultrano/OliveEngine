@@ -1,6 +1,6 @@
 #include "OvObjectProperties.h"
 #include "OliveValue.h"
-#include "OvRelationLinkBuilder.h"
+#include "OvAssociatedLinkConnector.h"
 
 
 OvObjectProperties::OvObjectProperties()
@@ -15,7 +15,7 @@ OvObjectProperties::~OvObjectProperties()
 		m_queValueQueue.pop();
 	}
 
-	for each( OvRelationLinkBuilder* linkBuilder in m_collectedLinkBuilder )
+	for each( OvAssociatedLinkConnector* linkBuilder in m_collectedLinkBuilder )
 	{
 		if (linkBuilder)
 		{
@@ -76,7 +76,7 @@ bool	OvObjectProperties::PopValue( OliveValue::Value& rValue )
 	return false;
 }
 
-void	OvObjectProperties::PushComponentObject(OvObject* pObject)
+void	OvObjectProperties::PushAssociatedObject(OvObject* pObject)
 {
 	if (pObject)
 	{
@@ -93,13 +93,13 @@ OvObject*	OvObjectProperties::PopComponentObject()
 	}
 	return NULL;
 }
-void		OvObjectProperties::CollectLinkBuilder( OvRelationLinkBuilder* linkBuilder)
+void		OvObjectProperties::CollectLinkBuilder( OvAssociatedLinkConnector* linkBuilder)
 {
 	m_collectedLinkBuilder.push_back( linkBuilder );
 }
 void OvObjectProperties::LinkBuilderListMoveTo( link_builder_list& builderList )
 {
-	for each( OvRelationLinkBuilder* linkBuilder in m_collectedLinkBuilder )
+	for each( OvAssociatedLinkConnector* linkBuilder in m_collectedLinkBuilder )
 	{
 		builderList.push_back( linkBuilder );
 	}

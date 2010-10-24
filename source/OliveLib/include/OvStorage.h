@@ -7,7 +7,7 @@
 #include "OvStreamCommon.h"
 
 class OvObjectProperties;
-class OvRelationLinkBuilder;
+class OvAssociatedLinkConnector;
 class OvObject;
 
 class OvStorage : public OvMemObject
