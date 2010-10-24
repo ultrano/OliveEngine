@@ -25,7 +25,7 @@ OvPoint2 OvInputManager::GetCurrentMousePos()
 {
 	POINT cursorPos;
 	GetCursorPos( &cursorPos );
-	OvPoint2 newPos( cursorPos.x, cursorPos.y );
+	OvPoint2 newPos( (float)cursorPos.x, (float)cursorPos.y );
 	return newPos;
 }
 
