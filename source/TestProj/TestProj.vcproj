@@ -40,7 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="../OliveLib/include;../SupportLib/vld/include;../SupportLib/tixml/include;../GloryUnitTestKit/include;../../resource/shader;&quot;$(SolutionDir)PhysxSDK\Cooking\include&quot;;&quot;$(SolutionDir)PhysxSDK\Foundation\include&quot;;&quot;$(SolutionDir)PhysxSDK\NxCharacter\include&quot;;&quot;$(SolutionDir)PhysxSDK\Physics\include&quot;;&quot;$(SolutionDir)PhysxSDK\PhysXLoader\include&quot;"
+				AdditionalIncludeDirectories="&quot;$(SolutionDir)OliveLib/include&quot;;&quot;$(SolutionDir)SupportLib/vld/include&quot;;&quot;$(SolutionDir)SupportLib/tixml/include&quot;;&quot;$(SolutionDir)GloryUnitTestKit/include&quot;;&quot;$(SolutionDir)PhysxSDK\Cooking\include&quot;;&quot;$(SolutionDir)PhysxSDK\Foundation\include&quot;;&quot;$(SolutionDir)PhysxSDK\NxCharacter\include&quot;;&quot;$(SolutionDir)PhysxSDK\Physics\include&quot;;&quot;$(SolutionDir)PhysxSDK\PhysXLoader\include&quot;;&quot;$(SolutionDir)SupportLib\lua\include&quot;;../../resource/shader"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -63,7 +63,7 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="d3dx9d.lib d3d9.lib GloryLib.lib OliveLib.lib tinyxmld.lib PhysXLoader.lib NxCooking.lib NxCharacter.lib"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="../SupportLib/vld/lib_d;../SupportLib/tixml/lib;../debug;&quot;$(SolutionDir)PhysxSDK\lib\Win32&quot;"
+				AdditionalLibraryDirectories="&quot;$(SolutionDir)SupportLib/vld/lib_d&quot;;&quot;$(SolutionDir)SupportLib/tixml/lib&quot;;&quot;$(SolutionDir)PhysxSDK\lib\Win32&quot;;&quot;$(SolutionDir)SupportLib\lua\lib&quot;;../debug"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				TargetMachine="1"
@@ -177,6 +177,10 @@
 			Filter="cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
+			<File
+				RelativePath="..\SupportLib\lua\include\lua_tinker.cpp"
+				>
+			</File>
 			<File
 				RelativePath=".\Main.cpp"
 				>
