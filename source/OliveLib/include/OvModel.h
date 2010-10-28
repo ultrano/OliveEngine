@@ -33,6 +33,6 @@ public:
 private:
 
 	OvResourceTicketSPtr	m_material;
-	OvMeshSPtr		m_resourceMesh;
+	OvMeshSPtr				m_resourceMesh;
 
 };

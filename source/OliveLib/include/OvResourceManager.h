@@ -9,32 +9,30 @@
 //! 리소스 관리를 위한 단계이다.
 class OvResourceManager : public OvSingletonBase< OvResourceManager >
 {
+	friend class OvResource;
+	friend class OvResourceTicket;
+
 	typedef std::map<const OvRTTI*, OvResourceLoaderSPtr>	resource_loader_table;
 	typedef std::map< OvResource*, std::string >			resource_location_table;
 	typedef std::map< std::string, OvResourceTicket* >		resource_ticket_table;
-	typedef std::list< OvResourceSPtr >						resource_cache_list;	
-	friend class OvResource;
-	friend class OvResourceTicket;
+	typedef std::list< OvResourceSPtr >						resource_cache_list;
+
 public:
+
 	OvResourceManager();
 	~OvResourceManager();
 
 	template<typename Type_0>
 	OvSmartPointer<Type_0>	LoadResource( const string& fileLocation );
-	OvResourceSPtr	LoadResource( const OvRTTI* resourceType, const string& fileLocation );
-	OvResourceSPtr	LoadResource( const string& resourceType, const string& fileLocation );
+	OvResourceSPtr			LoadResource( const OvRTTI* resourceType, const string& fileLocation );
+	OvResourceSPtr			LoadResource( const string& resourceType, const string& fileLocation );
+	OvResourceTicketSPtr	CheckTicket(  const string& fileLocation );
+	OvResourceTicketSPtr	FindTicket( OvResourceSPtr resource );
 
-	OvResourceSPtr	ReloadResource( const string& fileLocation );
-	OvResourceSPtr	ReloadResource( OvResourceSPtr resource );
-	void			ReloadResourceAll();
+	void					ResourceCache( OvResourceSPtr resource );
+	string					FindFileLocation( OvResourceSPtr resource );
 
-	void			ResourceCache( OvResourceSPtr resource );
-
-	string			FindFileLocation( OvResourceSPtr resource );
-
-	OvResourceTicketSPtr	CheckIn(  OvResourceSPtr resource );
-
-	const string&	ResourceDirectory();
+	const string&			ResourceDirectory();
 
 private:
 

@@ -59,8 +59,9 @@ OvResourceFolder::operator const std::string&()
 	return m_completedFileLocation;
 }
 
-OvResourceTicket::OvResourceTicket( OvResource* resource )
-: m_resource( resource )
+OvResourceTicket::OvResourceTicket( const string& file )
+: m_resource( NULL )
+, m_fileName( file )
 {
 	OvResourceManager::GetInstance()->_called_when_ticket_created( this );
 }
@@ -76,7 +77,12 @@ OvResourceSPtr OvResourceTicket::CheckOut()
 	return m_resource;
 }
 
-void OvResourceTicket::_called_when_resource_reloaded( OvResource* resource )
+void OvResourceTicket::_check_in( OvResource* resource )
 {
 	m_resource = resource;
+}
+
+const string& OvResourceTicket::GetFileName()
+{
+	return m_fileName;
 }

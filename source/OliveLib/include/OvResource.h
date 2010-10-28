@@ -2,7 +2,6 @@
 #include "OvRefBase.h"
 #include "OvBitFlags.h"
 
-
 class OvResourceFolder : public OvMemObject
 {
 public:
@@ -53,11 +52,14 @@ public:
 
 	OvResourceSPtr CheckOut();
 
+	const string&	GetFileName();
+
 private:
 
-	OvResourceTicket( OvResource* resource );
-	void _called_when_resource_reloaded( OvResource* resource );
+	OvResourceTicket( const string& file );
+	void _check_in( OvResource* resource );
 
 private:
 	OvResourceSPtr m_resource;
+	std::string m_fileName;
 };

@@ -651,8 +651,9 @@ bool OvPropAccesser_resource_ticket::Inject( OvObject* pObj, OvObjectProperties&
 		fileLocation = &(resourceInfo.at( resourceInfo.find(':') + 1 ));
 		resourceType.resize( resourceInfo.find(':') );
 
+		(*accessProp) = OvResourceManager::GetInstance()->CheckTicket( ResDirPath( fileLocation )  );
+
 		OvResourceSPtr resource = OvResourceManager::GetInstance()->LoadResource( resourceType, ResDirPath( fileLocation ) );
-		(*accessProp) = OvResourceManager::GetInstance()->CheckIn( resource );
 	}
 
 	return false;

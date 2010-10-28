@@ -33,7 +33,7 @@ OvMeshSPtr OvModel::GetMesh()
 
 void OvModel::SetMaterial( OvMaterialSPtr material )
 {
-	m_material = OvResourceManager::GetInstance()->CheckIn( material );
+	m_material = OvResourceManager::GetInstance()->FindTicket( material );
 }
 
 OvMaterialSPtr OvModel::GetMaterial()

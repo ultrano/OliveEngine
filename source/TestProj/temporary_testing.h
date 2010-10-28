@@ -32,25 +32,6 @@ GL_TEST_CASE_FUNC( excuted_location_test )
 	}
 	OvSingletonPool::ShutDown();
 }
-GL_TEST_CASE_FUNC( resource_reload_and_ticket_test )
-{
-	OvSingletonPool::StartUp();
-	{
-		const string file_location = "texture/test.jpg";
-		OvRenderer::GetInstance()->GenerateRenderer();
-		OvTextureSPtr resource = OvResourceManager::GetInstance()->LoadResource<OvTexture>( ResDirPath( file_location ) );
-
-		OvResourceTicketSPtr ticket = OvResourceManager::GetInstance()->CheckIn( resource );
-
-		OvResourceSPtr old_resource = ticket->CheckOut();
-
-		OvResourceManager::GetInstance()->ReloadResource( file_location );
-
-		OvResourceSPtr new_resource = ticket->CheckOut();
-
-	}
-	OvSingletonPool::ShutDown();
-}
 GL_TEST_CASE_FUNC( olive_value_addtional_operator_test )
 {
 

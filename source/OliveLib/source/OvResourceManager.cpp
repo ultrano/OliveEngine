@@ -54,58 +54,6 @@ OvResourceSPtr OvResourceManager::LoadResource( const string& resourceType, cons
 	return NULL;
 }
 
-OvResourceSPtr OvResourceManager::ReloadResource( const string& fileLocation )
-{
-	for each( const resource_location_table::value_type& table_pair in m_resourceLocationTable )
-	{
-		if ( fileLocation == table_pair.second )
-		{
-			return ReloadResource( table_pair.first );
-		}
-	}
-	return NULL;
-}
-
-OvResourceSPtr OvResourceManager::ReloadResource( OvResourceSPtr resource )
-{
-	if ( resource )
-	{
-		std::string fileLocation = FindFileLocation( resource );
-		const OvRTTI* resourceType = resource->QueryRTTI();
-		if ( !fileLocation.empty() && resourceType )
-		{
-			m_resourceLocationTable.erase( resource.GetRear() );
-			resource = _force_load_resouroce( resourceType, fileLocation );
-
-			OvResourceTicketSPtr ticket = NULL;
-			resource_ticket_table::iterator itor = m_resourceTicketTable.find( fileLocation );
-			if ( itor != m_resourceTicketTable.end() )
-			{
-				if ( OvResourceTicket* ticket = itor->second )
-				{
-					ticket->_called_when_resource_reloaded( resource.GetRear() );
-				}
-			}
-		}
-	}
-	return resource;
-}
-void OvResourceManager::ReloadResourceAll()
-{
-	vector< OvResourceSPtr > res_holder;
-	res_holder.reserve( m_resourceLocationTable.size() );
-
-	for each ( resource_location_table::value_type table_value in m_resourceLocationTable )
-	{
-		res_holder.push_back( table_value.first );
-	}
-
-	for each ( OvResourceSPtr resource in res_holder )
-	{
-		ReloadResource( resource );
-	}
-
-}
 void OvResourceManager::ResourceCache( OvResourceSPtr resource )
 {
 	if ( resource )
@@ -122,6 +70,11 @@ void OvResourceManager::_register_loaded_resource( OvResource* resource, const s
 	if ( m_resourceLocationTable.end() != itor )
 	{
 		itor->second = location;
+	}
+
+	if ( OvResourceTicketSPtr ticket = CheckTicket( location ) )
+	{
+		ticket->_check_in( resource );
 	}
 }
 
@@ -141,8 +94,13 @@ void OvResourceManager::_called_when_resource_deleted( OvResource* resource )
 
 void OvResourceManager::_called_when_ticket_created( OvResourceTicket* ticket )
 {
-	const string& file_location = FindFileLocation( ticket->m_resource.GetRear() );
-	if ( ! file_location.empty() )
+	const string& file_location = ticket->GetFileName();
+
+	if (
+		! file_location.empty()
+		&& 
+		m_resourceTicketTable.find( file_location ) == m_resourceTicketTable.end() 
+		)
 	{
 		m_resourceTicketTable[ file_location ] = ticket;
 	}
@@ -150,7 +108,7 @@ void OvResourceManager::_called_when_ticket_created( OvResourceTicket* ticket )
 
 void OvResourceManager::_called_when_ticket_deleted( OvResourceTicket* ticket )
 {
-	const string& file_location = FindFileLocation( ticket->m_resource );
+	const string& file_location = ticket->GetFileName();
 	m_resourceTicketTable.erase( file_location );
 }
 
@@ -184,20 +142,23 @@ string OvResourceManager::FindFileLocation( OvResourceSPtr resource )
 	return fileLocation;
 }
 
-OvResourceTicketSPtr OvResourceManager::CheckIn( OvResourceSPtr resource )
+OvResourceTicketSPtr OvResourceManager::CheckTicket( const string& fileLocation )
 {
-	if ( resource )
+	OvResourceTicketSPtr ticket = NULL;
+	if ( ! fileLocation.empty() )
 	{
-		string location = FindFileLocation( resource );
-		resource_ticket_table::iterator itor = m_resourceTicketTable.find( location );
-		if ( itor != m_resourceTicketTable.end() )
+		resource_ticket_table::iterator itor = m_resourceTicketTable.find( fileLocation );
+		if ( itor == m_resourceTicketTable.end() )
 		{
-			return itor->second;
+			ticket = OvNew OvResourceTicket( fileLocation );
 		}
-
-		return ( OvNew OvResourceTicket( resource.GetRear() ) );
+		else
+		{
+			ticket = itor->second;
+		}
 	}
-	return NULL;
+
+	return ticket;
 }
 
 OvResourceSPtr OvResourceManager::_force_load_resouroce( const OvRTTI* resourceType, const string& fileLocation )
@@ -226,6 +187,13 @@ const string& OvResourceManager::ResourceDirectory()
 	return m_resourceDirectory;
 }
 
+OvResourceTicketSPtr OvResourceManager::FindTicket( OvResourceSPtr resource )
+{
+	const string& file = FindFileLocation( resource );
+
+	return CheckTicket( file );
+
+}
 std::string ResDirPath( const std::string& file )
 {
 	return OvResourceManager::GetInstance()->ResourceDirectory() + "\\" + file;
