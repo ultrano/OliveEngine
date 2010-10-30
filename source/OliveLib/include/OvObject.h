@@ -39,13 +39,16 @@ public:
 	//! ID of Object
 	OvObjectID		GetObjectID();
 
-	void		RegisterExtraProperty( const string& propName, OliveValue::Value* extraProp );
-	bool		RemoveExtraProperty( const string& propName );
-	void		ClearExtraProperty();
-
+	//! Extra Property
 	template<typename Type_0>
 	Type_0* FindExtraProperty( const string& propName );
 	OliveValue::Value* FindExtraProperty( const string& propName );
+
+	//! RegisterExtraProperty는 성능상의 부하를 고려 해야 겠다. (구현부가 부하를 발생시키게 생겼다.)
+	bool		RegisterExtraProperty( const string& propName, OliveValue::Value& extraProp );
+	bool		RemoveExtraProperty( const string& propName );
+	void		ClearExtraProperty();
+
 
 private:
 

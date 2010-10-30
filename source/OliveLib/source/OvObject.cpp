@@ -21,7 +21,6 @@ OvPROPERTY_BAG_END(OvObject);
 OvObject::OvObject()
 {
 	m_idObjectID = OvObjectManager::GetInstance()->AllocObjectID(this);
-	RegisterExtraProperty( "Name", OliveValue::Factory( "String" ) );
 }
 OvObject::OvObject(OvStorage& rStorage)
 {
@@ -47,11 +46,20 @@ OvObjectID		OvObject::GetObjectID()
 	return m_idObjectID;
 }
 
-void		OvObject::RegisterExtraProperty( const string& propName, OliveValue::Value* extraProp )
+bool OvObject::RegisterExtraProperty( const string& propName, OliveValue::Value& extraProp )
 {
-	RemoveExtraProperty( propName );
-	m_extraPropertyTable[propName] = extraProp;
+	if ( m_extraPropertyTable.find( propName ) == m_extraPropertyTable.end() )
+	{
+		OliveValue::Value* copy = OliveValue::Factory( OvRTTI_Util::TypeName( &extraProp ) );
+		if ( copy )
+		{
+			copy->SetValue( extraProp.GetValue() );
+			return true;
+		}
+	}
+	return false;
 }
+
 bool		OvObject::RemoveExtraProperty( const string& propName )
 {
 	extra_property_table::iterator tableIter = m_extraPropertyTable.find(propName) ;

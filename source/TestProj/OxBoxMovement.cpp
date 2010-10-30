@@ -65,8 +65,8 @@ void OxBoxMovement::SetUp()
 		m_actor->setGlobalOrientationQuat( OvConvert::xyzw<NxQuat>( GetTarget()->GetRotation() ) );
 		m_actor->addForce( OvConvert::xyz<NxVec3>( m_vel * 20000 ) );
 
-		OliveValue::UserData* actorData = OliveValue::Factory<OliveValue::UserData>();
-		actorData->SetUserData( (void*)m_actor );
+		OliveValue::UserData actorData;
+		actorData.SetUserData( (void*)m_actor );
 		GetTarget()->RegisterExtraProperty( "PhysxActor", actorData );
 	}
 	else
