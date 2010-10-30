@@ -1,7 +1,9 @@
 #pragma once
 #include "OvRefBase.h"
+
 OvREF_POINTER(OvResource);
 OvREF_POINTER(OvResourceLoader);
+
 class OvResourceLoader : public OvRefBase
 {
 	OvRTTI_DECL(OvResourceLoader);
