@@ -1,8 +1,12 @@
 #include "OvResourceManager.h"
 #include "OvFileMeshLoader.h"
+#include "OvMesh.h"
 #include "OvTextureLoader.h"
+#include "OvTexture.h"
 #include "OvShaderCodeLoader.h"
+#include "OvShaderCode.h"
 #include "OvMaterialLoader.h"
+#include "OvMaterial.h"
 
 #include <algorithm>
 

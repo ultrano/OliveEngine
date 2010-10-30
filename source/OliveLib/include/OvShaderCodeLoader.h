@@ -1,5 +1,5 @@
 #pragma once
-#include "OvShaderCode.h"
+#include "OvResourceLoader.h"
 
 class OvShaderCodeLoader : public OvResourceLoader
 {

@@ -2,6 +2,7 @@
 #include "OvXNode.h"
 #include "OvMesh.h"
 #include "OvMaterial.h"
+#include "OvResourceTicket.h"
 
 OvREF_POINTER(OvModel);
 class OvModel : public OvXNode

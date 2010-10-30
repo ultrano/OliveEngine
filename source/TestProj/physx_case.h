@@ -41,10 +41,10 @@ public:
 		OvSingletonPool::StartUp();
 		OvRenderer::GetInstance()->GenerateRenderer();
 
-		lua_State* state = lua_open();
-		luaL_openlibs(state);
-		lua_tinker::def(state,"messagebox", OvMessageBox);
-		lua_tinker::dofile(state,ResDirPath("script/lua/testsrvr.lua").c_str());
+// 		lua_State* state = lua_open();
+// 		luaL_openlibs(state);
+// 		lua_tinker::def(state,"messagebox", OvMessageBox);
+// 		lua_tinker::dofile(state,ResDirPath("script/lua/testsrvr.lua").c_str());
 
 		OvStorage store;
 		if ( ! store.Load( ResDirPath("ovf/scene_test.xml"), m_loadedObjects) )

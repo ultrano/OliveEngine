@@ -1,6 +1,8 @@
 #pragma once
 #include "OvSingleton.h"
 #include "OvResource.h"
+#include "OvResourceLoader.h"
+#include "OvResourceTicket.h"
 #include <string>
 #include <list>
 #include <map>

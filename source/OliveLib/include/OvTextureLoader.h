@@ -1,5 +1,5 @@
 #pragma once
-#include "OvTexture.h"
+#include "OvResourceLoader.h"
 
 class OvTextureLoader : public OvResourceLoader
 {

@@ -1,4 +1,5 @@
 #pragma once
+#include "OvResourceLoader.h"
 #include "OvMesh.h"
 
 class OvMeshLoaderBase : public OvResourceLoader

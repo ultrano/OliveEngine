@@ -1,4 +1,5 @@
 #include "OvMaterialLoader.h"
+#include "OvMaterial.h"
 #include "tinyxml.h"
 #include "OvVertexShader.h"
 #include "OvPixelShader.h"

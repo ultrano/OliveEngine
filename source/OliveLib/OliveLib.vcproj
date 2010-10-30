@@ -384,30 +384,6 @@
 					</File>
 				</Filter>
 				<Filter
-					Name="OvResource"
-					>
-					<File
-						RelativePath=".\source\OvResource.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\include\OvResource.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="OvResourceManager"
-					>
-					<File
-						RelativePath=".\source\OvResourceManager.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\include\OvResourceManager.h"
-						>
-					</File>
-				</Filter>
-				<Filter
 					Name="OvShader"
 					>
 					<File
@@ -514,6 +490,58 @@
 						RelativePath=".\include\OvScene.h"
 						>
 					</File>
+				</Filter>
+				<Filter
+					Name="ResourceFolder"
+					>
+					<Filter
+						Name="OvResource"
+						>
+						<File
+							RelativePath=".\source\OvResource.cpp"
+							>
+						</File>
+						<File
+							RelativePath=".\include\OvResource.h"
+							>
+						</File>
+					</Filter>
+					<Filter
+						Name="OvResourceManager"
+						>
+						<File
+							RelativePath=".\source\OvResourceManager.cpp"
+							>
+						</File>
+						<File
+							RelativePath=".\include\OvResourceManager.h"
+							>
+						</File>
+					</Filter>
+					<Filter
+						Name="OvResourceLoader"
+						>
+						<File
+							RelativePath=".\source\OvResourceLoader.cpp"
+							>
+						</File>
+						<File
+							RelativePath=".\include\OvResourceLoader.h"
+							>
+						</File>
+					</Filter>
+					<Filter
+						Name="OvResourceTicket"
+						>
+						<File
+							RelativePath=".\source\OvResourceTicket.cpp"
+							>
+						</File>
+						<File
+							RelativePath=".\include\OvResourceTicket.h"
+							>
+						</File>
+					</Filter>
 				</Filter>
 			</Filter>
 			<Filter

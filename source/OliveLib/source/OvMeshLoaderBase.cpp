@@ -1,4 +1,5 @@
 #include "OvMeshLoaderBase.h"
+#include "OvMesh.h"
 #include "OvAutoPtr.h"
 
 OvRTTI_IMPL(OvMeshLoaderBase);

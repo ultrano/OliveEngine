@@ -1,4 +1,5 @@
 #include "OvShaderCodeLoader.h"
+#include "OvShaderCode.h"
 
 OvResourceSPtr OvShaderCodeLoader::Load( const std::string& fileLocation )
 {

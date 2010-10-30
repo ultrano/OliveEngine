@@ -1,4 +1,5 @@
 #include "OvTextureLoader.h"
+#include "OvTexture.h"
 #include "OvRenderer.h"
 
 OvResourceSPtr OvTextureLoader::Load( const std::string& fileLocation )
