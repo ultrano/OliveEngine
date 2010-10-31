@@ -558,6 +558,18 @@
 							>
 						</File>
 					</Filter>
+					<Filter
+						Name="OvFileMeshLoader"
+						>
+						<File
+							RelativePath=".\source\OvFileMeshLoader.cpp"
+							>
+						</File>
+						<File
+							RelativePath=".\include\OvFileMeshLoader.h"
+							>
+						</File>
+					</Filter>
 				</Filter>
 			</Filter>
 			<Filter
@@ -604,18 +616,6 @@
 					>
 					<File
 						RelativePath=".\include\OvConvert.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="OvFileMeshLoader"
-					>
-					<File
-						RelativePath=".\source\OvFileMeshLoader.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\include\OvFileMeshLoader.h"
 						>
 					</File>
 				</Filter>
