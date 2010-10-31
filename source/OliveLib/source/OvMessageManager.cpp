@@ -24,32 +24,41 @@ bool	OvWinMsgManager::_listenMessage( HWND hWnd, UINT message, WPARAM wParam, LP
 {
 	switch ( message )
 	{
+	case WM_NCLBUTTONDOWN : 
 	case WM_LBUTTONDOWN : 
 		OvInputManager::GetInstance()->_notify_mouse_state( L_BUTTON, PRESSED );
 		break;
+	case WM_NCMBUTTONDOWN : 
 	case WM_MBUTTONDOWN : 
 		OvInputManager::GetInstance()->_notify_mouse_state( M_BUTTON, PRESSED );
 		break;
+	case WM_NCRBUTTONDOWN : 
 	case WM_RBUTTONDOWN : 
 		OvInputManager::GetInstance()->_notify_mouse_state( R_BUTTON, PRESSED );
 		break;
 
+	case WM_NCLBUTTONUP : 
 	case WM_LBUTTONUP : 
 		OvInputManager::GetInstance()->_notify_mouse_state( L_BUTTON, RELEASED );
 		break;
+	case WM_NCMBUTTONUP : 
 	case WM_MBUTTONUP : 
 		OvInputManager::GetInstance()->_notify_mouse_state( M_BUTTON, RELEASED );
 		break;
+	case WM_NCRBUTTONUP : 
 	case WM_RBUTTONUP : 
 		OvInputManager::GetInstance()->_notify_mouse_state( R_BUTTON, RELEASED );
 		break;
 
+	case WM_NCLBUTTONDBLCLK : 
 	case WM_LBUTTONDBLCLK : 
 		OvInputManager::GetInstance()->_notify_mouse_state( L_BUTTON, DBCLICKED );
 		break;
+	case WM_NCMBUTTONDBLCLK : 
 	case WM_MBUTTONDBLCLK : 
 		OvInputManager::GetInstance()->_notify_mouse_state( M_BUTTON, DBCLICKED );
 		break;
+	case WM_NCRBUTTONDBLCLK : 
 	case WM_RBUTTONDBLCLK : 
 		OvInputManager::GetInstance()->_notify_mouse_state( R_BUTTON, DBCLICKED );
 
