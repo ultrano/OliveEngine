@@ -73,9 +73,8 @@ private:
 	void	_async_routine();
 
 	OvResourceTicketSPtr	_check_ticket( const OvRTTI* type, const string& fileLocation );
-	void	_add_async_load_info( SAsyncLoadInfo& info );
-	void	_copy_async_load_list( async_load_list& copy );
-	void	_clear_async_load_list();
+	void	_push_async_load_info( SAsyncLoadInfo& info );
+	bool	_pop_async_load_info( SAsyncLoadInfo& info );
 
 private:
 	resource_loader_table	m_loaderTable;

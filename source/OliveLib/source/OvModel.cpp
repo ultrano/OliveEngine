@@ -8,11 +8,12 @@
 OvRTTI_IMPL(OvModel)
 OvPROPERTY_BAG_BEGIN(OvModel)
 	OvPROPERTY_BAG_REGISTER( OvPropAccesser_resource_ticket, m_material )
-	OvPROPERTY_BAG_REGISTER( OvPropAccesser_resource, m_resourceMesh )
+	OvPROPERTY_BAG_REGISTER( OvPropAccesser_resource_ticket, m_mesh )
 OvPROPERTY_BAG_END(OvModel)
 
 OvModel::OvModel()
 : m_material( NULL )
+, m_mesh( NULL )
 {
 
 }
@@ -23,12 +24,12 @@ OvModel::~OvModel()
 }
 void OvModel::SetMesh( OvMeshSPtr resource )
 {
-	m_resourceMesh = resource;
+	m_mesh = OvResourceManager::GetInstance()->FindTicket( resource );
 }
 
 OvMeshSPtr OvModel::GetMesh()
 {
-	return m_resourceMesh;
+	return m_mesh->CheckOut();
 }
 
 void OvModel::SetMaterial( OvMaterialSPtr material )
@@ -56,9 +57,9 @@ void OvModel::RenderWithoutMaterial()
 	OvShaderManager::GetInstance()->GetVSConst( OvVShaderConst::ViewProject, temp_mat );
 	OvShaderManager::GetInstance()->SetVSConst( OvVShaderConst::WorldViewProject, GetWorldMatrix() * temp_mat );
 
-	if ( m_resourceMesh )
+	if ( GetMesh() )
 	{
-		m_resourceMesh->Rendering();
+		GetMesh()->Rendering();
 	}
 }
 
@@ -77,8 +78,8 @@ void	OvModel::Render()
 	OvShaderManager::GetInstance()->GetVSConst( OvVShaderConst::ViewProject, view_proj );
 	OvShaderManager::GetInstance()->SetVSConst( OvVShaderConst::WorldViewProject, GetWorldMatrix() * view_proj );
 
-	if ( m_resourceMesh )
+	if ( GetMesh() )
 	{
-		m_resourceMesh->Rendering();
+		GetMesh()->Rendering();
 	}
 }

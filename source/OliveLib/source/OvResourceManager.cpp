@@ -83,7 +83,7 @@ OvResourceTicketSPtr OvResourceManager::AsyncLoadResource( const OvRTTI* resourc
 		info.file = fileLocation;
 		info.loader = _find_resource_loader( resourceType );
 		info.loader = info.loader->Clone();
-		_add_async_load_info( info );
+		_push_async_load_info( info );
 	}
 	return ticket;
 }
@@ -242,11 +242,10 @@ void OvResourceManager::_async_routine()
 {
 	while ( _get_async_life_flag() )
 	{
-		async_load_list copy_list;
-		_copy_async_load_list( copy_list );
-		OvResourceSPtr resource = NULL;
-		for each( SAsyncLoadInfo info in copy_list )
+		SAsyncLoadInfo info;
+		if ( _pop_async_load_info( info ) )
 		{
+			OvResourceSPtr resource = NULL;
 			if ( info.loader )
 			{
 				if ( resource = info.loader->_load_resource( info.file ) )
@@ -255,26 +254,25 @@ void OvResourceManager::_async_routine()
 				}
 			}
 		}
-		_clear_async_load_list();
 	}
 }
 
-void OvResourceManager::_add_async_load_info( SAsyncLoadInfo& info )
+void OvResourceManager::_push_async_load_info( SAsyncLoadInfo& info )
 {
 	OvSectionGuardian guardian( m_load_section );
 	m_aload_list.push_back( info );
 }
 
-void OvResourceManager::_copy_async_load_list( async_load_list& copy )
+bool OvResourceManager::_pop_async_load_info( SAsyncLoadInfo& info )
 {
 	OvSectionGuardian guardian( m_load_section );
-	copy = m_aload_list;
-}
-
-void OvResourceManager::_clear_async_load_list()
-{
-	OvSectionGuardian guardian( m_load_section );
-	m_aload_list.clear();
+	if ( m_aload_list.size() )
+	{
+		info = m_aload_list.front();
+		m_aload_list.pop_front();
+		return true;
+	}
+	return false;
 }
 
 void OvResourceManager::_set_resource_location( OvResource* resource, const string& location )

@@ -12,7 +12,7 @@ class OvShaderCode : public OvResource
 	OvRTTI_DECL( OvShaderCode );
 	typedef std::map< std::pair<std::string,std::string>, OvShaderSPtr > precompiled_shader_table;
 public:
-	
+
 	OvShaderCode( const std::string& code);
 	const string&	GetCodeString();
 	void*			GetCodeBuffer();
