@@ -14,7 +14,11 @@ OxCameraController::OxCameraController( NxScene * scene )
 
 OxCameraController::~OxCameraController()
 {
-
+	if ( m_scene && m_cameraActor )
+	{
+		m_scene->releaseActor( *m_cameraActor );
+		m_cameraActor = NULL;
+	}
 }
 
 void OxCameraController::SetUp()
@@ -72,7 +76,7 @@ void OxCameraController::Update( float _fElapse )
 	float moveSpeed = 50.0f;
 	if ( OvInputManager::IsPushed( VK_SHIFT ))
 	{
-		moveSpeed = moveSpeed * 2;
+		moveSpeed = moveSpeed * 5;
 	}
 	if ( OvInputManager::IsPushed( 'W' ) )
 	{

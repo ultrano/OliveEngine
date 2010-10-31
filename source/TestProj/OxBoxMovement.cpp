@@ -14,6 +14,15 @@ OxBoxMovement::OxBoxMovement( NxScene * scene, OvPoint3& vel ) : m_time( 0 )
 
 }
 
+OxBoxMovement::~OxBoxMovement()
+{
+	if ( m_scene && m_actor )
+	{
+		m_scene->releaseActor( *m_actor );
+		m_actor = NULL;
+	}
+}
+
 void OxBoxMovement::Update( float _fElapse )
 {
 	if( NULL == m_actor ) return ;
@@ -24,11 +33,6 @@ void OxBoxMovement::Update( float _fElapse )
 	m_time++;
 	if( m_time >= 1500 )
 	{
-		if ( m_actor )
-		{
-			m_scene->releaseActor( *m_actor );
-			m_actor = NULL;
-		}
 		GetTarget()->SetControlFlag(OvXObject::UPDATABLE,false);
 		GetTarget()->SetControlFlag(OvXObject::VISIBLE,false);
 		OvXNodeSPtr xnode = GetTarget()->GetAttachedNode();
