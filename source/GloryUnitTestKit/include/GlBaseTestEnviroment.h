@@ -18,8 +18,8 @@ public:
 
 public:
 
-	void	SetEnvName( const string& );
-	void	SetCaseTitle( const string& );
+	void	SetEnvName( const char* );
+	void	SetCaseTitle( const char* );
 
 	const string&	GetEnvName();
 	const string&	GetCaseTitle();

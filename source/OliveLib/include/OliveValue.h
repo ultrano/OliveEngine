@@ -42,6 +42,7 @@ namespace OliveValue
 		Value();
 		virtual ~Value();
 	public:
+		void			SetValue( const char* expData );
 		virtual void	SetValue( const string& expData ) = 0;
 		virtual string	GetValue() = 0;
 	};

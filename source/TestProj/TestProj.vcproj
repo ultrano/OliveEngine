@@ -63,7 +63,7 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="d3dx9d.lib d3d9.lib GloryLib.lib OliveLib.lib tinyxmld.lib PhysXLoader.lib NxCooking.lib NxCharacter.lib"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="&quot;$(SolutionDir)SupportLib/vld/lib_d&quot;;&quot;$(SolutionDir)SupportLib/tixml/lib&quot;;&quot;$(SolutionDir)PhysxSDK\lib\Win32&quot;;&quot;$(SolutionDir)SupportLib\lua\lib&quot;;../debug"
+				AdditionalLibraryDirectories="&quot;$(SolutionDir)SupportLib/vld/lib_d&quot;;&quot;$(SolutionDir)SupportLib/tixml/lib&quot;;&quot;$(SolutionDir)PhysxSDK\lib\Win32&quot;;&quot;$(SolutionDir)SupportLib\lua\lib&quot;;&quot;$(SolutionDir)$(ConfigurationName)&quot;"
 				IgnoreDefaultLibraryNames="LIBCMTD.lib"
 				GenerateDebugInformation="true"
 				SubSystem="2"
@@ -99,7 +99,7 @@
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="1"
-			CharacterSet="1"
+			CharacterSet="2"
 			WholeProgramOptimization="1"
 			>
 			<Tool
@@ -119,6 +119,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
+				AdditionalIncludeDirectories="&quot;$(SolutionDir)OliveLib/include&quot;;&quot;$(SolutionDir)SupportLib/vld/include&quot;;&quot;$(SolutionDir)SupportLib/tixml/include&quot;;&quot;$(SolutionDir)GloryUnitTestKit/include&quot;;&quot;$(SolutionDir)PhysxSDK\Cooking\include&quot;;&quot;$(SolutionDir)PhysxSDK\Foundation\include&quot;;&quot;$(SolutionDir)PhysxSDK\NxCharacter\include&quot;;&quot;$(SolutionDir)PhysxSDK\Physics\include&quot;;&quot;$(SolutionDir)PhysxSDK\PhysXLoader\include&quot;;&quot;$(SolutionDir)SupportLib\lua\include&quot;;../../resource/shader"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
@@ -137,7 +138,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="d3dx9.lib d3d9.lib GloryLib.lib OliveLib.lib tinyxmld.lib PhysXLoader.lib NxCooking.lib NxCharacter.lib"
 				LinkIncremental="1"
+				AdditionalLibraryDirectories="&quot;$(SolutionDir)SupportLib/tixml/lib&quot;;&quot;$(SolutionDir)PhysxSDK\lib\Win32&quot;;&quot;$(SolutionDir)SupportLib\lua\lib&quot;;&quot;$(SolutionDir)$(ConfigurationName)&quot;"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				OptimizeReferences="2"

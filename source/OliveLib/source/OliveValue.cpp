@@ -41,6 +41,12 @@ Value::~Value()
 {
 
 }
+
+void OliveValue::Value::SetValue( const char* expData )
+{
+	SetValue( string( expData ) );
+}
+
 //////////////////////////////////////////////////////////////////////////
 
 void OliveValue::Bool::SetValue( const string& expData )
