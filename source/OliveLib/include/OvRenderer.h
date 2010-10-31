@@ -11,6 +11,24 @@ OvREF_POINTER(OvVertexShader);
 OvREF_POINTER(OvTexture);
 OvREF_POINTER(OvCubeTexture);
 
+class OvDevice
+{
+private:
+	OvDevice();
+public:
+
+	OvDevice( OvDevice& copy );
+	OvDevice(LPDIRECT3DDEVICE9 device, CRITICAL_SECTION& occupy );
+	~OvDevice();
+
+	LPDIRECT3DDEVICE9 operator ->()const;;
+	operator	LPDIRECT3DDEVICE9();
+	operator	bool();
+
+private:
+	LPDIRECT3DDEVICE9 m_device;
+	CRITICAL_SECTION& m_device_occupy;
+};
 class OvRenderer : public OvSingletonBase< OvRenderer >
 {
 	OvRTTI_DECL_ROOT(OvRenderer);
@@ -47,10 +65,11 @@ public:
 	LPDIRECT3DINDEXBUFFER9	CreateIndexStream( void* buffer, UINT stride, UINT count);
 	LPDIRECT3DVERTEXDECLARATION9 CreateVertexDeclaration( D3DVERTEXELEMENT9* vertElement );
 
-	LPDIRECT3DDEVICE9	GetDevice();
+	OvDevice		GetDevice();
 
 private:
 
 	LPDIRECT3DDEVICE9			m_device;
+	CRITICAL_SECTION			m_device_occupy;
 
 };

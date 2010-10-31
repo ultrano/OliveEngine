@@ -142,7 +142,7 @@ void OvRenderTarget::CubeFaceMatrix( D3DCUBEMAP_FACES face_index, const OvPoint3
 OvTextureSPtr CreateRenderTexture( unsigned width, unsigned height, unsigned level, D3DFORMAT format )
 {
 	OvTextureSPtr return_texture = NULL;
-	LPDIRECT3DDEVICE9 device = OvRenderer::GetInstance()->GetDevice();
+	OvDevice device = OvRenderer::GetInstance()->GetDevice();
 	if ( device )
 	{
 		LPDIRECT3DTEXTURE9 texture = NULL;
@@ -159,7 +159,7 @@ OvTextureSPtr CreateRenderTexture( unsigned width, unsigned height, unsigned lev
 OvTextureSPtr CreateDepthStencilTexture( unsigned width, unsigned height, unsigned level, D3DFORMAT format )
 {
 	OvTextureSPtr return_texture = NULL;
-	LPDIRECT3DDEVICE9 device = OvRenderer::GetInstance()->GetDevice();
+	OvDevice device = OvRenderer::GetInstance()->GetDevice();
 	if ( device )
 	{
 		LPDIRECT3DTEXTURE9 texture = NULL;
@@ -176,7 +176,7 @@ OvTextureSPtr CreateDepthStencilTexture( unsigned width, unsigned height, unsign
 OvCubeTextureSPtr CreateRenderCubeTexture( unsigned size, unsigned level, D3DFORMAT format )
 {
 	OvCubeTextureSPtr return_texture = NULL;
-	LPDIRECT3DDEVICE9 device = OvRenderer::GetInstance()->GetDevice();
+	OvDevice device = OvRenderer::GetInstance()->GetDevice();
 	if ( device )
 	{
 		LPDIRECT3DCUBETEXTURE9 cube_texture = NULL;

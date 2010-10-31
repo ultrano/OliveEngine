@@ -86,7 +86,7 @@ OvVertexShaderSPtr OvShaderCode::CompileVertexShader( const string& entry_func, 
 		SDxAutoRelease autoRelease( shaderBuffer );
 		if ( shaderBuffer )
 		{
-			LPDIRECT3DDEVICE9 device = OvRenderer::GetInstance()->GetDevice();
+			OvDevice device = OvRenderer::GetInstance()->GetDevice();
 			if ( device )
 			{
 				LPDIRECT3DVERTEXSHADER9 shader = NULL;
@@ -110,7 +110,7 @@ OvPixelShaderSPtr	OvShaderCode::CompilePixelShader( const string& entry_func, co
 		SDxAutoRelease autoRelease( shaderBuffer );
 		if ( shaderBuffer )
 		{
-			LPDIRECT3DDEVICE9 device = OvRenderer::GetInstance()->GetDevice();
+			OvDevice device = OvRenderer::GetInstance()->GetDevice();
 			if ( device )
 			{
 				LPDIRECT3DPIXELSHADER9 shader = NULL;

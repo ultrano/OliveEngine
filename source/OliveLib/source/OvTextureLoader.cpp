@@ -8,7 +8,7 @@ OvResourceSPtr OvTextureLoader::Load( const std::string& fileLocation )
 {
 	if ( fileLocation.empty() == false )
 	{
-		LPDIRECT3DDEVICE9 device = OvRenderer::GetInstance()->GetDevice();
+		OvDevice device = OvRenderer::GetInstance()->GetDevice();
 		if ( device )
 		{
 			LPDIRECT3DTEXTURE9	kpTexture = NULL;

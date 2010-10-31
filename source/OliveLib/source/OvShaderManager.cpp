@@ -21,7 +21,7 @@ OvShaderManager::~OvShaderManager()
 
 bool	OvShaderManager::SetVSConstB(const OvShaderConstInfo& rConstInfo,bool bCheck)
 {
-	LPDIRECT3DDEVICE9 kpDevice =  OvRenderer::GetInstance()->GetDevice();
+	OvDevice kpDevice =  OvRenderer::GetInstance()->GetDevice();
 	if (kpDevice)
 	{
 		HRESULT kHs = E_FAIL;
@@ -32,7 +32,7 @@ bool	OvShaderManager::SetVSConstB(const OvShaderConstInfo& rConstInfo,bool bChec
 }
 bool	OvShaderManager::GetVSConstB(const OvShaderConstInfo& rConstInfo,bool& bCheck)
 {
-	LPDIRECT3DDEVICE9 kpDevice =  OvRenderer::GetInstance()->GetDevice();
+	OvDevice kpDevice =  OvRenderer::GetInstance()->GetDevice();
 	if (kpDevice)
 	{
 		HRESULT kHs = E_FAIL;
@@ -44,7 +44,7 @@ bool	OvShaderManager::GetVSConstB(const OvShaderConstInfo& rConstInfo,bool& bChe
 
 bool	OvShaderManager::_SetVSConstF(const OvShaderConstInfo& rConstInfo,float* pConst,size_t stConstSize)
 {
-	LPDIRECT3DDEVICE9 kpDevice =  OvRenderer::GetInstance()->GetDevice();
+	OvDevice kpDevice =  OvRenderer::GetInstance()->GetDevice();
 	if (kpDevice)
 	{
 		HRESULT kHs = E_FAIL;
@@ -66,7 +66,7 @@ bool	OvShaderManager::_SetVSConstF(const OvShaderConstInfo& rConstInfo,float* pC
 }
 bool	OvShaderManager::_GetVSConstF(const OvShaderConstInfo& rConstInfo,float* pConst,size_t stConstSize)
 {
-	LPDIRECT3DDEVICE9 kpDevice =  OvRenderer::GetInstance()->GetDevice();
+	OvDevice kpDevice =  OvRenderer::GetInstance()->GetDevice();
 	if (kpDevice)
 	{
 		HRESULT kHs = E_FAIL;
@@ -115,7 +115,7 @@ bool	OvShaderManager::GetVSConst(const OvShaderConstInfo& rConstInfo,OvMatrix& r
 
 bool	OvShaderManager::_SetPSConstF(const OvShaderConstInfo& rConstInfo,float* pConst,size_t stConstSize)
 {
-	LPDIRECT3DDEVICE9 kpDevice =  OvRenderer::GetInstance()->GetDevice();
+	OvDevice kpDevice =  OvRenderer::GetInstance()->GetDevice();
 	if (kpDevice)
 	{
 		HRESULT kHs = E_FAIL;
@@ -127,7 +127,7 @@ bool	OvShaderManager::_SetPSConstF(const OvShaderConstInfo& rConstInfo,float* pC
 }
 bool	OvShaderManager::_GetPSConstF(const OvShaderConstInfo& rConstInfo,float* pConst,size_t stConstSize)
 {
-	LPDIRECT3DDEVICE9 kpDevice =  OvRenderer::GetInstance()->GetDevice();
+	OvDevice kpDevice =  OvRenderer::GetInstance()->GetDevice();
 	if (kpDevice)
 	{
 		HRESULT kHs = E_FAIL;
