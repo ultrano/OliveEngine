@@ -242,7 +242,6 @@ void OvResourceManager::_async_routine()
 {
 	while ( _get_async_life_flag() )
 	{
-		Sleep(5500);
 		async_load_list copy_list;
 		_copy_async_load_list( copy_list );
 		OvResourceSPtr resource = NULL;
