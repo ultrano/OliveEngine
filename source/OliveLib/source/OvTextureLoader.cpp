@@ -2,6 +2,8 @@
 #include "OvTexture.h"
 #include "OvRenderer.h"
 
+OvRTTI_IMPL( OvTextureLoader );
+
 OvResourceSPtr OvTextureLoader::Load( const std::string& fileLocation )
 {
 	if ( fileLocation.empty() == false )

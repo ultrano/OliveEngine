@@ -2,7 +2,6 @@
 #include "OvResourceManager.h"
 
 OvRTTI_IMPL(OvResource);
-OvRTTI_IMPL(OvResourceLoader);
 
 OvResource::OvResource()
 {

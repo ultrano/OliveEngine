@@ -16,6 +16,10 @@
 #include "OvModel.h"
 #include "OvMaterial.h"
 #include "OvCameraController.h"
+#include "OvFileMeshLoader.h"
+#include "OvTextureLoader.h"
+#include "OvShaderCodeLoader.h"
+#include "OvMaterialLoader.h"
 OvObject* TemporaryFactoryFunction(const string& typeName)
 {
 	if ("OvXNode" == typeName)
@@ -37,6 +41,22 @@ OvObject* TemporaryFactoryFunction(const string& typeName)
 	else if ("OvCameraController" == typeName)
 	{
 		return OvNew OvCameraController;
+	}
+	else if ("OvFileMeshLoader" == typeName)
+	{
+		return OvNew OvFileMeshLoader;
+	}
+	else if ("OvTextureLoader" == typeName)
+	{
+		return OvNew OvTextureLoader;
+	}
+	else if ("OvShaderCodeLoader" == typeName)
+	{
+		return OvNew OvShaderCodeLoader;
+	}
+	else if ("OvMaterialLoader" == typeName)
+	{
+		return OvNew OvMaterialLoader;
 	}
 	return NULL;
 }

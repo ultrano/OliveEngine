@@ -11,6 +11,8 @@
 #include <map>
 using namespace std;
 
+OvRTTI_IMPL( OvMaterialLoader );
+
 OvResourceSPtr OvMaterialLoader::Load( const std::string& fileLocation )
 {
 	TiXmlDocument doc("material_doc");

@@ -1,10 +1,10 @@
 #pragma once
-#include "OvRefBase.h"
+#include "OvObject.h"
 
 OvREF_POINTER(OvResource);
 OvREF_POINTER(OvResourceLoader);
 
-class OvResourceLoader : public OvRefBase
+class OvResourceLoader : public OvObject
 {
 	OvRTTI_DECL(OvResourceLoader);
 

@@ -622,9 +622,8 @@ bool OvPropAccesser_resource_ticket::Extract( OvObject* pObj, OvObjectProperties
 	if ( accessProp )
 	{
 		OvResourceTicketSPtr ticket = (*accessProp);
-		OvResourceSPtr resource = ticket->CheckOut();
-		string typeName = OvRTTI_Util::TypeName( resource );
-		string fileLocation = OvResourceManager::GetInstance()->FindFileLocation( resource );
+		string typeName = ((OvRTTI*)ticket->GetResourceType())->TypeName();
+		string fileLocation = ticket->GetFileName();
 		ClampPathIfResDir( fileLocation );
 
 		string resourceInfo;
@@ -651,9 +650,8 @@ bool OvPropAccesser_resource_ticket::Inject( OvObject* pObj, OvObjectProperties&
 		fileLocation = &(resourceInfo.at( resourceInfo.find(':') + 1 ));
 		resourceType.resize( resourceInfo.find(':') );
 
-		(*accessProp) = OvResourceManager::GetInstance()->CheckTicket( ResDirPath( fileLocation )  );
-
-		OvResourceSPtr resource = OvResourceManager::GetInstance()->LoadResource( resourceType, ResDirPath( fileLocation ) );
+		(*accessProp) = OvResourceManager::GetInstance()->AsyncLoadResource( resourceType, ResDirPath( fileLocation ) );
+		
 	}
 
 	return false;

@@ -24,19 +24,22 @@ private:
 	OvSectionKey	m_qSectionKey;
 };
 
-class OvTargetSectionLocker
+class OvSectionGuardian
 {
+private:
+	OvSectionGuardian();
 public:
-	OvTargetSectionLocker(OvSectionKey&	rSectionKey):m_qSectionKey(rSectionKey)
+	OvSectionGuardian( CRITICAL_SECTION& critical_section )
+		: m_critical_section( critical_section )
 	{
-		OvLockSection(m_qSectionKey);
+		::EnterCriticalSection( &m_critical_section);
 	}
-	~OvTargetSectionLocker()
+	~OvSectionGuardian()
 	{
-		OvUnlockSection(m_qSectionKey);
+		::LeaveCriticalSection( &m_critical_section);
 	}
 private:
-	OvSectionKey&	m_qSectionKey;
+	CRITICAL_SECTION&	m_critical_section;
 };
 //template<typename Type0>
 //class	OvMultiThreadSync

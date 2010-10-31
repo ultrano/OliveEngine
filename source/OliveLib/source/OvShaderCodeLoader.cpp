@@ -1,6 +1,8 @@
 #include "OvShaderCodeLoader.h"
 #include "OvShaderCode.h"
 
+OvRTTI_IMPL( OvShaderCodeLoader );
+
 OvResourceSPtr OvShaderCodeLoader::Load( const std::string& fileLocation )
 {
 
