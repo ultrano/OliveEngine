@@ -60,7 +60,7 @@ void OxBoxMovement::SetUp()
 	NxActorDesc actorDesc;
 	actorDesc.shapes.pushBack(&desc);
 	actorDesc.body			= &bodyDesc;
-	actorDesc.density		= 10.0f;
+	actorDesc.density		= 1.0f;
 	m_actor = m_scene->createActor( actorDesc );
 
 	if ( m_actor )

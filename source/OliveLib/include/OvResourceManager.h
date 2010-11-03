@@ -35,7 +35,7 @@ public:
 
 
 	void					ResourceCache( OvResourceSPtr resource );
-	string					FindFileLocation( OvResourceSPtr resource );
+	const string&			FindFileLocation( OvResourceSPtr resource );
 
 	const string&			ResourceDirectory();
 
@@ -46,17 +46,23 @@ private:
 		std::string file; 
 		OvResourceLoaderSPtr loader; 
 	};
+	struct SResourceInfo
+	{
+		SResourceInfo():resource(NULL),ticket(NULL){};
+		OvResource* resource;
+		OvResourceTicket* ticket;
+	};
 	typedef std::map<const OvRTTI*, OvResourceLoaderSPtr>	resource_loader_table;
-	typedef std::map< OvResource*, std::string >			resource_location_table;
-	typedef std::map< std::string, OvResourceTicket* >		resource_ticket_table;
 	typedef std::list< OvResourceSPtr >						resource_cache_list;
 	typedef std::list< SAsyncLoadInfo >						async_load_list;
 
+	typedef std::map< std::string, SResourceInfo >			loaded_resource_table;
+	typedef std::list< OvResource* >						resource_list;
 private:
 
-	void _register_loaded_resource( OvResource* resource, const string& location );
+	OvResourceTicketSPtr	_reserve_ticket( const OvRTTI* type, const string& fileLocation );
+	void _register_loaded_resource( const string& location, OvResource* resource );
 
-	void _set_resource_location( OvResource* resource, const string& location );
 	OvResourceLoaderSPtr _find_resource_loader( const OvRTTI* resourceType );
 	OvResourceSPtr _find_loaded_resource( const OvRTTI* resourceType, const string& location);
 
@@ -66,24 +72,22 @@ private:
 	void	_called_when_ticket_created( OvResourceTicket* ticket );
 	void	_called_when_ticket_deleted( OvResourceTicket* ticket );
 
-	OvResourceSPtr _force_load_resouroce( const OvRTTI* resourceType, const string& fileLocation );
-
 	static	void	_thread_routine( void* data );
 	static bool&	_get_async_life_flag();
 	void	_async_routine();
 
-	OvResourceTicketSPtr	_check_ticket( const OvRTTI* type, const string& fileLocation );
 	void	_push_async_load_info( SAsyncLoadInfo& info );
 	bool	_pop_async_load_info( SAsyncLoadInfo& info );
 
 private:
+	resource_list			m_resourceList;
+	loaded_resource_table	m_resourceInfoTable;
 	resource_loader_table	m_loaderTable;
-	resource_location_table	m_resourceLocationTable;
 	resource_cache_list		m_cacheList;
-	resource_ticket_table	m_resourceTicketTable;
 
 	async_load_list			m_aload_list;
 	CRITICAL_SECTION		m_load_section;
+	CRITICAL_SECTION		m_life_section;
 	HANDLE					m_async_handle;
 
 	std::string				m_resourceDirectory;

@@ -20,8 +20,8 @@ private:
 	void _check_in( OvResource* resource );
 
 private:
-	OvResourceSPtr	m_resource;
-	const OvRTTI*	m_resourceType;
-	std::string		m_fileName;
-	CRITICAL_SECTION m_section;
+	OvResourceSPtr		m_resource;
+	const OvRTTI*		m_resourceType;
+	const std::string&	m_fileName;
+	CRITICAL_SECTION	m_section;
 };

@@ -15,6 +15,7 @@
 OvResourceManager::OvResourceManager()
 {
 	::InitializeCriticalSection( &m_load_section );
+	::InitializeCriticalSection( &m_life_section );
 
 	m_loaderTable[ OvMesh			::GetRTTI() ]	= OvNew OvFileMeshLoader;
 	m_loaderTable[ OvTexture		::GetRTTI() ]	= OvNew OvTextureLoader;
@@ -37,10 +38,14 @@ OvResourceManager::OvResourceManager()
 
 OvResourceManager::~OvResourceManager()
 {
+
 	_get_async_life_flag() = false;
 	WaitForSingleObject( m_async_handle, INFINITE );
-	::DeleteCriticalSection( &m_load_section );
+
 	m_cacheList.clear();
+	::DeleteCriticalSection( &m_load_section );
+	::DeleteCriticalSection( &m_life_section );
+
 }
 
 OvResourceSPtr OvResourceManager::LoadResource( const OvRTTI* resourceType, const string& fileLocation )
@@ -53,7 +58,7 @@ OvResourceSPtr OvResourceManager::LoadResource( const OvRTTI* resourceType, cons
 		{
 			if ( resource = loader->_load_resource( fileLocation ) )
 			{
-				_register_loaded_resource( resource.GetRear(), fileLocation );
+				_register_loaded_resource( fileLocation, resource.GetRear() );
 				return resource;
 			}
 		}
@@ -75,7 +80,7 @@ OvResourceSPtr OvResourceManager::LoadResource( const string& resourceType, cons
 }
 OvResourceTicketSPtr OvResourceManager::AsyncLoadResource( const OvRTTI* resourceType, const string& fileLocation )
 {
-	OvResourceTicketSPtr	ticket = _check_ticket( resourceType, fileLocation );
+	OvResourceTicketSPtr	ticket = _reserve_ticket( resourceType, fileLocation );
 	OvResourceSPtr resource = _find_loaded_resource( resourceType, fileLocation );
 	if ( NULL == resource )
 	{
@@ -111,99 +116,92 @@ void OvResourceManager::ResourceCache( OvResourceSPtr resource )
 		}
 	}
 }
-void OvResourceManager::_register_loaded_resource( OvResource* resource, const string& location )
+void OvResourceManager::_register_loaded_resource( const string& location, OvResource* resource )
 {
-	_set_resource_location(resource, location);
-
-	if ( OvResourceTicketSPtr ticket = _check_ticket( resource->QueryRTTI(), location ) )
+	OvSectionGuardian guardian( m_load_section );
+	SResourceInfo& info = m_resourceInfoTable[ location ];
+	info.resource = resource;
+	if ( info.ticket )
 	{
-		ticket->_check_in( resource );
+		info.ticket->_check_in( resource );
 	}
 }
 
 void OvResourceManager::_called_when_resource_created( OvResource* resource )
 {
-	m_resourceLocationTable[ resource ] = "";
+	OvSectionGuardian guardian( m_life_section );
+	m_resourceList.push_back( resource );
 }
 void OvResourceManager::_called_when_resource_deleted( OvResource* resource )
 {
-	resource_location_table::iterator itor = m_resourceLocationTable.find( resource );
-	if ( m_resourceLocationTable.end() != itor )
+	OvSectionGuardian guardian( m_life_section );
+	resource_list::iterator itor = std::find( m_resourceList.begin(), m_resourceList.end(), resource );
+	if ( itor != m_resourceList.end() )
 	{
-		m_resourceTicketTable.erase( itor->second );
-		m_resourceLocationTable.erase( itor );
+		m_resourceList.erase( itor );
 	}
 }
 
 void OvResourceManager::_called_when_ticket_created( OvResourceTicket* ticket )
 {
-	const string& file_location = ticket->GetFileName();
-
-	if (
-		! file_location.empty()
-		&& 
-		m_resourceTicketTable.find( file_location ) == m_resourceTicketTable.end() 
-		)
-	{
-		m_resourceTicketTable[ file_location ] = ticket;
-	}
+	OvSectionGuardian guardian( m_load_section );
+	SResourceInfo& info = m_resourceInfoTable[ ticket->GetFileName() ];
+	info.ticket = ticket;
 }
 
 void OvResourceManager::_called_when_ticket_deleted( OvResourceTicket* ticket )
 {
-	const string& file_location = ticket->GetFileName();
-	m_resourceTicketTable.erase( file_location );
+	OvSectionGuardian guardian( m_load_section );
+	SResourceInfo& info = m_resourceInfoTable[ ticket->GetFileName() ];
+	info.ticket = NULL;
 }
 
 OvResourceSPtr OvResourceManager::_find_loaded_resource( const OvRTTI* resourceType, const string& location )
 {
-	for each( const resource_location_table::value_type& typevalue in m_resourceLocationTable)
+	OvResource* resource = NULL;
+	loaded_resource_table::iterator itor = m_resourceInfoTable.find( location );
+	if ( itor != m_resourceInfoTable.end() )
 	{
-		OvResource* resource = typevalue.first;
-		if ( resource->QueryRTTI() == resourceType )
-		{
-			if ( typevalue.second == location )
-			{
-				return resource;
-			}
-		}
+		SResourceInfo& set = itor->second;
+		resource =  set.resource;
 	}
-	return NULL;
+	return resource;
 }
 
-string OvResourceManager::FindFileLocation( OvResourceSPtr resource )
+const string& OvResourceManager::FindFileLocation( OvResourceSPtr resource )
 {
+	static string empty = "";
 	OvSectionGuardian guardian( m_load_section );
-	string fileLocation = "";
-	if ( resource )
+	loaded_resource_table::iterator itor = m_resourceInfoTable.begin();
+	for ( ; itor != m_resourceInfoTable.end() ; ++itor )
 	{
-		resource_location_table::iterator itor = m_resourceLocationTable.find( resource.GetRear() );
-		if ( m_resourceLocationTable.end() != itor )
+		const SResourceInfo& info = itor->second;
+		if ( resource == info.resource )
 		{
-			fileLocation = itor->second;
+			return itor->first;
 		}
 	}
-	return fileLocation;
+	return empty;
 }
 
-OvResourceTicketSPtr OvResourceManager::_check_ticket(  const OvRTTI* type, const string& fileLocation )
+OvResourceTicketSPtr OvResourceManager::_reserve_ticket(  const OvRTTI* type, const string& fileLocation )
 {
-	OvSectionGuardian guardian( m_load_section );
-
-	OvResourceTicketSPtr ticket = NULL;
 	if ( ! fileLocation.empty() )
 	{
-		resource_ticket_table::iterator itor = m_resourceTicketTable.find( fileLocation );
-		if ( itor == m_resourceTicketTable.end() )
+		loaded_resource_table::iterator itor;
+		SResourceInfo info;
 		{
-			ticket = OvNew OvResourceTicket( type, fileLocation );
+			OvSectionGuardian guardian( m_load_section );
+			info = m_resourceInfoTable[ fileLocation ];
+			itor = m_resourceInfoTable.find( fileLocation );
 		}
-		else
+		if ( NULL == info.ticket )
 		{
-			ticket = itor->second;
+			info.ticket = OvNew OvResourceTicket( type, itor->first );
 		}
+		return info.ticket;
 	}
-	return ticket;
+	return NULL;
 }
 
 const string& OvResourceManager::ResourceDirectory()
@@ -215,7 +213,7 @@ OvResourceTicketSPtr OvResourceManager::FindTicket( OvResourceSPtr resource )
 {
 	const string& file = FindFileLocation( resource );
 
-	return _check_ticket( resource->QueryRTTI(), file );
+	return _reserve_ticket( resource->QueryRTTI(), file );
 
 }
 
@@ -250,7 +248,7 @@ void OvResourceManager::_async_routine()
 			{
 				if ( resource = info.loader->_load_resource( info.file ) )
 				{
-					_register_loaded_resource( resource.GetRear(), info.file );
+					_register_loaded_resource( info.file, resource.GetRear() );
 				}
 			}
 		}
@@ -273,16 +271,6 @@ bool OvResourceManager::_pop_async_load_info( SAsyncLoadInfo& info )
 		return true;
 	}
 	return false;
-}
-
-void OvResourceManager::_set_resource_location( OvResource* resource, const string& location )
-{
-	OvSectionGuardian guardian( m_load_section );
-	resource_location_table::iterator itor = m_resourceLocationTable.find( resource );
-	if ( m_resourceLocationTable.end() != itor )
-	{
-		itor->second = location;
-	}
 }
 
 struct SSection
