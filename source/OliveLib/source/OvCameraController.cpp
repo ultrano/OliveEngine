@@ -1,5 +1,5 @@
 #include "OvCameraController.h"
-#include "OvInputDevice.h"
+#include "OvInputManager.h"
 #include "OvQuaternion.h"
 #include "OvCamera.h"
 #include "OvRegisterableProperties.h"
@@ -16,45 +16,41 @@ OvCameraController::~OvCameraController()
 {
 
 }
-bool OvCameraController::MessageListen( HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam )
+void OvCameraController::Update( float _fElapse )
 {
+	
 	OvCameraSPtr target_camera = GetTarget();
-	switch( message )
+	
+	OvQuaternion yRot,xRot;
+	yRot.MakeQuaternion(OvPoint3::AXIS_Y, m_accumulatedRotate.x / (D3DX_PI * 20.0f) );
+	xRot.MakeQuaternion(OvPoint3::AXIS_X, m_accumulatedRotate.y / (D3DX_PI * 20.0f));
+
+	target_camera->SetRotation( yRot * xRot );
+
+	OvPoint2 mouseMovement = OvInputManager::GetCurrentMousePos() - m_liatMousePos;
+	m_liatMousePos = OvInputManager::GetCurrentMousePos();
+	m_accumulatedRotate = ( m_accumulatedRotate + mouseMovement );
+	
+	OvPoint3 direction;
+	OvPoint3 velocity;
+	float moveSpeed = 1.0f;
+	if ( OvInputManager::IsPushed( VK_UP ) )
 	{
-	case WM_MOUSEMOVE : 
-		{
-			OvQuaternion yRot,xRot;
-			yRot.MakeQuaternion(OvPoint3::AXIS_Y, m_accumulatedRotate.x / (D3DX_PI * 20.0f) );
-			xRot.MakeQuaternion(OvPoint3::AXIS_X, m_accumulatedRotate.y / (D3DX_PI * 20.0f));
-
-			target_camera->SetRotation( yRot * xRot );
-
-			m_accumulatedRotate = ( m_accumulatedRotate + OvInputDevice::GetInstance()->GetMouseInterval() );
-		}
-		break;
-	case WM_KEYDOWN : 
-		{
-			OvPoint3 direction;
-			OvPoint3 velocity;
-			float moveSpeed = 1.0f;
-			switch ( wparam )
-			{
-			case VK_UP :
-				direction = target_camera->GetLocalLookDirection();
-				break;
-			case VK_DOWN :
-				direction = -target_camera->GetLocalLookDirection();
-				break;
-			case VK_LEFT :
-				direction = -target_camera->GetLocalRightDirection();
-				break;
-			case VK_RIGHT :
-				direction = target_camera->GetLocalRightDirection();
-				break;
-			}
-			velocity = (target_camera->GetTranslate() + direction * moveSpeed);
-			target_camera->SetTranslate( velocity );
-		}
+		direction += target_camera->GetLocalLookDirection();
 	}
-	return false;
+	if ( OvInputManager::IsPushed( VK_DOWN ) )
+	{
+		direction += -target_camera->GetLocalLookDirection();
+	}
+	if ( OvInputManager::IsPushed( VK_LEFT ) )
+	{
+		direction += -target_camera->GetLocalRightDirection();
+	}
+	if ( OvInputManager::IsPushed( VK_RIGHT ) )
+	{
+		direction += target_camera->GetLocalRightDirection();
+	}
+	velocity = (target_camera->GetTranslate() + direction * moveSpeed);
+	target_camera->SetTranslate( velocity );
+	
 }
