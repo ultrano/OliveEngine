@@ -119,6 +119,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
+				Optimization="2"
 				AdditionalIncludeDirectories="&quot;$(SolutionDir)OliveLib/include&quot;;&quot;$(SolutionDir)SupportLib/vld/include&quot;;&quot;$(SolutionDir)SupportLib/tixml/include&quot;;&quot;$(SolutionDir)GloryUnitTestKit/include&quot;;&quot;$(SolutionDir)PhysxSDK\Cooking\include&quot;;&quot;$(SolutionDir)PhysxSDK\Foundation\include&quot;;&quot;$(SolutionDir)PhysxSDK\NxCharacter\include&quot;;&quot;$(SolutionDir)PhysxSDK\Physics\include&quot;;&quot;$(SolutionDir)PhysxSDK\PhysXLoader\include&quot;;&quot;$(SolutionDir)SupportLib\lua\include&quot;;../../resource/shader"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS"
 				RuntimeLibrary="2"
