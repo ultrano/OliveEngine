@@ -60,7 +60,7 @@ OvResourceSPtr OvMaterialLoader::Load( const std::string& fileLocation )
 
 	//////////////////////////////////////////////////////////////////////////
 	TiXmlElement* sampler_stage_elem = root->FirstChildElement( "sampler_stage" );
-	std::map<unsigned int, OvTextureSPtr> stageImage;
+	std::map<unsigned int, OvResourceTicketSPtr> stageImage;
 
 	for ( TiXmlElement* sampler_elem = sampler_stage_elem->FirstChildElement( "sampler" )
 		; NULL != sampler_elem
@@ -71,7 +71,7 @@ OvResourceSPtr OvMaterialLoader::Load( const std::string& fileLocation )
 		
 		TiXmlElement* texture_elem = sampler_elem->FirstChildElement( "texture" );
 
-		OvTextureSPtr image = OvResourceManager::GetInstance()->LoadResource<OvTexture>( ResDirPath( texture_elem->GetText() ) );
+		OvResourceTicketSPtr image = OvResourceManager::GetInstance()->AsyncLoadResource<OvTexture>( AbsolutePath( texture_elem->GetText() ) );
 
 		stageImage[ stage ] = image;
 	}

@@ -134,6 +134,23 @@ void OvResourceManager::_called_when_resource_created( OvResource* resource )
 }
 void OvResourceManager::_called_when_resource_deleted( OvResource* resource )
 {
+	{
+		OvSectionGuardian guardian( m_load_section );
+		loaded_resource_table::iterator itor = m_resourceInfoTable.begin();
+		for ( ; itor != m_resourceInfoTable.end() ; ++itor )
+		{
+			const SResourceInfo& info = itor->second;
+			if ( resource == info.resource )
+			{
+				break;
+			}
+		}
+		if ( itor != m_resourceInfoTable.end() )
+		{
+			SResourceInfo& info = itor->second;
+			info.resource = NULL;
+		}
+	}
 	OvSectionGuardian guardian( m_life_section );
 	resource_list::iterator itor = std::find( m_resourceList.begin(), m_resourceList.end(), resource );
 	if ( itor != m_resourceList.end() )
@@ -158,6 +175,7 @@ void OvResourceManager::_called_when_ticket_deleted( OvResourceTicket* ticket )
 
 OvResourceSPtr OvResourceManager::_find_loaded_resource( const OvRTTI* resourceType, const string& location )
 {
+	OvSectionGuardian guardian( m_load_section );
 	OvResource* resource = NULL;
 	loaded_resource_table::iterator itor = m_resourceInfoTable.find( location );
 	if ( itor != m_resourceInfoTable.end() )
@@ -293,7 +311,7 @@ bool& OvResourceManager::_get_async_life_flag()
 	OvSectionGuardian guardian( block.section );
 	return life_flag;
 }
-std::string ResDirPath( const std::string& file )
+std::string AbsolutePath( const std::string& file )
 {
 	return OvResourceManager::GetInstance()->ResourceDirectory() + "\\" + file;
 }

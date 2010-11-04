@@ -1,14 +1,15 @@
 #pragma once
 #include "OvResource.h"
 #include "OvAutoPtr.h"
-#include "OvPixelShader.h"
-#include "OvVertexShader.h"
-#include "OvTexture.h"
+#include "OvResourceTicket.h"
 //
 //OvREF_POINTER(OvTexture);
 //OvREF_POINTER(OvMesh);
 //
 
+OvREF_POINTER(OvPixelShader);
+OvREF_POINTER(OvVertexShader);
+OvREF_POINTER(OvTexture);
 OvREF_POINTER(OvMaterial);
 class OvMaterial : public OvResource
 {
@@ -32,6 +33,7 @@ public:
 	void	SetPixelShader( OvPixelShaderSPtr shader );
 	OvPixelShaderSPtr GetPixelShader();
 
+	void	SetStageTexture( TextureStage stageIndex,  OvResourceTicketSPtr ticket  );
 	void	SetStageTexture( TextureStage stageIndex, OvTextureSPtr texture );
 	OvTextureSPtr GetStageTexture( TextureStage stageIndex);
 
@@ -41,6 +43,6 @@ private:
 
 	OvVertexShaderSPtr m_vertexShader;
 	OvPixelShaderSPtr m_pixelShader;
-	OvTextureSPtr	m_stageTexture[ MaxStage ];
+	OvResourceTicketSPtr	m_stageTexture[ MaxStage ];
 
 };

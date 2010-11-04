@@ -15,7 +15,7 @@ OvShaderCodeIncluder::OvShaderCodeIncluder()
 
 STDMETHODIMP OvShaderCodeIncluder::Open( THIS_ D3DXINCLUDE_TYPE IncludeType, LPCSTR pFileName, LPCVOID pParentData, LPCVOID *ppData, UINT *pBytes )
 {
-	string fileLocation = ResDirPath( "shader\\" + std::string( pFileName ) );
+	string fileLocation = AbsolutePath( "shader\\" + std::string( pFileName ) );
 
 	OvShaderCodeSPtr code_resource = OvResourceManager::GetInstance()->LoadResource<OvShaderCode>( fileLocation );
 

@@ -27,6 +27,8 @@ public:
 	//
 
 	//! async load method
+	template<typename Type_0>
+	OvResourceTicketSPtr	AsyncLoadResource( const string& fileLocation );
 	OvResourceTicketSPtr	AsyncLoadResource( const OvRTTI* resourceType, const string& fileLocation );
 	OvResourceTicketSPtr	AsyncLoadResource( const string& resourceType, const string& fileLocation );
 
@@ -99,6 +101,12 @@ OvResourceManager::LoadResource( const string& fileLocation )
 {
 	return LoadResource( Type_0::GetRTTI(), fileLocation );
 };
+template<typename Type_0>
+OvResourceTicketSPtr
+OvResourceManager::AsyncLoadResource( const string& fileLocation )
+{
+	return AsyncLoadResource( Type_0::GetRTTI(), fileLocation );
+};
 
-string	ResDirPath( const std::string& file );
+string	AbsolutePath( const std::string& file );
 bool	ClampPathIfResDir( std::string& file );

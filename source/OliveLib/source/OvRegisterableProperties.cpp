@@ -603,7 +603,7 @@ bool OvPropAccesser_resource::Inject( OvObject* pObj, OvObjectProperties& rObjSt
 		fileLocation = &(resourceInfo.at( resourceInfo.find(':') + 1 ));
 		resourceType.resize( resourceInfo.find(':') );
 
-		OvResourceSPtr resource = OvResourceManager::GetInstance()->LoadResource( resourceType, ResDirPath( fileLocation ) );
+		OvResourceSPtr resource = OvResourceManager::GetInstance()->LoadResource( resourceType, AbsolutePath( fileLocation ) );
 		(*accessProp) = resource;
 	}
 
@@ -650,7 +650,7 @@ bool OvPropAccesser_resource_ticket::Inject( OvObject* pObj, OvObjectProperties&
 		fileLocation = &(resourceInfo.at( resourceInfo.find(':') + 1 ));
 		resourceType.resize( resourceInfo.find(':') );
 
-		(*accessProp) = OvResourceManager::GetInstance()->AsyncLoadResource( resourceType, ResDirPath( fileLocation ) );
+		(*accessProp) = OvResourceManager::GetInstance()->AsyncLoadResource( resourceType, AbsolutePath( fileLocation ) );
 		
 	}
 

@@ -47,7 +47,7 @@ public:
 // 		lua_tinker::dofile(state,ResDirPath("script/lua/testsrvr.lua").c_str());
 
 		OvStorage store;
-		if ( ! store.Load( ResDirPath("ovf/scene_test.xml"), m_loadedObjects) )
+		if ( ! store.Load( AbsolutePath("ovf/scene_test.xml"), m_loadedObjects) )
 		{
 			OvMessageBox("¸ÁÇÞ¾î¿°^_^ ·Îµù ¤¤¤¤","");
 			m_exitFlag = true;
@@ -62,7 +62,6 @@ public:
 			}
 		}
 		m_mainCamera = m_loadedObjects.GetByName("Camera");
-		m_mainCamera->SetFOV( D3DX_PI/2.0f );
 		m_mainCamera->RemoveComponent( m_mainCamera->GetFirstComponent<OvCameraController>() );
 
 		//////////////////////////////////////////////////////////////////////////
@@ -74,7 +73,7 @@ public:
 		//////////////////////////////////////////////////////////////////////////
 		//////////////////////////////////////////////////////////////////////////
 
-		m_shader_code = OvResourceManager::GetInstance()->LoadResource<OvShaderCode>( ResDirPath("shader/test.shacode") );
+		m_shader_code = OvResourceManager::GetInstance()->LoadResource<OvShaderCode>( AbsolutePath("shader/test.shacode") );
 
 		m_shader_code->CompileVertexShader( "rectV", "vs_2_0" );
 		m_shader_code->CompilePixelShader( "rectP", "ps_2_0" );

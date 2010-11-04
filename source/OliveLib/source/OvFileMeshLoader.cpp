@@ -104,13 +104,9 @@ OvResourceSPtr OvFileMeshLoader::Load( const std::string& fileLocation )
 
 	OliveValue::Integer vertexCount( _readLine() );
 	OliveValue::Integer faceCount( _readLine() );
-	Sleep(1000);
 	streamInfoLow = _parseStreamLow();
-	Sleep(1000);
 	streamInfoMedium = _parseStreamMedium();
-	Sleep(1000);
 	streamFace = _parseIndexStream();
-	Sleep(1000);
 
 	fclose( meshFile );
 	return _buildMesh
