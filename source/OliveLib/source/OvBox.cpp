@@ -32,32 +32,32 @@ OvPlane OvBox::GetPlane(BOX_PLANE _iSideIndex)
 
 	switch(_iSideIndex)
 	{
-	case BOX_PLANE::RIGHT : 
+	case RIGHT : 
 		kNormal = m_pt3HalfSizeAxis[0];
 		kfDistance = m_pt3HalfSizeAxis[0].Length();
 		break;
 
-	case BOX_PLANE::LEFT : 
+	case LEFT : 
 		kNormal = -m_pt3HalfSizeAxis[0];
 		kfDistance = m_pt3HalfSizeAxis[0].Length();
 		break;
 
-	case BOX_PLANE::FRONT :
+	case FRONT :
 		kNormal = m_pt3HalfSizeAxis[1];
 		kfDistance = m_pt3HalfSizeAxis[1].Length(); 
 		break;
 
-	case BOX_PLANE::BACK : 
+	case BACK : 
 		kNormal = -m_pt3HalfSizeAxis[1];
 		kfDistance = m_pt3HalfSizeAxis[1].Length(); 
 		break;
 
-	case BOX_PLANE::TOP : 
+	case TOP : 
 		kNormal = m_pt3HalfSizeAxis[2];
 		kfDistance = m_pt3HalfSizeAxis[2].Length(); 
 		break;
 
-	case BOX_PLANE::BOTTOM : 
+	case BOTTOM : 
 		kNormal = -m_pt3HalfSizeAxis[2];
 		kfDistance = m_pt3HalfSizeAxis[2].Length();
 		break;

@@ -1,12 +1,11 @@
 #include "OvRenderer.h"
-#include "OvInputDevice.h"
+#include "OvMessageManager.h"
 
 #include <d3dx9.h>
 #include "OvTexture.h"
 #include "OvVertexShader.h"
 #include "OvPixelShader.h"
 
-#include "OvSurface.h"
 #include "OvCamera.h"
 #include <queue>
 #include <map>
@@ -24,14 +23,16 @@ OvRTTI_IMPL_ROOT(OvRenderer);
 OvRenderer::OvRenderer()
 :m_device( NULL )
 {
+	::InitializeCriticalSection( &m_device_occupy );
 }
 OvRenderer::~OvRenderer()
 {
-	
-	if (m_device)
+	OvDevice device = GetDevice();
+	if ( device )
 	{
-		m_device->Release();
+		device->Release();
 	}
+	::DeleteCriticalSection( &m_device_occupy );
 }
 
 
@@ -75,10 +76,10 @@ bool		OvRenderer::GenerateRenderer()
 	WndClass.hCursor		=	LoadCursor(NULL,IDC_ARROW);
 	WndClass.hIcon			=	LoadIcon(NULL,IDI_APPLICATION);
 	WndClass.hInstance		=	GetModuleHandle(NULL);
-	WndClass.lpfnWndProc	=	(WNDPROC)OvInputDevice::ListenMessage;
+	WndClass.lpfnWndProc	=	(WNDPROC)OvWinMsgManager::ListenMessage;
 	WndClass.lpszClassName	=	windowClassName;
 	WndClass.lpszMenuName	=	NULL;
-	WndClass.style			=	CS_HREDRAW | CS_VREDRAW;
+	WndClass.style			=	CS_HREDRAW | CS_VREDRAW | CS_DBLCLKS ;
 
 	RegisterClass(&WndClass);
 
@@ -113,21 +114,51 @@ bool		OvRenderer::GenerateRenderer()
 		&d3dpp,
 		&(m_device)
 		);
-
+	OvDevice device = GetDevice();
 	//m_device->SetRenderState(D3DRS_ZENABLE,TRUE);
 
-	m_device->SetSamplerState( 1, D3DSAMP_MINFILTER, D3DTEXF_LINEAR );
-	m_device->SetSamplerState( 1, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR );
-	m_device->SetRenderState(D3DRS_CULLMODE,D3DCULL_CW);
+	// 	m_device->SetSamplerState( 1, D3DSAMP_MINFILTER, D3DTEXF_LINEAR );
+	// 	m_device->SetSamplerState( 1, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR );
+	 	device->SetRenderState(D3DRS_CULLMODE,D3DCULL_NONE);
 	//m_device->SetRenderState(D3DRS_LIGHTING,false);
 
 	return SUCCEEDED(hr);
 
 };
+
+LPDIRECT3DSURFACE9 OvRenderer::ChangeRenderTarget( unsigned targetIndex, LPDIRECT3DSURFACE9 renderTarget )
+{
+	if ( OvDevice device = GetDevice() )
+	{
+		LPDIRECT3DSURFACE9 oldRenderTarget = NULL;
+		HRESULT hr0 = device->GetRenderTarget( targetIndex, &oldRenderTarget );
+		HRESULT hr1 = device->SetRenderTarget( targetIndex, renderTarget );
+		if ( SUCCEEDED( hr0 ) && SUCCEEDED( hr1 ) )
+		{
+			return oldRenderTarget;
+		}
+	}
+	return NULL;
+}
+
+LPDIRECT3DSURFACE9 OvRenderer::ChangeDepthStencil( LPDIRECT3DSURFACE9 depthStencil )
+{
+	if ( OvDevice device = GetDevice() )
+	{
+		LPDIRECT3DSURFACE9 oldDepthStencil = NULL;
+		HRESULT hr0 = device->GetDepthStencilSurface( &oldDepthStencil );
+		HRESULT hr1 = device->SetDepthStencilSurface( depthStencil );
+		if ( SUCCEEDED( hr0 ) && SUCCEEDED( hr1 ) )
+		{
+			return oldDepthStencil;
+		}
+	}
+	return NULL;
+}
 bool			OvRenderer::ClearTarget()
 {
-
-	if (FAILED(m_device->Clear(0,
+	OvDevice device = GetDevice();
+	if (FAILED(device->Clear(0,
 		NULL,
 		D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER ,
 		D3DCOLOR_XRGB(1,1,1),
@@ -143,8 +174,8 @@ bool			OvRenderer::ClearTarget()
 
 bool			OvRenderer::BeginTarget()
 {
-
-	if (FAILED(m_device->BeginScene()))
+	OvDevice device = GetDevice();
+	if (FAILED(device->BeginScene()))
 	{
 		OvAssertMsg("Failed Begin RenderTarget");
 		return false;
@@ -155,8 +186,8 @@ bool			OvRenderer::BeginTarget()
 
 bool			OvRenderer::EndTarget()
 {
-
-	if (FAILED(m_device->EndScene()))
+	OvDevice device = GetDevice();
+	if (FAILED(device->EndScene()))
 	{
 		OvAssertMsg("Failed End RenderTarget");
 		return false;
@@ -167,7 +198,8 @@ bool			OvRenderer::EndTarget()
 
 bool			OvRenderer::PresentTarget()
 {
-	if (FAILED(m_device->Present(0,0,0,0)))
+	OvDevice device = GetDevice();
+	if (FAILED( device->Present(0,0,0,0) ))
 	{
 		OvAssertMsg("Failed Present RenderTarget");
 		return false;
@@ -178,34 +210,66 @@ bool			OvRenderer::PresentTarget()
 
 void OvRenderer::SetPixelShader( OvPixelShaderSPtr shader )
 {
-	if ( m_device && shader )
+	OvDevice device = GetDevice();
+	if ( device && shader )
 	{
-		m_device->SetPixelShader( shader->ToDirectShader() );
+		HRESULT hr = device->SetPixelShader( shader->ToDirectShader() );
+		if ( FAILED( hr ) )
+		{
+			OvAssertMsg("Failed SetPixelShader");
+		}
 	}
 }
 
 void OvRenderer::SetVertexShader( OvVertexShaderSPtr shader )
 {
-	if ( m_device && shader )
+	OvDevice device = GetDevice();
+	if ( device && shader )
 	{
-		m_device->SetVertexShader( shader->ToDirectShader() );
+		HRESULT hr = device->SetVertexShader( shader->ToDirectShader() );
+		if ( FAILED( hr ) )
+		{
+			OvAssertMsg("Failed SetVertexShader");
+		}
 	}
 }
 
-void OvRenderer::SetVertexStream( WORD streamIndex, SVertexStreamInfo* streamInfo )
+bool OvRenderer::SetTexture(UINT uiSamplerIndex,OvTextureSPtr pTexture)
 {
-	if ( m_device )
+	OvDevice kpDevice =  GetDevice();
+	if (kpDevice && pTexture)
+	{
+		HRESULT kHs = E_FAIL;
+		kHs = kpDevice->SetTexture( uiSamplerIndex, pTexture->ToDxTexture() );
+		return SUCCEEDED(kHs);
+	}
+	return false;
+}
+
+bool OvRenderer::SetCubeTexture(UINT uiSamplerIndex,OvCubeTextureSPtr pTexture)
+{
+	OvDevice kpDevice =  GetDevice();
+	if ( kpDevice && pTexture )
+	{
+		HRESULT kHs = E_FAIL;
+		kHs = kpDevice->SetTexture( uiSamplerIndex, pTexture->ToDxCubeTexture() );
+		return SUCCEEDED(kHs);
+	}
+	return false;
+}
+
+void OvRenderer::SetVertexStream( WORD streamIndex, const SVertexStreamInfo& streamInfo )
+{
+	OvDevice device = GetDevice();
+	if ( device )
 	{		
 		LPDIRECT3DVERTEXBUFFER9 Stream = NULL;
-		size_t Stride = 0;
+		UINT Stride = 0;
 		
-		if (streamInfo)
-		{
-			Stream = streamInfo->vertexStream;
-			Stride = streamInfo->vertexStride;
-		}
+		Stream = streamInfo.vertexStream;
+		Stride = streamInfo.vertexStride;
 
-		HRESULT hr = m_device->SetStreamSource( streamIndex, Stream, 0, Stride );
+		HRESULT hr = device->SetStreamSource( streamIndex, Stream, 0, Stride );
 		OvAssert( SUCCEEDED( hr ) );
 
 	}
@@ -213,25 +277,28 @@ void OvRenderer::SetVertexStream( WORD streamIndex, SVertexStreamInfo* streamInf
 
 void OvRenderer::SetIndexStream( LPDIRECT3DINDEXBUFFER9 streamBuffer )
 {
-	if ( m_device )
+	OvDevice device = GetDevice();
+	if ( device )
 	{
-		HRESULT hr = m_device->SetIndices( streamBuffer );
+		HRESULT hr = device->SetIndices( streamBuffer );
 		OvAssert( SUCCEEDED( hr ) );
 	}
 }
 void OvRenderer::SetVertexDeclaration( LPDIRECT3DVERTEXDECLARATION9 decl )
 {
-	if ( m_device )
+	OvDevice device = GetDevice();
+	if ( device )
 	{
-		HRESULT hr = m_device->SetVertexDeclaration( decl );
+		HRESULT hr = device->SetVertexDeclaration( decl );
 		OvAssert( SUCCEEDED( hr ) );
 	}
 }
-bool OvRenderer::DrawPrimitive( D3DPRIMITIVETYPE primitiveType, size_t primCount )
+bool OvRenderer::DrawPrimitive( D3DPRIMITIVETYPE primitiveType, UINT primCount )
 {
-	if ( m_device )
+	OvDevice device = GetDevice();
+	if ( device )
 	{
-		HRESULT hr = m_device->DrawPrimitive
+		HRESULT hr = device->DrawPrimitive
 			( primitiveType
 			, 0
 			, primCount);
@@ -240,18 +307,54 @@ bool OvRenderer::DrawPrimitive( D3DPRIMITIVETYPE primitiveType, size_t primCount
 	return false;
 }
 
-LPDIRECT3DDEVICE9	OvRenderer::GetDevice()
-{	
-	return m_device;
+void OvRenderer::RenderUnitRect( OvVertexShaderSPtr v_shader , OvPixelShaderSPtr p_shader )
+{
+	struct SScreenRect
+	{
+		OvPoint3 pos; OvPoint2 tex;
+	};
+	static D3DVERTEXELEMENT9 rect_elem[] =
+	{
+		{ 0, 0
+		, D3DDECLTYPE_FLOAT3
+		, D3DDECLMETHOD_DEFAULT
+		, D3DDECLUSAGE_POSITION, 0 },
+
+		{ 0, 12
+		, D3DDECLTYPE_FLOAT2
+		, D3DDECLMETHOD_DEFAULT
+		, D3DDECLUSAGE_TEXCOORD, 0 },
+		D3DDECL_END()
+	};
+	static SScreenRect rect[] = 
+	{ {OvPoint3(-1,-1,0),OvPoint2(0,1)}
+	, {OvPoint3(-1,+1,0),OvPoint2(0,0)}
+	, {OvPoint3(+1,+1,0),OvPoint2(1,0)}
+	, {OvPoint3(+1,-1,0),OvPoint2(1,1)}};
+
+	static LPDIRECT3DVERTEXBUFFER9 rectVertBuffer = CreateVertexStream( (void*)&rect[0], sizeof( SScreenRect ), 4 );
+	static LPDIRECT3DVERTEXDECLARATION9 rectDecl = CreateVertexDeclaration( rect_elem );
+
+	if ( v_shader ) SetVertexShader( v_shader );
+	if ( p_shader ) SetPixelShader( p_shader );
+	SetVertexStream( 0, SVertexStreamInfo( rectVertBuffer, sizeof( SScreenRect ), 0) );
+	SetVertexDeclaration( rectDecl );
+	DrawPrimitive( D3DPT_TRIANGLEFAN, 2);
 }
 
-LPDIRECT3DVERTEXBUFFER9 OvRenderer::CreateVertexStream( void* buffer, size_t stride, size_t count )
+OvDevice	OvRenderer::GetDevice()
+{	
+	return OvDevice( m_device, m_device_occupy );
+}
+
+LPDIRECT3DVERTEXBUFFER9 OvRenderer::CreateVertexStream( void* buffer, UINT stride, UINT count )
 {
-	if ( m_device )
+	OvDevice device = GetDevice();
+	if ( device )
 	{
 		LPDIRECT3DVERTEXBUFFER9 vertexStream = NULL;
-		size_t streamSize = count * stride;
-		HRESULT hr = m_device->CreateVertexBuffer
+		UINT streamSize = count * stride;
+		HRESULT hr = device->CreateVertexBuffer
 			( streamSize
 			, 0
 			, 0
@@ -273,13 +376,14 @@ LPDIRECT3DVERTEXBUFFER9 OvRenderer::CreateVertexStream( void* buffer, size_t str
 	return NULL;
 }
 
-LPDIRECT3DINDEXBUFFER9 OvRenderer::CreateIndexStream( void* buffer, size_t stride, size_t count )
+LPDIRECT3DINDEXBUFFER9 OvRenderer::CreateIndexStream( void* buffer, UINT stride, UINT count )
 {
-	if ( m_device )
+	OvDevice device = GetDevice();
+	if ( device )
 	{
 		LPDIRECT3DINDEXBUFFER9	streamBuffer = NULL;
-		size_t streamSize = count * stride;
-		HRESULT hr = m_device->CreateIndexBuffer
+		UINT streamSize = count * stride;
+		HRESULT hr = device->CreateIndexBuffer
 			( streamSize
 			, 0
 			, D3DFMT_INDEX16
@@ -305,14 +409,53 @@ LPDIRECT3DINDEXBUFFER9 OvRenderer::CreateIndexStream( void* buffer, size_t strid
 
 LPDIRECT3DVERTEXDECLARATION9 OvRenderer::CreateVertexDeclaration( D3DVERTEXELEMENT9* vertElement )
 {
-	if ( m_device )
+	OvDevice device = GetDevice();
+	if ( device)
 	{
 		LPDIRECT3DVERTEXDECLARATION9 vertDecl = NULL;
-		HRESULT hr = m_device->CreateVertexDeclaration( vertElement, &vertDecl );
+		HRESULT hr = device->CreateVertexDeclaration( vertElement, &vertDecl );
 		if ( SUCCEEDED( hr ) )
 		{
 			return vertDecl;
 		}
 	}
 	return NULL;
+}
+
+OvDevice::OvDevice( OvDevice& copy )
+: m_device( copy.m_device )
+, m_device_occupy( copy.m_device_occupy )
+{
+	copy.m_device = NULL;
+	::EnterCriticalSection( &m_device_occupy );
+}
+
+OvDevice::OvDevice( LPDIRECT3DDEVICE9 device, CRITICAL_SECTION& occupy ) 
+: m_device( device )
+, m_device_occupy( occupy )
+{
+	::EnterCriticalSection( &m_device_occupy );
+}
+
+OvDevice::~OvDevice()
+{
+	if ( m_device )
+	{
+		m_device = NULL;
+		::LeaveCriticalSection( &m_device_occupy );
+	}
+}
+
+OvDevice::operator LPDIRECT3DDEVICE9()
+{
+	return m_device;
+}
+OvDevice::operator bool()
+{
+	return (NULL != m_device);
+}
+
+LPDIRECT3DDEVICE9 OvDevice::operator->() const
+{
+	return m_device;
 }

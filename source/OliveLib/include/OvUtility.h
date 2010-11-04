@@ -10,7 +10,6 @@
 #include "OvConvert.h"
 #include "OvUtility_RTTI.h"
 #include "OvMacro.h"
-#include "OvClassProperty.h"
 #include "OvThreadSync.h"
 
 namespace OvUtil = OvUtility;

@@ -12,6 +12,7 @@ OvRTTI_IMPL(Quaternion);
 OvRTTI_IMPL(Integer);
 OvRTTI_IMPL(String);
 OvRTTI_IMPL(ObjectID);
+OvRTTI_IMPL(UserData);
 
 //////////////////////////////////////////////////////////////////////////
 #define REGIST_VALUE_TYPE_BEGINE OliveValue::Value*	OliveValue::Factory(const std::string& valueType){\
@@ -27,11 +28,10 @@ REGIST_VALUE_TYPE_BEGINE
 	REGIST_VALUE_TYPE( Quaternion )
 	REGIST_VALUE_TYPE( Integer )
 	REGIST_VALUE_TYPE( String )
+	REGIST_VALUE_TYPE( ObjectID )
+	REGIST_VALUE_TYPE( UserData )
 REGIST_VALUE_TYPE_END
 //////////////////////////////////////////////////////////////////////////
-
-
-#include <boost/lexical_cast.hpp>
 
 Value::Value()
 {
@@ -41,15 +41,21 @@ Value::~Value()
 {
 
 }
+
+void OliveValue::Value::SetValue( const char* expData )
+{
+	SetValue( string( expData ) );
+}
+
 //////////////////////////////////////////////////////////////////////////
 
 void OliveValue::Bool::SetValue( const string& expData )
 {
-	if ( stricmp( "0",expData.c_str() ) == 0 || stricmp( "false",expData.c_str() ) == 0 )
+	if ( _stricmp( "0",expData.c_str() ) == 0 || _stricmp( "false",expData.c_str() ) == 0 )
 	{
 		m_value = false;
 	}
-	else if ( stricmp( "1",expData.c_str() ) == 0 || stricmp( "true",expData.c_str() ) == 0 )
+	else if ( _stricmp( "1",expData.c_str() ) == 0 || _stricmp( "true",expData.c_str() ) == 0 )
 	{
 		m_value = true;
 	}
@@ -57,7 +63,7 @@ void OliveValue::Bool::SetValue( const string& expData )
 
 std::string OliveValue::Bool::GetValue()
 {
-	return boost::lexical_cast<string>(m_value);
+	return std::string( OvFormatString( "%d", m_value ) );
 }
 
 void OliveValue::Bool::SetBool( bool expData )
@@ -73,11 +79,11 @@ bool OliveValue::Bool::GetBool()
 //////////////////////////////////////////////////////////////////////////
 void			Float::SetValue( const string& expData )
 {
-	m_value = boost::lexical_cast<float>(expData);
+	sscanf_s( expData.c_str(), "%f", &m_value );
 }
 string			Float::GetValue()
 {
-	return boost::lexical_cast<string>(m_value);
+	return string( OvFormatString( "%f", m_value ) );
 }
 void			Float::SetFloat( float expValue )
 {
@@ -164,11 +170,11 @@ const OvQuaternion&	Quaternion::GetQuaternion()
 //////////////////////////////////////////////////////////////////////////
 void			Integer::SetValue( const string& expData )
 {
-	m_value = boost::lexical_cast<int>(expData);
+	sscanf_s( expData.c_str(), "%d", &m_value );
 }
 string			Integer::GetValue()
 {
-	return boost::lexical_cast<string>(m_value);
+	return string( OvFormatString( "%d", m_value ) );
 }
 void			Integer::SetInteger( int expValue )
 {
@@ -202,17 +208,42 @@ const string&	String::GetString()
 //////////////////////////////////////////////////////////////////////////
 void			ObjectID::SetValue( const string& expData )
 {
-	m_value = OvObjectID( boost::lexical_cast< OvObjectID::id_core_type >( expData ) );
+	OvObjectID::id_core_type core_id;
+	sscanf_s( expData.c_str(), "%d", &core_id );
+	m_value = OvObjectID( core_id );
 }
 string			ObjectID::GetValue()
 {
-	return boost::lexical_cast< string >( *(( OvObjectID::id_core_type* )&m_value) );
+	return string( OvFormatString( "%d", m_value ) );
 }
 void			ObjectID::SetObjectID( const OvObjectID& expValue )
 {
 	m_value = expValue;
 }
 const OvObjectID& ObjectID::GetObjectID()
+{
+	return m_value;
+}
+//////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////
+
+void OliveValue::UserData::SetValue( const string& expData )
+{
+	sscanf_s( expData.c_str(), "%p", &m_value );
+}
+
+std::string OliveValue::UserData::GetValue()
+{
+	return string( OvFormatString( "%p", m_value ) );
+}
+
+void OliveValue::UserData::SetUserData( void* userData )
+{
+	m_value = userData;
+}
+
+void* OliveValue::UserData::GetUserData()
 {
 	return m_value;
 }

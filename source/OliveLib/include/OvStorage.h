@@ -7,7 +7,7 @@
 #include "OvStreamCommon.h"
 
 class OvObjectProperties;
-class OvRelationLinkBuilder;
+class OvAssociatedLinkConnector;
 class OvObject;
 
 class OvStorage : public OvMemObject
@@ -18,10 +18,8 @@ public:
 	OvStorage();
 	~OvStorage();
 
-	bool	Save(const char* pFile, OvObjectCollector& saveObjects);
-	bool	Load(const char* pFile, OvObjectCollector& loadedObjects);
-
-	void	ExportObjectStructure(const char* pFile,const OvRTTI* rtti);
+	bool	Save( const std::string& pFile, OvObjectCollector& saveObjects);
+	bool	Load( const std::string& pFile, OvObjectCollector& loadedObjects);
 
 	void	Clear();
 
@@ -47,3 +45,4 @@ private:
 	link_builder_list		m_linkBuilderList;
 
 };
+OvObject* TemporaryFactoryFunction(const string& typeName);

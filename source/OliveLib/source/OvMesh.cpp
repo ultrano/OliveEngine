@@ -14,7 +14,7 @@ OvMesh::~OvMesh()
 	if ( m_renderData )
 	{
 		for( int i = 0 
-			; i < StreamStage::STAGE_MAX
+			; i < STAGE_MAX
 			; ++i)
 		{
 			SVertexStreamInfo& streamInfo = m_renderData->vertStreamInfo[ i ];
@@ -40,16 +40,16 @@ void	OvMesh::Rendering( StreamStage meshDetail )
 	meshDetail = (meshDetail > Blend)? Blend : meshDetail;
 
 	for( int i = 0 
-		; i < StreamStage::STAGE_MAX
+		; i < STAGE_MAX
 		; ++i)
 	{
-		OvRenderer::GetInstance()->SetVertexStream( i, &(m_renderData->vertStreamInfo[ i ]) );
+		OvRenderer::GetInstance()->SetVertexStream( i, (m_renderData->vertStreamInfo[ i ]) );
 	}
 
 	OvRenderer::GetInstance()->SetIndexStream( m_renderData->faceStream );
 
 	OvRenderer::GetInstance()->SetVertexDeclaration( m_renderData->vertDecl );
 
-	bool result = OvRenderer::GetInstance()->DrawPrimitive( D3DPRIMITIVETYPE::D3DPT_TRIANGLELIST, m_renderData->faceCount );
+	bool result = OvRenderer::GetInstance()->DrawPrimitive( D3DPT_TRIANGLELIST, m_renderData->faceCount );
 
 }

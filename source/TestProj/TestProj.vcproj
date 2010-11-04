@@ -40,11 +40,11 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="../OliveLib/include;../OliveLib/shader;../SupportLib/vld/include;../SupportLib/tixml/include;../GloryUnitTestKit/include"
+				AdditionalIncludeDirectories="&quot;$(SolutionDir)OliveLib/include&quot;;&quot;$(SolutionDir)SupportLib/vld/include&quot;;&quot;$(SolutionDir)SupportLib/tixml/include&quot;;&quot;$(SolutionDir)GloryUnitTestKit/include&quot;;&quot;$(SolutionDir)PhysxSDK\Cooking\include&quot;;&quot;$(SolutionDir)PhysxSDK\Foundation\include&quot;;&quot;$(SolutionDir)PhysxSDK\NxCharacter\include&quot;;&quot;$(SolutionDir)PhysxSDK\Physics\include&quot;;&quot;$(SolutionDir)PhysxSDK\PhysXLoader\include&quot;;&quot;$(SolutionDir)SupportLib\lua\include&quot;;../../resource/shader"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
-				RuntimeLibrary="3"
+				RuntimeLibrary="1"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="true"
@@ -61,9 +61,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="d3dx9d.lib d3d9.lib GloryLib.lib OliveLib.lib tinyxmld.lib"
+				AdditionalDependencies="d3dx9d.lib d3d9.lib GloryLib.lib OliveLib.lib tinyxmld.lib PhysXLoader.lib NxCooking.lib NxCharacter.lib"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="../SupportLib/vld/lib_d;../SupportLib/tixml/lib;../debug"
+				AdditionalLibraryDirectories="&quot;$(SolutionDir)SupportLib/vld/lib_d&quot;;&quot;$(SolutionDir)SupportLib/tixml/lib&quot;;&quot;$(SolutionDir)PhysxSDK\lib\Win32&quot;;&quot;$(SolutionDir)SupportLib\lua\lib&quot;;&quot;$(SolutionDir)$(ConfigurationName)&quot;"
+				IgnoreDefaultLibraryNames=""
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				TargetMachine="1"
@@ -98,7 +99,7 @@
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="1"
-			CharacterSet="1"
+			CharacterSet="2"
 			WholeProgramOptimization="1"
 			>
 			<Tool
@@ -118,6 +119,8 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
+				Optimization="2"
+				AdditionalIncludeDirectories="&quot;$(SolutionDir)OliveLib/include&quot;;&quot;$(SolutionDir)SupportLib/vld/include&quot;;&quot;$(SolutionDir)SupportLib/tixml/include&quot;;&quot;$(SolutionDir)GloryUnitTestKit/include&quot;;&quot;$(SolutionDir)PhysxSDK\Cooking\include&quot;;&quot;$(SolutionDir)PhysxSDK\Foundation\include&quot;;&quot;$(SolutionDir)PhysxSDK\NxCharacter\include&quot;;&quot;$(SolutionDir)PhysxSDK\Physics\include&quot;;&quot;$(SolutionDir)PhysxSDK\PhysXLoader\include&quot;;&quot;$(SolutionDir)SupportLib\lua\include&quot;;../../resource/shader"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
@@ -136,7 +139,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="d3dx9.lib d3d9.lib GloryLib.lib OliveLib.lib tinyxmld.lib PhysXLoader.lib NxCooking.lib NxCharacter.lib"
 				LinkIncremental="1"
+				AdditionalLibraryDirectories="&quot;$(SolutionDir)SupportLib/tixml/lib&quot;;&quot;$(SolutionDir)PhysxSDK\lib\Win32&quot;;&quot;$(SolutionDir)SupportLib\lua\lib&quot;;&quot;$(SolutionDir)$(ConfigurationName)&quot;"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				OptimizeReferences="2"
@@ -178,12 +183,16 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
+				RelativePath="..\SupportLib\lua\include\lua_tinker.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Main.cpp"
 				>
 			</File>
 		</Filter>
 		<Filter
-			Name="리소스 파일"
+			Name="test_cases"
 			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav"
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
@@ -192,56 +201,64 @@
 				>
 			</File>
 			<File
-				RelativePath=".\math_function_case.h"
-				>
-			</File>
-			<File
-				RelativePath=".\mesh_case.h"
-				>
-			</File>
-			<File
-				RelativePath=".\next_term_material_text_case.h"
-				>
-			</File>
-			<File
-				RelativePath=".\stream_case.h"
+				RelativePath=".\physx_case.h"
 				>
 			</File>
 			<File
 				RelativePath=".\temporary_testing.h"
 				>
 			</File>
-			<File
-				RelativePath=".\xml_cdata_parse_case.h"
-				>
-			</File>
 		</Filter>
 		<Filter
-			Name="simple_game"
+			Name="PhysxTest"
 			>
 			<Filter
-				Name="game_controller"
+				Name="OxCameraController"
 				>
 				<File
-					RelativePath=".\game_controller.h"
+					RelativePath=".\OxCameraController.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\OxCameraController.h"
 					>
 				</File>
 			</Filter>
 			<Filter
-				Name="componnent"
+				Name="OxTestPhysx"
 				>
-				<Filter
-					Name="GMPhysics"
+				<File
+					RelativePath=".\OxTestPhysx.cpp"
 					>
-					<File
-						RelativePath=".\GMPhysics.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\GMPhysics.h"
-						>
-					</File>
-				</Filter>
+				</File>
+				<File
+					RelativePath=".\OxTestPhysx.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="OxGameController"
+				>
+				<File
+					RelativePath=".\OxGameController.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\OxGameController.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="OxBoxMovement"
+				>
+				<File
+					RelativePath=".\OxBoxMovement.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\OxBoxMovement.h"
+					>
+				</File>
 			</Filter>
 		</Filter>
 	</Files>

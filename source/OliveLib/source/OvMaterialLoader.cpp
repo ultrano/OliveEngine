@@ -1,4 +1,5 @@
 #include "OvMaterialLoader.h"
+#include "OvMaterial.h"
 #include "tinyxml.h"
 #include "OvVertexShader.h"
 #include "OvPixelShader.h"
@@ -6,21 +7,26 @@
 #include "OvResourceManager.h"
 #include "OvShaderManager.h"
 #include "OvShaderCodeIncluder.h"
+#include "OvShaderCode.h"
 #include <map>
 using namespace std;
+
+OvRTTI_IMPL( OvMaterialLoader );
 
 OvResourceSPtr OvMaterialLoader::Load( const std::string& fileLocation )
 {
 	TiXmlDocument doc("material_doc");
 	
-	doc.LoadFile( fileLocation.c_str() );
-	
+	if ( ! doc.LoadFile( fileLocation.c_str() ) )
+	{	
+		return NULL;
+	}
 	TiXmlElement* root = doc.RootElement();
 
 	//////////////////////////////////////////////////////////////////////////
 	TiXmlElement* shader_elem = root->FirstChildElement( "shader" );
 
-	OvShaderCodeIncluder includer("../OliveLib/shader");
+	OvShaderCodeIncluder includer;
 	OvVertexShaderSPtr	vertexShader = NULL;
 	OvPixelShaderSPtr	pixelShader	 = NULL;
 	string shader_code;
@@ -35,11 +41,8 @@ OvResourceSPtr OvMaterialLoader::Load( const std::string& fileLocation )
 	entry_function	= vertex_shader_elem->Attribute("entry_function");
 	complie_version	= vertex_shader_elem->Attribute("complie_version");
 
-	vertexShader = OvShaderManager::GetInstance()->CreateVertexShaderFromCode
-		( shader_code
-		, entry_function
-		, complie_version
-		, &includer );
+	OvShaderCode vertex_code( shader_code );
+	vertexShader = vertex_code.CompileVertexShader( entry_function, complie_version );
 
 	//////////////////////////////////////////////////////////////////////////
 
@@ -50,16 +53,14 @@ OvResourceSPtr OvMaterialLoader::Load( const std::string& fileLocation )
 	entry_function	= pixel_shader_elem->Attribute("entry_function");
 	complie_version	= pixel_shader_elem->Attribute("complie_version");
 
-	pixelShader = OvShaderManager::GetInstance()->CreatePixelShaderFromCode
-		( shader_code
-		, entry_function
-		, complie_version
-		, &includer );
+	OvShaderCode pixel_code( shader_code );
+	pixelShader = pixel_code.CompilePixelShader( entry_function, complie_version );
+
 	//////////////////////////////////////////////////////////////////////////
 
 	//////////////////////////////////////////////////////////////////////////
 	TiXmlElement* sampler_stage_elem = root->FirstChildElement( "sampler_stage" );
-	std::map<unsigned int, OvTextureSPtr> stageImage;
+	std::map<unsigned int, OvResourceTicketSPtr> stageImage;
 
 	for ( TiXmlElement* sampler_elem = sampler_stage_elem->FirstChildElement( "sampler" )
 		; NULL != sampler_elem
@@ -70,7 +71,7 @@ OvResourceSPtr OvMaterialLoader::Load( const std::string& fileLocation )
 		
 		TiXmlElement* texture_elem = sampler_elem->FirstChildElement( "texture" );
 
-		OvTextureSPtr image = OvResourceManager::GetInstance()->LoadResource<OvTexture>( texture_elem->GetText() );
+		OvResourceTicketSPtr image = OvResourceManager::GetInstance()->AsyncLoadResource<OvTexture>( AbsolutePath( texture_elem->GetText() ) );
 
 		stageImage[ stage ] = image;
 	}

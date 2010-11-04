@@ -2,6 +2,7 @@
 #include "OvXNode.h"
 #include "OvMesh.h"
 #include "OvMaterial.h"
+#include "OvResourceTicket.h"
 
 OvREF_POINTER(OvModel);
 class OvModel : public OvXNode
@@ -27,11 +28,12 @@ public:
 	void	SetMaterial( OvMaterialSPtr	material );
 	OvMaterialSPtr	GetMaterial();
 
+	void	RenderWithoutMaterial();
 	void	Render();
 
 private:
 
-	OvMaterialSPtr	m_material;
-	OvMeshSPtr		m_resourceMesh;
+	OvResourceTicketSPtr	m_material;
+	OvResourceTicketSPtr	m_mesh;
 
 };

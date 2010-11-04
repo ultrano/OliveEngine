@@ -1,7 +1,20 @@
 #pragma once
-#include "OvRenderEffector.h"
+#include "OvSceneEffector.h"
 
-class OvLight : public OvRenderEffector
+class OvLight : public OvSceneEffector
 {
 	OvRTTI_DECL(OvLight);
+};
+
+class OvPointLight : public OvLight 
+{
+	OvRTTI_DECL( OvPointLight );
+
+public:
+
+private:
+
+	float m_startLight;
+	float m_endLight;
+
 };

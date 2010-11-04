@@ -1,9 +1,13 @@
 #include "OvShaderCodeLoader.h"
+#include "OvShaderCode.h"
+
+OvRTTI_IMPL( OvShaderCodeLoader );
 
 OvResourceSPtr OvShaderCodeLoader::Load( const std::string& fileLocation )
 {
 
-	FILE* file = fopen( fileLocation.c_str(), "r" );
+	FILE* file = NULL;
+	fopen_s( &file, fileLocation.c_str(), "r" );
 
 	if ( file )
 	{
@@ -13,6 +17,7 @@ OvResourceSPtr OvShaderCodeLoader::Load( const std::string& fileLocation )
 		{
 			shader_code += line;
 		}
+		fclose( file );
 		return new OvShaderCode( shader_code );
 	}
 

@@ -3,8 +3,8 @@
 #include <map>
 #include <list>
 
-class OvRelationLinkBuilder;
-typedef std::list<OvRelationLinkBuilder*> link_builder_list;
+class OvAssociatedLinkConnector;
+typedef std::list<OvAssociatedLinkConnector*> link_builder_list;
 
 class OvObjectID;
 class OvObject;

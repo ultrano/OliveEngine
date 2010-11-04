@@ -1,0 +1,58 @@
+<ObjectTable>
+  <Object type="OvModel" id="3">
+    <prop>OvMaterial:material/test.matf0</prop>
+    <prop>OvMesh:mesh/bottom_plane.msf0</prop>
+    <prop>0:</prop>
+    <prop>0</prop>
+    <prop>1.000000,1.000000,1.000000</prop>
+    <prop>0.000000,0.000000,0.000000</prop>
+    <prop>0.000000,0.000000,0.000000,1.000000</prop>
+    <prop>0:</prop>
+    <prop>Plane</prop>
+    <prop>0:</prop>
+  </Object>
+  <Object type="OvModel" id="4">
+    <prop>OvMaterial:material/test.matf0</prop>
+    <prop>OvMesh:mesh/box1.msf0</prop>
+    <prop>0:</prop>
+    <prop>0</prop>
+    <prop>2.000000,8.000000,2.000000</prop>
+    <prop>0.000000,5.000000,0.000000</prop>
+    <prop>0.000000,0.000000,0.000000,1.000000</prop>
+    <prop>0:</prop>
+    <prop>Ball</prop>
+    <prop>0:</prop>
+  </Object>
+  <Object type="OvCamera" id="1">
+    <prop>0</prop>
+    <prop>0</prop>
+    <prop>0.785398006</prop>
+    <prop>1</prop>
+    <prop>1000</prop>
+    <prop>1</prop>
+    <prop>0:</prop>
+    <prop>0</prop>
+    <prop>1.000000,1.000000,1.000000</prop>
+    <prop>0.000000,10.000000,0.000000</prop>
+    <prop>0.000000,0.000000,0.000000,1.000000</prop>
+    <prop>1:2!</prop>
+    <prop>Camera</prop>
+    <prop>0:</prop>
+  </Object>
+  <Object type="OvModel" id="5">
+    <prop>OvMaterial:material/test.matf0</prop>
+    <prop>OvMesh:mesh/sphere.msf0</prop>
+    <prop>0:</prop>
+    <prop>0</prop>
+    <prop>0.100000,0.100000,0.100000</prop>
+    <prop>0.000000,0.000000,0.000000</prop>
+    <prop>0.000000,0.000000,0.000000,1.000000</prop>
+    <prop>0:</prop>
+    <prop>Light</prop>
+    <prop>0:</prop>
+  </Object>
+  <Object type="OvCameraController" id="2">
+    <prop>1</prop>
+    <prop>0:</prop>
+  </Object>
+</ObjectTable>

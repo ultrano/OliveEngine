@@ -1,4 +1,5 @@
 #pragma once
+#pragma warning( disable : 4521 )
 
 class OvPoint3;
 

@@ -117,3 +117,12 @@ class OvPropAccesser_resource : public OvPropertyAccesser
 	virtual bool	Extract(OvObject* pObj, OvObjectProperties& rObjStore);
 	virtual bool	Inject(OvObject* pObj, OvObjectProperties& rObjStore);
 };
+
+//resource Property
+class OvResourceLoader;
+class OvPropAccesser_resource_ticket : public OvPropertyAccesser
+{
+	OvRTTI_DECL( OvPropAccesser_resource_ticket );
+	virtual bool	Extract(OvObject* pObj, OvObjectProperties& rObjStore);
+	virtual bool	Inject(OvObject* pObj, OvObjectProperties& rObjStore);
+};

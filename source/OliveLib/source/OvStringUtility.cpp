@@ -1,4 +1,5 @@
 #include "OvStringUtility.h"
+#include <stdio.h>
 #define FORMATTING_LENGTH 1024
 
 OvArrayAutoPtr<char> FormatString(const char* _pFormat,...)
@@ -20,7 +21,7 @@ OvArrayAutoPtr<char> FormatString(const char* _pFormat,...)
 		kFormatBuf = new char[kFormatLen];
 
 		memset(kFormatBuf,0,kFormatLen);
-		vsprintf(kFormatBuf,_pFormat,kpArg);
+		vsprintf_s( kFormatBuf, kFormatLen, _pFormat, kpArg);
 
 	}
 
@@ -39,7 +40,7 @@ char* Formatting(const char* pFormat,va_list pArg)
 	kFormatBuf = new char[kFormatLen];
 
 	memset(kFormatBuf,0,kFormatLen);
-	vsprintf(kFormatBuf,pFormat,pArg);
+	vsprintf_s( kFormatBuf, kFormatLen, pFormat, pArg);
 
 	//m_pBuffer = kFormatBuf;
 	return (kFormatBuf);

@@ -6,6 +6,7 @@
 #include "OvTransform.h"
 #include "OvSphere.h"
 #include "OvObjectCollector.h"
+#include "OvBitFlags.h"
 
 // OvXObject -> eXtentionObject 
 // 활동적인 오브젝트 (공간상의 객체역할)
@@ -30,9 +31,16 @@ class OvXObject : public OvObject
 	friend class OvXComponent;
 
 public :
-
+	enum CONTROL_FLAG
+	{
+		UPDATABLE,
+		VISIBLE,
+	};
 	OvXObject();
 	virtual ~OvXObject();
+
+	void			SetControlFlag( CONTROL_FLAG flag, bool check );
+	bool			GetControlFlag( CONTROL_FLAG flag );
 
 	//! Update
 	void			Update(float _fElapse);
@@ -73,9 +81,12 @@ public :
 	//! Get Parent
 	OvXNodeSPtr			GetAttachedNode();
 
+	template<typename Type_0>
+	OvSmartPointer<Type_0>	GetFirstComponent();
 	bool				GetComponents( OvObjectCollector& extraComponents );
 	OvXComponentSPtr	RemoveComponent( const OvObjectSPtr component );
 	OvXComponentSPtr	RemoveComponent( const OvObjectID& compoentID );
+	OvXComponentSPtr	RemoveComponent( const char* name );
 
 private:
 
@@ -115,4 +126,26 @@ private:
 
 	OvObjectCollector	m_extraComponents;
 
+	Ov8SetFlags	m_controlFlags;
+
 };
+
+template<typename Type_0>
+OvSmartPointer<Type_0>
+OvXObject::GetFirstComponent()
+{
+	OvObjectCollector extraComponents;
+	if ( GetComponents( extraComponents ) )
+	{
+		OvXComponentSPtr component = NULL;
+		for ( unsigned i = 0 ; i < extraComponents.Count() ; ++i )
+		{
+			component = extraComponents.GetByAt( i );
+			if ( component = OvRTTI_Util::IsTypeOf<Type_0>( component.GetRear() ) )
+			{
+				return component;
+			}
+		}
+	}
+	return NULL;
+}

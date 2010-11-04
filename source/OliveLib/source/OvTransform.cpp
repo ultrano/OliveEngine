@@ -41,3 +41,16 @@ OvTransform ExtractTransformFromMatrix( const OvMatrix& mat )
 	outPut.Scale.z = kExtractMat._33;
 	return outPut;
 }
+
+bool MakeViewMatrix( const OvPoint3& lookDir, const OvPoint3& upDir, const OvPoint3& pos, OvMatrix& outMat )
+{
+	OvPoint3 rightDir = OvPoint3CrossProduct( upDir, lookDir );
+
+	outMat = OvMatrix
+		(rightDir.x,upDir.x,lookDir.x,0
+		,rightDir.y,upDir.y,lookDir.y,0
+		,rightDir.z,upDir.z,lookDir.z,0
+		,-OvPoint3DotProduct( rightDir, pos ),-OvPoint3DotProduct( upDir, pos ),-OvPoint3DotProduct( lookDir, pos ),1);
+
+	return true;
+}

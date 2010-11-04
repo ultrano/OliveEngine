@@ -1,4 +1,5 @@
 #pragma once
+#include "OvResourceLoader.h"
 #include "OvMesh.h"
 
 class OvMeshLoaderBase : public OvResourceLoader
@@ -11,7 +12,7 @@ protected:
 		, SVertexStreamInfo& streamMedium
 		, SVertexStreamInfo& streamHigh
 		, LPDIRECT3DVERTEXDECLARATION9 declVert
-		, size_t countVert
+		, UINT countVert
 		, LPDIRECT3DINDEXBUFFER9 streamFace
-		, size_t countFace );
+		, UINT countFace );
 };

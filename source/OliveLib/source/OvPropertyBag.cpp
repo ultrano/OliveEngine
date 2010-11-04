@@ -1,50 +1,43 @@
 #include "OvPropertyBag.h"
-#include "OvPropAccesserNode.h"
+#include "OvPropertyAccesser.h"
+
+OvPropertyBag::OvPropertyBag()
+{
+
+}
 
 OvPropertyBag::~OvPropertyBag()
 {
-	OvPropAccesserNode* kpDeleteNode = BeginAccessNode();
-	OvPropAccesserNode* kpNextNode	= 0;
-	while (kpDeleteNode)
-	{
-		kpNextNode = kpDeleteNode->GetNext();
-		delete kpDeleteNode;
-		kpDeleteNode = kpNextNode;
-	}
 }
 
-OvPropAccesserNode*	OvPropertyBag::BeginAccessNode()
+unsigned OvPropertyBag::GetPropertiesCount()
 {
-	return m_pListBegin;
-};
-OvPropAccesserNode*	OvPropertyBag::EndAccessNode()
-{
-	OvPropAccesserNode* kpListEnd = m_pListBegin;
-	if (kpListEnd)
-	{
-		while (kpListEnd->GetNext())
-		{
-			kpListEnd = kpListEnd->GetNext();
-		}
-	}
-	return kpListEnd;
+	return (unsigned)m_properties.size();
 }
 
-OvPropAccesserNode*		OvPropertyBag::AddProperty(OvPropertyAccesser* pProperty)
+OvPropertyAccesser* OvPropertyBag::GetPropertyAt( unsigned index )
 {
-	OvPropAccesserNode* kpNewNode = 0;
-	if (pProperty)
+	if ( index < m_properties.size() )
 	{
-		kpNewNode = new OvPropAccesserNode(pProperty);
-		OvPropAccesserNode* kpListEnd = EndAccessNode();
-		if (kpNewNode && kpListEnd)
+		return m_properties.at( index ).GetRear();
+	}
+	return NULL;
+}
+
+OvPropertyAccesser* OvPropertyBag::FindProperty( const std::string& name )
+{
+	OvPropertyAccesser* accesser = NULL;
+	for ( unsigned i = 0 ; accesser = GetPropertyAt( i ) ; ++i )
+	{
+		if ( accesser->GetPropertyName() == name )
 		{
-			kpListEnd->SetNext(kpNewNode);
-		}
-		else
-		{
-			m_pListBegin = kpNewNode;
+			return accesser;
 		}
 	}
-	return kpNewNode;
+	return NULL;
+}
+
+void				OvPropertyBag::AddProperty( OvPropertyAccesser* pProperty )
+{
+	m_properties.push_back( pProperty );
 }

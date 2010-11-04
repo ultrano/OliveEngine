@@ -1,24 +1,27 @@
 #pragma once
 
+#include "OvAutoPtr.h"
+#include <vector>
+#include <string>
 
 class OvPropertyAccesser;
-class OvPropAccesserNode;
 
 class OvPropertyBag
 {
 public:
 
-	OvPropertyBag():m_pListBegin(0){};
+	OvPropertyBag();
 	~OvPropertyBag();
 
-	OvPropAccesserNode*	BeginAccessNode();
-	OvPropAccesserNode*	EndAccessNode();
+	unsigned			GetPropertiesCount();
+	OvPropertyAccesser* GetPropertyAt( unsigned index );
+	OvPropertyAccesser* FindProperty( const std::string& name );
 
-	OvPropAccesserNode*		AddProperty(OvPropertyAccesser* pProperty);
+	void				AddProperty(OvPropertyAccesser* pProperty);
 
 private:
 
-	OvPropAccesserNode* m_pListBegin;
+	vector< OvAutoPtr<OvPropertyAccesser> > m_properties;
 
 };
 

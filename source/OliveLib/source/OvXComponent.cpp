@@ -15,7 +15,10 @@ OvXComponent::OvXComponent()
 }
 OvXComponent::~OvXComponent()
 {
-
+	if ( m_equippedObject )
+	{
+		ShutDown();
+	}
 }
 
 void		OvXComponent::SetTarget( OvXObjectSPtr _pEquippedObject )

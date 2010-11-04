@@ -19,11 +19,11 @@ void	GlBaseTestEnviroment::TearDown()
 {
 };
 
-void	GlBaseTestEnviroment::SetEnvName( const string& enviromentName )
+void	GlBaseTestEnviroment::SetEnvName( const char* enviromentName )
 {
 	m_enviromentName = enviromentName;
 }
-void	GlBaseTestEnviroment::SetCaseTitle( const string& testCaseTitle )
+void	GlBaseTestEnviroment::SetCaseTitle( const char* testCaseTitle )
 {
 	m_testCaseTitle = testCaseTitle;
 }

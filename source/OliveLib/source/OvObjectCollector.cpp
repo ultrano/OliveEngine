@@ -49,7 +49,7 @@ OvObjectSPtr	OvObjectCollector::GetByID( const OvObjectID& objectID )
 
 DWORD			OvObjectCollector::Count()
 {
-	return m_tdObjArray.size();
+	return (DWORD)m_tdObjArray.size();
 }
 void			OvObjectCollector::Clear()
 {
@@ -63,11 +63,12 @@ bool			OvObjectCollector::AddObject(OvObjectSPtr pObj)
 
 bool			OvObjectCollector::AddObject(OvObjectCollector& pObjContainer)
 {
-	for (int i=0;i<pObjContainer.Count();++i)
+	m_tdObjArray.reserve( pObjContainer.Count() );
+	for ( unsigned  i = 0 ; i < (unsigned)pObjContainer.Count() ; ++i )
 	{
-		AddObject(pObjContainer.GetByAt(i));
+		m_tdObjArray.push_back( pObjContainer.GetByAt(i) );
 	}
-	return pObjContainer.Count();
+	return ( m_tdObjArray.size() != 0 );
 }
 
 OvObjectSPtr	OvObjectCollector::RemoveObject(OvObjectSPtr pObj)
@@ -97,7 +98,7 @@ bool			OvObjectCollector::IsCollected(OvObjectSPtr pObj)
 {
 	if (pObj)
 	{
-		for (int i=0;i<Count();++i)
+		for ( unsigned i = 0 ; i < (unsigned)Count() ; ++i )
 		{
 			OvObjectSPtr kpTarget = GetByAt(i);
 			if (kpTarget == pObj)

@@ -9,6 +9,7 @@
 #include "OvObjectID.h"
 
 class OvStorage;
+class OvObjectProperties;
 OvREF_POINTER(OvObject);
 namespace OliveValue
 {
@@ -28,24 +29,31 @@ public:
 	OvObject(OvStorage& rStorage);
 	virtual ~OvObject(); 
 
+	//! Clone Object
+	OvObjectSPtr Clone();
+
 	//! Object Name
-	void		SetName(const char* _pName);
-	const string& GetName();
+	void			SetName(const char* _pName);
+	const string&	GetName();
 
 	//! ID of Object
 	OvObjectID		GetObjectID();
 
-	void		RegisterExtraProperty( const string& propName, OliveValue::Value* extraProp );
-	bool		RemoveExtraProperty( const string& propName );
-	void		ClearExtraProperty();
-
+	//! Extra Property
 	template<typename Type_0>
 	Type_0* FindExtraProperty( const string& propName );
 	OliveValue::Value* FindExtraProperty( const string& propName );
 
+	//! RegisterExtraProperty는 성능상의 부하를 고려 해야 겠다. (구현부가 부하를 발생시키게 생겼다.)
+	bool		RegisterExtraProperty( const string& propName, OliveValue::Value& extraProp );
+	bool		RemoveExtraProperty( const string& propName );
+	void		ClearExtraProperty();
+
+
 private:
 
 	OvObjectID		m_idObjectID;
+	std::string		m_name;
 
 	extra_property_table	m_extraPropertyTable;
 
@@ -62,7 +70,5 @@ Type_0* OvObject::FindExtraProperty( const string& propName )
 	}
 	return NULL;
 }
-
-#define OvFACTORY_MEMBER(__class_name) friend class OvObjectFactory;\
-__class_name(OvObjectID& objID){objID = GetObjectID();};\
-static OvObjectSPtr	FactoryCallback(OvObjectID& objID){return (new __class_name(objID));};
+void ExtractProperties( OvObject* obj, OvObjectProperties& prop );
+void InjectProperties( OvObject* obj, OvObjectProperties& prop );

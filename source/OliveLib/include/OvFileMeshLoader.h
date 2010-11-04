@@ -2,6 +2,8 @@
 #include "OvMeshLoaderBase.h"
 #include <string>
 
+// 메쉬 포맷을 3단계로 고정시키자
+// 유연해봐야 쓰지도 않는다.
 class OvFileMeshLoader : public OvMeshLoaderBase
 {
 	OvRTTI_DECL(OvFileMeshLoader);

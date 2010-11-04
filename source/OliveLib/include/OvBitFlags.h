@@ -7,7 +7,7 @@ public:
 	OvBitFlags():m_flags(0){};
 	inline void	SetFlag(int _flag_bit,bool _set);
 	inline bool	GetFlag(int _flag_bit);
-	inline void	Clear();
+	inline void	Clear( bool check = false );
 protected:
 private:
 	Type0	m_flags;
@@ -27,13 +27,13 @@ inline void	OvBitFlags<Type0>::SetFlag(int _flag_bit,bool _set)
 template<typename Type0>
 inline bool	OvBitFlags<Type0>::GetFlag(int _flag_bit)
 {
-	return (m_flags&(1<<_flag_bit));
+	return (( m_flags & ( 1 << _flag_bit ) ) != 0);
 }
 
 template<typename Type0>
-inline void	OvBitFlags<Type0>::Clear()
+inline void	OvBitFlags<Type0>::Clear( bool check )
 {
-	m_flags = 0;
+	m_flags = check? -1 : 0;
 }
 
 typedef	OvBitFlags<unsigned char>	Ov8SetFlags;

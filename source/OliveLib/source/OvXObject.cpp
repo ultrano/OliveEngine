@@ -18,13 +18,28 @@ OvPROPERTY_BAG_END(OvXObject);
 OvXObject::OvXObject()
 :m_pParent(NULL)
 {
+	m_controlFlags.Clear( true );
 }
 OvXObject::~OvXObject()
 {
 }
 
+void OvXObject::SetControlFlag( CONTROL_FLAG flag, bool check )
+{
+	m_controlFlags.SetFlag( flag, check );
+}
+
+bool OvXObject::GetControlFlag( CONTROL_FLAG flag )
+{
+	return m_controlFlags.GetFlag( flag );
+}
+
 void OvXObject::Update(float _fElapse)
 {
+	if ( false == GetControlFlag( UPDATABLE ) )
+	{
+		return ;
+	}
 	OvTransform&	krLocalTransform = m_tfLocalTransform;
 	OvTransform&	krWorldTransform = m_tfWorldTransform;
 
@@ -44,18 +59,10 @@ void OvXObject::Update(float _fElapse)
 
 	m_tfWorldTransform = ExtractTransformFromMatrix( m_worldBuildMatrix );
 
-	for (int i = 0 ; i < m_extraComponents.Count() ; ++i)
+	OvObjectCollector	extraComponents = m_extraComponents;
+	for ( unsigned i = 0 ; i < extraComponents.Count() ; ++i )
 	{
-		OvXComponentSPtr	kpController = m_extraComponents.GetByAt( i );
-		if ( kpController )
-		{
-			kpController->Update(_fElapse);
-		}
-	}
-
-	for ( int i = 0 ; i < m_extraComponents.Count() ; ++i )
-	{
-		OvXComponentSPtr component = m_extraComponents.GetByAt( i );
+		OvXComponentSPtr component = extraComponents.GetByAt( i );
 		if ( component )
 		{
 			component->Update( _fElapse );
@@ -181,7 +188,7 @@ const OvMatrix&		OvXObject::GetWorldMatrix()
 
 bool OvXObject::IsNode()
 {
-	return OvRTTI_Util::IsKindOf< OvXNode >( this );
+	return ( OvRTTI_Util::IsKindOf< OvXNode >( this ) != NULL );
 }
 
 bool OvXObject::IsLeaf()
@@ -242,4 +249,20 @@ OvXComponentSPtr OvXObject::RemoveComponent( const OvObjectID& compoentID )
 	OvXComponentSPtr removedComponent = m_extraComponents.RemoveObject( compoentID );
 	removedComponent->SetTarget( NULL );
 	return removedComponent;
+}
+
+OvXComponentSPtr OvXObject::RemoveComponent( const char* name )
+{
+	if ( NULL == name ) return NULL;
+	OvXComponentSPtr removedComponent = NULL;
+	for ( unsigned i = 0 ; i < m_extraComponents.Count() ; ++i )
+	{
+		removedComponent = m_extraComponents.GetByAt( i );
+		if ( removedComponent->GetName() == std::string( name ) )
+		{
+			removedComponent->SetTarget( NULL );
+			return removedComponent;
+		}
+	}
+	return NULL;
 }

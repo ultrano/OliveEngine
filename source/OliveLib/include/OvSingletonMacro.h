@@ -1,4 +1,5 @@
 #pragma once
+#include "OvGlobalFunc.h"
 #include "OvMacro.h"
 template<class Type_0>
 class OvSingletonBase
@@ -44,6 +45,6 @@ public:
 			OvAssertMsg("[OvSingletonPool]이 가동 되지 않았습니다.\n"
 				"[OvSingletonPool::StartUp()]을 호출해야 싱글톤들이 사용가능합니다.");
 		}
-		return NULL;
+		return 0;
 	};
 };

@@ -33,5 +33,5 @@ void	OvSingletonPool::ShutDown()
 }
 bool OvSingletonPool::IsPoolStartedUp()
 {
-	return sm_pSingletonContextList;
+	return ( sm_pSingletonContextList != NULL );
 }

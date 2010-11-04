@@ -3,30 +3,17 @@
     <vertex_shader entry_function="main" complie_version="vs_2_0">
       <![CDATA[
    
-   #include <vertex_common.h>
+   #include "vertex_common.h"
 
 void	main( in input_vertex input, out output_vertex output )
 {
 	output.pos = mul( vector( input.geom.pos, 1.0 ), WorldViewProject );
 	
-	float3 lightdir;
-	lightdir.x = sin( Time );
-	lightdir.y = 0;
-	lightdir.z = cos( Time );
-	lightdir = normalize( lightdir );
-	
-	float3 norm = normalize( mul( input.geom.norm, World) );
-	float3 tan = normalize( mul( input.geom.tan, World) );
-	float3 binorm = normalize( cross( norm, tan) );
-	
-	output.norm = norm;
-	output.light.x = dot( lightdir, tan );
-	output.light.y = dot( lightdir, binorm );
-	output.light.z = dot( lightdir, norm );
-	
+	output.norm = normalize( mul( input.geom.norm, World) );
 	output.tex0 = input.tex.tex0;
 	output.eye = ViewPos;
 	output.eye2pos = normalize( input.geom.pos - ViewPos );
+  output.depth = output.pos;
 };
     ]]>]
     </vertex_shader>
@@ -34,7 +21,7 @@ void	main( in input_vertex input, out output_vertex output )
     <pixel_shader entry_function="main" complie_version="ps_2_0">
       <![CDATA[
     
-#include <pixel_common.h>
+#include "pixel_common.h"
 
 
 
@@ -44,40 +31,29 @@ void main( in input_pixel input, out vector col0 : COLOR0 )
 
 	// collecting channels
 	output.diffuse		= texturesampler_0( input.tex0 );
-	output.emissive		= texturesampler_0( input.tex0 ) / 2.0f;
-	output.normal		= texturesampler_1( input.tex0 );
-	output.specular_pow = 10;
 	//
 	
 	// manufaturing channels
-	
-	output.normal = normalize( 2.0f * output.normal - 1.0f );
-	
-	float3 eye2pos	= normalize( input.eye2pos );
-	float3 light	= normalize( input.light );
-
-	float3 reflection = normalize( reflect( output.normal, eye2pos ) );
-
-	float4 specular = max( 0, dot( light, reflection));
-	col0 = output.emissive + ( output.diffuse * pow( specular, output.specular_pow) );
-	
+  col0 = output.diffuse;
 	//
 	
 }
     ]]>]
     </pixel_shader>
   </shader>
+  
   <sampler_stage>
     <sampler stage="0">
-      <texture>../../resource/texture/test.jpg</texture>
+      <texture>texture/test.jpg</texture>
       <state>
       </state>
 
     </sampler>
     <sampler stage="1">
-      <texture>../../resource/texture/normal.jpg</texture>
+      <texture>texture/normal.jpg</texture>
       <state>
       </state>
     </sampler>
   </sampler_stage>
+  
 </material>

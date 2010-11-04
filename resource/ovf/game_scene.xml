@@ -1,7 +1,7 @@
 <ObjectTable>
     <Object type="OvModel" id="3">
-        <prop>OvMaterial:../../resource/material/test.matf0</prop>
-        <prop>OvMesh:../../resource/mesh/bottom_plane.msf0</prop>
+        <prop>OvMaterial:material/test.matf0</prop>
+        <prop>OvMesh:mesh/bottom_plane.msf0</prop>
         <prop>0:</prop>
         <prop>0</prop>
         <prop>1.000000,1.000000,1.000000</prop>
@@ -11,11 +11,11 @@
         <prop>1:[6-4-11]StringNameBottomPlane</prop>
     </Object>
     <Object type="OvModel" id="4">
-      <prop>OvMaterial:../../resource/material/test.matf0</prop>
-      <prop>OvMesh:../../resource/mesh/ball.msf0</prop>
+      <prop>OvMaterial:material/test.matf0</prop>
+      <prop>OvMesh:mesh/ball.msf0</prop>
       <prop>0:</prop>
       <prop>0</prop>
-      <prop>1.000000,1.000000,1.000000</prop>
+      <prop>20.000000,20.000000,20.000000</prop>
       <prop>0.000000,100.000000,0.000000</prop>
       <prop>0.000000,0.000000,0.000000,1.000000</prop>
       <prop>0:</prop>

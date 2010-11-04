@@ -7,7 +7,7 @@
 #include "OvTransform.h"
 #include "OliveValue.h"
 #include "OvObjectCollector.h"
-#include "OvRelationLinkBuilder.h"
+#include "OvAssociatedLinkConnector.h"
 #include "OvResourceManager.h"
 using namespace std;
 
@@ -136,7 +136,7 @@ bool	OvPropAccesser_object_pointer::Extract(OvObject* pObj, OvObjectProperties& 
 			extractValue.SetObjectID( OvObjectID::INVALID );
 		}
 		rObjStore.PushValue(extractValue);
-		rObjStore.PushComponentObject(*kpProp);
+		rObjStore.PushAssociatedObject(*kpProp);
 		return true;
 	}
 	return false;
@@ -149,7 +149,7 @@ bool	OvPropAccesser_object_pointer::Inject(OvObject* pObj, OvObjectProperties& r
 		OliveValue::ObjectID injectValue;
 		if ( rObjStore.PopValue(injectValue) && injectValue.GetObjectID() != OvObjectID::INVALID )
 		{
-			OvPointLinkBuilder* linkBuilder = OvNew OvPointLinkBuilder;
+			OvPointerLinkConnector* linkBuilder = OvNew OvPointerLinkConnector;
 
 			linkBuilder->SetFormerID( injectValue.GetObjectID() );
 			linkBuilder->SetDestination( kpProp );
@@ -182,7 +182,7 @@ bool	OvPropAccesser_object_smart_pointer::Extract(OvObject* pObj, OvObjectProper
 			extractValue.SetObjectID( OvObjectID::INVALID );
 		}
 		rObjStore.PushValue(extractValue);
-		rObjStore.PushComponentObject( kpProp->GetRear() );
+		rObjStore.PushAssociatedObject( kpProp->GetRear() );
 		return true;
 	}
 	return false;
@@ -195,7 +195,7 @@ bool	OvPropAccesser_object_smart_pointer::Inject(OvObject* pObj, OvObjectPropert
 		OliveValue::ObjectID injectValue;
 		if ( rObjStore.PopValue(injectValue) && injectValue.GetObjectID() != OvObjectID::INVALID )
 		{
-			OvSmartLinkBuilder* linkBuilder = OvNew OvSmartLinkBuilder;
+			OvSmartPtrLinkConnector* linkBuilder = OvNew OvSmartPtrLinkConnector;
 
 			linkBuilder->SetFormerID( injectValue.GetObjectID() );
 			linkBuilder->SetSmartDestination( kpProp );			
@@ -398,7 +398,7 @@ bool	OvPropAccesser_extra_data::Extract(OvObject* pObj, OvObjectProperties& rObj
 	{
 		OvObject::extra_property_table& extraTable = *kpProp;
 
-		OliveValue::Integer extraCount( extraTable.size() );
+		OliveValue::Integer extraCount( (int)extraTable.size() );
 		
 		unsigned savedPropCount = 0;
 		string extraInfo;
@@ -409,9 +409,9 @@ bool	OvPropAccesser_extra_data::Extract(OvObject* pObj, OvObjectProperties& rObj
 
 			string typeName = OvRTTI_Util::TypeName( extraValue );
 
-			OliveValue::Integer typeLength( typeName.size() );
-			OliveValue::Integer nameLength( extraProp.first.size() );
-			OliveValue::Integer valueLength( extraValue->GetValue().size() );
+			OliveValue::Integer typeLength( (int)typeName.size() );
+			OliveValue::Integer nameLength( (int)extraProp.first.size() );
+			OliveValue::Integer valueLength( (int)extraValue->GetValue().size() );
 
 			if ( valueLength.GetInteger() )
 			{
@@ -453,12 +453,12 @@ bool	OvPropAccesser_extra_data::Inject(OvObject* pObj, OvObjectProperties& rObjS
 
 		rObjStore.PopValue( extraInfo );
 
-		sscanf( extraInfo.c_str(), "%d:%s", &count, &extraInfo[0] );
+		sscanf_s( extraInfo.c_str(), "%d:%s", &count, &(extraInfo[0]), extraInfo.size() );
 
 		string propInfo;
 		propInfo = extraInfo;
 
-		for (int i = 0 ; i < count ; ++i)
+		for ( unsigned i = 0 ; i < count ; ++i)
 		{
 			// [9-5-1]somethingtest0
 			// type: something
@@ -468,7 +468,7 @@ bool	OvPropAccesser_extra_data::Inject(OvObject* pObj, OvObjectProperties& rObjS
 			unsigned int nameLength = 0;
 			unsigned int valueLength = 0;
 
-			sscanf( propInfo.c_str(), "[%d-%d-%d]%s", &typeLength, &nameLength, &valueLength, &propInfo[0] );
+			sscanf_s( propInfo.c_str(), "[%d-%d-%d]%s", &typeLength, &nameLength, &valueLength, &propInfo[0], propInfo.length() );
 
 			string extra_type = propInfo;
 			extra_type.resize( typeLength );
@@ -518,7 +518,7 @@ bool OvPropAccesser_object_collector::Extract(OvObject* pObj, OvObjectProperties
 			{
 				OliveValue::ObjectID relationID( relatedObj->GetObjectID() );
 				collectedInfo += relationID.GetValue() + "!";
-				rObjStore.PushComponentObject( relatedObj.GetRear() );
+				rObjStore.PushAssociatedObject( relatedObj.GetRear() );
 			}
 		}
 		rObjStore.PushValue( collectedInfo );
@@ -537,19 +537,19 @@ bool OvPropAccesser_object_collector::Inject(OvObject* pObj, OvObjectProperties&
 
 		rObjStore.PopValue( data );
 
-		sscanf( data.c_str(), "%d:%s", &count, &data[0] );
+		sscanf_s( data.c_str(), "%d:%s", &count, &data[0], data.size() );
 
 		if ( count )
 		{
 			unsigned int id = 0;
 
-			OvObjectCollectorLinkBuilder* linkBuilder = OvNew OvObjectCollectorLinkBuilder;
+			OvCollectedObjectsLinkConnector* linkBuilder = OvNew OvCollectedObjectsLinkConnector;
 
 			linkBuilder->SetDestinateCollector( kpProp );
 
-			for (int i = 0 ; i < count ; ++i)
+			for ( unsigned i = 0 ; i < count ; ++i)
 			{
-				sscanf( data.c_str(), "%d!%s", &id, &data[0] );
+				sscanf_s( data.c_str(), "%d!%s", &id, &data[0], data.size() );
 				OliveValue::ObjectID formerID( id );
 				linkBuilder->AddRelatedObjectID( formerID.GetObjectID() );
 			}
@@ -573,10 +573,11 @@ OvRTTI_IMPL(OvPropAccesser_resource);
 bool OvPropAccesser_resource::Extract( OvObject* pObj, OvObjectProperties& rObjStore )
 {
 	OvResourceSPtr* accessProp = (OvResourceSPtr*)Access(pObj);
-	if ( accessProp && (*accessProp) )
+	if ( accessProp )
 	{
 		string typeName = OvRTTI_Util::TypeName( (*accessProp) );
-		string fileLocation = OvResourceManager::GetInstance()->FindFileLocation( (*accessProp).GetRear() );
+		string fileLocation = OvResourceManager::GetInstance()->FindFileLocation( (*accessProp) );
+		ClampPathIfResDir( fileLocation );
 
 		string resourceInfo;
 		resourceInfo += typeName;
@@ -602,8 +603,55 @@ bool OvPropAccesser_resource::Inject( OvObject* pObj, OvObjectProperties& rObjSt
 		fileLocation = &(resourceInfo.at( resourceInfo.find(':') + 1 ));
 		resourceType.resize( resourceInfo.find(':') );
 
-		OvResourceSPtr resource = OvResourceManager::GetInstance()->LoadResource( resourceType, fileLocation);
+		OvResourceSPtr resource = OvResourceManager::GetInstance()->LoadResource( resourceType, AbsolutePath( fileLocation ) );
 		(*accessProp) = resource;
+	}
+
+	return false;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////				resource_ticket     		/////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
+
+OvRTTI_IMPL(OvPropAccesser_resource_ticket);
+
+bool OvPropAccesser_resource_ticket::Extract( OvObject* pObj, OvObjectProperties& rObjStore )
+{
+	OvResourceTicketSPtr* accessProp = (OvResourceTicketSPtr*)Access(pObj);
+	if ( accessProp )
+	{
+		OvResourceTicketSPtr ticket = (*accessProp);
+		string typeName = ((OvRTTI*)ticket->GetResourceType())->TypeName();
+		string fileLocation = ticket->GetFileName();
+		ClampPathIfResDir( fileLocation );
+
+		string resourceInfo;
+		resourceInfo += typeName;
+		resourceInfo += ":";
+		resourceInfo += fileLocation;
+		rObjStore.PushValue( resourceInfo );
+		return true;
+	}
+	return false;
+}
+
+bool OvPropAccesser_resource_ticket::Inject( OvObject* pObj, OvObjectProperties& rObjStore )
+{
+	OvResourceTicketSPtr* accessProp = (OvResourceTicketSPtr*)Access(pObj);
+	if ( accessProp )
+	{
+		string resourceInfo;
+		string resourceType;
+		string fileLocation;
+		rObjStore.PopValue( resourceInfo );
+
+		resourceType = resourceInfo;
+		fileLocation = &(resourceInfo.at( resourceInfo.find(':') + 1 ));
+		resourceType.resize( resourceInfo.find(':') );
+
+		(*accessProp) = OvResourceManager::GetInstance()->AsyncLoadResource( resourceType, AbsolutePath( fileLocation ) );
+		
 	}
 
 	return false;

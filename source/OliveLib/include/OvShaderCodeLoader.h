@@ -1,8 +1,9 @@
 #pragma once
-#include "OvShaderCode.h"
+#include "OvResourceLoader.h"
 
 class OvShaderCodeLoader : public OvResourceLoader
 {
+	OvRTTI_DECL( OvShaderCodeLoader );
 public:
 	virtual OvResourceSPtr Load( const std::string& fileLocation );
 };
