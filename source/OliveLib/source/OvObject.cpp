@@ -54,6 +54,7 @@ bool OvObject::RegisterExtraProperty( const string& propName, OliveValue::Value&
 		if ( copy )
 		{
 			copy->SetValue( extraProp.GetValue() );
+			m_extraPropertyTable[ propName ] = copy;
 			return true;
 		}
 	}
@@ -76,7 +77,7 @@ void		OvObject::ClearExtraProperty()
 {
 	for each( const extra_property_table_pair& propPair in m_extraPropertyTable )
 	{
-		delete propPair.second;
+		OvDelete propPair.second;
 	}
 	m_extraPropertyTable.clear();
 }
