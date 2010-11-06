@@ -33,7 +33,7 @@ struct OvMemoryPoolList ;
 //	}
 class  OvMemoryMgr : public OvSingletonBase< OvMemoryMgr >
 {
-#ifdef _OvMEMORY_DEBUG_
+#ifdef _DEBUG
 	friend void* OvMemAlloc_Debug(char* ,int ,const size_t);
 	friend void	OvMemFree_Debug(void*);
 #endif
@@ -68,7 +68,7 @@ protected:
 	// ¸®ÅÏ : ¾ø¶°¿° '¤µ'
 	void		  Free(void* _memory);
 
-#ifdef _OvMEMORY_DEBUG_
+#ifdef _DEBUG
 	void*		  Alloc_Debug(char* _pBlock,int _iLine,std::size_t _size_type);
 	void		  Free_Debug(void* _memory);
 #endif

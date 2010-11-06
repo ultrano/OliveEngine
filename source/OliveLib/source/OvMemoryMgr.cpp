@@ -128,7 +128,7 @@ void		  OvMemoryMgr::Free(void* _memory)
 	kMemPool->free_memory(_memory);
 }
 
-#ifdef _OvMEMORY_DEBUG_
+#ifdef _DEBUG
 void*		  OvMemoryMgr::Alloc_Debug(char* _pBlock,int _iLine,std::size_t _size_type)
 {
 	return get_pool(_size_type)->alloc_memory_debug(_pBlock,_iLine);

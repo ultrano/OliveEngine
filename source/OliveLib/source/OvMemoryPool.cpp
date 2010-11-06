@@ -3,7 +3,7 @@
 #define OvExportDll
 #include "OvMemoryPool.h"
 
-#ifdef _OvMEMORY_DEBUG_
+#ifdef _DEBUG
 #include "OvStringUtility.h"
 DWORD	g_dMemoryCount = 0;
 void		OvMemoryPool::report_abnormal_memory_release(OvPoolHeader* _pPoolList)
@@ -49,7 +49,7 @@ void	OvMemoryPool::_constructor(std::size_t _size_type)
 
 void	OvMemoryPool::_destructor()
 {
-#ifdef _OvMEMORY_DEBUG_
+#ifdef _DEBUG
 	report_abnormal_memory_release(m_pPoolList);
 #endif
 	// 별거 없다.
@@ -63,7 +63,7 @@ void	OvMemoryPool::_destructor()
 			k_next	 = k_next->mNext;
 
 		free(((void*)k_header));
-#ifdef _OvMEMORY_DEBUG_
+#ifdef _DEBUG
 		OutputDebugString(OvFormatString("Olive Memory Pool Report Free(%8d byte) CallCount: %4d\n",MEM_POOL_SIZE,g_dMemoryCount));
 		g_dMemoryCount--;
 #endif
@@ -96,12 +96,12 @@ bool		OvMemoryPool::add_pool()
 	{
 		k_sequence			=	(OvMemHeader*)(POOL(k_pool)+(MEM_BLOCK_SIZE*i));
 		k_sequence->mNext	=	(OvMemHeader*)(POOL(k_pool)+(MEM_BLOCK_SIZE*(i+1)));
-#ifdef _OvMEMORY_DEBUG_
+#ifdef _DEBUG
 		k_sequence->m_pBlock=	NULL;
 		k_sequence->m_iLine	=	0;
 #endif
 	}
-#ifdef _OvMEMORY_DEBUG_
+#ifdef _DEBUG
 	g_dMemoryCount++;
 	OutputDebugString(OvFormatString("Olive Memory Pool Report Alloc(%8d byte) CallCount: %4d\n",MEM_POOL_SIZE,g_dMemoryCount));
 #endif
@@ -150,7 +150,7 @@ void		OvMemoryPool::free_memory(void* _memory)
 
 }
 
-#ifdef _OvMEMORY_DEBUG_
+#ifdef _DEBUG
 void*		OvMemoryPool::alloc_memory_debug(char* _pBlock,int _iLine)
 {
 	if ( ! m_pFreeMemoryList)

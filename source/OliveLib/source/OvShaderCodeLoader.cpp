@@ -18,7 +18,7 @@ OvResourceSPtr OvShaderCodeLoader::Load( const std::string& fileLocation )
 			shader_code += line;
 		}
 		fclose( file );
-		return new OvShaderCode( shader_code );
+		return OvNew OvShaderCode( shader_code );
 	}
 
 	return NULL;

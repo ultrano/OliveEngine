@@ -18,7 +18,7 @@
 //		PS.자세한 메모리 관리 내용은 OvMemoryMgr클레스 설명을 참조.
 //			버추얼 함수가 들어가선 안된다 (소멸자 포함)
 //	}
-#ifdef _OvMEMORY_DEBUG_
+#ifdef _DEBUG
 
 #define OvNew	new(__FUNCTION__,__LINE__)
 #define OvDelete delete
@@ -40,7 +40,7 @@ class 	OvMemObject //: public OvMultiThreadSync<OvMemObject>
 {
 public:
 
-#ifdef _OvMEMORY_DEBUG_
+#ifdef _DEBUG
 	static	void*	operator new(size_t _size, char* _pBlock,int _iLine);
 	static	void*	operator new[](size_t _size, char* _pBlock,int _iLine);
 #endif
@@ -58,7 +58,7 @@ private:
 };
 
 
-#ifdef _OvMEMORY_DEBUG_
+#ifdef _DEBUG
 void*	OvMemAlloc_Debug(char* _pBlock,int _iLine,const size_t _szMemSize);
 void	OvMemFree_Debug(void* _pMemory);
 #endif

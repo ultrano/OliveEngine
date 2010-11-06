@@ -11,7 +11,7 @@ void*	OvMemObject::operator new(size_t, void* location)
 }
 
 
-#ifdef _OvMEMORY_DEBUG_
+#ifdef _DEBUG
 void*	OvMemObject::operator new(std::size_t _size, char* _pBlock,int _iLine)
 {
 	return OvMemAlloc_Debug(_pBlock,_iLine,_size);
@@ -40,7 +40,7 @@ void	OvMemObject::operator delete[](void* _memory)
 }
 
 
-#ifdef _OvMEMORY_DEBUG_
+#ifdef _DEBUG
 
 void*	OvMemAlloc_Debug(char* _pBlock,int _iLine,const size_t _szMemSize)
 {

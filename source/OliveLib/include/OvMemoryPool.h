@@ -54,7 +54,7 @@ struct	OvMemHeader
 		OvMemHeader*	mNext;
 		OvMemoryPool*	mMemPool;
 	};
-#ifdef _OvMEMORY_DEBUG_
+#ifdef _DEBUG
 	char*	m_pBlock;
 	int		m_iLine;
 	OvMemHeader():mNext(NULL),m_pBlock(NULL),m_iLine(NULL)
@@ -99,7 +99,7 @@ private:
 	// 리턴 : 없뜸
 	void	_destructor();
 
-#ifdef _OvMEMORY_DEBUG_
+#ifdef _DEBUG
 	// 함수 이름 : report_abnormal_memory_release
 	// 설명 : 디버그용 비정상 메모리 해제 리포트 함수
 	// 리턴 : 없뜸
@@ -117,7 +117,7 @@ protected:
 	// 메모리를 환원받고. 재사용가능한 여분의 메모리리스트에 다시 추가시킨다.
 	void				free_memory(void* _memory);
 
-#ifdef _OvMEMORY_DEBUG_
+#ifdef _DEBUG
 	void*				alloc_memory_debug(char* _pBlock,int _iLine);
 	void				free_memory_debug(void* _memory);
 #endif

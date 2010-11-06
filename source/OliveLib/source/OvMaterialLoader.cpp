@@ -78,7 +78,7 @@ OvResourceSPtr OvMaterialLoader::Load( const std::string& fileLocation )
 
 	//////////////////////////////////////////////////////////////////////////
 
-	OvMaterialSPtr material = new OvMaterial;
+	OvMaterialSPtr material = OvNew OvMaterial;
 	material->SetVertexShader( vertexShader );
 	material->SetPixelShader( pixelShader );
 	for ( int i = 0 ; i < OvMaterial::MaxStage ; ++i )
