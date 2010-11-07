@@ -8,4 +8,4 @@ typedef std::list<OvAssociatedLinkConnector*> link_builder_list;
 
 class OvObjectID;
 class OvObject;
-typedef std::map< OvObjectID, OvObject* > restore_object_table;
+typedef std::map< OvObjectID, OvObject* > OvLinkageTable;

@@ -154,7 +154,7 @@ bool	OvPropAccesser_object_pointer::Inject(OvObject* pObj, OvObjectProperties& r
 			linkBuilder->SetFormerID( injectValue.GetObjectID() );
 			linkBuilder->SetDestination( kpProp );
 
-			rObjStore.CollectLinkBuilder( linkBuilder );
+			rObjStore.PushAssociatedLinkConnector( linkBuilder );
 
 			return true;
 		}
@@ -200,7 +200,7 @@ bool	OvPropAccesser_object_smart_pointer::Inject(OvObject* pObj, OvObjectPropert
 			linkBuilder->SetFormerID( injectValue.GetObjectID() );
 			linkBuilder->SetSmartDestination( kpProp );			
 
-			rObjStore.CollectLinkBuilder( linkBuilder );
+			rObjStore.PushAssociatedLinkConnector( linkBuilder );
 
 			return true;
 		}
@@ -554,7 +554,7 @@ bool OvPropAccesser_object_collector::Inject(OvObject* pObj, OvObjectProperties&
 				linkBuilder->AddRelatedObjectID( formerID.GetObjectID() );
 			}
 
-			rObjStore.CollectLinkBuilder( linkBuilder );
+			rObjStore.PushAssociatedLinkConnector( linkBuilder );
 		}
 
 		return true;

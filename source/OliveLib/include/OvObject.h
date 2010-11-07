@@ -7,6 +7,7 @@
 #include <map>
 
 #include "OvObjectID.h"
+#include "TemporaryFactoryFunction.h"
 
 class OvStorage;
 class OvObjectProperties;

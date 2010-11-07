@@ -66,7 +66,7 @@ bool		OvObject::RemoveExtraProperty( const string& propName )
 	extra_property_table::iterator tableIter = m_extraPropertyTable.find(propName) ;
 	if ( m_extraPropertyTable.end() != tableIter )
 	{
-		delete tableIter->second;
+		OvDelete tableIter->second;
 		m_extraPropertyTable.erase(tableIter);
 
 		return true;

@@ -1,11 +1,16 @@
 
 #include "include_header.h"
+#include "lua_system.h"
 #include "OliveValue.h"
 #include "OvTexture.h"
-#include "OvRenderTexture.h"
+#include "OvRenderTarget.h"
 #include "OvResourceManager.h"
 #include "OvShaderCodeIncluder.h"
 
+GL_TEST_CASE_FUNC( stream_refactoring )
+{
+
+}
 GL_TEST_CASE_FUNC( rtti_modify )
 {
 	OvSingletonPool::StartUp();
