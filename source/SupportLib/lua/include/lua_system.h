@@ -2,7 +2,11 @@
 #ifdef _DEBUG
 #pragma comment( lib, "lua_5_1_4_d" )
 #else
-#pragma comment( lib, "lua_5_1_4" )
+#if (_MSC_VER == 1400 )
+#pragma comment( lib, "lua_5_1_4_vs2005" )
+#else if(_MSC_VER == 1500)
+#pragma comment( lib, "lua_5_1_4_vs2008" )
+#endif
 #endif
 
 extern "C" 
