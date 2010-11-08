@@ -336,6 +336,18 @@
 							>
 						</File>
 					</Filter>
+					<Filter
+						Name="OvDevice"
+						>
+						<File
+							RelativePath=".\source\OvDevice.cpp"
+							>
+						</File>
+						<File
+							RelativePath=".\include\OvDevice.h"
+							>
+						</File>
+					</Filter>
 				</Filter>
 				<Filter
 					Name="SceneFolder"
