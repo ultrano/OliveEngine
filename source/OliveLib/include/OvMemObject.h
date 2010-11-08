@@ -2,7 +2,7 @@
 // maker : Han,sang woon
 // OvMemObject
 #pragma once
-
+#pragma warning( disable : 4291 )
 //	클레스 이름 : OvMemObject
 //	설명
 //	{
