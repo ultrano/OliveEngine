@@ -1,6 +1,6 @@
 <ObjectTable>
   <Object type="OvModel" id="3">
-    <prop>OvMaterial:material/test.matf0</prop>
+    <prop>OvMaterial:material/test2.matf0</prop>
     <prop>OvMesh:mesh/bottom_plane.msf0</prop>
     <prop>0:</prop>
     <prop>0</prop>

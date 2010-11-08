@@ -28,6 +28,8 @@ public:
 	bool			EndTarget();
 	bool			PresentTarget();
 
+	bool			SetSamplerState( DWORD sampler, DWORD type, DWORD value );
+
 	void			SetPixelShader( OvPixelShaderSPtr shader );
 	void			SetVertexShader( OvVertexShaderSPtr shader );
 	bool			SetTexture(UINT uiSamplerIndex,OvTextureSPtr pTexture);
