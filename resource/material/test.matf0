@@ -2,39 +2,46 @@
   <shader>
     <vertex_shader entry_function="main" complie_version="vs_2_0">
       <![CDATA[
-   
-   #include "vertex_common.h"
+   #include "OvVShaderConst.h"
 
-void	main( in input_vertex input, out output_vertex output )
+void	main( in float3 in_pos		  : POSITION
+	        , in float3 in_norm		  : NORMAL
+	        , in float3 in_tan		  : TANGENT
+	        , in float2 in_tex0		  : TEXCOORD0
+          , out float4 out_pos	  : POSITION
+	        , out float3 out_norm	  : TEXCOORD0
+	        , out float2 out_tex0		: TEXCOORD1
+	        , out float3 out_eye		: TEXCOORD2
+	        , out float3 out_eye2pos: TEXCOORD3
+	        , out float4 out_depth	: TEXCOORD4)
 {
-	output.pos = mul( vector( input.geom.pos, 1.0 ), WorldViewProject );
+	out_pos = mul( vector( in_pos, 1.0 ), WorldViewProject );
 	
-	output.norm = normalize( mul( input.geom.norm, World) );
-	output.tex0 = input.tex.tex0;
-	output.eye = ViewPos;
-	output.eye2pos = normalize( input.geom.pos - ViewPos );
-  output.depth = output.pos;
+	out_norm = normalize( mul( in_norm, World) );
+	out_tex0 = in_tex0;
+	out_eye = ViewPos;
+	out_eye2pos = normalize( in_pos - ViewPos );
+  out_depth = out_pos;
 };
     ]]>]
     </vertex_shader>
 
     <pixel_shader entry_function="main" complie_version="ps_2_0">
       <![CDATA[
-    
-#include "pixel_common.h"
+#include "OvPShaderConst.h"
+sampler SAMPLER_0	: register(s0);
+sampler SAMPLER_1	: register(s1);
 
-
-
-void main( in input_pixel input, out vector col0 : COLOR0 )
+void main( in float2 in_tex0	: TEXCOORD1
+         , out vector col0 : COLOR0 )
 {
-	pixel_channel output = (pixel_channel)0;
 
 	// collecting channels
-	output.diffuse		= texturesampler_0( input.tex0 );
+	float4 diffuse		= tex2D( SAMPLER_0, in_tex0 );
 	//
 	
 	// manufaturing channels
-  col0 = output.diffuse;
+  col0 = diffuse;
 	//
 	
 }
@@ -44,9 +51,12 @@ void main( in input_pixel input, out vector col0 : COLOR0 )
   
   <sampler_stage>
     <sampler stage="0">
-      <texture>texture/1normal.jpg</texture>
+      <texture>texture/test.jpg</texture>
       <state type="addressu">mirror</state>
       <state type="addressv">mirror</state>
+      <state type="mipfilter">none</state>
+      <state type="magfilter">none</state>
+      <state type="minfilter">none</state>
     </sampler>
     <sampler stage="1">
       <texture>texture/normal.jpg</texture>
