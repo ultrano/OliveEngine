@@ -20,6 +20,10 @@ class OvObject : public OvRefBase
 {
 	OvRTTI_DECL(OvObject);
 	OvPROPERTY_BAG_DECL(OvObject);
+private:
+
+	OvObject( OvObject& );
+	OvObject( const OvObject& );
 
 public:
 
@@ -27,7 +31,6 @@ public:
 	typedef std::pair< std::string, OliveValue::Value* > extra_property_table_pair;
 
 	OvObject();
-	OvObject(OvStorage& rStorage);
 	virtual ~OvObject(); 
 
 	//! Clone Object

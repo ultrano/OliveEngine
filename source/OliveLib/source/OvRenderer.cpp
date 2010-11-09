@@ -158,54 +158,67 @@ LPDIRECT3DSURFACE9 OvRenderer::ChangeDepthStencil( LPDIRECT3DSURFACE9 depthStenc
 bool			OvRenderer::ClearTarget()
 {
 	OvDevice device = GetDevice();
-	if (FAILED(device->Clear(0,
+	HRESULT hr = E_FAIL;
+	if ( device && SUCCEEDED( hr = device->Clear(0,
 		NULL,
 		D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER ,
 		D3DCOLOR_XRGB(1,1,1),
 		1.0f,
 		0)))
 	{
-		OvAssertMsg("Failed Clear RenderTarget");
-		return false;
+		return true;
 	}
-
-	return true;
+	OvAssertMsg("Failed Clear RenderTarget");
+	return false;
 }
 
 bool			OvRenderer::BeginTarget()
 {
 	OvDevice device = GetDevice();
-	if (FAILED(device->BeginScene()))
+	HRESULT hr = E_FAIL;
+	if ( device && SUCCEEDED( hr = device->BeginScene()))
 	{
-		OvAssertMsg("Failed Begin RenderTarget");
-		return false;
+		return true;
 	}
-
-	return true;
+	OvAssertMsg("Failed Begin RenderTarget");
+	return false;
 }
 
 bool			OvRenderer::EndTarget()
 {
 	OvDevice device = GetDevice();
-	if (FAILED(device->EndScene()))
+	HRESULT hr = E_FAIL;
+	if ( device && SUCCEEDED( hr = device->EndScene()))
 	{
-		OvAssertMsg("Failed End RenderTarget");
-		return false;
+		return true;
 	}
-
-	return true;
+	OvAssertMsg("Failed End RenderTarget");
+	return false;
 }
 
 bool			OvRenderer::PresentTarget()
 {
 	OvDevice device = GetDevice();
-	if (FAILED( device->Present(0,0,0,0) ))
+	HRESULT hr = E_FAIL;
+	if ( device && SUCCEEDED( hr = device->Present(0,0,0,0) ))
 	{
-		OvAssertMsg("Failed Present RenderTarget");
-		return false;
+		return true;
 	}
 
-	return true;
+	OvAssertMsg(OvFormatString("Failed Present RenderTarget code: %d", (DWORD)hr ));
+	return false;
+}
+
+bool OvRenderer::SetSamplerState( DWORD sampler, DWORD type, DWORD value )
+{
+	OvDevice device = GetDevice();
+	HRESULT hr = E_FAIL;
+	if ( device && SUCCEEDED( hr = device->SetSamplerState( sampler, (D3DSAMPLERSTATETYPE)type, value ) )  )
+	{
+		return true;
+	}
+	OvAssertMsg("Failed SetSamplerState");
+	return false;
 }
 
 void OvRenderer::SetPixelShader( OvPixelShaderSPtr shader )
@@ -420,42 +433,4 @@ LPDIRECT3DVERTEXDECLARATION9 OvRenderer::CreateVertexDeclaration( D3DVERTEXELEME
 		}
 	}
 	return NULL;
-}
-
-OvDevice::OvDevice( OvDevice& copy )
-: m_device( copy.m_device )
-, m_device_occupy( copy.m_device_occupy )
-{
-	copy.m_device = NULL;
-	::EnterCriticalSection( &m_device_occupy );
-}
-
-OvDevice::OvDevice( LPDIRECT3DDEVICE9 device, CRITICAL_SECTION& occupy ) 
-: m_device( device )
-, m_device_occupy( occupy )
-{
-	::EnterCriticalSection( &m_device_occupy );
-}
-
-OvDevice::~OvDevice()
-{
-	if ( m_device )
-	{
-		m_device = NULL;
-		::LeaveCriticalSection( &m_device_occupy );
-	}
-}
-
-OvDevice::operator LPDIRECT3DDEVICE9()
-{
-	return m_device;
-}
-OvDevice::operator bool()
-{
-	return (NULL != m_device);
-}
-
-LPDIRECT3DDEVICE9 OvDevice::operator->() const
-{
-	return m_device;
 }

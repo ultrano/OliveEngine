@@ -38,10 +38,11 @@ void main( in float2 in_tex0	: TEXCOORD1
 
 	// collecting channels
 	float4 diffuse		= tex2D( SAMPLER_0, in_tex0 );
+  float4 normal		= tex2D( SAMPLER_1, in_tex0 );
 	//
 	
 	// manufaturing channels
-  col0 = diffuse;
+  col0 = normal * diffuse;
 	//
 	
 }
@@ -51,17 +52,17 @@ void main( in float2 in_tex0	: TEXCOORD1
   
   <sampler_stage>
     <sampler stage="0">
-      <texture>texture/test.jpg</texture>
-      <state type="addressu">mirror</state>
-      <state type="addressv">mirror</state>
-      <state type="mipfilter">none</state>
-      <state type="magfilter">none</state>
-      <state type="minfilter">none</state>
+      <texture>texture/spot_shape.jpg</texture>
+      <state type="addressu">wrap</state>
+      <state type="addressv">wrap</state>
+      <state type="mipfilter">linear</state>
+      <state type="magfilter">linear</state>
+      <state type="minfilter">linear</state>
     </sampler>
     <sampler stage="1">
       <texture>texture/normal.jpg</texture>
-      <state type="addressu">mirror</state>
-      <state type="addressv">mirror</state>
+      <state type="addressu">wrap</state>
+      <state type="addressv">wrap</state>
     </sampler>
   </sampler_stage>
   

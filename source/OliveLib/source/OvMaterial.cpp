@@ -23,6 +23,22 @@ OvMaterial::~OvMaterial()
 	m_pixelShader = NULL;
 }
 
+void OvMaterial::SetSamplerState( DWORD sampler, DWORD type, DWORD value )
+{
+	m_sampler_states[ make_pair( sampler, type ) ] = value;
+}
+
+bool OvMaterial::GetSamplerState( DWORD sampler, DWORD type, DWORD& value )
+{
+	sampler_state_table::iterator itor = m_sampler_states.find( make_pair( sampler, type ) );
+	if ( itor != m_sampler_states.end() )
+	{
+		value = itor->second;
+		return true;
+	}
+	return false;
+}
+
 void OvMaterial::SetVertexShader( OvVertexShaderSPtr shader )
 {
 	m_vertexShader = shader;
@@ -66,6 +82,14 @@ void OvMaterial::ApplyMaterial()
 {
 	OvRenderer::GetInstance()->SetVertexShader( GetVertexShader() );
 	OvRenderer::GetInstance()->SetPixelShader( GetPixelShader() );
+
+	for each ( const sampler_state_table::value_type& pairset in m_sampler_states )
+	{
+		DWORD sampler = pairset.first.first;
+		DWORD type = pairset.first.second;
+		DWORD value = pairset.second;
+		OvRenderer::GetInstance()->SetSamplerState( sampler, type, value );
+	}
 
 	for ( int i = 0 
 		; i < MaxStage 

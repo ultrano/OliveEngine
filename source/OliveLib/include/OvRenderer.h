@@ -4,31 +4,12 @@
 #include "OvAutoPtr.h"
 #include "OvRefBase.h"
 #include "OvSingleton.h"
-#include "OvRenderingCommon.h"
+#include "OvDevice.h"
 
 OvREF_POINTER(OvPixelShader);
 OvREF_POINTER(OvVertexShader);
 OvREF_POINTER(OvTexture);
 OvREF_POINTER(OvCubeTexture);
-
-class OvDevice
-{
-private:
-	OvDevice();
-public:
-
-	OvDevice( OvDevice& copy );
-	OvDevice(LPDIRECT3DDEVICE9 device, CRITICAL_SECTION& occupy );
-	~OvDevice();
-
-	LPDIRECT3DDEVICE9 operator ->()const;;
-	operator	LPDIRECT3DDEVICE9();
-	operator	bool();
-
-private:
-	LPDIRECT3DDEVICE9 m_device;
-	CRITICAL_SECTION& m_device_occupy;
-};
 class OvRenderer : public OvSingletonBase< OvRenderer >
 {
 	OvRTTI_DECL_ROOT(OvRenderer);
@@ -46,6 +27,8 @@ public:
 	bool			BeginTarget();
 	bool			EndTarget();
 	bool			PresentTarget();
+
+	bool			SetSamplerState( DWORD sampler, DWORD type, DWORD value );
 
 	void			SetPixelShader( OvPixelShaderSPtr shader );
 	void			SetVertexShader( OvVertexShaderSPtr shader );

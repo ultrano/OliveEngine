@@ -2,6 +2,7 @@
 #include "OvResource.h"
 #include "OvAutoPtr.h"
 #include "OvResourceTicket.h"
+#include <map>
 //
 //OvREF_POINTER(OvTexture);
 //OvREF_POINTER(OvMesh);
@@ -15,6 +16,7 @@ class OvMaterial : public OvResource
 {
 	OvRTTI_DECL( OvMaterial );
 public:
+	typedef std::map<pair<DWORD,DWORD>,DWORD> sampler_state_table;
 
 	// 요고는 마테리얼 부분으로 빼자
 	enum TextureStage
@@ -26,6 +28,9 @@ public:
 
 	OvMaterial();
 	~OvMaterial();
+
+	void	SetSamplerState( DWORD sampler, DWORD type, DWORD value );
+	bool	GetSamplerState( DWORD sampler, DWORD type, DWORD& value );
 
 	void	SetVertexShader( OvVertexShaderSPtr shader );
 	OvVertexShaderSPtr GetVertexShader();
@@ -44,5 +49,5 @@ private:
 	OvVertexShaderSPtr m_vertexShader;
 	OvPixelShaderSPtr m_pixelShader;
 	OvResourceTicketSPtr	m_stageTexture[ MaxStage ];
-
+	sampler_state_table	m_sampler_states;
 };

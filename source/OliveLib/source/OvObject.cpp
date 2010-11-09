@@ -22,10 +22,6 @@ OvObject::OvObject()
 {
 	m_idObjectID = OvObjectManager::GetInstance()->AllocObjectID(this);
 }
-OvObject::OvObject(OvStorage& rStorage)
-{
-	m_idObjectID = OvObjectManager::GetInstance()->AllocObjectID(this);
-}
 OvObject::~OvObject()
 {
 	ClearExtraProperty();
