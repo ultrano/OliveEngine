@@ -756,6 +756,14 @@
 						RelativePath=".\include\OvObject.h"
 						>
 					</File>
+					<File
+						RelativePath=".\source\TemporaryFactoryFunction.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\include\TemporaryFactoryFunction.h"
+						>
+					</File>
 				</Filter>
 				<Filter
 					Name="OvObjectCollector"
@@ -1136,6 +1144,30 @@
 		<Filter
 			Name="ÀÛ¾÷·Î"
 			>
+			<Filter
+				Name="OvStreamAgent"
+				>
+				<File
+					RelativePath=".\source\OvStreamAgent.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\OvStreamAgent.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="OvDataStream"
+				>
+				<File
+					RelativePath=".\source\OvDataStream.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\OvDataStream.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<File
 			RelativePath=".\ReadMe.txt"
