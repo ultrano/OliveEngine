@@ -42,7 +42,7 @@ OvObjectID		OvObject::GetObjectID()
 	return m_idObjectID;
 }
 
-bool OvObject::RegisterExtraProperty( const string& propName, OliveValue::Value& extraProp )
+OliveValue::Value* OvObject::RegisterExtraProperty( const string& propName, OliveValue::Value& extraProp )
 {
 	if ( m_extraPropertyTable.find( propName ) == m_extraPropertyTable.end() )
 	{
@@ -51,10 +51,10 @@ bool OvObject::RegisterExtraProperty( const string& propName, OliveValue::Value&
 		{
 			copy->SetValue( extraProp.GetValue() );
 			m_extraPropertyTable[ propName ] = copy;
-			return true;
+			return copy;
 		}
 	}
-	return false;
+	return NULL;
 }
 
 bool		OvObject::RemoveExtraProperty( const string& propName )
