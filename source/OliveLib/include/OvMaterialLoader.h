@@ -4,5 +4,5 @@ class OvMaterialLoader : public OvResourceLoader
 {
 	OvRTTI_DECL( OvMaterialLoader );
 public:
-	virtual OvResourceSPtr Load( const std::string& fileLocation );
+	virtual OvResourceSPtr Load( OvDataStream& stream );
 };

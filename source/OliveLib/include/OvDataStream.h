@@ -13,7 +13,7 @@ private:
 public:
 
 	OvDataStream( const std::string& buf );
-	OvDataStream( const char* data, size_t data_size );
+	OvDataStream( size_t reserve_size );
 	~OvDataStream();
 
 	const char*	Ptr();

@@ -34,13 +34,12 @@ OvDataStream::OvDataStream( const std::string& buf )
 
 }
 
-OvDataStream::OvDataStream( const char* data, size_t data_size )
+OvDataStream::OvDataStream( size_t reserve_size )
 : m_read_caret( 0 )
 {
-	if ( data && data_size )
+	if ( reserve_size > 0 )
 	{
-		m_buffer.resize( data_size );
-		memcpy( (void*)m_buffer.at( 0 ), data, m_buffer.size() );
+		m_buffer.resize( reserve_size );
 	}
 }
 
