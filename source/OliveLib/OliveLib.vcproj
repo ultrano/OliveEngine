@@ -1156,6 +1156,18 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="OvDataStream"
+				>
+				<File
+					RelativePath=".\source\OvDataStream.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\OvDataStream.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<File
 			RelativePath=".\ReadMe.txt"
