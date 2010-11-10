@@ -24,5 +24,5 @@ private:
 	enum {MAX_READ_BUFFER_SIZE = 256};
 	FILE* m_file;
 	std::string m_readBuffer;
-	OvAutoPtr<OvDataStream> m_data;
+	OvDataStream* m_data;
 };

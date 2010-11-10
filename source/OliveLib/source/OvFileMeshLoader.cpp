@@ -77,6 +77,7 @@ typedef vector<SVertex_Medium> medium_stream_buffer;
 
 
 OvFileMeshLoader::OvFileMeshLoader()
+: m_data( NULL )
 {
 	m_readBuffer.resize( MAX_READ_BUFFER_SIZE );
 }
@@ -84,6 +85,7 @@ OvFileMeshLoader::OvFileMeshLoader()
 OvFileMeshLoader::~OvFileMeshLoader()
 {
 	m_readBuffer.clear();
+	m_data = NULL;
 }
 
 OvResourceSPtr OvFileMeshLoader::Load( OvDataStream& stream )
