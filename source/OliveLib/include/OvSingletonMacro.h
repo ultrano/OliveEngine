@@ -25,7 +25,7 @@ protected:
 	}
 	virtual ~OvSingletonBase()
 	{
-		_standalone_instance_pointer() = 0 ;\
+		_standalone_instance_pointer() = 0 ;
 	}
 public:
 	static Type_0*	GetInstance()
