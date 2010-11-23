@@ -13,15 +13,15 @@
 
 OvObject* TemporaryFactoryFunction(const std::string& typeName)
 {
-	if ("OvXNode" == typeName)
+	if ( OvXNode::GetRTTI()->TypeName() == typeName)
 	{
 		return OvNew OvXNode;
 	}
-	else if ("OvCamera" == typeName)
+	else if ( OvCamera::GetRTTI()->TypeName() == typeName)
 	{
 		return OvNew OvCamera;
 	}
-	else if ("OvModel" == typeName)
+	else if ( OvModel::GetRTTI()->TypeName() == typeName)
 	{
 		return OvNew OvModel;
 	}
@@ -29,23 +29,23 @@ OvObject* TemporaryFactoryFunction(const std::string& typeName)
 	// 	{
 	// 		return OvNew OvPointLight;
 	// 	}
-	else if ("OvCameraController" == typeName)
+	else if ( OvCameraController::GetRTTI()->TypeName() == typeName)
 	{
 		return OvNew OvCameraController;
 	}
-	else if ("OvFileMeshLoader" == typeName)
+	else if ( OvFileMeshLoader::GetRTTI()->TypeName() == typeName)
 	{
 		return OvNew OvFileMeshLoader;
 	}
-	else if ("OvTextureLoader" == typeName)
+	else if ( OvTextureLoader::GetRTTI()->TypeName() == typeName)
 	{
 		return OvNew OvTextureLoader;
 	}
-	else if ("OvShaderCodeLoader" == typeName)
+	else if ( OvShaderCodeLoader::GetRTTI()->TypeName() == typeName)
 	{
 		return OvNew OvShaderCodeLoader;
 	}
-	else if ("OvMaterialLoader" == typeName)
+	else if ( OvMaterialLoader::GetRTTI()->TypeName() == typeName)
 	{
 		return OvNew OvMaterialLoader;
 	}
