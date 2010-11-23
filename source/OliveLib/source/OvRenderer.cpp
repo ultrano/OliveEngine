@@ -250,10 +250,14 @@ void OvRenderer::SetVertexShader( OvVertexShaderSPtr shader )
 bool OvRenderer::SetTexture(UINT uiSamplerIndex,OvTextureSPtr pTexture)
 {
 	OvDevice kpDevice =  GetDevice();
-	if (kpDevice && pTexture)
+	if ( kpDevice )
 	{
 		HRESULT kHs = E_FAIL;
-		kHs = kpDevice->SetTexture( uiSamplerIndex, pTexture->ToDxTexture() );
+		kpDevice->SetTexture( uiSamplerIndex, NULL );
+		if ( pTexture )
+		{
+			kHs = kpDevice->SetTexture( uiSamplerIndex, pTexture->ToDxTexture() );
+		}
 		return SUCCEEDED(kHs);
 	}
 	return false;
