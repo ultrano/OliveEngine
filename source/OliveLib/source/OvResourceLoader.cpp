@@ -7,6 +7,9 @@ OvRTTI_IMPL( OvResourceLoader );
 
 OvResourceSPtr OvResourceLoader::_load_resource( const std::string& fileLocation )
 {
+	static OvCriticalSection section;
+	EnterCriticalSection( &section.m_section );
+
 	FILE* file = NULL;
 	fopen_s( &file, fileLocation.c_str(), "rb" ); // 바이너리로 읽어들이는게 뽀인트!
 	if ( file )
@@ -19,8 +22,10 @@ OvResourceSPtr OvResourceLoader::_load_resource( const std::string& fileLocation
 		fread( (void*)data->Ptr(), 1, filesize, file );
 
 		fclose( file );
+		LeaveCriticalSection( &section.m_section );
 
 		return Load( *data );
 	}
+	LeaveCriticalSection( &section.m_section );
 	return NULL;
 }
