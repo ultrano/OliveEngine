@@ -24,11 +24,30 @@ private:
 	OvSectionKey	m_qSectionKey;
 };
 
+class OvCriticalSection
+{
+public:
+	OvCriticalSection()
+	{
+		InitializeCriticalSection( &m_section );
+	}
+	~OvCriticalSection()
+	{
+		DeleteCriticalSection( &m_section );
+	}
+	CRITICAL_SECTION m_section;
+};
+
 class OvSectionGuardian
 {
 private:
 	OvSectionGuardian();
 public:
+	OvSectionGuardian( OvCriticalSection& critical_section )
+		: m_critical_section( critical_section.m_section )
+	{
+		::EnterCriticalSection( &m_critical_section);
+	}
 	OvSectionGuardian( CRITICAL_SECTION& critical_section )
 		: m_critical_section( critical_section )
 	{
