@@ -3,6 +3,7 @@
 #define OvExportDll
 #include "OvMemoryMgr.h"
 #include "OvMemoryPool.h"
+#include "OvThreadSync.h"
 
 struct OvMemoryPoolList 
 {
@@ -23,6 +24,7 @@ struct OvMemoryPoolList
 OvMemoryMgr::OvMemoryMgr()
 {
 	m_pMemoryPoolList = NULL;
+	InitializeCriticalSection( &m_section );
 }
 OvMemoryMgr::~OvMemoryMgr()
 {
@@ -39,6 +41,7 @@ OvMemoryMgr::~OvMemoryMgr()
 
 	} while (k_list);
 	m_pMemoryPoolList = NULL;
+	DeleteCriticalSection( &m_section );
 
 }
 
@@ -91,12 +94,14 @@ OvMemoryPool*		  OvMemoryMgr::add_memory_pool(std::size_t _size_type)
 
 void*		  OvMemoryMgr::Alloc(std::size_t _size_type)
 {
+	OvSectionGuardian guardian( m_section );
 	// 인수크기의 메모리들을 담는 메모리풀에서 메모리를 리턴한다.
 	return get_pool(_size_type)->alloc_memory();
 }
 
 void		  OvMemoryMgr::Free(void* _memory)
 {
+	OvSectionGuardian guardian( m_section );
 	// 이부분은 OvMemoryPool헤더를 보고오면 편하다.
 	// 읽었다 가정하고 설명 ㄱㄱ
 	// OvMemoryPool는 메모리를 담을때
@@ -131,10 +136,12 @@ void		  OvMemoryMgr::Free(void* _memory)
 #ifdef _DEBUG
 void*		  OvMemoryMgr::Alloc_Debug(char* _pBlock,int _iLine,std::size_t _size_type)
 {
+	OvSectionGuardian guardian( m_section );
 	return get_pool(_size_type)->alloc_memory_debug(_pBlock,_iLine);
 }
 void		  OvMemoryMgr::Free_Debug(void* _memory)
 {
+	OvSectionGuardian guardian( m_section );
 	OvMemoryPool* kMemPool = HEADER(_memory)->mMemPool;
 	kMemPool->free_memory_debug(_memory);
 }
