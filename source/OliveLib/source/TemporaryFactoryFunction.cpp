@@ -10,44 +10,17 @@
 #include "OvShaderCodeLoader.h"
 #include "OvMaterialLoader.h"
 // //////////////////////////////////////////////////////////////////////////
+#define FACTORY_MEMBER_BEGIN() OvObject* TemporaryFactoryFunction(const std::string& typeName){ if( typeName.empty() ){ return NULL; }
+#define FACTORY_MEMBER( member ) else if( member::GetRTTI()->TypeName() == typeName ){ return OvNew member(); }
+#define FACTORY_MEMBER_END() return NULL;}
 
-OvObject* TemporaryFactoryFunction(const std::string& typeName)
-{
-	if ( OvXNode::GetRTTI()->TypeName() == typeName)
-	{
-		return OvNew OvXNode;
-	}
-	else if ( OvCamera::GetRTTI()->TypeName() == typeName)
-	{
-		return OvNew OvCamera;
-	}
-	else if ( OvModel::GetRTTI()->TypeName() == typeName)
-	{
-		return OvNew OvModel;
-	}
-	// 	else if ("OvPointLight" == typeName)
-	// 	{
-	// 		return OvNew OvPointLight;
-	// 	}
-	else if ( OvCameraController::GetRTTI()->TypeName() == typeName)
-	{
-		return OvNew OvCameraController;
-	}
-	else if ( OvFileMeshLoader::GetRTTI()->TypeName() == typeName)
-	{
-		return OvNew OvFileMeshLoader;
-	}
-	else if ( OvTextureLoader::GetRTTI()->TypeName() == typeName)
-	{
-		return OvNew OvTextureLoader;
-	}
-	else if ( OvShaderCodeLoader::GetRTTI()->TypeName() == typeName)
-	{
-		return OvNew OvShaderCodeLoader;
-	}
-	else if ( OvMaterialLoader::GetRTTI()->TypeName() == typeName)
-	{
-		return OvNew OvMaterialLoader;
-	}
-	return NULL;
-}
+FACTORY_MEMBER_BEGIN()
+	FACTORY_MEMBER( OvXNode )
+	FACTORY_MEMBER( OvCamera )
+	FACTORY_MEMBER( OvModel )
+	FACTORY_MEMBER( OvCameraController )
+	FACTORY_MEMBER( OvFileMeshLoader )
+	FACTORY_MEMBER( OvTextureLoader )
+	FACTORY_MEMBER( OvShaderCodeLoader )
+	FACTORY_MEMBER( OvMaterialLoader )
+FACTORY_MEMBER_END()
