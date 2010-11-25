@@ -1,5 +1,5 @@
 #pragma once
-
+#include "OvSingleton.h"
 #include "OvXNode.h"
 #include "OvObjectCollector.h"
 #include <map>
@@ -7,9 +7,8 @@
 OvREF_POINTER(OvModel);
 OvREF_POINTER(OvCamera);
 
-class OvScene : public OvXNode
+class OvSingleScene : public OvSingletonBase<OvSingleScene>
 {
-	OvRTTI_DECL( OvScene );
 	
 	typedef std::map< const OvRTTI *, OvObjectCollector > object_table;
 
@@ -53,12 +52,12 @@ private:
 };
 
 template<typename T>
-OvSmartPointer<T> OvScene::FindObject( const OvObjectID & objectID )
+OvSmartPointer<T> OvSingleScene::FindObject( const OvObjectID & objectID )
 {
 	return _find_object( T::GetRTTI(), objectID );
 }
 template<typename T>
-OvSmartPointer<T> OvScene::FindObject( const std::string & objectName )
+OvSmartPointer<T> OvSingleScene::FindObject( const std::string & objectName )
 {
 	return _find_object( T::GetRTTI(), objectName );
 }

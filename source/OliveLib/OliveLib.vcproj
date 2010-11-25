@@ -404,11 +404,11 @@
 						Name="OvScene"
 						>
 						<File
-							RelativePath=".\source\OvScene.cpp"
+							RelativePath=".\source\OvSingleScene.cpp"
 							>
 						</File>
 						<File
-							RelativePath=".\include\OvScene.h"
+							RelativePath=".\include\OvSingleScene.h"
 							>
 						</File>
 					</Filter>
