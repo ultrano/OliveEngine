@@ -134,7 +134,7 @@ public:
 			}
 		}
 
-		if ( OvInputManager::IsStateOf( L_BUTTON, CLICKED ) )
+		if ( OvInputManager::IsStateOf( L_BUTTON, PRESSED ) )
 		{
 			OvModelSPtr model = m_loadedObjects.GetByName("Ball");
 			if ( model )
