@@ -6,6 +6,15 @@
 #include <string>
 using namespace std;
 
+OvSingleScene::OvSingleScene()
+{
+
+}
+
+OvSingleScene::~OvSingleScene()
+{
+
+}
 
 OvModelSPtr OvSingleScene::CreateModel()
 {
@@ -51,24 +60,4 @@ OvObjectSPtr OvSingleScene::_set_and_return( OvObjectSPtr object )
 		m_object_table[ rtti ].AddObject( object );
 	}
 	return object;
-}
-
-OvModelSPtr OvSingleScene::FindModel( const OvObjectID & objectID )
-{
-	return OvSingleScene::FindObject<OvModel>( objectID );
-}
-
-OvModelSPtr OvSingleScene::FindModel( const std::string & objectName )
-{
-	return OvSingleScene::FindObject<OvModel>( objectName );
-}
-
-OvCameraSPtr OvSingleScene::FindCamera( const OvObjectID & objectID )
-{
-	return OvSingleScene::FindObject<OvCamera>( objectID );
-}
-
-OvCameraSPtr OvSingleScene::FindCamera( const std::string & objectName )
-{
-	return OvSingleScene::FindObject<OvCamera>( objectName );
 }

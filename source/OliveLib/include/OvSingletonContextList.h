@@ -8,6 +8,7 @@
 #include "OvShaderManager.h"
 #include "OvMessageManager.h"
 #include "OvInputManager.h"
+#include "OvSingleScene.h"
 
 #define OvREGISTER_SINGLETON_MEMBER(classname) classname m_##classname;
 
@@ -22,6 +23,8 @@ class OvSingletonContextList
 	OvREGISTER_SINGLETON_MEMBER(OvRenderer);
 	OvREGISTER_SINGLETON_MEMBER(OvResourceManager);
 	OvREGISTER_SINGLETON_MEMBER(OvShaderManager);
+	OvREGISTER_SINGLETON_MEMBER(OvSingleScene);
+	
 
 	friend class OvSingletonPool;
 	OvSingletonContextList(){};

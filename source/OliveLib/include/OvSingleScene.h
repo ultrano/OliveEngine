@@ -1,18 +1,20 @@
 #pragma once
 #include "OvSingleton.h"
-#include "OvXNode.h"
+#include "OvObject.h"
 #include "OvObjectCollector.h"
 #include <map>
 
+OvREF_POINTER(OvObject);
 OvREF_POINTER(OvModel);
 OvREF_POINTER(OvCamera);
 
-class OvSingleScene : public OvSingletonBase<OvSingleScene>
+class OvSingleScene : public OvSingletonBase< OvSingleScene >
 {
-	
 	typedef std::map< const OvRTTI *, OvObjectCollector > object_table;
-
 public: //!< Create Method
+
+	OvSingleScene();
+	~OvSingleScene();
 
 	OvModelSPtr		CreateModel();
 	OvCameraSPtr	CreateCamera();
@@ -23,12 +25,6 @@ public:
 	OvCameraSPtr	GetViewCamera();
 
 public: //!< Find Method
-
-	OvModelSPtr		FindModel( const OvObjectID & objectID );
-	OvModelSPtr		FindModel( const std::string & objectName );
-
-	OvCameraSPtr	FindCamera( const OvObjectID & objectID );
-	OvCameraSPtr	FindCamera( const std::string & objectName );
 
 	template<typename T>
 	OvSmartPointer<T> FindObject( const OvObjectID & objectID );
