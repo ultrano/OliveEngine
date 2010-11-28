@@ -19,6 +19,11 @@ OvInputManager::~OvInputManager()
 		m_keyboard_device->Unacquire();
 		m_keyboard_device->Release();
 	}
+	if ( m_mouse_device )
+	{
+		m_mouse_device->Unacquire();
+		m_mouse_device->Release();
+	}
 }
 
 bool OvInputManager::IsStateOfKey( byte dik_key, BUTTON_STATE state )
@@ -151,9 +156,7 @@ void OvInputManager::_initialize( HWND hWnd )
 		m_direct_input->CreateDevice( GUID_SysKeyboard
 			, &m_keyboard_device
 			, NULL );
-
 		m_keyboard_device->SetDataFormat( &c_dfDIKeyboard );
-
 		m_keyboard_device->SetCooperativeLevel(hWnd, DISCL_EXCLUSIVE |
 			DISCL_FOREGROUND);
 
