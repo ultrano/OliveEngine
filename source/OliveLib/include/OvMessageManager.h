@@ -5,13 +5,13 @@
 #include <windows.h>
 #include <list>
 
-class OvWinMsgManager : public OvSingletonBase< OvWinMsgManager >
+class OvMessageManager : public OvSingletonBase< OvMessageManager >
 {
 	friend class OvMessageListener;
 	typedef std::list<OvMessageListener*>	listener_list;
 public:
-	OvWinMsgManager();
-	~OvWinMsgManager();
+	OvMessageManager();
+	~OvMessageManager();
 
 public:
 
@@ -21,6 +21,8 @@ public:
 
 	OvPoint2	GetLastMousePoint();
 	OvPoint2	GetMouseInterval();
+
+	bool		IsWindowAlive();
 
 	void	_update();
 private:
@@ -33,4 +35,5 @@ private:
 	listener_list	m_listenerList;
 	OvPoint2	m_lastMousePoint;
 	OvPoint2	m_mouseMoveInterval;
+	bool		m_alive_flag;
 };

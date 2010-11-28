@@ -5,7 +5,7 @@
 class OvMessageListener : public OvXComponent
 {
 	OvRTTI_DECL(OvMessageListener);
-	friend class OvWinMsgManager;
+	friend class OvMessageManager;
 public:
 	struct InputMessage
 	{

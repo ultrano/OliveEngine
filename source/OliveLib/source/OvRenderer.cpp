@@ -52,7 +52,7 @@ m_pDirect3D9Object(NULL)
 LPDIRECT3D9 m_pDirect3D9Object;
 };
 
-bool		OvRenderer::GenerateRenderer()
+bool		OvRenderer::_generate_renderer()
 {
 
 	LPDIRECT3D9 kpDirect3D9Object = Direct3DCreate9(D3D_SDK_VERSION);
@@ -77,7 +77,7 @@ bool		OvRenderer::GenerateRenderer()
 	WndClass.hCursor		=	LoadCursor(NULL,IDC_ARROW);
 	WndClass.hIcon			=	LoadIcon(NULL,IDI_APPLICATION);
 	WndClass.hInstance		=	GetModuleHandle(NULL);
-	WndClass.lpfnWndProc	=	(WNDPROC)OvWinMsgManager::ListenMessage;
+	WndClass.lpfnWndProc	=	(WNDPROC)OvMessageManager::ListenMessage;
 	WndClass.lpszClassName	=	windowClassName;
 	WndClass.lpszMenuName	=	NULL;
 	WndClass.style			=	CS_HREDRAW | CS_VREDRAW | CS_DBLCLKS ;
@@ -118,8 +118,6 @@ bool		OvRenderer::GenerateRenderer()
 	OvDevice device = GetDevice();
 	//m_device->SetRenderState(D3DRS_ZENABLE,TRUE);
 
-	// 	m_device->SetSamplerState( 1, D3DSAMP_MINFILTER, D3DTEXF_LINEAR );
-	// 	m_device->SetSamplerState( 1, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR );
 	//m_device->SetRenderState(D3DRS_LIGHTING,false);
 	 	device->SetRenderState(D3DRS_CULLMODE,D3DCULL_NONE);
 

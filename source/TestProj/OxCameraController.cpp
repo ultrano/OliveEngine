@@ -58,7 +58,8 @@ void OxCameraController::Update( float _fElapse )
 	yRot.MakeQuaternion(OvPoint3::AXIS_Y, m_accumulatedRotate.x / (D3DX_PI * 20.0f) );
 	xRot.MakeQuaternion(OvPoint3::AXIS_X, m_accumulatedRotate.y / (D3DX_PI * 20.0f));
 
-	OvPoint3 delta = OvInputManager::GetMouseMoveDelta();
+	float mouseSensitivity = 0.1f;
+	OvPoint3 delta = OvInputManager::GetMouseMoveDelta() * mouseSensitivity;
 	OvPoint2 mouseMovement( delta.x, delta.y );
 	m_accumulatedRotate = ( m_accumulatedRotate + mouseMovement );
 
@@ -67,6 +68,7 @@ void OxCameraController::Update( float _fElapse )
 
 	target_camera->SetRotation( yRot * xRot );
 	target_camera->SetTranslate( OvConvert::xyz<OvPoint3>( m_cameraActor->getGlobalPosition() ) + OvPoint3::AXIS_Y*3 );
+	target_camera->SetFOV( target_camera->GetFOV() - delta.z*0.001f );
 
 	//////////////////////////////////////////////////////////////////////////
 	//////////////////////////////////////////////////////////////////////////
@@ -74,23 +76,23 @@ void OxCameraController::Update( float _fElapse )
 	OvPoint3 direction;
 	OvPoint3 velocity;
 	float moveSpeed = 50.0f;
-	if ( OvInputManager::IsPushed( DIK_LSHIFT ))
+	if ( OvInputManager::IsStateOfKey( DIK_LSHIFT, PRESSING ))
 	{
 		moveSpeed = moveSpeed * 5;
 	}
-	if ( OvInputManager::IsPushed( DIK_W ) )
+	if ( OvInputManager::IsStateOfKey( DIK_W, PRESSING ) )
 	{
 		direction += target_camera->GetLocalLookDirection();
 	}
-	if ( OvInputManager::IsPushed( DIK_S ) )
+	if ( OvInputManager::IsStateOfKey( DIK_S, PRESSING ) )
 	{
 		direction += -target_camera->GetLocalLookDirection();
 	}
-	if ( OvInputManager::IsPushed( DIK_A ) )
+	if ( OvInputManager::IsStateOfKey( DIK_A, PRESSING ) )
 	{
 		direction += -target_camera->GetLocalRightDirection();
 	}
-	if ( OvInputManager::IsPushed( DIK_D ) )
+	if ( OvInputManager::IsStateOfKey( DIK_D, PRESSING ) )
 	{
 		direction += target_camera->GetLocalRightDirection();
 	}
@@ -98,9 +100,9 @@ void OxCameraController::Update( float _fElapse )
 	velocity = ( direction.Normalize() * moveSpeed );
 	m_cameraActor->addForce( OvConvert::xyz<NxVec3>( velocity ) );
 
-	if ( OvInputManager::IsPushed( DIK_SPACE ) )
+	if ( OvInputManager::IsStateOfKey( DIK_SPACE, PRESSED ) )
 	{
-		m_cameraActor->addForce( OvConvert::xyz<NxVec3>( OvPoint3::AXIS_Y * 250 ) );
+		m_cameraActor->addForce( OvConvert::xyz<NxVec3>( OvPoint3::AXIS_Y * 2500 ) );
 	}
 
 }

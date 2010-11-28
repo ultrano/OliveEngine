@@ -12,13 +12,12 @@ OvREF_POINTER(OvTexture);
 OvREF_POINTER(OvCubeTexture);
 class OvRenderer : public OvSingletonBase< OvRenderer >
 {
+	friend class OliveDevice;
 	OvRTTI_DECL_ROOT(OvRenderer);
 public:
 
 	OvRenderer();
 	~OvRenderer();
-
-	bool			GenerateRenderer();
 
 	LPDIRECT3DSURFACE9 ChangeRenderTarget( unsigned targetIndex, LPDIRECT3DSURFACE9 renderTarget );
 	LPDIRECT3DSURFACE9 ChangeDepthStencil( LPDIRECT3DSURFACE9 depthStencil );
@@ -50,6 +49,10 @@ public:
 
 	OvDevice		GetDevice();
 	HWND			GetWindowHandle();
+
+private:
+
+	bool			_generate_renderer();
 
 private:
 

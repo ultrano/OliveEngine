@@ -34,19 +34,19 @@ void OvCameraController::Update( float _fElapse )
 	OvPoint3 direction;
 	OvPoint3 velocity;
 	float moveSpeed = 1.0f;
-	if ( OvInputManager::IsPushed( VK_UP ) )
+	if ( OvInputManager::IsStateOfKey( VK_UP, PRESSING ) )
 	{
 		direction += target_camera->GetLocalLookDirection();
 	}
-	if ( OvInputManager::IsPushed( VK_DOWN ) )
+	if ( OvInputManager::IsStateOfKey( VK_DOWN, PRESSING ) )
 	{
 		direction += -target_camera->GetLocalLookDirection();
 	}
-	if ( OvInputManager::IsPushed( VK_LEFT ) )
+	if ( OvInputManager::IsStateOfKey( VK_LEFT, PRESSING ) )
 	{
 		direction += -target_camera->GetLocalRightDirection();
 	}
-	if ( OvInputManager::IsPushed( VK_RIGHT ) )
+	if ( OvInputManager::IsStateOfKey( VK_RIGHT, PRESSING ) )
 	{
 		direction += target_camera->GetLocalRightDirection();
 	}

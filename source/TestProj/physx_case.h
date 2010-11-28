@@ -11,6 +11,7 @@
 #include "OxBoxMovement.h"
 #include "OvInputManager.h"
 #include "OxTestPhysx.h"
+#include "OliveDevice.h"
 
 // 테스트 환경 구축
 GL_TEST_ENVIROMENT( OliveLibTest )
@@ -38,8 +39,7 @@ public:
 		//////////////////////////////////////////////////////////////////////////
 
 		m_exitFlag = false;
-		OvSingletonPool::StartUp();
-		OvRenderer::GetInstance()->GenerateRenderer();
+		OliveDevice::EngineOn();
 
 		OvStorage store;
 		if ( ! store.Load( AbsolutePath("ovf/scene_test.xml"), m_loadedObjects) )
@@ -89,40 +89,26 @@ public:
 		m_shader_code = NULL;
 
 
-		OvSingletonPool::ShutDown();
+		OliveDevice::EngineOff();
 
 	}
 public:
 	void Run()
 	{
-
-		MSG msg;
-		ZeroMemory( &msg, sizeof( msg ) );
-		if ( msg.message != WM_QUIT )
+		while ( !m_exitFlag && OliveDevice::Run() )
 		{
-			while ( !m_exitFlag && msg.message != WM_QUIT )
-			{
-				OvInputManager::GetInstance()->_update();
-				if ( PeekMessage( &msg, NULL, NULL, NULL, PM_REMOVE ) )
-				{
-					TranslateMessage( &msg );
-					DispatchMessage( &msg );
-				}
-				{
-					Control();
-					Update(  m_root );
-					m_physx.GetScene()->simulate(1.0f/6.0f);
-					Render( m_mainCamera, m_root );
-					m_physx.GetScene()->flushStream();
-					m_physx.GetScene()->fetchResults(NX_RIGID_BODY_FINISHED, true);
-				}
-			}
+			Control();
+			Update(  m_root );
+			m_physx.GetScene()->simulate(1.0f/6.0f);
+			Render( m_mainCamera, m_root );
+			m_physx.GetScene()->flushStream();
+			m_physx.GetScene()->fetchResults(NX_RIGID_BODY_FINISHED, true);
 		}
 	}
 
 	void Control()
 	{
-		if ( OvInputManager::IsPushed(DIK_ESCAPE) )
+		if ( OvInputManager::IsStateOfKey( DIK_ESCAPE, PRESSED ) )
 		{
 			if ( !m_exitFlag )
 			{
@@ -130,7 +116,7 @@ public:
 			}
 		}
 
-		if ( OvInputManager::IsStateOf( L_BUTTON, PRESSED ) )
+		if ( OvInputManager::IsStateOfMouse( L_BUTTON, RELEASED ) )
 		{
 			OvModelSPtr model = m_loadedObjects.GetByName("Ball");
 			if ( model )
