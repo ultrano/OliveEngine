@@ -27,8 +27,8 @@ void OvCameraController::Update( float _fElapse )
 
 	target_camera->SetRotation( yRot * xRot );
 
-	OvPoint2 mouseMovement = OvInputManager::GetCurrentMousePos() - m_liatMousePos;
-	m_liatMousePos = OvInputManager::GetCurrentMousePos();
+	OvPoint3 delta = OvInputManager::GetMouseMoveDelta();
+	OvPoint2 mouseMovement( delta.x, delta.y );
 	m_accumulatedRotate = ( m_accumulatedRotate + mouseMovement );
 	
 	OvPoint3 direction;

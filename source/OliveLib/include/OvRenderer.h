@@ -49,10 +49,12 @@ public:
 	LPDIRECT3DVERTEXDECLARATION9 CreateVertexDeclaration( D3DVERTEXELEMENT9* vertElement );
 
 	OvDevice		GetDevice();
+	HWND			GetWindowHandle();
 
 private:
 
 	LPDIRECT3DDEVICE9			m_device;
 	CRITICAL_SECTION			m_device_occupy;
+	HWND						m_window_handle;
 
 };

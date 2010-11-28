@@ -15,6 +15,7 @@
 //! Temporary include
 #include "OvUtility.h"
 #include "OvStringUtility.h"
+#include "OvInputManager.h"
 
 OvRTTI_IMPL_ROOT(OvRenderer);
 
@@ -83,7 +84,7 @@ bool		OvRenderer::GenerateRenderer()
 
 	RegisterClass(&WndClass);
 
-	HWND _hTargetWindowHangle = CreateWindow
+	m_window_handle = CreateWindow
 		( windowClassName
 		, windowClassName
 		, WS_OVERLAPPEDWINDOW | WS_VISIBLE
@@ -109,7 +110,7 @@ bool		OvRenderer::GenerateRenderer()
 	HRESULT hr = kpDirect3D9Object->CreateDevice(
 		D3DADAPTER_DEFAULT,
 		D3DDEVTYPE_HAL,
-		_hTargetWindowHangle,
+		m_window_handle,
 		D3DCREATE_SOFTWARE_VERTEXPROCESSING,
 		&d3dpp,
 		&(m_device)
@@ -119,8 +120,10 @@ bool		OvRenderer::GenerateRenderer()
 
 	// 	m_device->SetSamplerState( 1, D3DSAMP_MINFILTER, D3DTEXF_LINEAR );
 	// 	m_device->SetSamplerState( 1, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR );
-	 	device->SetRenderState(D3DRS_CULLMODE,D3DCULL_NONE);
 	//m_device->SetRenderState(D3DRS_LIGHTING,false);
+	 	device->SetRenderState(D3DRS_CULLMODE,D3DCULL_NONE);
+
+	OvInputManager::GetInstance()->_initialize( GetWindowHandle() );
 
 	return SUCCEEDED(hr);
 
@@ -437,4 +440,9 @@ LPDIRECT3DVERTEXDECLARATION9 OvRenderer::CreateVertexDeclaration( D3DVERTEXELEME
 		}
 	}
 	return NULL;
+}
+
+HWND OvRenderer::GetWindowHandle()
+{
+	return m_window_handle;
 }

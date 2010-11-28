@@ -1139,6 +1139,18 @@
 						>
 					</File>
 				</Filter>
+				<Filter
+					Name="OliveDevice"
+					>
+					<File
+						RelativePath=".\source\OliveDevice.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\include\OliveDevice.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 		</Filter>
 		<Filter

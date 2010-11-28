@@ -101,3 +101,14 @@ void OvWinMsgManager::_remove_listener( OvMessageListener* listener )
 		m_listenerList.erase( itor );
 	}
 }
+
+void OvWinMsgManager::_update()
+{
+	MSG msg;
+	ZeroMemory( &msg, sizeof( msg ) );
+	if ( PeekMessage( &msg, NULL, NULL, NULL, PM_REMOVE ) )
+	{
+		TranslateMessage( &msg );
+		DispatchMessage( &msg );
+	}
+}

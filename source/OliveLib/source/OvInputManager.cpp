@@ -1,32 +1,39 @@
 #include "OvInputManager.h"
 #include "OliveValue.h"
 
+#pragma comment(lib, "DInput8.lib")
+#pragma comment(lib, "Dxguid.lib")
+
 OvInputManager::OvInputManager()
 {
-
 }
 
 OvInputManager::~OvInputManager()
 {
-
+	if ( m_keyboard_device )
+	{
+		m_keyboard_device->Unacquire();
+		m_keyboard_device->Release();
+	}
 }
 
-bool OvInputManager::IsPushed( int vk_key )
+bool OvInputManager::IsPushed( byte dik_key )
 {
-	return GetKeyState( vk_key ) < 0;
+	return GetInstance()->m_newKeyState[dik_key] & 0x80;
 }
 
 bool OvInputManager::IsStateOf( MOUSE_BUTTON button, BUTTON_STATE state )
 {
-	return ( GetInstance()->m_buttonState[ button ].curr_state == state );
+	return ( GetInstance()->m_new_mouse_state.rgbButtons[ button ] == 0x80 );
 }
 
-OvPoint2 OvInputManager::GetCurrentMousePos()
+OvPoint3 OvInputManager::GetMouseMoveDelta()
 {
-	POINT cursorPos;
-	GetCursorPos( &cursorPos );
-	OvPoint2 newPos( (float)cursorPos.x, (float)cursorPos.y );
-	return newPos;
+	OvPoint3 moveDelta;
+	moveDelta.x = (float)GetInstance()->m_new_mouse_state.lX;
+	moveDelta.y = (float)GetInstance()->m_new_mouse_state.lY;
+	moveDelta.z = (float)GetInstance()->m_new_mouse_state.lZ;
+	return moveDelta;
 }
 
 void OvInputManager::_notify_mouse_state( MOUSE_BUTTON button, BUTTON_STATE curr_state )
@@ -63,4 +70,57 @@ void OvInputManager::_clear_click_state()
 			_notify_mouse_state( (MOUSE_BUTTON)i, RELEASED );
 		}
 	}
+}
+
+void OvInputManager::_update()
+{
+	if ( NULL == m_keyboard_device )
+	{
+		return ;
+	}
+
+	HRESULT hr = m_keyboard_device->Acquire();
+	while ( hr == DIERR_INPUTLOST )
+	{
+		hr = m_keyboard_device->Acquire();
+	}
+	m_keyboard_device->GetDeviceState( sizeof( m_newKeyState ), &(m_newKeyState[0]) );
+
+	hr = m_mouse_device->Acquire();
+	while ( hr == DIERR_INPUTLOST )
+	{
+		hr = m_mouse_device->Acquire();
+	}
+	m_mouse_device->GetDeviceState( sizeof( m_new_mouse_state ), &(m_new_mouse_state) );
+}
+
+void OvInputManager::_initialize( HWND hWnd )
+{
+	HRESULT hr = E_FAIL;
+	hr = DirectInput8Create( GetModuleHandle(NULL)
+		, DIRECTINPUT_VERSION
+		, IID_IDirectInput8W
+		, ( VOID** ) &m_direct_input
+		, NULL);
+
+	if ( SUCCEEDED( hr ) )
+	{
+		m_direct_input->CreateDevice( GUID_SysKeyboard
+									, &m_keyboard_device
+									, NULL );
+
+		m_keyboard_device->SetDataFormat( &c_dfDIKeyboard );
+
+		m_keyboard_device->SetCooperativeLevel(hWnd, DISCL_EXCLUSIVE |
+			DISCL_FOREGROUND);
+
+		m_direct_input->CreateDevice( GUID_SysMouse
+									, &m_mouse_device
+									, NULL);
+		m_mouse_device->SetDataFormat( &c_dfDIMouse2 );
+		m_mouse_device->SetCooperativeLevel( hWnd, DISCL_EXCLUSIVE |
+			DISCL_FOREGROUND);
+	}
+
+
 }

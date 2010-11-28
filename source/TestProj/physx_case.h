@@ -41,11 +41,6 @@ public:
 		OvSingletonPool::StartUp();
 		OvRenderer::GetInstance()->GenerateRenderer();
 
-// 		lua_State* state = lua_open();
-// 		luaL_openlibs(state);
-// 		lua_tinker::def(state,"messagebox", OvMessageBox);
-// 		lua_tinker::dofile(state,ResDirPath("script/lua/testsrvr.lua").c_str());
-
 		OvStorage store;
 		if ( ! store.Load( AbsolutePath("ovf/scene_test.xml"), m_loadedObjects) )
 		{
@@ -107,6 +102,7 @@ public:
 		{
 			while ( !m_exitFlag && msg.message != WM_QUIT )
 			{
+				OvInputManager::GetInstance()->_update();
 				if ( PeekMessage( &msg, NULL, NULL, NULL, PM_REMOVE ) )
 				{
 					TranslateMessage( &msg );
@@ -126,7 +122,7 @@ public:
 
 	void Control()
 	{
-		if ( OvInputManager::IsPushed(VK_ESCAPE) )
+		if ( OvInputManager::IsPushed(DIK_ESCAPE) )
 		{
 			if ( !m_exitFlag )
 			{

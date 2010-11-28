@@ -22,6 +22,7 @@ public:
 	OvPoint2	GetLastMousePoint();
 	OvPoint2	GetMouseInterval();
 
+	void	_update();
 private:
 
 	bool	_listenMessage( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
