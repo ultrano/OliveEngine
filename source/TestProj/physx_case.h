@@ -30,7 +30,6 @@ protected:
 
 	OxTestPhysx	m_physx;
 
-	bool m_exitFlag;
 public:
 	GL_ENV_SET_UP
 	{
@@ -38,14 +37,12 @@ public:
 		//////////////////////////////////////////////////////////////////////////
 		//////////////////////////////////////////////////////////////////////////
 
-		m_exitFlag = false;
 		OliveDevice::EngineOn();
 
 		OvStorage store;
 		if ( ! store.Load( AbsolutePath("ovf/scene_test.xml"), m_loadedObjects) )
 		{
 			OvMessageBox("¸ÁÇÞ¾î¿°^_^ ·Îµù ¤¤¤¤","");
-			m_exitFlag = true;
 		}
 		m_root = OvNew OvXNode;
 		for ( unsigned i = 0 ; i < m_loadedObjects.Count() ; ++i )
@@ -95,7 +92,7 @@ public:
 public:
 	void Run()
 	{
-		while ( !m_exitFlag && OliveDevice::Run() )
+		while ( OliveDevice::Run() && !OvInputManager::IsStateOfKey( DIK_ESCAPE, PRESSED ) )
 		{
 			Control();
 			Update(  m_root );
@@ -108,15 +105,7 @@ public:
 
 	void Control()
 	{
-		if ( OvInputManager::IsStateOfKey( DIK_ESCAPE, PRESSED ) )
-		{
-			if ( !m_exitFlag )
-			{
-				m_exitFlag = true;
-			}
-		}
-
-		if ( OvInputManager::IsStateOfMouse( L_BUTTON, RELEASED ) )
+		if ( OvInputManager::IsStateOfMouse( L_BUTTON, PRESSING ) )
 		{
 			OvModelSPtr model = m_loadedObjects.GetByName("Ball");
 			if ( model )
