@@ -1151,6 +1151,18 @@
 						>
 					</File>
 				</Filter>
+				<Filter
+					Name="OvColor"
+					>
+					<File
+						RelativePath=".\source\OvColor.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\include\OvColor.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 		</Filter>
 		<Filter
