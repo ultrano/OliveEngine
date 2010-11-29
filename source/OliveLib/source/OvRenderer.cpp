@@ -129,7 +129,7 @@ bool		OvRenderer::_generate_renderer()
 
 };
 
-LPDIRECT3DSURFACE9 OvRenderer::SetRenderTarget( OvTextureSPtr render_texture, bool clear_buffer, bool clear_zbuffer, const OvColor& color )
+bool OvRenderer::SetRenderTarget( OvTextureSPtr render_texture, bool clear_buffer, bool clear_zbuffer, const OvColor& color )
 {
 	if ( OvDevice device = GetDevice() )
 	{
@@ -141,20 +141,19 @@ LPDIRECT3DSURFACE9 OvRenderer::SetRenderTarget( OvTextureSPtr render_texture, bo
 			newRenderTarget = render_texture->GetSurface();
 		}
 
-		HRESULT hr0 = device->GetRenderTarget( 0, &oldRenderTarget );
 		HRESULT hr1 = device->SetRenderTarget( 0, newRenderTarget );
-		if ( SUCCEEDED( hr0 ) && SUCCEEDED( hr1 ) )
+		if ( SUCCEEDED( hr1 ) )
 		{
 			device->Clear( 0
 						  , NULL
-						  , (D3DCLEAR_TARGET & clear_buffer) | (D3DCLEAR_ZBUFFER & clear_zbuffer)
+						  , ( D3DCLEAR_TARGET * clear_buffer) | (D3DCLEAR_ZBUFFER * clear_zbuffer)
 						  , (D3DCOLOR)color.color
 						  , 1.0f
 						  , 0);
-			return oldRenderTarget;
+			return true;
 		}
 	}
-	return NULL;
+	return false;
 }
 
 LPDIRECT3DSURFACE9 OvRenderer::SetDepthStencil( LPDIRECT3DSURFACE9 depthStencil )

@@ -127,7 +127,6 @@ public:
 		shader->SetVSConst( OvVShaderConst::ViewProject, view_project );
 
 		renderer->SetRenderTarget( m_diffuseScene );
-		renderer->ClearTarget();
 		
 		Draw( xobj );
 
