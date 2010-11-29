@@ -51,7 +51,7 @@ void OxCameraController::ShutDown()
 
 void OxCameraController::Update( float _fElapse )
 {
-
+	OvInputManager* input = OvInputManager::GetInstance();
 	OvCameraSPtr target_camera = GetTarget();
 
 	OvQuaternion yRot,xRot;
@@ -59,7 +59,7 @@ void OxCameraController::Update( float _fElapse )
 	xRot.MakeQuaternion(OvPoint3::AXIS_X, m_accumulatedRotate.y / (D3DX_PI * 20.0f));
 
 	float mouseSensitivity = 0.1f;
-	OvPoint3 delta = OvInputManager::GetMouseMoveDelta() * mouseSensitivity;
+	OvPoint3 delta = input->GetMouseMoveDelta() * mouseSensitivity;
 	OvPoint2 mouseMovement( delta.x, delta.y );
 	m_accumulatedRotate = ( m_accumulatedRotate + mouseMovement );
 
@@ -76,23 +76,23 @@ void OxCameraController::Update( float _fElapse )
 	OvPoint3 direction;
 	OvPoint3 velocity;
 	float moveSpeed = 50.0f;
-	if ( OvInputManager::IsStateOfKey( DIK_LSHIFT, PRESSING ))
+	if ( input->IsStateOfKey( DIK_LSHIFT, PRESSING ))
 	{
 		moveSpeed = moveSpeed * 5;
 	}
-	if ( OvInputManager::IsStateOfKey( DIK_W, PRESSING ) )
+	if ( input->IsStateOfKey( DIK_W, PRESSING ) )
 	{
 		direction += target_camera->GetLocalLookDirection();
 	}
-	if ( OvInputManager::IsStateOfKey( DIK_S, PRESSING ) )
+	if ( input->IsStateOfKey( DIK_S, PRESSING ) )
 	{
 		direction += -target_camera->GetLocalLookDirection();
 	}
-	if ( OvInputManager::IsStateOfKey( DIK_A, PRESSING ) )
+	if ( input->IsStateOfKey( DIK_A, PRESSING ) )
 	{
 		direction += -target_camera->GetLocalRightDirection();
 	}
-	if ( OvInputManager::IsStateOfKey( DIK_D, PRESSING ) )
+	if ( input->IsStateOfKey( DIK_D, PRESSING ) )
 	{
 		direction += target_camera->GetLocalRightDirection();
 	}
@@ -100,7 +100,7 @@ void OxCameraController::Update( float _fElapse )
 	velocity = ( direction.Normalize() * moveSpeed );
 	m_cameraActor->addForce( OvConvert::xyz<NxVec3>( velocity ) );
 
-	if ( OvInputManager::IsStateOfKey( DIK_SPACE, PRESSED ) )
+	if ( input->IsStateOfKey( DIK_SPACE, PRESSED ) )
 	{
 		m_cameraActor->addForce( OvConvert::xyz<NxVec3>( OvPoint3::AXIS_Y * 2500 ) );
 	}

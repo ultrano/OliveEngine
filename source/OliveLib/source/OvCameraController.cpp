@@ -18,7 +18,7 @@ OvCameraController::~OvCameraController()
 }
 void OvCameraController::Update( float _fElapse )
 {
-	
+	OvInputManager* input = OvInputManager::GetInstance();
 	OvCameraSPtr target_camera = GetTarget();
 	
 	OvQuaternion yRot,xRot;
@@ -27,26 +27,26 @@ void OvCameraController::Update( float _fElapse )
 
 	target_camera->SetRotation( yRot * xRot );
 
-	OvPoint3 delta = OvInputManager::GetMouseMoveDelta();
+	OvPoint3 delta = input->GetMouseMoveDelta();
 	OvPoint2 mouseMovement( delta.x, delta.y );
 	m_accumulatedRotate = ( m_accumulatedRotate + mouseMovement );
 	
 	OvPoint3 direction;
 	OvPoint3 velocity;
 	float moveSpeed = 1.0f;
-	if ( OvInputManager::IsStateOfKey( VK_UP, PRESSING ) )
+	if ( input->IsStateOfKey( VK_UP, PRESSING ) )
 	{
 		direction += target_camera->GetLocalLookDirection();
 	}
-	if ( OvInputManager::IsStateOfKey( VK_DOWN, PRESSING ) )
+	if ( input->IsStateOfKey( VK_DOWN, PRESSING ) )
 	{
 		direction += -target_camera->GetLocalLookDirection();
 	}
-	if ( OvInputManager::IsStateOfKey( VK_LEFT, PRESSING ) )
+	if ( input->IsStateOfKey( VK_LEFT, PRESSING ) )
 	{
 		direction += -target_camera->GetLocalRightDirection();
 	}
-	if ( OvInputManager::IsStateOfKey( VK_RIGHT, PRESSING ) )
+	if ( input->IsStateOfKey( VK_RIGHT, PRESSING ) )
 	{
 		direction += target_camera->GetLocalRightDirection();
 	}

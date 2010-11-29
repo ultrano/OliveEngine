@@ -28,20 +28,20 @@ OvInputManager::~OvInputManager()
 
 bool OvInputManager::IsStateOfKey( byte dik_key, BUTTON_STATE state )
 {
-	return GetInstance()->m_keyboard_state[dik_key] == state;
+	return m_keyboard_state[dik_key] == state;
 }
 
 bool OvInputManager::IsStateOfMouse( MOUSE_BUTTON button, BUTTON_STATE state )
 {
-	return ( GetInstance()->m_mouse_state[button] == state );
+	return ( m_mouse_state[button] == state );
 }
 
 OvPoint3 OvInputManager::GetMouseMoveDelta()
 {
 	OvPoint3 moveDelta;
-	moveDelta.x = (float)GetInstance()->m_new_mouse_state.lX;
-	moveDelta.y = (float)GetInstance()->m_new_mouse_state.lY;
-	moveDelta.z = (float)GetInstance()->m_new_mouse_state.lZ;
+	moveDelta.x = (float)m_new_mouse_state.lX;
+	moveDelta.y = (float)m_new_mouse_state.lY;
+	moveDelta.z = (float)m_new_mouse_state.lZ;
 	return moveDelta;
 }
 

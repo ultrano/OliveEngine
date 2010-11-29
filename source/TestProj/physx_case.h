@@ -91,7 +91,8 @@ public:
 public:
 	void Run()
 	{
-		while ( OliveDevice::Run() && !OvInputManager::IsStateOfKey( DIK_ESCAPE, PRESSED ) )
+		OvInputManager* input = OvInputManager::GetInstance();
+		while ( OliveDevice::Run() && !input->IsStateOfKey( DIK_ESCAPE, PRESSED ) )
 		{
 			Control();
 			Update(  m_root );
@@ -104,7 +105,8 @@ public:
 
 	void Control()
 	{
-		if ( OvInputManager::IsStateOfMouse( L_BUTTON, PRESSING ) )
+		OvInputManager* input = OvInputManager::GetInstance();
+		if ( input->IsStateOfMouse( L_BUTTON, PRESSING ) )
 		{
 			OvModelSPtr model = m_loadedObjects.GetByName("Ball");
 			if ( model )
