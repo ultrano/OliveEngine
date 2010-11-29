@@ -23,8 +23,7 @@ public:
 	bool SetRenderTarget( OvTextureSPtr render_texture, bool clear_buffer = true, bool clear_zbuffer = true, const OvColor& color = OvColor(255,0,0,0) );
 	LPDIRECT3DSURFACE9 SetDepthStencil( LPDIRECT3DSURFACE9 depthStencil );
 
-	bool			ClearTarget();
-	bool			BeginTarget();
+	bool			BeginTarget(bool clear_buffer = true, bool clear_zbuffer = true, const OvColor& color = OvColor(255,0,0,0) );
 	bool			EndTarget();
 	bool			PresentTarget();
 

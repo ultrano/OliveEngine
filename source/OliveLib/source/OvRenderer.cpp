@@ -171,33 +171,26 @@ LPDIRECT3DSURFACE9 OvRenderer::SetDepthStencil( LPDIRECT3DSURFACE9 depthStencil 
 	return NULL;
 }
 
-bool			OvRenderer::ClearTarget()
+bool			OvRenderer::BeginTarget(bool clear_buffer, bool clear_zbuffer, const OvColor& color )
 {
 	OvDevice device = GetDevice();
 	HRESULT hr = E_FAIL;
-	if ( device && SUCCEEDED( hr = device->Clear(0,
-		NULL,
-		D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER ,
-		D3DCOLOR_XRGB(1,1,1),
-		1.0f,
-		0)))
+	if ( device && FAILED( hr = device->Clear( 0
+											 , NULL
+											 , ( D3DCLEAR_TARGET * clear_buffer) | (D3DCLEAR_ZBUFFER * clear_zbuffer)
+											 , (D3DCOLOR)color.color
+											 , 1.0f
+											 , 0)))
 	{
-		return true;
+		OvAssertMsg("Failed Clear RenderTarget");
+		return false;
 	}
-	OvAssertMsg("Failed Clear RenderTarget");
-	return false;
-}
-
-bool			OvRenderer::BeginTarget()
-{
-	OvDevice device = GetDevice();
-	HRESULT hr = E_FAIL;
-	if ( device && SUCCEEDED( hr = device->BeginScene()))
+	if ( device && FAILED( hr = device->BeginScene()))
 	{
-		return true;
+		OvAssertMsg("Failed Begin RenderTarget");
+		return false;
 	}
-	OvAssertMsg("Failed Begin RenderTarget");
-	return false;
+	return true;
 }
 
 bool			OvRenderer::EndTarget()

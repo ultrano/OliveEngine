@@ -137,7 +137,6 @@ public:
 	{
 		OvRenderer* renderer = OvRenderer::GetInstance();
 
-		renderer->ClearTarget();
 		renderer->BeginTarget();
 
 		RenderDiffuse( camera, xobj );
