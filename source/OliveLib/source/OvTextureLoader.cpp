@@ -16,8 +16,7 @@ OvResourceSPtr OvTextureLoader::Load( OvDataStream& stream )
 			, (UINT)	stream.Size()
 			, &kpTexture ) ) )
 		{
-			OvTextureSPtr texture = OvNew OvTexture;
-			texture->m_texture = kpTexture;
+			OvTextureSPtr texture = OvNew OvTexture( kpTexture, eTexUsage_Texture );
 			return texture;
 		}
 	}

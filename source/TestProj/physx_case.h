@@ -18,7 +18,6 @@ GL_TEST_ENVIROMENT( OliveLibTest )
 {
 private:
 protected:
-	OvRenderTarget m_renderTarget;
 	OvTextureSPtr m_diffuseScene;
 	
 	OvShaderCodeSPtr m_shader_code;
@@ -59,7 +58,7 @@ public:
 		//////////////////////////////////////////////////////////////////////////
 		//////////////////////////////////////////////////////////////////////////
 		//////////////////////////////////////////////////////////////////////////
-		m_diffuseScene = CreateRenderTexture( 800, 600, 1, D3DFMT_A8B8G8R8 );
+		m_diffuseScene = OvRenderer::GetInstance()->CreateRenderTexture( 800, 600 );
 
 		//////////////////////////////////////////////////////////////////////////
 		//////////////////////////////////////////////////////////////////////////
@@ -121,34 +120,36 @@ public:
 
 	void	RenderDiffuse( OvCameraSPtr camera, OvXObjectSPtr xobj )
 	{
+		OvRenderer* renderer = OvRenderer::GetInstance();
+		OvShaderManager* shader = OvShaderManager::GetInstance();
+
 		OvMatrix view_project = camera->GetViewMatrix() * camera->GetProjectMatrix();
-		OvShaderManager::GetInstance()->SetVSConst( OvVShaderConst::ViewProject, view_project );
+		shader->SetVSConst( OvVShaderConst::ViewProject, view_project );
 
-		m_renderTarget.LockRenderTarget( 0, m_diffuseScene->GetSurface() );
-
-		OvRenderer::GetInstance()->ClearTarget();
-		OvRenderer::GetInstance()->BeginTarget();
+		renderer->SetRenderTarget( m_diffuseScene );
+		renderer->ClearTarget();
 		
 		Draw( xobj );
 
-		OvRenderer::GetInstance()->EndTarget();
-		m_renderTarget.UnlockRenderTarget();
+		renderer->SetRenderTarget( NULL );
+
 	}
 	void	Render( OvCameraSPtr camera, OvXObjectSPtr xobj )
 	{
+		OvRenderer* renderer = OvRenderer::GetInstance();
+
+		renderer->ClearTarget();
+		renderer->BeginTarget();
+
 		RenderDiffuse( camera, xobj );
+		renderer->SetTexture( 0, m_diffuseScene );
 
-		OvRenderer::GetInstance()->SetTexture( 0, m_diffuseScene );
-
-		OvRenderer::GetInstance()->ClearTarget();
-		OvRenderer::GetInstance()->BeginTarget();
-
-		OvRenderer::GetInstance()->RenderUnitRect
+		renderer->RenderUnitRect
 			( m_shader_code->FindShader( "rectV", "vs_2_0" ) 
 			, m_shader_code->FindShader( "rectP", "ps_2_0" ) );
 
-		OvRenderer::GetInstance()->EndTarget();
-		OvRenderer::GetInstance()->PresentTarget();
+		renderer->EndTarget();
+		renderer->PresentTarget();
 
 	}
 

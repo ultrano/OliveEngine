@@ -116,6 +116,8 @@ bool		OvRenderer::_generate_renderer()
 		&(m_device)
 		);
 	OvDevice device = GetDevice();
+	;
+	device->GetRenderTarget( 0, &m_default_display_buffer );
 	//m_device->SetRenderState(D3DRS_ZENABLE,TRUE);
 
 	//m_device->SetRenderState(D3DRS_LIGHTING,false);
@@ -127,22 +129,35 @@ bool		OvRenderer::_generate_renderer()
 
 };
 
-LPDIRECT3DSURFACE9 OvRenderer::ChangeRenderTarget( unsigned targetIndex, LPDIRECT3DSURFACE9 renderTarget )
+LPDIRECT3DSURFACE9 OvRenderer::SetRenderTarget( OvTextureSPtr render_texture, bool clear_buffer, bool clear_zbuffer, const OvColor& color )
 {
 	if ( OvDevice device = GetDevice() )
 	{
 		LPDIRECT3DSURFACE9 oldRenderTarget = NULL;
-		HRESULT hr0 = device->GetRenderTarget( targetIndex, &oldRenderTarget );
-		HRESULT hr1 = device->SetRenderTarget( targetIndex, renderTarget );
+		LPDIRECT3DSURFACE9 newRenderTarget = m_default_display_buffer;
+
+		if ( render_texture )
+		{
+			newRenderTarget = render_texture->GetSurface();
+		}
+
+		HRESULT hr0 = device->GetRenderTarget( 0, &oldRenderTarget );
+		HRESULT hr1 = device->SetRenderTarget( 0, newRenderTarget );
 		if ( SUCCEEDED( hr0 ) && SUCCEEDED( hr1 ) )
 		{
+			device->Clear( 0
+						  , NULL
+						  , (D3DCLEAR_TARGET & clear_buffer) | (D3DCLEAR_ZBUFFER & clear_zbuffer)
+						  , (D3DCOLOR)color.color
+						  , 1.0f
+						  , 0);
 			return oldRenderTarget;
 		}
 	}
 	return NULL;
 }
 
-LPDIRECT3DSURFACE9 OvRenderer::ChangeDepthStencil( LPDIRECT3DSURFACE9 depthStencil )
+LPDIRECT3DSURFACE9 OvRenderer::SetDepthStencil( LPDIRECT3DSURFACE9 depthStencil )
 {
 	if ( OvDevice device = GetDevice() )
 	{
@@ -156,6 +171,7 @@ LPDIRECT3DSURFACE9 OvRenderer::ChangeDepthStencil( LPDIRECT3DSURFACE9 depthStenc
 	}
 	return NULL;
 }
+
 bool			OvRenderer::ClearTarget()
 {
 	OvDevice device = GetDevice();
@@ -443,4 +459,54 @@ LPDIRECT3DVERTEXDECLARATION9 OvRenderer::CreateVertexDeclaration( D3DVERTEXELEME
 HWND OvRenderer::GetWindowHandle()
 {
 	return m_window_handle;
+}
+OvTextureSPtr OvRenderer::CreateRenderTexture( unsigned width, unsigned height, unsigned level, D3DFORMAT format )
+{
+	OvTextureSPtr return_texture = NULL;
+	OvDevice device = GetDevice();
+	if ( device )
+	{
+		LPDIRECT3DTEXTURE9 texture = NULL;
+		HRESULT hs = E_FAIL;
+		hs = D3DXCreateTexture( device, width, height, level, D3DUSAGE_RENDERTARGET, format, D3DPOOL_DEFAULT, &texture );
+		if ( SUCCEEDED( hs ) )
+		{
+			return_texture = OvNew OvTexture( texture, eTexUsage_RenderTarget );
+		}
+	}
+	return return_texture;
+}
+
+OvTextureSPtr OvRenderer::CreateDepthStencilTexture( unsigned width, unsigned height, unsigned level, D3DFORMAT format )
+{
+	OvTextureSPtr return_texture = NULL;
+	OvDevice device = GetDevice();
+	if ( device )
+	{
+		LPDIRECT3DTEXTURE9 texture = NULL;
+		HRESULT hs = E_FAIL;
+		hs = D3DXCreateTexture( device, width, height, level, D3DUSAGE_DEPTHSTENCIL, format, D3DPOOL_DEFAULT, &texture );
+		if ( SUCCEEDED( hs ) )
+		{
+			return_texture = OvNew OvTexture( texture, eTexUsage_DepthStencil );
+		}
+	}
+	return return_texture;
+}
+
+OvCubeTextureSPtr OvRenderer::CreateRenderCubeTexture( unsigned size, unsigned level, D3DFORMAT format )
+{
+	OvCubeTextureSPtr return_texture = NULL;
+	OvDevice device = GetDevice();
+	if ( device )
+	{
+		LPDIRECT3DCUBETEXTURE9 cube_texture = NULL;
+		HRESULT hs = E_FAIL;
+		hs = D3DXCreateCubeTexture( device, size,level, D3DUSAGE_RENDERTARGET, format, D3DPOOL_DEFAULT, &cube_texture );
+		if ( SUCCEEDED( hs ) )
+		{
+			return_texture = OvNew OvCubeTexture( cube_texture, eTexUsage_RenderTarget );
+		}
+	}
+	return return_texture;
 }

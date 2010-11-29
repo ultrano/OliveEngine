@@ -5,6 +5,7 @@
 #include "OvRefBase.h"
 #include "OvSingleton.h"
 #include "OvDevice.h"
+#include "OvColor.h"
 
 OvREF_POINTER(OvPixelShader);
 OvREF_POINTER(OvVertexShader);
@@ -19,8 +20,8 @@ public:
 	OvRenderer();
 	~OvRenderer();
 
-	LPDIRECT3DSURFACE9 ChangeRenderTarget( unsigned targetIndex, LPDIRECT3DSURFACE9 renderTarget );
-	LPDIRECT3DSURFACE9 ChangeDepthStencil( LPDIRECT3DSURFACE9 depthStencil );
+	LPDIRECT3DSURFACE9 SetRenderTarget( OvTextureSPtr render_texture, bool clear_buffer = true, bool clear_zbuffer = true, const OvColor& color = OvColor(255,0,0,0) );
+	LPDIRECT3DSURFACE9 SetDepthStencil( LPDIRECT3DSURFACE9 depthStencil );
 
 	bool			ClearTarget();
 	bool			BeginTarget();
@@ -41,12 +42,19 @@ public:
 
 	void			RenderUnitRect( OvVertexShaderSPtr v_shader = NULL , OvPixelShaderSPtr p_shader = NULL );
 
-//////////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////
 
 	LPDIRECT3DVERTEXBUFFER9 CreateVertexStream( void* buffer, UINT stride, UINT count );
 	LPDIRECT3DINDEXBUFFER9	CreateIndexStream( void* buffer, UINT stride, UINT count);
 	LPDIRECT3DVERTEXDECLARATION9 CreateVertexDeclaration( D3DVERTEXELEMENT9* vertElement );
 
+	//////////////////////////////////////////////////////////////////////////
+
+	OvTextureSPtr CreateRenderTexture( unsigned width, unsigned height, unsigned level = 1, D3DFORMAT format = D3DFMT_A8B8G8R8 );
+	OvTextureSPtr CreateDepthStencilTexture( unsigned width, unsigned height, unsigned level, D3DFORMAT format );
+	OvCubeTextureSPtr CreateRenderCubeTexture( unsigned size, unsigned level, D3DFORMAT format );
+
+	//////////////////////////////////////////////////////////////////////////
 	OvDevice		GetDevice();
 	HWND			GetWindowHandle();
 
@@ -57,6 +65,7 @@ private:
 private:
 
 	LPDIRECT3DDEVICE9			m_device;
+	LPDIRECT3DSURFACE9			m_default_display_buffer;
 	CRITICAL_SECTION			m_device_occupy;
 	HWND						m_window_handle;
 
