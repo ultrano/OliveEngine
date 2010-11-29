@@ -5,19 +5,19 @@ class OvColor : public OvMemObject
 {
 public:
 	OvColor();
-	OvColor( char _a, char _r, char _g, char _b );
+	OvColor( unsigned char _a, unsigned char _r, unsigned char _g, unsigned char _b );
 	OvColor( unsigned int _color );
 public:
 	union
 	{
 		struct 
 		{
-			char a;
-			char r;
-			char g;
-			char b;
+			unsigned char a;
+			unsigned char r;
+			unsigned char g;
+			unsigned char b;
 		};
 		unsigned int color;
-		char argb[4];
+		unsigned char argb[4];
 	};
 };
