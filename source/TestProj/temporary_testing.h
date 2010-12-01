@@ -55,7 +55,7 @@ GL_TEST_CASE_FUNC( olive_value_addtional_operator_test )
 	ovfloat = kfloat;
 	ovbool = kbool;
 
-	ovbool.SetValue("False");
-	ovbool.SetValue("True");
+	ovbool.FromString("False");
+	ovbool.FromString("True");
 
 }

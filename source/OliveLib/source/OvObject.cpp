@@ -48,7 +48,7 @@ OvBool OvObject::RegisterExtraProperty( const OvString& propName, OliveValue::Va
 		OliveValue::Value* copy = OliveValue::Factory( OvRTTI_Util::TypeName( &extraProp ) );
 		if ( copy )
 		{
-			copy->SetValue( extraProp.GetValue() );
+			copy->FromString( extraProp.ToString() );
 			m_extraPropertyTable[ propName ] = copy;
 			return true;
 		}

@@ -135,7 +135,7 @@ SVertexStreamInfo OvFileMeshLoader::_parseStreamLow()
 	vector< OvPoint3 > normBuffer;
 	vector< OvPoint3 > tanBuffer;
 
-	vertNum.SetValue( _readLine() );
+	vertNum.FromString( _readLine() );
 	posBuffer.reserve( vertNum.GetInteger() );
 	for ( unsigned i = 0 ; i < (unsigned)vertNum.GetInteger() ; ++i )
 	{

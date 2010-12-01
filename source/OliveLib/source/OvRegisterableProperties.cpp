@@ -410,7 +410,7 @@ OvBool	OvPropAccesser_extra_data::Extract(OvObject* pObj, OvObjectProperties& rO
 
 			OliveValue::Integer typeLength( (OvInt)typeName.size() );
 			OliveValue::Integer nameLength( (OvInt)extraProp.first.size() );
-			OliveValue::Integer valueLength( (OvInt)extraValue->GetValue().size() );
+			OliveValue::Integer valueLength( (OvInt)extraValue->ToString().size() );
 
 			if ( valueLength.GetInteger() )
 			{
@@ -419,19 +419,19 @@ OvBool	OvPropAccesser_extra_data::Extract(OvObject* pObj, OvObjectProperties& rO
 				// name: test
 				// value: 0
 				extraInfo += "[";
-				extraInfo += typeLength.GetValue();
+				extraInfo += typeLength.ToString();
 				extraInfo += "-";
-				extraInfo += nameLength.GetValue();
+				extraInfo += nameLength.ToString();
 				extraInfo += "-";
-				extraInfo += valueLength.GetValue();
+				extraInfo += valueLength.ToString();
 				extraInfo += "]";
-				extraInfo += typeName + extraProp.first + extraValue->GetValue();
+				extraInfo += typeName + extraProp.first + extraValue->ToString();
 
 				++savedPropCount;
 			}
 		}
 
-		extraInfo = OliveValue::Integer( savedPropCount ).GetValue() + ":" + extraInfo;
+		extraInfo = OliveValue::Integer( savedPropCount ).ToString() + ":" + extraInfo;
 		rObjStore.PushValue( extraInfo );
 
 		return true;
@@ -482,7 +482,7 @@ OvBool	OvPropAccesser_extra_data::Inject(OvObject* pObj, OvObjectProperties& rOb
 				extra_name.resize( nameLength );
 				extra_value.resize( valueLength );
 
-				extraValue->SetValue( extra_value );
+				extraValue->FromString( extra_value );
 
 				extraTable[ extra_name ] = extraValue;
 			}
@@ -508,7 +508,7 @@ OvBool OvPropAccesser_object_collector::Extract(OvObject* pObj, OvObjectProperti
 		OvObjectCollector* kpProp = (OvObjectCollector*)Access(pObj);
 		OliveValue::Integer relationCount( kpProp->Count() );
 
-		collectedInfo += relationCount.GetValue() + ":";
+		collectedInfo += relationCount.ToString() + ":";
 
 		for ( OvInt i = 0 ; i < relationCount.GetInteger() ; ++i )
 		{
@@ -516,7 +516,7 @@ OvBool OvPropAccesser_object_collector::Extract(OvObject* pObj, OvObjectProperti
 			if (relatedObj)
 			{
 				OliveValue::ObjectID relationID( relatedObj->GetObjectID() );
-				collectedInfo += relationID.GetValue() + "!";
+				collectedInfo += relationID.ToString() + "!";
 				rObjStore.PushAssociatedObject( relatedObj.GetRear() );
 			}
 		}

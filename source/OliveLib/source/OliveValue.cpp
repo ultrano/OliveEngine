@@ -42,14 +42,14 @@ Value::~Value()
 
 }
 
-void OliveValue::Value::SetValue( const char* expData )
+void OliveValue::Value::FromString( const char* expData )
 {
-	SetValue( OvString( expData ) );
+	FromString( OvString( expData ) );
 }
 
 //////////////////////////////////////////////////////////////////////////
 
-void OliveValue::Bool::SetValue( const OvString& expData )
+void OliveValue::Bool::FromString( const OvString& expData )
 {
 	if ( _stricmp( "0",expData.c_str() ) == 0 || _stricmp( "false",expData.c_str() ) == 0 )
 	{
@@ -61,7 +61,7 @@ void OliveValue::Bool::SetValue( const OvString& expData )
 	}
 }
 
-OvString OliveValue::Bool::GetValue()
+OvString OliveValue::Bool::ToString()
 {
 	return OvString( OvFormatString( "%d", m_value ) );
 }
@@ -77,11 +77,11 @@ OvBool OliveValue::Bool::GetBool()
 }
 
 //////////////////////////////////////////////////////////////////////////
-void			Float::SetValue( const OvString& expData )
+void			Float::FromString( const OvString& expData )
 {
 	sscanf_s( expData.c_str(), "%f", &m_value );
 }
-OvString			Float::GetValue()
+OvString			Float::ToString()
 {
 	return OvString( OvFormatString( "%f", m_value ) );
 }
@@ -96,11 +96,11 @@ OvFloat			Float::GetFloat()
 //////////////////////////////////////////////////////////////////////////
 
 //////////////////////////////////////////////////////////////////////////
-void			Point2::SetValue( const OvString& expData )
+void			Point2::FromString( const OvString& expData )
 {
 	sscanf_s( expData.c_str(), "%f,%f", &m_value.x, &m_value.y );
 }
-OvString			Point2::GetValue()
+OvString			Point2::ToString()
 {
 	return OvString( OvFormatString( "%f,%f", m_value.x, m_value.y ) );
 }
@@ -120,11 +120,11 @@ const OvPoint2&	Point2::GetPoint2()
 
 
 //////////////////////////////////////////////////////////////////////////
-void			Point3::SetValue( const OvString& expData )
+void			Point3::FromString( const OvString& expData )
 {
 	sscanf_s( expData.c_str(), "%f,%f,%f", &m_value.x, &m_value.y, &m_value.z );
 }
-OvString			Point3::GetValue()
+OvString			Point3::ToString()
 {
 	return OvString( OvFormatString( "%f,%f,%f", m_value.x, m_value.y, m_value.z ) );
 }
@@ -144,11 +144,11 @@ const OvPoint3&	Point3::GetPoint3()
 
 
 //////////////////////////////////////////////////////////////////////////
-void				Quaternion::SetValue( const OvString& expData )
+void				Quaternion::FromString( const OvString& expData )
 {
 	sscanf_s( expData.c_str(), "%f,%f,%f,%f", &m_value.x, &m_value.y, &m_value.z, &m_value.w );
 }
-OvString				Quaternion::GetValue()
+OvString				Quaternion::ToString()
 {
 	return OvString( OvFormatString( "%f,%f,%f,%f", m_value.x, m_value.y, m_value.z, m_value.w ) );
 }
@@ -168,11 +168,11 @@ const OvQuaternion&	Quaternion::GetQuaternion()
 
 
 //////////////////////////////////////////////////////////////////////////
-void			Integer::SetValue( const OvString& expData )
+void			Integer::FromString( const OvString& expData )
 {
 	sscanf_s( expData.c_str(), "%d", &m_value );
 }
-OvString			Integer::GetValue()
+OvString			Integer::ToString()
 {
 	return OvString( OvFormatString( "%d", m_value ) );
 }
@@ -187,11 +187,11 @@ OvInt				Integer::GetInteger()
 //////////////////////////////////////////////////////////////////////////
 
 //////////////////////////////////////////////////////////////////////////
-void			String::SetValue( const OvString& expData )
+void			String::FromString( const OvString& expData )
 {
 	m_value = expData;
 }
-OvString			String::GetValue()
+OvString			String::ToString()
 {
 	return m_value;
 }
@@ -206,13 +206,13 @@ const OvString&	String::GetString()
 //////////////////////////////////////////////////////////////////////////
 
 //////////////////////////////////////////////////////////////////////////
-void			ObjectID::SetValue( const OvString& expData )
+void			ObjectID::FromString( const OvString& expData )
 {
 	OvObjectID::id_core_type core_id;
 	sscanf_s( expData.c_str(), "%d", &core_id );
 	m_value = OvObjectID( core_id );
 }
-OvString			ObjectID::GetValue()
+OvString			ObjectID::ToString()
 {
 	return OvString( OvFormatString( "%d", m_value ) );
 }
@@ -228,12 +228,12 @@ const OvObjectID& ObjectID::GetObjectID()
 
 //////////////////////////////////////////////////////////////////////////
 
-void OliveValue::UserData::SetValue( const OvString& expData )
+void OliveValue::UserData::FromString( const OvString& expData )
 {
 	sscanf_s( expData.c_str(), "%p", &m_value );
 }
 
-OvString OliveValue::UserData::GetValue()
+OvString OliveValue::UserData::ToString()
 {
 	return OvString( OvFormatString( "%p", m_value ) );
 }

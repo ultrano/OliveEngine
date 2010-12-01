@@ -63,14 +63,14 @@ OvBool	OvObjectProperties::PopValue(OvString& rValue)
 }
 void	OvObjectProperties::PushValue( OliveValue::Value& rValue )
 {
-	PushValue(rValue.GetValue());
+	PushValue(rValue.ToString());
 }
 OvBool	OvObjectProperties::PopValue( OliveValue::Value& rValue )
 {
 	OvString popedValue;
 	if(PopValue(popedValue))
 	{
-		rValue.SetValue(popedValue);
+		rValue.FromString(popedValue);
 		return true;
 	}
 	return false;
