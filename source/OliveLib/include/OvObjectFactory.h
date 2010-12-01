@@ -23,10 +23,10 @@ namespace Olive
 
 #define OvFACTORY_OBJECT_DECL( type_name ) \
 	static OvObject* _construct_function_(){ return OvNew type_name; };\
-	static Olive::OvFactoryMemberDeclarer static_factory_declarer;
+	static Olive::OvFactoryMemberDeclarer _static_factory_declarer;
 
 #define OvFACTORY_OBJECT_IMPL( type_name ) \
 	OvObject* _construct_function_##type_name(){ return type_name::_construct_function_(); }\
-	Olive::OvFactoryMemberDeclarer type_name::static_factory_declarer( #type_name, _construct_function_##type_name);
+	Olive::OvFactoryMemberDeclarer type_name::_static_factory_declarer( #type_name, _construct_function_##type_name);
 
 }

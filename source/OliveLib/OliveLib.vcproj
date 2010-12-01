@@ -756,14 +756,6 @@
 						RelativePath=".\include\OvObject.h"
 						>
 					</File>
-					<File
-						RelativePath=".\source\TemporaryFactoryFunction.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\include\TemporaryFactoryFunction.h"
-						>
-					</File>
 				</Filter>
 				<Filter
 					Name="OvObjectCollector"
@@ -1160,6 +1152,14 @@
 					</File>
 					<File
 						RelativePath=".\include\OvColor.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="OvTypeDef"
+					>
+					<File
+						RelativePath=".\include\OvTypeDef.h"
 						>
 					</File>
 				</Filter>
