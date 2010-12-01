@@ -51,8 +51,8 @@ namespace OvConvert
 namespace OvMath
 {
 
-	unsigned int Factorial( unsigned int total);
-	unsigned int Factorial( unsigned int total, unsigned int select );
-	unsigned int Combination( unsigned int total, unsigned int select );
-	unsigned int Sigma( unsigned int total);
+	OvUInt Factorial( OvUInt total);
+	OvUInt Factorial( OvUInt total, OvUInt select );
+	OvUInt Combination( OvUInt total, OvUInt select );
+	OvUInt Sigma( OvUInt total);
 }

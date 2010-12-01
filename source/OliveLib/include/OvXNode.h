@@ -22,7 +22,7 @@ public:
 
 	size_t			GetChildCount();
 
-	OvXObjectSPtr	GetChildeAt( unsigned int iIndex);
+	OvXObjectSPtr	GetChildeAt( OvUInt iIndex);
 private:
 
 	virtual void	_update_system( float _fElapse ) override;

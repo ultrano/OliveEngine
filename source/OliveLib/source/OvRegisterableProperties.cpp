@@ -448,7 +448,7 @@ bool	OvPropAccesser_extra_data::Inject(OvObject* pObj, OvObjectProperties& rObjS
 
 		string extraInfo;
 
-		unsigned int count = 0;
+		OvUInt count = 0;
 
 		rObjStore.PopValue( extraInfo );
 
@@ -463,9 +463,9 @@ bool	OvPropAccesser_extra_data::Inject(OvObject* pObj, OvObjectProperties& rObjS
 			// type: something
 			// name: test
 			// value: 0
-			unsigned int typeLength = 0;
-			unsigned int nameLength = 0;
-			unsigned int valueLength = 0;
+			OvUInt typeLength = 0;
+			OvUInt nameLength = 0;
+			OvUInt valueLength = 0;
 
 			sscanf_s( propInfo.c_str(), "[%d-%d-%d]%s", &typeLength, &nameLength, &valueLength, &propInfo[0], propInfo.length() );
 
@@ -532,7 +532,7 @@ bool OvPropAccesser_object_collector::Inject(OvObject* pObj, OvObjectProperties&
 	if (kpProp)
 	{
 		string data;
-		unsigned int count = 0;
+		OvUInt count = 0;
 
 		rObjStore.PopValue( data );
 
@@ -540,7 +540,7 @@ bool OvPropAccesser_object_collector::Inject(OvObject* pObj, OvObjectProperties&
 
 		if ( count )
 		{
-			unsigned int id = 0;
+			OvUInt id = 0;
 
 			OvCollectedObjectsLinkConnector* linkBuilder = OvNew OvCollectedObjectsLinkConnector;
 

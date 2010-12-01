@@ -35,7 +35,7 @@ public:
 	void					SetPropertyBag(OvPropertyBag* propBag){m_pPropertyBag = propBag;};
 	inline OvPropertyBag*	PropertyBag(){return m_pPropertyBag;};
 	inline const string&	TypeName() const {return m_strClassName;};
-	const OvRTTI*		GetBaseRTTI(unsigned int uiIndex = 0){return m_pBaseClassRTTI[uiIndex];};
+	const OvRTTI*		GetBaseRTTI(OvUInt uiIndex = 0){return m_pBaseClassRTTI[uiIndex];};
 
 private:
 

@@ -128,7 +128,7 @@ OvResourceSPtr OvMaterialLoader::Load( OvDataStream& stream )
 
 	//////////////////////////////////////////////////////////////////////////
 	TiXmlElement* sampler_stage_elem = root->FirstChildElement( "sampler_stage" );
-	std::map<unsigned int, OvResourceTicketSPtr> stageImage;
+	std::map<OvUInt, OvResourceTicketSPtr> stageImage;
 	OvMaterial::sampler_state_table	state_table;
 
 	for ( TiXmlElement* sampler_elem = sampler_stage_elem->FirstChildElement( "sampler" )

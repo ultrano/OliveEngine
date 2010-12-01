@@ -1,13 +1,14 @@
 #pragma once
 #pragma warning( disable : 4521 )
+#include "OvTypeDef.h"
 #include "OvMemObject.h"
-//typedef unsigned int OvObjectID;;
+//typedef OvUInt OvObjectID;;
 
 class OvObjectID : public OvMemObject
 {
 public:
 
-	typedef unsigned int id_core_type;
+	typedef OvUInt id_core_type;
 
 	static OvObjectID	INVALID;
 

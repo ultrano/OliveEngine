@@ -19,8 +19,8 @@ public:
 	virtual bool	Inject(OvObject* pObj, OvObjectProperties& rXml) = 0;
 
 	void*			Access(OvObject* pObj);
-	unsigned int	GetOffset();
-	void			SetOffset(unsigned int uiOffset);
+	OvUInt	GetOffset();
+	void			SetOffset(OvUInt uiOffset);
 
 	OvString&	GetPropertyName();
 	void			SetPropertyName(const OvString& strPropName);
@@ -28,6 +28,6 @@ public:
 private:
 
 	OvString		m_strPropertyName;
-	unsigned int	m_uiOffset;
+	OvUInt	m_uiOffset;
 
 };

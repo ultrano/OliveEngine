@@ -1,13 +1,13 @@
 //
 //
 //template<typename Type_0>
-//unsigned int OvValueKeyCollector<Type_0>::GetKeyCount()
+//OvUInt OvValueKeyCollector<Type_0>::GetKeyCount()
 //{
 //	return m_mapKeyTale.size();
 //}
 //
 //template<typename Type_0>
-//bool			OvValueKeyCollector<Type_0>::IsValidKeyIndex(unsigned int iIndex)
+//bool			OvValueKeyCollector<Type_0>::IsValidKeyIndex(OvUInt iIndex)
 //{
 //	if (iIndex <0 || iIndex >= GetKeyCount())
 //	{

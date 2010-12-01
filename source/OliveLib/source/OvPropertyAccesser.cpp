@@ -18,11 +18,11 @@ void*			OvPropertyAccesser::Access(OvObject* pObj)
 	}
 	return (void*)0;
 }
-unsigned int	OvPropertyAccesser::GetOffset()
+OvUInt	OvPropertyAccesser::GetOffset()
 {
 	return m_uiOffset;
 }
-void			OvPropertyAccesser::SetOffset(unsigned int uiOffset)
+void			OvPropertyAccesser::SetOffset(OvUInt uiOffset)
 {
 	m_uiOffset = uiOffset;
 }

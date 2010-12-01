@@ -15,7 +15,7 @@ OvColor::OvColor( unsigned char _a, unsigned char _r, unsigned char _g, unsigned
 
 }
 
-OvColor::OvColor( unsigned int _color )
+OvColor::OvColor( OvUInt _color )
 : color( _color )
 {
 

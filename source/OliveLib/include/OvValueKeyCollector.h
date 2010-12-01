@@ -17,15 +17,15 @@
 //	};
 //public:
 //
-//	bool			IsValidKeyIndex(unsigned int iIndex);
+//	bool			IsValidKeyIndex(OvUInt iIndex);
 //	bool			IsOverlapTickKey(float fTick);
 //
 //	void			CollectValueKey(float fTick,const Type_0& crValue);
 //	void			BuildKeyNode();
 //	void			SortAccessCash();
 //
-//	unsigned int	GetKeyCount();
-//	ContainKeyType	GetKeyAt(unsigned int iIndex)
+//	OvUInt	GetKeyCount();
+//	ContainKeyType	GetKeyAt(OvUInt iIndex)
 //	{
 //		if (IsValidKeyIndex(iIndex))
 //			return m_vecKeyArray[iIndex];

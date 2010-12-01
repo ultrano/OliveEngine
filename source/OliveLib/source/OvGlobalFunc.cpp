@@ -117,9 +117,9 @@ memcpy((void*)(*_lpp_dest),(void*)k_src.data(),k_src.length()*sizeof(char));
 return true;
 };*/
 
-unsigned int OvMath::Factorial( unsigned int total )
+OvUInt OvMath::Factorial( OvUInt total )
 {
-	unsigned int result = 1;
+	OvUInt result = 1;
 	while ( total )
 	{
 		result *= total;
@@ -128,17 +128,17 @@ unsigned int OvMath::Factorial( unsigned int total )
 	return result;
 }
 
-unsigned int OvMath::Factorial( unsigned int total, unsigned int select )
+OvUInt OvMath::Factorial( OvUInt total, OvUInt select )
 {
 	return ( OvMath::Factorial( total ) / OvMath::Factorial( select ) );
 }
 
-unsigned int OvMath::Combination( unsigned int total, unsigned int select )
+OvUInt OvMath::Combination( OvUInt total, OvUInt select )
 {
 	return ( OvMath::Factorial( total ) / ( OvMath::Factorial( select ) * OvMath::Factorial( total - select ) ) );
 }
 
-unsigned int OvMath::Sigma( unsigned int total )
+OvUInt OvMath::Sigma( OvUInt total )
 {
 	return ((total * ( total + 1 )) / 2);
 }

@@ -38,4 +38,4 @@ inline void	OvBitFlags<Type0>::Clear( bool check )
 
 typedef	OvBitFlags<unsigned char>	Ov8SetFlags;
 typedef	OvBitFlags<unsigned short>	Ov16SetFlags;
-typedef	OvBitFlags<unsigned int>	Ov32SetFlags;
+typedef	OvBitFlags<OvUInt>	Ov32SetFlags;
