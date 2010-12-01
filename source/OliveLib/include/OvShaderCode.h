@@ -13,7 +13,7 @@ class OvShaderCode : public OvResource
 public:
 
 	OvShaderCode( const OvString& code);
-	const string&	GetCodeString();
+	const OvString&	GetCodeString();
 	void*			GetCodeBuffer();
 	size_t			GetCodeSize();
 
@@ -29,6 +29,6 @@ private:
 	void			_register_compiled_shader( const OvString& entry_func, const OvString& compile_version, OvShaderSPtr compiled_shader );
 
 private:
-	string m_code;
+	OvString m_code;
 	precompiled_shader_table	m_precompiledShaderTable;
 };

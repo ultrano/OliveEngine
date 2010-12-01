@@ -17,14 +17,14 @@ public:
 		OvRTTI_MAX_PARENT_COUNT = 2
 	};
 
-	OvRTTI(const string & classname)
+	OvRTTI(const OvString & classname)
 		:m_strClassName(classname)
 		,m_pPropertyBag(NULL)
 	{
 		m_pBaseClassRTTI[0] = NULL;
 		m_pBaseClassRTTI[1] = NULL;
 	};
-	OvRTTI(const string & classname, const OvRTTI& baseclass)
+	OvRTTI(const OvString & classname, const OvRTTI& baseclass)
 		:m_strClassName(classname)
 		,m_pPropertyBag(NULL)
 	{
@@ -34,12 +34,12 @@ public:
 
 	void					SetPropertyBag(OvPropertyBag* propBag){m_pPropertyBag = propBag;};
 	inline OvPropertyBag*	PropertyBag(){return m_pPropertyBag;};
-	inline const string&	TypeName() const {return m_strClassName;};
+	inline const OvString&	TypeName() const {return m_strClassName;};
 	const OvRTTI*		GetBaseRTTI(OvUInt uiIndex = 0){return m_pBaseClassRTTI[uiIndex];};
 
 private:
 
-	const string					m_strClassName;
+	const OvString					m_strClassName;
 
 	const OvRTTI*					m_pBaseClassRTTI[OvRTTI_MAX_PARENT_COUNT];
 

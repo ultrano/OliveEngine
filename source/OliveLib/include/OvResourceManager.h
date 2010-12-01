@@ -20,25 +20,25 @@ public:
 
 	//! sync load method
 	template<typename Type_0>
-	OvSmartPointer<Type_0>	LoadResource( const string& fileLocation );
-	OvResourceSPtr			LoadResource( const OvRTTI* resourceType, const string& fileLocation );
-	OvResourceSPtr			LoadResource( const string& resourceType, const string& fileLocation );
+	OvSmartPointer<Type_0>	LoadResource( const OvString& fileLocation );
+	OvResourceSPtr			LoadResource( const OvRTTI* resourceType, const OvString& fileLocation );
+	OvResourceSPtr			LoadResource( const OvString& resourceType, const OvString& fileLocation );
 	//
 
 	//! async load method
 	template<typename Type_0>
-	OvResourceTicketSPtr	AsyncLoadResource( const string& fileLocation );
-	OvResourceTicketSPtr	AsyncLoadResource( const OvRTTI* resourceType, const string& fileLocation );
-	OvResourceTicketSPtr	AsyncLoadResource( const string& resourceType, const string& fileLocation );
+	OvResourceTicketSPtr	AsyncLoadResource( const OvString& fileLocation );
+	OvResourceTicketSPtr	AsyncLoadResource( const OvRTTI* resourceType, const OvString& fileLocation );
+	OvResourceTicketSPtr	AsyncLoadResource( const OvString& resourceType, const OvString& fileLocation );
 
 	OvResourceTicketSPtr	FindTicket( OvResourceSPtr resource );
 	//
 
 
 	void					ResourceCache( OvResourceSPtr resource );
-	const string&			FindFileLocation( OvResourceSPtr resource );
+	const OvString&			FindFileLocation( OvResourceSPtr resource );
 
-	const string&			ResourceDirectory();
+	const OvString&			ResourceDirectory();
 
 private:
 
@@ -61,11 +61,11 @@ private:
 	typedef std::list< OvResource* >						resource_list;
 private:
 
-	OvResourceTicketSPtr	_reserve_ticket( const OvRTTI* type, const string& fileLocation );
-	void _register_loaded_resource( const string& location, OvResource* resource );
+	OvResourceTicketSPtr	_reserve_ticket( const OvRTTI* type, const OvString& fileLocation );
+	void _register_loaded_resource( const OvString& location, OvResource* resource );
 
 	OvResourceLoaderSPtr _find_resource_loader( const OvRTTI* resourceType );
-	OvResourceSPtr _find_loaded_resource( const OvRTTI* resourceType, const string& location);
+	OvResourceSPtr _find_loaded_resource( const OvRTTI* resourceType, const OvString& location);
 
 	void	_called_when_resource_created( OvResource* resource );
 	void	_called_when_resource_deleted( OvResource* resource );
@@ -96,16 +96,16 @@ private:
 
 template<typename Type_0>
 OvSmartPointer<Type_0> 
-OvResourceManager::LoadResource( const string& fileLocation )
+OvResourceManager::LoadResource( const OvString& fileLocation )
 {
 	return LoadResource( Type_0::GetRTTI(), fileLocation );
 };
 template<typename Type_0>
 OvResourceTicketSPtr
-OvResourceManager::AsyncLoadResource( const string& fileLocation )
+OvResourceManager::AsyncLoadResource( const OvString& fileLocation )
 {
 	return AsyncLoadResource( Type_0::GetRTTI(), fileLocation );
 };
 
-string	AbsolutePath( const OvString& file );
+OvString	AbsolutePath( const OvString& file );
 bool	ClampPathIfResDir( OvString& file );

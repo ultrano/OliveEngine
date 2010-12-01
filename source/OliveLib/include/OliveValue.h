@@ -15,8 +15,8 @@ namespace OliveValue
 	private:type_name m_value;\
 	public:\
 	__this_class(){};\
-	__this_class( const char* strValue ){SetValue( string( strValue ) );};\
-	__this_class( string& strValue ){SetValue(strValue);};\
+	__this_class( const char* strValue ){SetValue( OvString( strValue ) );};\
+	__this_class( OvString& strValue ){SetValue(strValue);};\
 	__this_class( const type_name& typeValue ){m_value = typeValue;};\
 	const __this_class& operator=( const type_name& typeValue ){ m_value = typeValue; return *this; };\
 	operator const type_name& (){ return m_value; };
@@ -44,8 +44,8 @@ namespace OliveValue
 		virtual ~Value();
 	public:
 		void			SetValue( const char* expData );
-		virtual void	SetValue( const string& expData ) = 0;
-		virtual string	GetValue() = 0;
+		virtual void	SetValue( const OvString& expData ) = 0;
+		virtual OvString	GetValue() = 0;
 	};
 
 	class Bool : public OliveValue::Value
@@ -53,8 +53,8 @@ namespace OliveValue
 		OvRTTI_DECL(Bool);
 		OLIVE_VALUE_TYPE(bool);
 	public:
-		virtual void	SetValue( const string& expData );
-		virtual string	GetValue();
+		virtual void	SetValue( const OvString& expData );
+		virtual OvString	GetValue();
 	public:
 		void			SetBool( bool expData );
 		bool			GetBool();
@@ -65,8 +65,8 @@ namespace OliveValue
 		OvRTTI_DECL(Float);
 		OLIVE_VALUE_TYPE(float);
 	public:
-		virtual void	SetValue( const string& expData );
-		virtual string	GetValue();
+		virtual void	SetValue( const OvString& expData );
+		virtual OvString	GetValue();
 	public:
 		void			SetFloat( float expValue );
 		float			GetFloat();
@@ -77,8 +77,8 @@ namespace OliveValue
 		OvRTTI_DECL(Point2);
 		OLIVE_VALUE_TYPE(OvPoint2);
 	public:
-		virtual void	SetValue( const string& expData );
-		virtual string	GetValue();
+		virtual void	SetValue( const OvString& expData );
+		virtual OvString	GetValue();
 	public:
 		void			SetPoint2( const OvPoint2& expValue );
 		void			SetPoint2( float x, float y );
@@ -90,8 +90,8 @@ namespace OliveValue
 		OvRTTI_DECL(Point3);
 		OLIVE_VALUE_TYPE(OvPoint3);
 	public:
-		virtual void	SetValue( const string& expData );
-		virtual string	GetValue();
+		virtual void	SetValue( const OvString& expData );
+		virtual OvString	GetValue();
 	public:
 		void			SetPoint3( const OvPoint3& expValue );
 		void			SetPoint3( float x, float y, float z );
@@ -103,8 +103,8 @@ namespace OliveValue
 		OvRTTI_DECL(Quaternion);
 		OLIVE_VALUE_TYPE(OvQuaternion);
 	public:
-		virtual void	SetValue( const string& expData );
-		virtual string	GetValue();
+		virtual void	SetValue( const OvString& expData );
+		virtual OvString	GetValue();
 	public:
 		void			  SetQuaternion( const OvQuaternion& expValue );
 		void			  SetQuaternion( float x, float y, float z, float w );
@@ -116,8 +116,8 @@ namespace OliveValue
 		OvRTTI_DECL(Integer);
 		OLIVE_VALUE_TYPE(int);
 	public:
-		virtual void	SetValue( const string& expData );
-		virtual string	GetValue();
+		virtual void	SetValue( const OvString& expData );
+		virtual OvString	GetValue();
 	public:
 		void			SetInteger( int expValue );
 		int				GetInteger();
@@ -126,13 +126,13 @@ namespace OliveValue
 	class String : public OliveValue::Value
 	{
 		OvRTTI_DECL(String);
-		OLIVE_VALUE_TYPE(string);
+		OLIVE_VALUE_TYPE(OvString);
 	public:
-		virtual void	SetValue( const string& expData );
-		virtual string	GetValue();
+		virtual void	SetValue( const OvString& expData );
+		virtual OvString	GetValue();
 	public:
-		void			SetString( const string& expValue );
-		const string&	GetString();
+		void			SetString( const OvString& expValue );
+		const OvString&	GetString();
 	};
 
 	class ObjectID : public OliveValue::Value
@@ -140,8 +140,8 @@ namespace OliveValue
 		OvRTTI_DECL(ObjectID);
 		OLIVE_VALUE_TYPE(OvObjectID);
 	public:
-		virtual void	SetValue( const string& expData );
-		virtual string	GetValue();
+		virtual void	SetValue( const OvString& expData );
+		virtual OvString	GetValue();
 	public:
 		void			SetObjectID( const OvObjectID& expValue );
 		const OvObjectID&	GetObjectID();
@@ -153,8 +153,8 @@ namespace OliveValue
 		OvRTTI_DECL(UserData);
 		OLIVE_VALUE_TYPE(void_pointer);
 	public:
-		virtual void	SetValue( const string& expData );
-		virtual string	GetValue();
+		virtual void	SetValue( const OvString& expData );
+		virtual OvString	GetValue();
 	public:
 		void			SetUserData( void* userData );
 		void*			GetUserData();

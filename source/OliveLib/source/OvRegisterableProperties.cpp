@@ -86,14 +86,14 @@ bool	OvPropAccesser_integer::Inject(OvObject* pObj, OvObjectProperties& rObjStor
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////				stl::string					/////////////////////////////
+///////////////////////////				stl::OvString					/////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////
 OvRTTI_IMPL(OvPropAccesser_STL_string)
 bool	OvPropAccesser_STL_string::Extract(OvObject* pObj, OvObjectProperties& rObjStore)
 {
 	if (pObj)
 	{
-		string* kpProp = (string*)Access(pObj);
+		OvString* kpProp = (OvString*)Access(pObj);
 		if (kpProp)
 		{
 			rObjStore.PushValue(*kpProp);
@@ -106,7 +106,7 @@ bool	OvPropAccesser_STL_string::Inject(OvObject* pObj, OvObjectProperties& rObjS
 {
 	if (pObj)
 	{
-		string* kpProp = (string*)Access(pObj);
+		OvString* kpProp = (OvString*)Access(pObj);
 		if (kpProp)
 		{
 			rObjStore.PopValue(*kpProp);
@@ -400,13 +400,13 @@ bool	OvPropAccesser_extra_data::Extract(OvObject* pObj, OvObjectProperties& rObj
 		OliveValue::Integer extraCount( (int)extraTable.size() );
 		
 		unsigned savedPropCount = 0;
-		string extraInfo;
+		OvString extraInfo;
 
 		for each( const OvObject::extra_property_table_pair extraProp in extraTable )
 		{
 			OliveValue::Value* extraValue = (OliveValue::Value*)extraProp.second;
 
-			string typeName = OvRTTI_Util::TypeName( extraValue );
+			OvString typeName = OvRTTI_Util::TypeName( extraValue );
 
 			OliveValue::Integer typeLength( (int)typeName.size() );
 			OliveValue::Integer nameLength( (int)extraProp.first.size() );
@@ -446,7 +446,7 @@ bool	OvPropAccesser_extra_data::Inject(OvObject* pObj, OvObjectProperties& rObjS
 	{
 		OvObject::extra_property_table& extraTable = *kpProp;
 
-		string extraInfo;
+		OvString extraInfo;
 
 		OvUInt count = 0;
 
@@ -454,7 +454,7 @@ bool	OvPropAccesser_extra_data::Inject(OvObject* pObj, OvObjectProperties& rObjS
 
 		sscanf_s( extraInfo.c_str(), "%d:%s", &count, &(extraInfo[0]), extraInfo.size() );
 
-		string propInfo;
+		OvString propInfo;
 		propInfo = extraInfo;
 
 		for ( unsigned i = 0 ; i < count ; ++i)
@@ -469,15 +469,15 @@ bool	OvPropAccesser_extra_data::Inject(OvObject* pObj, OvObjectProperties& rObjS
 
 			sscanf_s( propInfo.c_str(), "[%d-%d-%d]%s", &typeLength, &nameLength, &valueLength, &propInfo[0], propInfo.length() );
 
-			string extra_type = propInfo;
+			OvString extra_type = propInfo;
 			extra_type.resize( typeLength );
 
 			OliveValue::Value*	extraValue = OliveValue::Factory( extra_type );
 			if ( extraValue )
 			{
 
-				string extra_name = &( propInfo[ typeLength ] );
-				string extra_value = &( propInfo[ typeLength + nameLength ] );
+				OvString extra_name = &( propInfo[ typeLength ] );
+				OvString extra_value = &( propInfo[ typeLength + nameLength ] );
 
 				extra_name.resize( nameLength );
 				extra_value.resize( valueLength );
@@ -504,7 +504,7 @@ bool OvPropAccesser_object_collector::Extract(OvObject* pObj, OvObjectProperties
 {
 	if (pObj)
 	{
-		string collectedInfo;
+		OvString collectedInfo;
 		OvObjectCollector* kpProp = (OvObjectCollector*)Access(pObj);
 		OliveValue::Integer relationCount( kpProp->Count() );
 
@@ -531,7 +531,7 @@ bool OvPropAccesser_object_collector::Inject(OvObject* pObj, OvObjectProperties&
 	OvObjectCollector* kpProp = (OvObjectCollector*)Access(pObj);
 	if (kpProp)
 	{
-		string data;
+		OvString data;
 		OvUInt count = 0;
 
 		rObjStore.PopValue( data );
@@ -574,11 +574,11 @@ bool OvPropAccesser_resource::Extract( OvObject* pObj, OvObjectProperties& rObjS
 	OvResourceSPtr* accessProp = (OvResourceSPtr*)Access(pObj);
 	if ( accessProp )
 	{
-		string typeName = OvRTTI_Util::TypeName( (*accessProp) );
-		string fileLocation = OvResourceManager::GetInstance()->FindFileLocation( (*accessProp) );
+		OvString typeName = OvRTTI_Util::TypeName( (*accessProp) );
+		OvString fileLocation = OvResourceManager::GetInstance()->FindFileLocation( (*accessProp) );
 		ClampPathIfResDir( fileLocation );
 
-		string resourceInfo;
+		OvString resourceInfo;
 		resourceInfo += typeName;
 		resourceInfo += ":";
 		resourceInfo += fileLocation;
@@ -593,9 +593,9 @@ bool OvPropAccesser_resource::Inject( OvObject* pObj, OvObjectProperties& rObjSt
 	OvResourceSPtr* accessProp = (OvResourceSPtr*)Access(pObj);
 	if ( accessProp )
 	{
-		string resourceInfo;
-		string resourceType;
-		string fileLocation;
+		OvString resourceInfo;
+		OvString resourceType;
+		OvString fileLocation;
 		rObjStore.PopValue( resourceInfo );
 
 		resourceType = resourceInfo;
@@ -621,11 +621,11 @@ bool OvPropAccesser_resource_ticket::Extract( OvObject* pObj, OvObjectProperties
 	if ( accessProp )
 	{
 		OvResourceTicketSPtr ticket = (*accessProp);
-		string typeName = ((OvRTTI*)ticket->GetResourceType())->TypeName();
-		string fileLocation = ticket->GetFileName();
+		OvString typeName = ((OvRTTI*)ticket->GetResourceType())->TypeName();
+		OvString fileLocation = ticket->GetFileName();
 		ClampPathIfResDir( fileLocation );
 
-		string resourceInfo;
+		OvString resourceInfo;
 		resourceInfo += typeName;
 		resourceInfo += ":";
 		resourceInfo += fileLocation;
@@ -640,9 +640,9 @@ bool OvPropAccesser_resource_ticket::Inject( OvObject* pObj, OvObjectProperties&
 	OvResourceTicketSPtr* accessProp = (OvResourceTicketSPtr*)Access(pObj);
 	if ( accessProp )
 	{
-		string resourceInfo;
-		string resourceType;
-		string fileLocation;
+		OvString resourceInfo;
+		OvString resourceType;
+		OvString fileLocation;
 		rObjStore.PopValue( resourceInfo );
 
 		resourceType = resourceInfo;

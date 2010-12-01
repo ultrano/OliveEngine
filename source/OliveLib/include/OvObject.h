@@ -37,19 +37,19 @@ public:
 
 	//! Object Name
 	void			SetName(const char* _pName);
-	const string&	GetName();
+	const OvString&	GetName();
 
 	//! ID of Object
 	OvObjectID		GetObjectID();
 
 	//! Extra Property
 	template<typename Type_0>
-	Type_0* FindExtraProperty( const string& propName );
-	OliveValue::Value* FindExtraProperty( const string& propName );
+	Type_0* FindExtraProperty( const OvString& propName );
+	OliveValue::Value* FindExtraProperty( const OvString& propName );
 
 	//! RegisterExtraProperty는 성능상의 부하를 고려 해야 겠다. (구현부가 부하를 발생시키게 생겼다.)
-	bool		RegisterExtraProperty( const string& propName, OliveValue::Value& extraProp );
-	bool		RemoveExtraProperty( const string& propName );
+	bool		RegisterExtraProperty( const OvString& propName, OliveValue::Value& extraProp );
+	bool		RemoveExtraProperty( const OvString& propName );
 	void		ClearExtraProperty();
 
 
@@ -63,7 +63,7 @@ private:
 };
 
 template<typename Type_0>
-Type_0* OvObject::FindExtraProperty( const string& propName )
+Type_0* OvObject::FindExtraProperty( const OvString& propName )
 {
 	OliveValue::Value* extraValue = NULL;
 	extraValue = FindExtraProperty( propName );

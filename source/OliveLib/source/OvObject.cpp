@@ -31,7 +31,7 @@ void	OvObject::SetName( const char* _pName )
 {
 	m_name = _pName;
 }
-const string& OvObject::GetName()
+const OvString& OvObject::GetName()
 {
 	return m_name;
 }
@@ -41,7 +41,7 @@ OvObjectID		OvObject::GetObjectID()
 	return m_idObjectID;
 }
 
-bool OvObject::RegisterExtraProperty( const string& propName, OliveValue::Value& extraProp )
+bool OvObject::RegisterExtraProperty( const OvString& propName, OliveValue::Value& extraProp )
 {
 	if ( m_extraPropertyTable.find( propName ) == m_extraPropertyTable.end() )
 	{
@@ -56,7 +56,7 @@ bool OvObject::RegisterExtraProperty( const string& propName, OliveValue::Value&
 	return false;
 }
 
-bool		OvObject::RemoveExtraProperty( const string& propName )
+bool		OvObject::RemoveExtraProperty( const OvString& propName )
 {
 	extra_property_table::iterator tableIter = m_extraPropertyTable.find(propName) ;
 	if ( m_extraPropertyTable.end() != tableIter )
@@ -77,7 +77,7 @@ void		OvObject::ClearExtraProperty()
 	m_extraPropertyTable.clear();
 }
 
-OliveValue::Value* OvObject::FindExtraProperty( const string& propName )
+OliveValue::Value* OvObject::FindExtraProperty( const OvString& propName )
 {
 	extra_property_table::iterator tableIter = m_extraPropertyTable.find(propName) ;
 	if ( m_extraPropertyTable.end() != tableIter )
