@@ -1,6 +1,6 @@
 #pragma once
+#include "OvTypeDef.h"
 #include <Windows.h>
-#include <string>
 
 void	OvGetLastError();
 
@@ -10,9 +10,9 @@ void	OvErrorMsgBox(const char* _file,const char* _block,const char* _msg = NULL)
 
 bool	OvStringAllocator(LPTSTR* _lpp_dest,LPCTSTR lp_src);
 
-std::string	OvGetDirectoryInFullFilePath(const std::string& strFileFullPath);
-std::string	OvGetFileNameInFullFilePath(const std::string& strFileFullPath);
-std::string	OvGetExtentionInFullFilePath(const std::string& strFileFullPath);
+OvString	OvGetDirectoryInFullFilePath(const OvString& strFileFullPath);
+OvString	OvGetFileNameInFullFilePath(const OvString& strFileFullPath);
+OvString	OvGetExtentionInFullFilePath(const OvString& strFileFullPath);
 
 namespace OvConvert
 {

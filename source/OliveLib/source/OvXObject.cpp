@@ -258,7 +258,7 @@ OvXComponentSPtr OvXObject::RemoveComponent( const char* name )
 	for ( unsigned i = 0 ; i < m_extraComponents.Count() ; ++i )
 	{
 		removedComponent = m_extraComponents.GetByAt( i );
-		if ( removedComponent->GetName() == std::string( name ) )
+		if ( removedComponent->GetName() == OvString( name ) )
 		{
 			removedComponent->SetTarget( NULL );
 			return removedComponent;

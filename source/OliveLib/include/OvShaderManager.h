@@ -62,12 +62,12 @@ class OvShaderConstInfo : public OvMemObject
 {
 public:
 	OvShaderConstInfo();
-	OvShaderConstInfo(const string& T, const string& N, UINT R,UINT C);
-	OvShaderConstInfo(UINT A, const string& T, const string& N, UINT R,UINT C);
+	OvShaderConstInfo(const OvString& T, const OvString& N, UINT R,UINT C);
+	OvShaderConstInfo(UINT A, const OvString& T, const OvString& N, UINT R,UINT C);
 	OvShaderConstInfo operator[](const UINT uiIndex)const;
 	const UINT	ArrayCount;
-	const string	Type;
-	const string	Name;
+	const OvString	Type;
+	const OvString	Name;
 	const UINT	RegistIndex;
 	const UINT	ConstCount;
 private:

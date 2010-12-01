@@ -5,7 +5,6 @@
 #include "OvStreamCommon.h"
 #include <queue>
 #include <list>
-#include <string>
 using namespace std;
 
 class OvObject;

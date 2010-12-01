@@ -18,8 +18,8 @@ public:
 	OvStorage();
 	~OvStorage();
 
-	bool	Save( const std::string& pFile, OvObjectCollector& saveObjects);
-	bool	Load( const std::string& pFile, OvObjectCollector& loadedObjects);
+	bool	Save( const OvString& pFile, OvObjectCollector& saveObjects);
+	bool	Load( const OvString& pFile, OvObjectCollector& loadedObjects);
 
 	void	Clear();
 

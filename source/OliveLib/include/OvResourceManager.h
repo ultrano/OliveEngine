@@ -3,7 +3,6 @@
 #include "OvResource.h"
 #include "OvResourceLoader.h"
 #include "OvResourceTicket.h"
-#include <string>
 #include <list>
 #include <map>
 
@@ -45,7 +44,7 @@ private:
 
 	struct SAsyncLoadInfo
 	{ 
-		std::string file; 
+		OvString file; 
 		OvResourceLoaderSPtr loader; 
 	};
 	struct SResourceInfo
@@ -58,7 +57,7 @@ private:
 	typedef std::list< OvResourceSPtr >						resource_cache_list;
 	typedef std::list< SAsyncLoadInfo >						async_load_list;
 
-	typedef std::map< std::string, SResourceInfo >			loaded_resource_table;
+	typedef std::map< OvString, SResourceInfo >			loaded_resource_table;
 	typedef std::list< OvResource* >						resource_list;
 private:
 
@@ -92,7 +91,7 @@ private:
 	CRITICAL_SECTION		m_life_section;
 	HANDLE					m_async_handle;
 
-	std::string				m_resourceDirectory;
+	OvString				m_resourceDirectory;
 };
 
 template<typename Type_0>
@@ -108,5 +107,5 @@ OvResourceManager::AsyncLoadResource( const string& fileLocation )
 	return AsyncLoadResource( Type_0::GetRTTI(), fileLocation );
 };
 
-string	AbsolutePath( const std::string& file );
-bool	ClampPathIfResDir( std::string& file );
+string	AbsolutePath( const OvString& file );
+bool	ClampPathIfResDir( OvString& file );

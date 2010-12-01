@@ -2,7 +2,6 @@
 
 #include <windows.h>
 #include <assert.h>
-#include <string>
 #include <math.h>
 #include <stdlib.h>
 

@@ -12,16 +12,16 @@ public:
 	OvResourceSPtr CheckOut();
 
 	const OvRTTI*	GetResourceType();
-	const string&	GetFileName();
+	const OvString&	GetFileName();
 
 private:
 
-	OvResourceTicket( const OvRTTI* type, const string& file );
+	OvResourceTicket( const OvRTTI* type, const OvString& file );
 	void _check_in( OvResource* resource );
 
 private:
 	OvResourceSPtr		m_resource;
 	const OvRTTI*		m_resourceType;
-	const std::string&	m_fileName;
+	const OvString&	m_fileName;
 	CRITICAL_SECTION	m_section;
 };

@@ -24,7 +24,7 @@ struct SAutoStoreCleaner
 	SAutoStoreCleaner(OvStorage* cleanTarget):m_cleanTarget(cleanTarget){};
 	~SAutoStoreCleaner(){if(m_cleanTarget)m_cleanTarget->Clear();};
 };
-bool	OvStorage::Save( const std::string& pFile, OvObjectCollector& saveObjects )
+bool	OvStorage::Save( const OvString& pFile, OvObjectCollector& saveObjects )
 {
 	SAutoStoreCleaner autoCleaner(this);
 
@@ -40,7 +40,7 @@ bool	OvStorage::Save( const std::string& pFile, OvObjectCollector& saveObjects )
 	return m_xmlDoc.SaveFile( pFile.c_str() );
 }
 
-bool	OvStorage::Load( const std::string& pFile, OvObjectCollector& loadedObjects)
+bool	OvStorage::Load( const OvString& pFile, OvObjectCollector& loadedObjects)
 {
 	SAutoStoreCleaner autoCleaner(this);
 
@@ -107,7 +107,7 @@ bool	OvStorage::_extract_property(OvObject* pObj,OvObjectProperties& rStore)
 	{
 
 		ExtractProperties( pObj, rStore );
-		string typeName = OvRTTI_Util::TypeName( pObj );
+		OvString typeName = OvRTTI_Util::TypeName( pObj );
 		rStore.SetObjectType( typeName );
 		rStore.SetObjectID(pObj->GetObjectID());
 
@@ -132,7 +132,7 @@ bool	OvStorage::_write_property(OvObjectProperties& rStore, TiXmlElement& objEle
 	objElem.SetAttribute("type", rStore.GetObjectType().c_str() );
 	objElem.SetAttribute("id",OvFormatString("%d",rStore.GetObjectID()));
 
-	string kstrValue;
+	OvString kstrValue;
 	while (rStore.PopValue(kstrValue))
 	{
 		TiXmlElement kPropSection("prop");
@@ -144,12 +144,12 @@ bool	OvStorage::_write_property(OvObjectProperties& rStore, TiXmlElement& objEle
 
 bool	OvStorage::_read_property( TiXmlElement& objElem, OvObjectProperties& rStore )
 {
-	if ( string("Object") == objElem.Value() )
+	if ( OvString("Object") == objElem.Value() )
 	{
 
 		OvObjectID	formerId;
 		objElem.Attribute( "id", (int*)&formerId );
-		string	typeName = objElem.Attribute( "type" );
+		OvString	typeName = objElem.Attribute( "type" );
 
 		rStore.SetObjectType(typeName);
 		rStore.SetObjectID(formerId);

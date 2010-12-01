@@ -27,11 +27,11 @@ void			OvPropertyAccesser::SetOffset(unsigned int uiOffset)
 	m_uiOffset = uiOffset;
 }
 
-std::string&			OvPropertyAccesser::GetPropertyName()
+OvString&			OvPropertyAccesser::GetPropertyName()
 {
 	return m_strPropertyName;
 }
-void			OvPropertyAccesser::SetPropertyName(const std::string& strPropName)
+void			OvPropertyAccesser::SetPropertyName(const OvString& strPropName)
 {
 	m_strPropertyName = strPropName;
 }

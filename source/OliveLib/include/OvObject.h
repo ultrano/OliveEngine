@@ -4,7 +4,6 @@
 #include "OvAutoPtr.h"
 #include "OvPropertyBag.h"
 #include "OvObjectFactory.h"
-#include <string>
 #include <map>
 
 #include "OvObjectID.h"
@@ -27,8 +26,8 @@ private:
 
 public:
 
-	typedef std::map< std::string, OliveValue::Value* > extra_property_table;
-	typedef std::pair< std::string, OliveValue::Value* > extra_property_table_pair;
+	typedef std::map< OvString, OliveValue::Value* > extra_property_table;
+	typedef std::pair< OvString, OliveValue::Value* > extra_property_table_pair;
 
 	OvObject();
 	virtual ~OvObject(); 
@@ -57,7 +56,7 @@ public:
 private:
 
 	OvObjectID		m_idObjectID;
-	std::string		m_name;
+	OvString		m_name;
 
 	extra_property_table	m_extraPropertyTable;
 

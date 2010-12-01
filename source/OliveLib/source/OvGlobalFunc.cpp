@@ -59,14 +59,14 @@ bool		OvStringAllocator(LPTSTR* _lpp_dest,LPCTSTR lp_src)
 	memcpy((void*)(*_lpp_dest),(void*)lp_src,k_len*sizeof(CHAR));
 	return true;
 };
-string	OvGetDirectoryInFullFilePath(const string& strFileFullPath)
+OvString	OvGetDirectoryInFullFilePath(const OvString& strFileFullPath)
 {
-	string kReturnString= "";
+	OvString kReturnString= "";
 	char separator[] = {'\\','/'};
 	for ( unsigned short i = 0 ; i < 2 ; ++i )
 	{
 		size_t stTok = strFileFullPath.rfind( separator[i] );
-		if (stTok != string::npos)
+		if (stTok != OvString::npos)
 		{
 			kReturnString = strFileFullPath;
 			kReturnString.resize( stTok );
@@ -74,14 +74,14 @@ string	OvGetDirectoryInFullFilePath(const string& strFileFullPath)
 	}
 	return kReturnString;
 }
-std::string	OvGetFileNameInFullFilePath(const std::string& strFileFullPath)
+OvString	OvGetFileNameInFullFilePath(const OvString& strFileFullPath)
 {
-	string kReturnString= "";
+	OvString kReturnString= "";
 	char separator[] = {'\\','/'};
 	for ( unsigned short i = 0 ; i < 2 ; ++i )
 	{
 		size_t stTok = strFileFullPath.rfind( separator[i] );
-		if (stTok != string::npos)
+		if (stTok != OvString::npos)
 		{
 			kReturnString = &strFileFullPath[stTok+1];
 			stTok = kReturnString.rfind('.');
@@ -90,11 +90,11 @@ std::string	OvGetFileNameInFullFilePath(const std::string& strFileFullPath)
 	}
 	return kReturnString;
 }
-std::string	OvGetExtentionInFullFilePath(const std::string& strFileFullPath)
+OvString	OvGetExtentionInFullFilePath(const OvString& strFileFullPath)
 {
-	string kReturnString= "";
+	OvString kReturnString= "";
 	size_t stTok = strFileFullPath.rfind('.');
-	if (stTok != string::npos)
+	if (stTok != OvString::npos)
 	{
 		kReturnString = &strFileFullPath[stTok];
 	}
@@ -106,7 +106,7 @@ if (!lp_src)
 {
 return false;
 }
-std::string	k_src(lp_src);
+OvString	k_src(lp_src);
 *_lpp_dest = new char[k_src.length()];
 memset((void*)(*_lpp_dest),0,k_src.length()*sizeof(char));
 if (!(*_lpp_dest))

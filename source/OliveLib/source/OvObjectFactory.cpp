@@ -6,7 +6,7 @@ using namespace Olive;
 
 struct OvObjectFactory
 {
-	map<string, construct_function > factory_table;
+	map<OvString, construct_function > factory_table;
 };
 
 OvObjectFactory& GetFactory()
@@ -15,13 +15,13 @@ OvObjectFactory& GetFactory()
 	return static_factory;
 }
 
-OvObjectSPtr Olive::CreateObject( const std::string& type_name )
+OvObjectSPtr Olive::CreateObject( const OvString& type_name )
 {
 	construct_function func = GetFactory().factory_table[ type_name ];
 	return ( func )? ( func() ) : ( 0 );
 }
 
-OvObject* Olive::CreateObject_Ptr( const std::string& type_name )
+OvObject* Olive::CreateObject_Ptr( const OvString& type_name )
 {
 	construct_function func = GetFactory().factory_table[ type_name ];
 	return ( func )? ( func() ) : ( 0 );
@@ -29,7 +29,7 @@ OvObject* Olive::CreateObject_Ptr( const std::string& type_name )
 
 void Olive::RegisterConstructFunc( const char* type_name, construct_function func )
 {
-	GetFactory().factory_table[ string( type_name ) ] = func;
+	GetFactory().factory_table[ OvString( type_name ) ] = func;
 }
 Olive::OvFactoryMemberDeclarer::OvFactoryMemberDeclarer( const char* type_name, construct_function func )
 {

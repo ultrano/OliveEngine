@@ -24,7 +24,7 @@ OvPropertyAccesser* OvPropertyBag::GetPropertyAt( unsigned index )
 	return NULL;
 }
 
-OvPropertyAccesser* OvPropertyBag::FindProperty( const std::string& name )
+OvPropertyAccesser* OvPropertyBag::FindProperty( const OvString& name )
 {
 	OvPropertyAccesser* accesser = NULL;
 	for ( unsigned i = 0 ; accesser = GetPropertyAt( i ) ; ++i )

@@ -48,7 +48,7 @@ OvResourceManager::~OvResourceManager()
 
 }
 
-OvResourceSPtr OvResourceManager::LoadResource( const OvRTTI* resourceType, const string& fileLocation )
+OvResourceSPtr OvResourceManager::LoadResource( const OvRTTI* resourceType, const OvString& fileLocation )
 {
 	OvResourceSPtr resource = NULL;
 	resource = _find_loaded_resource( resourceType, fileLocation );
@@ -66,7 +66,7 @@ OvResourceSPtr OvResourceManager::LoadResource( const OvRTTI* resourceType, cons
 	return resource;
 }
 
-OvResourceSPtr OvResourceManager::LoadResource( const string& resourceType, const string& fileLocation )
+OvResourceSPtr OvResourceManager::LoadResource( const OvString& resourceType, const OvString& fileLocation )
 {
 	for each( const resource_loader_table::value_type& typevalue in m_loaderTable )
 	{
@@ -78,7 +78,7 @@ OvResourceSPtr OvResourceManager::LoadResource( const string& resourceType, cons
 	}
 	return NULL;
 }
-OvResourceTicketSPtr OvResourceManager::AsyncLoadResource( const OvRTTI* resourceType, const string& fileLocation )
+OvResourceTicketSPtr OvResourceManager::AsyncLoadResource( const OvRTTI* resourceType, const OvString& fileLocation )
 {
 	OvResourceTicketSPtr	ticket = _reserve_ticket( resourceType, fileLocation );
 	OvResourceSPtr resource = _find_loaded_resource( resourceType, fileLocation );
@@ -93,7 +93,7 @@ OvResourceTicketSPtr OvResourceManager::AsyncLoadResource( const OvRTTI* resourc
 	return ticket;
 }
 
-OvResourceTicketSPtr OvResourceManager::AsyncLoadResource( const string& resourceType, const string& fileLocation )
+OvResourceTicketSPtr OvResourceManager::AsyncLoadResource( const OvString& resourceType, const OvString& fileLocation )
 {
 	for each( const resource_loader_table::value_type& typevalue in m_loaderTable )
 	{
@@ -116,7 +116,7 @@ void OvResourceManager::ResourceCache( OvResourceSPtr resource )
 		}
 	}
 }
-void OvResourceManager::_register_loaded_resource( const string& location, OvResource* resource )
+void OvResourceManager::_register_loaded_resource( const OvString& location, OvResource* resource )
 {
 	OvSectionGuardian guardian( m_load_section );
 	SResourceInfo& info = m_resourceInfoTable[ location ];
@@ -173,7 +173,7 @@ void OvResourceManager::_called_when_ticket_deleted( OvResourceTicket* ticket )
 	info.ticket = NULL;
 }
 
-OvResourceSPtr OvResourceManager::_find_loaded_resource( const OvRTTI* resourceType, const string& location )
+OvResourceSPtr OvResourceManager::_find_loaded_resource( const OvRTTI* resourceType, const OvString& location )
 {
 	OvSectionGuardian guardian( m_load_section );
 	OvResource* resource = NULL;
@@ -186,9 +186,9 @@ OvResourceSPtr OvResourceManager::_find_loaded_resource( const OvRTTI* resourceT
 	return resource;
 }
 
-const string& OvResourceManager::FindFileLocation( OvResourceSPtr resource )
+const OvString& OvResourceManager::FindFileLocation( OvResourceSPtr resource )
 {
-	static string empty = "";
+	static OvString empty = "";
 	OvSectionGuardian guardian( m_load_section );
 	loaded_resource_table::iterator itor = m_resourceInfoTable.begin();
 	for ( ; itor != m_resourceInfoTable.end() ; ++itor )
@@ -202,7 +202,7 @@ const string& OvResourceManager::FindFileLocation( OvResourceSPtr resource )
 	return empty;
 }
 
-OvResourceTicketSPtr OvResourceManager::_reserve_ticket(  const OvRTTI* type, const string& fileLocation )
+OvResourceTicketSPtr OvResourceManager::_reserve_ticket(  const OvRTTI* type, const OvString& fileLocation )
 {
 	if ( ! fileLocation.empty() )
 	{
@@ -222,14 +222,14 @@ OvResourceTicketSPtr OvResourceManager::_reserve_ticket(  const OvRTTI* type, co
 	return NULL;
 }
 
-const string& OvResourceManager::ResourceDirectory()
+const OvString& OvResourceManager::ResourceDirectory()
 {
 	return m_resourceDirectory;
 }
 
 OvResourceTicketSPtr OvResourceManager::FindTicket( OvResourceSPtr resource )
 {
-	const string& file = FindFileLocation( resource );
+	const OvString& file = FindFileLocation( resource );
 
 	return _reserve_ticket( resource->QueryRTTI(), file );
 
@@ -311,14 +311,14 @@ bool& OvResourceManager::_get_async_life_flag()
 	OvSectionGuardian guardian( block.section );
 	return life_flag;
 }
-std::string AbsolutePath( const std::string& file )
+OvString AbsolutePath( const OvString& file )
 {
 	return OvResourceManager::GetInstance()->ResourceDirectory() + "\\" + file;
 }
 
-bool ClampPathIfResDir( std::string& file )
+bool ClampPathIfResDir( OvString& file )
 {
-	string output;
+	OvString output;
 	output = OvResourceManager::GetInstance()->ResourceDirectory() + "\\";
 	if ( strncmp( output.c_str(), file.c_str(), output.size() ) == 0 )
 	{

@@ -24,7 +24,7 @@ OvObjectSPtr	OvObjectCollector::GetByAt(int iIndex)
 {
 	return m_tdObjArray[iIndex];
 }
-OvObjectSPtr	OvObjectCollector::GetByName( const string& name )
+OvObjectSPtr	OvObjectCollector::GetByName( const OvString& name )
 {
 	for each( tdObjectArray::value_type obj in m_tdObjArray )
 	{

@@ -8,7 +8,6 @@
 #include "OvObjectProperties.h"
 #include "OvStorage.h"
 
-#include <string>
 using namespace std;
 
 OvRTTI_IMPL(OvObject);

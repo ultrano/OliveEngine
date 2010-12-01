@@ -26,12 +26,12 @@ OvObjectProperties::~OvObjectProperties()
 
 }
 
-void	OvObjectProperties::SetObjectType(const string& objType)
+void	OvObjectProperties::SetObjectType(const OvString& objType)
 {
 	m_objectType = objType;
 }
 
-const string& OvObjectProperties::GetObjectType()
+const OvString& OvObjectProperties::GetObjectType()
 {
 	return m_objectType;
 }
@@ -46,12 +46,12 @@ const OvObjectID& OvObjectProperties::GetObjectID()
 	return m_idObjectID;
 }
 
-void	OvObjectProperties::PushValue(const string& rValue)
+void	OvObjectProperties::PushValue(const OvString& rValue)
 {
 	m_queValueQueue.push(rValue);
 }
 
-bool	OvObjectProperties::PopValue(string& rValue)
+bool	OvObjectProperties::PopValue(OvString& rValue)
 {
 	if (m_queValueQueue.size())
 	{
@@ -67,7 +67,7 @@ void	OvObjectProperties::PushValue( OliveValue::Value& rValue )
 }
 bool	OvObjectProperties::PopValue( OliveValue::Value& rValue )
 {
-	string popedValue;
+	OvString popedValue;
 	if(PopValue(popedValue))
 	{
 		rValue.SetValue(popedValue);

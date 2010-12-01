@@ -1,5 +1,4 @@
 #include "OvRegisterableProperties.h"
-#include <string>
 #include "tinyxml.h"
 #include "OvStringUtility.h"
 #include "OvObjectProperties.h"

@@ -3,7 +3,6 @@
 #include "OvCamera.h"
 #include "OvModel.h"
 
-#include <string>
 using namespace std;
 
 OvSingleScene::OvSingleScene()
@@ -43,7 +42,7 @@ OvObjectSPtr OvSingleScene::_find_object( const OvRTTI * rtti, const OvObjectID 
 	return collector.GetByID( objectID );
 }
 
-OvObjectSPtr OvSingleScene::_find_object( const OvRTTI * rtti, const std::string & objectName )
+OvObjectSPtr OvSingleScene::_find_object( const OvRTTI * rtti, const OvString & objectName )
 {
 	OvObjectCollector & collector = m_object_table[ rtti ];
 	return collector.GetByName( objectName );

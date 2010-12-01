@@ -63,13 +63,13 @@ public:\
 //////////////////////////////////////////////////////////////////////////
 
 template<typename Type_0>
-const string&	TypeName( Type_0 typePointer )
+const OvString&	TypeName( Type_0 typePointer )
 {
 	if (typePointer)
 	{
 		return (const_cast<OvRTTI*>(typePointer->QueryRTTI()))->TypeName();
 	}
-	static string emptyName = "";
+	static OvString emptyName = "";
 	return emptyName;
 }
 

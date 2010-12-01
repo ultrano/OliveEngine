@@ -14,5 +14,5 @@ class OvResourceLoader : public OvObject
 private:
 	// OvResourceManager만을 위한 접근 인터페이스.
 	friend class OvResourceManager;
-	OvResourceSPtr _load_resource( const std::string& fileLocation );
+	OvResourceSPtr _load_resource( const OvString& fileLocation );
 };

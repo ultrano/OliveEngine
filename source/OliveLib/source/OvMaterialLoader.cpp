@@ -38,7 +38,7 @@ struct SStateTypeTable : OvMemObject
 		state_type_table["dmapoffset"]		= D3DSAMP_DMAPOFFSET;
 
 	};
-	std::map<std::string, DWORD> state_type_table;
+	std::map<OvString, DWORD> state_type_table;
 };
 
 struct SStateValueTable : OvMemObject
@@ -67,7 +67,7 @@ struct SStateValueTable : OvMemObject
 		
 
 	};
-	std::map<std::string, DWORD> state_value_table;
+	std::map<OvString, DWORD> state_value_table;
 };
 
 DWORD StringToStateType( const char* type )
@@ -97,9 +97,9 @@ OvResourceSPtr OvMaterialLoader::Load( OvDataStream& stream )
 	OvShaderCodeIncluder includer;
 	OvVertexShaderSPtr	vertexShader = NULL;
 	OvPixelShaderSPtr	pixelShader	 = NULL;
-	string shader_code;
-	string entry_function;
-	string complie_version;
+	OvString shader_code;
+	OvString entry_function;
+	OvString complie_version;
 	//////////////////////////////////////////////////////////////////////////
 
 	//////////////////////////////////////////////////////////////////////////

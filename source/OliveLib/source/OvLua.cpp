@@ -59,7 +59,7 @@
 //bool		OvLua::ExecuteFunctionWithArg(const char* _pFuncName,const char* _pArgRex,...)
 //{
 //	lua_getglobal(GetScriptContext(),_pFuncName);
-//	vector<string> kArgTypeArray;
+//	vector<OvString> kArgTypeArray;
 //	if (_pArgRex)
 //	{
 //		char pArgRexCopy[256] = {0,};

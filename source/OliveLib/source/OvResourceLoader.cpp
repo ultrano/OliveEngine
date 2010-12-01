@@ -5,7 +5,7 @@
 
 OvRTTI_IMPL( OvResourceLoader );
 
-OvResourceSPtr OvResourceLoader::_load_resource( const std::string& fileLocation )
+OvResourceSPtr OvResourceLoader::_load_resource( const OvString& fileLocation )
 {
 	static OvCriticalSection section;
 	EnterCriticalSection( &section.m_section );

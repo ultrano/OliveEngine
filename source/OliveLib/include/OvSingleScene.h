@@ -29,12 +29,12 @@ public: //!< Find Method
 	template<typename T>
 	OvSmartPointer<T> FindObject( const OvObjectID & objectID );
 	template<typename T>
-	OvSmartPointer<T> FindObject( const std::string & objectName );
+	OvSmartPointer<T> FindObject( const OvString & objectName );
 
 private:
 
 	OvObjectSPtr	_find_object( const OvRTTI * rtti, const OvObjectID & objectID );
-	OvObjectSPtr	_find_object( const OvRTTI * rtti, const std::string & objectName );
+	OvObjectSPtr	_find_object( const OvRTTI * rtti, const OvString & objectName );
 
 	OvObjectSPtr	_set_and_return( OvObjectSPtr object );
 
@@ -53,7 +53,7 @@ OvSmartPointer<T> OvSingleScene::FindObject( const OvObjectID & objectID )
 	return _find_object( T::GetRTTI(), objectID );
 }
 template<typename T>
-OvSmartPointer<T> OvSingleScene::FindObject( const std::string & objectName )
+OvSmartPointer<T> OvSingleScene::FindObject( const OvString & objectName )
 {
 	return _find_object( T::GetRTTI(), objectName );
 }

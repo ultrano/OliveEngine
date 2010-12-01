@@ -1,5 +1,5 @@
 #pragma once
 
-#define	NumToStr(_Number)		(lexical_cast<string>(_Number).data())
+#define	NumToStr(_Number)		(lexical_cast<OvString>(_Number).data())
 
 

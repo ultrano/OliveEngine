@@ -2,7 +2,7 @@
 #include "OvResource.h"
 #include "OvResourceManager.h"
 
-OvResourceTicket::OvResourceTicket( const OvRTTI* type, const string& file )
+OvResourceTicket::OvResourceTicket( const OvRTTI* type, const OvString& file )
 : m_resource( NULL )
 , m_resourceType( type )
 , m_fileName( file )
@@ -35,7 +35,7 @@ const OvRTTI* OvResourceTicket::GetResourceType()
 	return m_resourceType;
 }
 
-const string& OvResourceTicket::GetFileName()
+const OvString& OvResourceTicket::GetFileName()
 {
 	return m_fileName;
 }

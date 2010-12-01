@@ -1,5 +1,5 @@
 #pragma once
-#include <string>
+#include "OvTypeDef.h"
 #include "OvUtility_RTTI.h"
 #include "OvMemObject.h"
 
@@ -22,12 +22,12 @@ public:
 	unsigned int	GetOffset();
 	void			SetOffset(unsigned int uiOffset);
 
-	std::string&	GetPropertyName();
-	void			SetPropertyName(const std::string& strPropName);
+	OvString&	GetPropertyName();
+	void			SetPropertyName(const OvString& strPropName);
 
 private:
 
-	std::string		m_strPropertyName;
+	OvString		m_strPropertyName;
 	unsigned int	m_uiOffset;
 
 };

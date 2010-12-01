@@ -1,4 +1,5 @@
 #pragma once
+#include "OvTypeDef.h"
 #include "OvMemObject.h"
 #include "OvUtility_RTTI.h"
 #include "OvPoint2.h"
@@ -22,7 +23,7 @@ namespace OliveValue
 
 
 	class Value;
-	Value*	Factory(const std::string& valueType);
+	Value*	Factory(const OvString& valueType);
 	template<typename Type_0>
 	Type_0*	Factory()
 	{
@@ -36,7 +37,7 @@ namespace OliveValue
 
 	class Value : public OvMemObject
 	{
-		friend Value*	Factory(const std::string& valueType);
+		friend Value*	Factory(const OvString& valueType);
 		friend class OvObject;
 		OvRTTI_DECL_ROOT(Value);
 		Value();
