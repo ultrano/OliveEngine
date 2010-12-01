@@ -25,7 +25,7 @@ public:
 
 private:
 
-	virtual void	Update(float _fElapse) override;
+	virtual void	Update(OvFloat _fElapse) override;
 	void	_push_message( const InputMessage& message );
 
 private:

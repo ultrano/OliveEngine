@@ -11,7 +11,7 @@ class OvCameraController : public OvXComponent
 public:
 	OvCameraController();
 	~OvCameraController();
-	virtual void Update(float _fElapse);
+	virtual void Update(OvFloat _fElapse);
 
 private:
 	OvPoint2 m_lastMoustPt;

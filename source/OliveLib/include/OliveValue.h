@@ -63,13 +63,13 @@ namespace OliveValue
 	class Float : public OliveValue::Value
 	{
 		OvRTTI_DECL(Float);
-		OLIVE_VALUE_TYPE(float);
+		OLIVE_VALUE_TYPE(OvFloat);
 	public:
 		virtual void	SetValue( const OvString& expData );
 		virtual OvString	GetValue();
 	public:
-		void			SetFloat( float expValue );
-		float			GetFloat();
+		void			SetFloat( OvFloat expValue );
+		OvFloat			GetFloat();
 	};
 	
 	class Point2 : public OliveValue::Value
@@ -81,7 +81,7 @@ namespace OliveValue
 		virtual OvString	GetValue();
 	public:
 		void			SetPoint2( const OvPoint2& expValue );
-		void			SetPoint2( float x, float y );
+		void			SetPoint2( OvFloat x, OvFloat y );
 		const OvPoint2&	GetPoint2();
 	};
 
@@ -94,7 +94,7 @@ namespace OliveValue
 		virtual OvString	GetValue();
 	public:
 		void			SetPoint3( const OvPoint3& expValue );
-		void			SetPoint3( float x, float y, float z );
+		void			SetPoint3( OvFloat x, OvFloat y, OvFloat z );
 		const OvPoint3&	GetPoint3();
 	};
 
@@ -107,7 +107,7 @@ namespace OliveValue
 		virtual OvString	GetValue();
 	public:
 		void			  SetQuaternion( const OvQuaternion& expValue );
-		void			  SetQuaternion( float x, float y, float z, float w );
+		void			  SetQuaternion( OvFloat x, OvFloat y, OvFloat z, OvFloat w );
 		const OvQuaternion& GetQuaternion();
 	};
 

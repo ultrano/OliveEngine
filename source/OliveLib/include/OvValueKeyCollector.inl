@@ -17,13 +17,13 @@
 //}
 //
 //template<typename Type_0>
-//OvBool		OvValueKeyCollector<Type_0>::IsOverlapTickKey(float fTick)
+//OvBool		OvValueKeyCollector<Type_0>::IsOverlapTickKey(OvFloat fTick)
 //{
 //	return (m_mapKeyTale.find(fTick) != m_mapKeyTale.end());
 //}
 //
 //template<typename Type_0>
-//void		OvValueKeyCollector<Type_0>::CollectValueKey(float fTick,const Type_0& crValue)
+//void		OvValueKeyCollector<Type_0>::CollectValueKey(OvFloat fTick,const Type_0& crValue)
 //{
 //	m_mapKeyTale[fTick] = crKey;
 //	BuildKeyNode();
@@ -49,7 +49,7 @@
 //void		OvValueKeyCollector<Type_0>::SortAccessCash()
 //{
 //	m_vecKeyArray.clear();
-//	map<float,ContainKeyType>::iterator	kIter = m_mapKeyTale.begin();
+//	map<OvFloat,ContainKeyType>::iterator	kIter = m_mapKeyTale.begin();
 //	for ( ; kIter != m_mapKeyTale.end() ; ++kIter)
 //	{
 //		m_vecKeyArray.push_back(kIter->second);

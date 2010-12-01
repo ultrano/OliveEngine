@@ -14,7 +14,7 @@ public:
 
 private:
 
-	float m_startLight;
-	float m_endLight;
+	OvFloat m_startLight;
+	OvFloat m_endLight;
 
 };

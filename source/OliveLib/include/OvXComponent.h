@@ -6,7 +6,7 @@
 
 //! 설명
 /*
-virtual void	Update(float _fElapse) = 0;
+virtual void	Update(OvFloat _fElapse) = 0;
 를 재정의 해서 쓰셈
 */
 OvREF_POINTER(OvXObject);
@@ -25,7 +25,7 @@ public:
 
 	virtual void	SetUp();
 	virtual void	ShutDown();
-	virtual void	Update(float _fElapse) = 0;
+	virtual void	Update(OvFloat _fElapse) = 0;
 
 private:
 

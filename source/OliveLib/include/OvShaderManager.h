@@ -48,14 +48,14 @@ private:
 	////////////////////////////////////////////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////////////////////////////////////////
 
-	OvBool	_SetVSConstF(const OvShaderConstInfo& rConstInfo,float* pConst,size_t stConstSize);
-	OvBool	_GetVSConstF(const OvShaderConstInfo& rConstInfo,float* pConst,size_t stConstSize);
+	OvBool	_SetVSConstF(const OvShaderConstInfo& rConstInfo,OvFloat* pConst,size_t stConstSize);
+	OvBool	_GetVSConstF(const OvShaderConstInfo& rConstInfo,OvFloat* pConst,size_t stConstSize);
 
 	////////////////////////////////////////////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////////////////////////////////////////
 
-	OvBool	_SetPSConstF(const OvShaderConstInfo& rConstInfo,float* pConst,size_t stConstSize);
-	OvBool	_GetPSConstF(const OvShaderConstInfo& rConstInfo,float* pConst,size_t stConstSize);
+	OvBool	_SetPSConstF(const OvShaderConstInfo& rConstInfo,OvFloat* pConst,size_t stConstSize);
+	OvBool	_GetPSConstF(const OvShaderConstInfo& rConstInfo,OvFloat* pConst,size_t stConstSize);
 };
 
 class OvShaderConstInfo : public OvMemObject
@@ -86,12 +86,12 @@ private:
 template<typename Type_0>
 OvBool	OvShaderManager::SetVSConst(const OvShaderConstInfo& rConstInfo,const Type_0& rType)
 {
-	return _SetVSConstF(rConstInfo,(float*)&(rType),sizeof(Type_0));
+	return _SetVSConstF(rConstInfo,(OvFloat*)&(rType),sizeof(Type_0));
 }
 template<typename Type_0>
 OvBool	OvShaderManager::GetVSConst(const OvShaderConstInfo& rConstInfo,Type_0& rType)
 {
-	return _GetVSConstF(rConstInfo,(float*)&(rType),sizeof(Type_0));
+	return _GetVSConstF(rConstInfo,(OvFloat*)&(rType),sizeof(Type_0));
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -100,12 +100,12 @@ OvBool	OvShaderManager::GetVSConst(const OvShaderConstInfo& rConstInfo,Type_0& r
 template<typename Type_0>
 OvBool	OvShaderManager::SetPSConst(const OvShaderConstInfo& rConstInfo,const Type_0& rType)
 {
-	return _SetPSConstF(rConstInfo,(float*)&(rType),sizeof(Type_0));
+	return _SetPSConstF(rConstInfo,(OvFloat*)&(rType),sizeof(Type_0));
 }
 template<typename Type_0>
 OvBool	OvShaderManager::GetPSConst(const OvShaderConstInfo& rConstInfo,Type_0& rType)
 {
-	return _GetPSConstF(rConstInfo,(float*)&(rType),sizeof(Type_0));
+	return _GetPSConstF(rConstInfo,(OvFloat*)&(rType),sizeof(Type_0));
 }
 #define CONST_DECLARE_IN_APPLICATION
 #include "OvPShaderConst.h"

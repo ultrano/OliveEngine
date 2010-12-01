@@ -16,7 +16,7 @@ OvCameraController::~OvCameraController()
 {
 
 }
-void OvCameraController::Update( float _fElapse )
+void OvCameraController::Update( OvFloat _fElapse )
 {
 	OvInputManager* input = OvInputManager::GetInstance();
 	OvCameraSPtr target_camera = GetTarget();
@@ -33,7 +33,7 @@ void OvCameraController::Update( float _fElapse )
 	
 	OvPoint3 direction;
 	OvPoint3 velocity;
-	float moveSpeed = 1.0f;
+	OvFloat moveSpeed = 1.0f;
 	if ( input->IsStateOfKey( VK_UP, PRESSING ) )
 	{
 		direction += target_camera->GetLocalLookDirection();

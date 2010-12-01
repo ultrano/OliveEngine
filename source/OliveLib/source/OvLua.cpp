@@ -94,7 +94,7 @@
 //				PushNumber(kpPushNum);
 //			}else if(kArgTypeArray[i] == "%f")
 //			{
-//				float kpPushNum = va_arg(kvaArgs,float);
+//				OvFloat kpPushNum = va_arg(kvaArgs,OvFloat);
 //				PushNumber(kpPushNum);
 //			}
 //		}

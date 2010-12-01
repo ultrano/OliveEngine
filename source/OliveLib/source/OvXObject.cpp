@@ -34,7 +34,7 @@ OvBool OvXObject::GetControlFlag( CONTROL_FLAG flag )
 	return m_controlFlags.GetFlag( flag );
 }
 
-void OvXObject::Update(float _fElapse)
+void OvXObject::Update(OvFloat _fElapse)
 {
 	if ( false == GetControlFlag( UPDATABLE ) )
 	{
@@ -73,7 +73,7 @@ void OvXObject::Update(float _fElapse)
 	_update_system(_fElapse);
 }
 
-void OvXObject::UpdateSubordinate( float _fElapse )
+void OvXObject::UpdateSubordinate( OvFloat _fElapse )
 {
 
 }
@@ -82,7 +82,7 @@ void	OvXObject::SetTranslate(OvPoint3& _rPosition)
 {
 	m_tfLocalTransform.Position = _rPosition;
 }
-void	OvXObject::SetTranslate(float x,float y,float z)
+void	OvXObject::SetTranslate(OvFloat x,OvFloat y,OvFloat z)
 {
 	SetTranslate(OvPoint3(x,y,z));
 }
@@ -90,7 +90,7 @@ void	OvXObject::SetRotation(OvQuaternion& _rRotation)
 {
 	m_tfLocalTransform.Quaternion = _rRotation;
 }
-void	OvXObject::SetScale(float _fScale)
+void	OvXObject::SetScale(OvFloat _fScale)
 {
 	m_tfLocalTransform.Scale = OvPoint3(1,1,1) * _fScale;
 }
@@ -131,7 +131,7 @@ void			OvXObject::SetTranslateFromWorldCoord(OvPoint3& _rPosition)
 	}
 }
 
-void			OvXObject::SetTranslateFromWorldCoord(float x,float y,float z)
+void			OvXObject::SetTranslateFromWorldCoord(OvFloat x,OvFloat y,OvFloat z)
 {
 	SetTranslateFromWorldCoord(OvPoint3(x,y,z));
 }
@@ -164,7 +164,7 @@ void			OvXObject::SetScaleFromWorldCoord(OvPoint3& _rScale)
 	}
 }
 
-void			OvXObject::SetScaleFromWorldCoord(float _fScale)
+void			OvXObject::SetScaleFromWorldCoord(OvFloat _fScale)
 {
 	SetScaleFromWorldCoord(OvPoint3(_fScale,_fScale,_fScale));
 }
@@ -233,7 +233,7 @@ OvBool OvXObject::_remove_component( OvXComponentSPtr component )
 	return false;
 }
 
-void OvXObject::_update_system( float _fElapse )
+void OvXObject::_update_system( OvFloat _fElapse )
 {
 
 }

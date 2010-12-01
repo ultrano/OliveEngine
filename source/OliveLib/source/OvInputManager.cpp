@@ -39,9 +39,9 @@ OvBool OvInputManager::IsStateOfMouse( MOUSE_BUTTON button, BUTTON_STATE state )
 OvPoint3 OvInputManager::GetMouseMoveDelta()
 {
 	OvPoint3 moveDelta;
-	moveDelta.x = (float)m_new_mouse_state.lX;
-	moveDelta.y = (float)m_new_mouse_state.lY;
-	moveDelta.z = (float)m_new_mouse_state.lZ;
+	moveDelta.x = (OvFloat)m_new_mouse_state.lX;
+	moveDelta.y = (OvFloat)m_new_mouse_state.lY;
+	moveDelta.z = (OvFloat)m_new_mouse_state.lZ;
 	return moveDelta;
 }
 

@@ -13,7 +13,7 @@ OvMessageListener::~OvMessageListener()
 	OvMessageManager::GetInstance()->_remove_listener( this );
 }
 
-void OvMessageListener::Update( float _fElapse )
+void OvMessageListener::Update( OvFloat _fElapse )
 {
 	if ( ! m_messageProcessed )
 	{

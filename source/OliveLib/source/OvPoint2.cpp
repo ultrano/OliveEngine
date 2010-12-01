@@ -6,18 +6,18 @@ OvPoint2 OvPoint2::AXIS_Y(0,1);
 
 OvPoint2 OvPoint2::Normalize()
 {
-	float kfLength = Length();
+	OvFloat kfLength = Length();
 	return OvPoint2(x/kfLength,y/kfLength);
 }
-float	OvPoint2::DotProduct(const OvPoint2& _rPt)
+OvFloat	OvPoint2::DotProduct(const OvPoint2& _rPt)
 {
-	return float(x*_rPt.x + y*_rPt.y );
+	return OvFloat(x*_rPt.x + y*_rPt.y );
 }
-float	OvPoint2::Length()
+OvFloat	OvPoint2::Length()
 {
 	return  Length3D(x,y,0,0,0,0);
 }
-float	OvPoint2::Length(const OvPoint2& _rTargetPoint)
+OvFloat	OvPoint2::Length(const OvPoint2& _rTargetPoint)
 {
 	return  Length3D(x,y,0,_rTargetPoint.x,_rTargetPoint.y,0);
 }
@@ -34,11 +34,11 @@ OvPoint2 OvPoint2::operator -() const
 {
 	return OvPoint2(-x,-y);
 }
-OvPoint2 OvPoint2::operator *(float _fScalar) const
+OvPoint2 OvPoint2::operator *(OvFloat _fScalar) const
 {
 	return OvPoint2(x * _fScalar ,y * _fScalar );
 }
-OvPoint2	OvPoint2::operator /(float _fScalar) const
+OvPoint2	OvPoint2::operator /(OvFloat _fScalar) const
 {
 	return OvPoint2(x / _fScalar ,y / _fScalar );
 }

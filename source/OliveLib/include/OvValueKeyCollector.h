@@ -18,9 +18,9 @@
 //public:
 //
 //	OvBool			IsValidKeyIndex(OvUInt iIndex);
-//	OvBool			IsOverlapTickKey(float fTick);
+//	OvBool			IsOverlapTickKey(OvFloat fTick);
 //
-//	void			CollectValueKey(float fTick,const Type_0& crValue);
+//	void			CollectValueKey(OvFloat fTick,const Type_0& crValue);
 //	void			BuildKeyNode();
 //	void			SortAccessCash();
 //
@@ -33,7 +33,7 @@
 //	};
 //
 //private:
-//	map<float,ContainKeyType>	m_mapKeyTale;
+//	map<OvFloat,ContainKeyType>	m_mapKeyTale;
 //	vector<ContainKeyType>		m_vecKeyArray;
 //	vector<SKeyNode>			m_vecKeyNodeArray;
 //};

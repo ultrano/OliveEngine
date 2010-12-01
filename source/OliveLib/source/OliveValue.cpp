@@ -85,11 +85,11 @@ OvString			Float::GetValue()
 {
 	return OvString( OvFormatString( "%f", m_value ) );
 }
-void			Float::SetFloat( float expValue )
+void			Float::SetFloat( OvFloat expValue )
 {
 	m_value = expValue;
 }
-float			Float::GetFloat()
+OvFloat			Float::GetFloat()
 {
 	return m_value;
 }
@@ -108,7 +108,7 @@ void			Point2::SetPoint2( const OvPoint2& expValue )
 {
 	m_value = expValue;
 }
-void			Point2::SetPoint2( float x, float y )
+void			Point2::SetPoint2( OvFloat x, OvFloat y )
 {
 	SetPoint2( OvPoint2( x, y ) );
 }
@@ -132,7 +132,7 @@ void			Point3::SetPoint3( const OvPoint3& expValue )
 {
 	m_value = expValue;
 }
-void			Point3::SetPoint3( float x, float y, float z )
+void			Point3::SetPoint3( OvFloat x, OvFloat y, OvFloat z )
 {
 	SetPoint3( OvPoint3( x, y, z ) );
 }
@@ -156,7 +156,7 @@ void				Quaternion::SetQuaternion( const OvQuaternion& expValue )
 {
 	m_value = expValue;
 }
-void				Quaternion::SetQuaternion( float x, float y, float z, float w )
+void				Quaternion::SetQuaternion( OvFloat x, OvFloat y, OvFloat z, OvFloat w )
 {
 	SetQuaternion( OvQuaternion( x, y, z, w ) );
 }

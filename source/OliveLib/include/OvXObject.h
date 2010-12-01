@@ -42,24 +42,24 @@ public :
 	OvBool			GetControlFlag( CONTROL_FLAG flag );
 
 	//! Update
-	void			Update(float _fElapse);
+	void			Update(OvFloat _fElapse);
 
 	//! updating for application
-	virtual void	UpdateSubordinate(float _fElapse);
+	virtual void	UpdateSubordinate(OvFloat _fElapse);
 
 	//! Set Local Transform
 	void			SetTranslate(OvPoint3& _rPosition);
-	void			SetTranslate(float x,float y,float z);
+	void			SetTranslate(OvFloat x,OvFloat y,OvFloat z);
 	void			SetRotation(OvQuaternion& _rRotation);
 	void			SetScale(const OvPoint3& ptAxisScale);
-	void			SetScale(float _fScale);
+	void			SetScale(OvFloat _fScale);
 
 	//! Set World Transform
 	void			SetTranslateFromWorldCoord(OvPoint3&);
-	void			SetTranslateFromWorldCoord(float x,float y,float z);
+	void			SetTranslateFromWorldCoord(OvFloat x,OvFloat y,OvFloat z);
 	void			SetRotationFromWorldCoord(OvQuaternion& );
 	void			SetScaleFromWorldCoord(OvPoint3&);
-	void			SetScaleFromWorldCoord(float _fScale);
+	void			SetScaleFromWorldCoord(OvFloat _fScale);
 
 	//! Get Local Transform
 	OvPoint3&		GetTranslate();
@@ -97,7 +97,7 @@ private:
 	void			_set_parent(OvXNodeSPtr _pParentNode);
 
 	//! Updating for system (Do not override in application, Use the "UpdateSubordinate" Method)
-	virtual void	_update_system( float _fElapse );
+	virtual void	_update_system( OvFloat _fElapse );
 
 private:
 

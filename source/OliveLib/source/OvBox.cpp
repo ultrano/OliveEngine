@@ -28,7 +28,7 @@ OvPoint3	OvBox::GetAxisZ()
 OvPlane OvBox::GetPlane(BOX_PLANE _iSideIndex)
 {
 	OvPoint3 kNormal;
-	float	kfDistance;
+	OvFloat	kfDistance;
 
 	switch(_iSideIndex)
 	{

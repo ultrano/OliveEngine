@@ -37,7 +37,7 @@ const OvMatrix&	OvSpotLight::GetProjectMatrix()
 	return m_project_matrix;
 }
 
-void			OvSpotLight::UpdateSubordinate(float _fElapse)
+void			OvSpotLight::UpdateSubordinate(OvFloat _fElapse)
 {
 	UpdateProjection();
 	UpdateLight();
@@ -45,36 +45,36 @@ void			OvSpotLight::UpdateSubordinate(float _fElapse)
 	__super::UpdateSubordinate(_fElapse);
 }
 
-void			OvSpotLight::SetFOV(float fFOV)
+void			OvSpotLight::SetFOV(OvFloat fFOV)
 {
 	m_fov = fFOV;
 }
-float			OvSpotLight::GetFOV()
+OvFloat			OvSpotLight::GetFOV()
 {
 	return m_fov;
 }
-void			OvSpotLight::SetNearClip(float fDistance)
+void			OvSpotLight::SetNearClip(OvFloat fDistance)
 {
 	m_near_clip = fDistance;
 }
-float			OvSpotLight::GetNearClip()
+OvFloat			OvSpotLight::GetNearClip()
 {
 	return m_near_clip;
 }
-void			OvSpotLight::SetFarClip(float fDistance)
+void			OvSpotLight::SetFarClip(OvFloat fDistance)
 {
 	m_far_clip = fDistance;
 }
-float			OvSpotLight::GetFarClip()
+OvFloat			OvSpotLight::GetFarClip()
 {
 	return m_far_clip ;
 }
 
-void			OvSpotLight::SetAspect( float aspect )
+void			OvSpotLight::SetAspect( OvFloat aspect )
 {
 	m_aspect = aspect;
 }
-float			OvSpotLight::GetAspect()
+OvFloat			OvSpotLight::GetAspect()
 {
 	return m_aspect;
 }

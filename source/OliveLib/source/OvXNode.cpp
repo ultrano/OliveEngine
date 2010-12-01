@@ -24,7 +24,7 @@ OvXNode::~OvXNode()
 	m_clectrChildCollect.Clear();
 }
 
-void OvXNode::_update_system( float _fElapse )
+void OvXNode::_update_system( OvFloat _fElapse )
 {
 	//! 자식의 업데이트중 자식 리스트에서 임의의 자식을
 	//! 때어달라는 요청을 할수 있다.

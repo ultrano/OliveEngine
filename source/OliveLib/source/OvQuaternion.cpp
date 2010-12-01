@@ -15,7 +15,7 @@ OvQuaternion::OvQuaternion(const OvQuaternion& _rQuat)
 {
 	memcpy((void*)this,(void*)&_rQuat,sizeof(OvQuaternion));
 }
-OvQuaternion::OvQuaternion(  float fX, float fY, float fZ, float fW )
+OvQuaternion::OvQuaternion(  OvFloat fX, OvFloat fY, OvFloat fZ, OvFloat fW )
 :x(fX)
 ,y(fY)
 ,z(fZ)
@@ -23,13 +23,13 @@ OvQuaternion::OvQuaternion(  float fX, float fY, float fZ, float fW )
 {
 }
 
-OvQuaternion::operator float* ()
+OvQuaternion::operator OvFloat* ()
 {
-	return (float*)this;
+	return (OvFloat*)this;
 }
-OvQuaternion::operator const float* () const
+OvQuaternion::operator const OvFloat* () const
 {
-	return (const float*)this;
+	return (const OvFloat*)this;
 }
 
 OvQuaternion& OvQuaternion::operator += ( const OvQuaternion& _rQuat)
@@ -47,7 +47,7 @@ OvQuaternion& OvQuaternion::operator *= ( const OvQuaternion& _rQuat)
 	*this = *this * _rQuat;
 	return *this;
 }
-OvQuaternion& OvQuaternion::operator *= ( float _fValue)
+OvQuaternion& OvQuaternion::operator *= ( OvFloat _fValue)
 {
 	x *= _fValue;
 	y *= _fValue;
@@ -55,7 +55,7 @@ OvQuaternion& OvQuaternion::operator *= ( float _fValue)
 	w *= _fValue;
 	return *this;
 }
-OvQuaternion& OvQuaternion::operator /= ( float _fValue)
+OvQuaternion& OvQuaternion::operator /= ( OvFloat _fValue)
 {
 	x /= _fValue;
 	y /= _fValue;
@@ -91,17 +91,17 @@ OvQuaternion OvQuaternion::operator * ( const OvQuaternion& _rQuat) const
 	D3DXQuaternionMultiply((D3DXQUATERNION*)&kOutput,(D3DXQUATERNION*)&_rQuat,(D3DXQUATERNION*)this);
 	return kOutput;
 }
-OvQuaternion OvQuaternion::operator * ( float _fValue) const
+OvQuaternion OvQuaternion::operator * ( OvFloat _fValue) const
 {
 	return OvQuaternion(x * _fValue,y * _fValue,z * _fValue,w * _fValue);
 }
-OvQuaternion OvQuaternion::operator / ( float _fValue) const
+OvQuaternion OvQuaternion::operator / ( OvFloat _fValue) const
 {
 	return OvQuaternion(x / _fValue,y / _fValue,z / _fValue,w / _fValue);
 }
 
 
-OvQuaternion operator * (float _fValue, const OvQuaternion& _rQuat)
+OvQuaternion operator * (OvFloat _fValue, const OvQuaternion& _rQuat)
 {
 	return OvQuaternion(_rQuat.x * _fValue,_rQuat.y * _fValue,_rQuat.z * _fValue,_rQuat.w * _fValue);
 }
@@ -123,13 +123,13 @@ OvQuaternion&		OvQuaternion::Identity()
 	return *this;
 }
 
-OvQuaternion&		OvQuaternion::MakeQuaternion(float _fAxisX,float _fAxisY,float _fAxisZ,float _fAngleRadian)
+OvQuaternion&		OvQuaternion::MakeQuaternion(OvFloat _fAxisX,OvFloat _fAxisY,OvFloat _fAxisZ,OvFloat _fAngleRadian)
 {
 	MakeQuaternion(OvPoint3(_fAxisX,_fAxisY,_fAxisZ),_fAngleRadian);
 	return *this;
 }
 
-OvQuaternion&		OvQuaternion::MakeQuaternion(const OvPoint3& _rAxis,float _fAngleRadian)
+OvQuaternion&		OvQuaternion::MakeQuaternion(const OvPoint3& _rAxis,OvFloat _fAngleRadian)
 {
 	OvPoint3 kNormAxis = ((OvPoint3&)_rAxis).Normalize();
 	*((OvPoint3*)this) = kNormAxis * sinf(_fAngleRadian/2.0f);
@@ -142,27 +142,27 @@ OvQuaternion		OvQuaternion::Inverse()
 	D3DXQuaternionInverse((D3DXQUATERNION*)&kInverse,(D3DXQUATERNION*)this);
 	return kInverse;
 }
-OvQuaternion	OvQuaternionSphericalInterpolate(float fRate,const OvQuaternion& crScr,const OvQuaternion& crDest)
+OvQuaternion	OvQuaternionSphericalInterpolate(OvFloat fRate,const OvQuaternion& crScr,const OvQuaternion& crDest)
 {
 	OvQuaternion	kResult;
 	D3DXQuaternionSlerp((D3DXQUATERNION*)&kResult,(D3DXQUATERNION*)&crScr,(D3DXQUATERNION*)&crDest,fRate);
 	return kResult;
 }
-OvQuaternion	OvEulerToQuaternion(float fX_Rotation,float fY_Rotation,float fZ_Rotation)
+OvQuaternion	OvEulerToQuaternion(OvFloat fX_Rotation,OvFloat fY_Rotation,OvFloat fZ_Rotation)
 {
 	OvQuaternion	kQuat;
-	float half_x = fX_Rotation / 2.0f;
-	float half_y = fY_Rotation / 2.0f;
-	float half_z = fZ_Rotation / 2.0f;
+	OvFloat half_x = fX_Rotation / 2.0f;
+	OvFloat half_y = fY_Rotation / 2.0f;
+	OvFloat half_z = fZ_Rotation / 2.0f;
 
-	float sin_x = sinf( half_x );
-	float cos_x = cosf( half_x );
+	OvFloat sin_x = sinf( half_x );
+	OvFloat cos_x = cosf( half_x );
 
-	float sin_y = sinf( half_y );
-	float cos_y = cosf( half_y );
+	OvFloat sin_y = sinf( half_y );
+	OvFloat cos_y = cosf( half_y );
 
-	float sin_z = sinf( half_z );
-	float cos_z = cosf( half_z );
+	OvFloat sin_z = sinf( half_z );
+	OvFloat cos_z = cosf( half_z );
 
 	kQuat.w		=	(+cos_x * cos_y * cos_z) - (sin_x * sin_y * sin_z);
 	kQuat.x		=	(-sin_x * cos_y * cos_z) - (cos_x * sin_y * sin_z);

@@ -47,7 +47,7 @@ class OvPropAccesser_object_smart_pointer : public OvPropertyAccesser
 };
 //
 
-// float Property
+// OvFloat Property
 class OvPropAccesser_float : public OvPropertyAccesser
 {
 	OvRTTI_DECL(OvPropAccesser_float);

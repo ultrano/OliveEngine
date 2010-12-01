@@ -28,7 +28,7 @@ public:
 		sprintf(m_CovertedString,"%d",_UnsignedLong);
 		return (char*)m_CovertedString;
 	};
-	char* operator()(float _UnsignedLong)
+	char* operator()(OvFloat _UnsignedLong)
 	{
 		sprintf(m_CovertedString,"%f",_UnsignedLong);
 		return (char*)m_CovertedString;

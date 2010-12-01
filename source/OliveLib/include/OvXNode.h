@@ -25,7 +25,7 @@ public:
 	OvXObjectSPtr	GetChildeAt( OvUInt iIndex);
 private:
 
-	virtual void	_update_system( float _fElapse ) override;
+	virtual void	_update_system( OvFloat _fElapse ) override;
 
 private:
 

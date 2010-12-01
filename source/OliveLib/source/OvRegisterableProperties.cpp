@@ -209,14 +209,14 @@ OvBool	OvPropAccesser_object_smart_pointer::Inject(OvObject* pObj, OvObjectPrope
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////				float					/////////////////////////////
+///////////////////////////				OvFloat					/////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////
 OvRTTI_IMPL(OvPropAccesser_float)
 OvBool	OvPropAccesser_float::Extract(OvObject* pObj, OvObjectProperties& rObjStore)
 {
 	if (pObj)
 	{
-		float* kpProp = (float*)Access(pObj);
+		OvFloat* kpProp = (OvFloat*)Access(pObj);
 		if (kpProp)
 		{
 			OliveValue::Float converter = *kpProp;
@@ -231,7 +231,7 @@ OvBool	OvPropAccesser_float::Inject(OvObject* pObj, OvObjectProperties& rObjStor
 {
 	if (pObj)
 	{
-		float* kpProp = (float*)Access(pObj);
+		OvFloat* kpProp = (OvFloat*)Access(pObj);
 		if (kpProp)
 		{
 			OliveValue::Float converter;
@@ -253,7 +253,7 @@ OvBool	OvPropAccesser_float::Inject(OvObject* pObj, OvObjectProperties& rObjStor
 OvRTTI_IMPL(OvPropAccesser_float2)
 OvBool	OvPropAccesser_float2::Extract(OvObject* pObj, OvObjectProperties& rObjStore)
 {
-	float* kpProp = (float*)Access(pObj);
+	OvFloat* kpProp = (OvFloat*)Access(pObj);
 	if (kpProp)
 	{
 		OliveValue::Point2 converter = (const OvPoint2&)*kpProp;
@@ -264,7 +264,7 @@ OvBool	OvPropAccesser_float2::Extract(OvObject* pObj, OvObjectProperties& rObjSt
 }
 OvBool	OvPropAccesser_float2::Inject(OvObject* pObj, OvObjectProperties& rObjStore)
 {
-	float* kpProp = (float*)Access(pObj);
+	OvFloat* kpProp = (OvFloat*)Access(pObj);
 	if (kpProp)
 	{
 		OliveValue::Point2 converter;
@@ -284,7 +284,7 @@ OvBool	OvPropAccesser_float2::Inject(OvObject* pObj, OvObjectProperties& rObjSto
 OvRTTI_IMPL(OvPropAccesser_float3)
 OvBool	OvPropAccesser_float3::Extract(OvObject* pObj, OvObjectProperties& rObjStore)
 {
-	float* kpProp = (float*)Access(pObj);
+	OvFloat* kpProp = (OvFloat*)Access(pObj);
 	if (kpProp)
 	{
 		OliveValue::Point3 converter = (const OvPoint3&)*kpProp;
@@ -295,7 +295,7 @@ OvBool	OvPropAccesser_float3::Extract(OvObject* pObj, OvObjectProperties& rObjSt
 }
 OvBool	OvPropAccesser_float3::Inject(OvObject* pObj, OvObjectProperties& rObjStore)
 {
-	float* kpProp = (float*)Access(pObj);
+	OvFloat* kpProp = (OvFloat*)Access(pObj);
 	if (kpProp)
 	{
 		OliveValue::Point3 converter;
@@ -315,7 +315,7 @@ OvBool	OvPropAccesser_float3::Inject(OvObject* pObj, OvObjectProperties& rObjSto
 OvRTTI_IMPL(OvPropAccesser_float4)
 OvBool	OvPropAccesser_float4::Extract(OvObject* pObj, OvObjectProperties& rObjStore)
 {
-	float* kpProp = (float*)Access(pObj);
+	OvFloat* kpProp = (OvFloat*)Access(pObj);
 	if ( kpProp )
 	{
 		OliveValue::Quaternion converter = (const OvQuaternion&)*kpProp;
@@ -326,7 +326,7 @@ OvBool	OvPropAccesser_float4::Extract(OvObject* pObj, OvObjectProperties& rObjSt
 }
 OvBool	OvPropAccesser_float4::Inject(OvObject* pObj, OvObjectProperties& rObjStore)
 {
-	float* kpProp = (float*)Access(pObj);
+	OvFloat* kpProp = (OvFloat*)Access(pObj);
 	if ( kpProp )
 	{
 		OliveValue::Quaternion converter;
