@@ -135,7 +135,7 @@ OvResourceSPtr OvMaterialLoader::Load( OvDataStream& stream )
 		; NULL != sampler_elem
 		; sampler_elem = sampler_elem->NextSiblingElement( "sampler" ) )
 	{
-		int stage = 0;
+		OvInt stage = 0;
 		sampler_elem->Attribute( "stage", &stage );
 		
 		TiXmlElement* texture_elem = sampler_elem->FirstChildElement( "texture" );
@@ -160,7 +160,7 @@ OvResourceSPtr OvMaterialLoader::Load( OvDataStream& stream )
 	OvMaterialSPtr material = OvNew OvMaterial;
 	material->SetVertexShader( vertexShader );
 	material->SetPixelShader( pixelShader );
-	for ( int i = 0 ; i < OvMaterial::MaxStage ; ++i )
+	for ( OvInt i = 0 ; i < OvMaterial::MaxStage ; ++i )
 	{
 		material->SetStageTexture( (OvMaterial::TextureStage)i, stageImage[i] );
 	}

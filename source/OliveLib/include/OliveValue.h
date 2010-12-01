@@ -114,13 +114,13 @@ namespace OliveValue
 	class Integer : public OliveValue::Value
 	{
 		OvRTTI_DECL(Integer);
-		OLIVE_VALUE_TYPE(int);
+		OLIVE_VALUE_TYPE(OvInt);
 	public:
 		virtual void	SetValue( const OvString& expData );
 		virtual OvString	GetValue();
 	public:
-		void			SetInteger( int expValue );
-		int				GetInteger();
+		void			SetInteger( OvInt expValue );
+		OvInt				GetInteger();
 	};
 
 	class String : public OliveValue::Value

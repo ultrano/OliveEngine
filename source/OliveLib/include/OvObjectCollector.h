@@ -19,7 +19,7 @@ public:
 	template<typename Type_0>
 	DWORD			CollectTreeObject(OvObjectSPtr	pObject);
 
-	OvObjectSPtr	GetByAt(int iIndex);
+	OvObjectSPtr	GetByAt(OvInt iIndex);
 	OvObjectSPtr	GetByName( const OvString& name );
 	OvObjectSPtr	GetByID( const OvObjectID& objectID );
 

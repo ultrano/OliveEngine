@@ -56,7 +56,7 @@ bool	OvPropAccesser_integer::Extract(OvObject* pObj, OvObjectProperties& rObjSto
 {
 	if (pObj)
 	{
-		int* kpProp = (int*)Access(pObj);
+		OvInt* kpProp = (OvInt*)Access(pObj);
 		if (kpProp)
 		{
 			OliveValue::Integer converter = *kpProp;
@@ -71,7 +71,7 @@ bool	OvPropAccesser_integer::Inject(OvObject* pObj, OvObjectProperties& rObjStor
 {
 	if (pObj)
 	{
-		int* kpProp = (int*)Access(pObj);
+		OvInt* kpProp = (OvInt*)Access(pObj);
 		if ( kpProp )
 		{
 			OliveValue::Integer converter;
@@ -397,7 +397,7 @@ bool	OvPropAccesser_extra_data::Extract(OvObject* pObj, OvObjectProperties& rObj
 	{
 		OvObject::extra_property_table& extraTable = *kpProp;
 
-		OliveValue::Integer extraCount( (int)extraTable.size() );
+		OliveValue::Integer extraCount( (OvInt)extraTable.size() );
 		
 		unsigned savedPropCount = 0;
 		OvString extraInfo;
@@ -408,9 +408,9 @@ bool	OvPropAccesser_extra_data::Extract(OvObject* pObj, OvObjectProperties& rObj
 
 			OvString typeName = OvRTTI_Util::TypeName( extraValue );
 
-			OliveValue::Integer typeLength( (int)typeName.size() );
-			OliveValue::Integer nameLength( (int)extraProp.first.size() );
-			OliveValue::Integer valueLength( (int)extraValue->GetValue().size() );
+			OliveValue::Integer typeLength( (OvInt)typeName.size() );
+			OliveValue::Integer nameLength( (OvInt)extraProp.first.size() );
+			OliveValue::Integer valueLength( (OvInt)extraValue->GetValue().size() );
 
 			if ( valueLength.GetInteger() )
 			{
@@ -510,7 +510,7 @@ bool OvPropAccesser_object_collector::Extract(OvObject* pObj, OvObjectProperties
 
 		collectedInfo += relationCount.GetValue() + ":";
 
-		for ( int i = 0 ; i < relationCount.GetInteger() ; ++i )
+		for ( OvInt i = 0 ; i < relationCount.GetInteger() ; ++i )
 		{
 			OvObjectSPtr relatedObj = kpProp->GetByAt( i );
 			if (relatedObj)

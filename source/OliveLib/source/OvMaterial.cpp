@@ -91,7 +91,7 @@ void OvMaterial::ApplyMaterial()
 		OvRenderer::GetInstance()->SetSamplerState( sampler, type, value );
 	}
 
-	for ( int i = 0 
+	for ( OvInt i = 0 
 		; i < MaxStage 
 		; ++i )
 	{

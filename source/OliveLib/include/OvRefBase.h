@@ -35,13 +35,13 @@ public:
 	OvRefBase();
 
 	// 현재, 사용중인 포인터들의 갯수를 얻어온다.
-	int		GetReferenceCount();
+	OvInt		GetReferenceCount();
 
 	// 아래의 함수들은 OvSmartPointer에서 사용하는 함수이지만
 	// 사용자가 원한다면 참조를 올리거나 내릴수 있도록 public으로 선언했다.
 	// (사용자가 직접 사용하길 권장하지 않는다.)
-	int		IncreaseReferenceCount();
-	int		DecreaseReferenceCount();
+	OvInt		IncreaseReferenceCount();
+	OvInt		DecreaseReferenceCount();
 
 	// 왠만하면 사용하지 말자.
 	void	DeleteThis(){OvDelete this;};
@@ -53,7 +53,7 @@ protected:
 	// 강제 종료한다. (멀리봤을때 처음 잘못된 삭제가 요청됬을때 잡아주는게 좋다고 생각해서다.)
 	virtual ~OvRefBase();
 private:
-	int	m_dReferenceCount;
+	OvInt	m_dReferenceCount;
 	OvSectionKey	m_qSectionKey;
 };
 #include "OvRefBase.inl"

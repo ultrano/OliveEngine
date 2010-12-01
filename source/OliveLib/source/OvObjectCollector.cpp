@@ -20,7 +20,7 @@ OvObjectCollector::~OvObjectCollector()
 {
 	Clear();
 }
-OvObjectSPtr	OvObjectCollector::GetByAt(int iIndex)
+OvObjectSPtr	OvObjectCollector::GetByAt(OvInt iIndex)
 {
 	return m_tdObjArray[iIndex];
 }

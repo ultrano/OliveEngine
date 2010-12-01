@@ -1,4 +1,5 @@
 #pragma once
+#include "OvTypeDef.h"
 #include "OvMemObject.h"
 #include "OvPoint3.h"
 class OvPlane	:	public OvMemObject
@@ -20,7 +21,7 @@ public:
 	inline void		SetPlane(const OvPoint3& _PlaneNormal,const OvPoint3& _P0);
 	inline void		SetPlane(const OvPoint3& _PlaneNormal,float _PlaneDistance);
 
-	int			WhichSide(const OvPoint3& _SidePoint);
+	OvInt			WhichSide(const OvPoint3& _SidePoint);
 	enum
 	{
 		NEGATIVE_SIDE=-1,

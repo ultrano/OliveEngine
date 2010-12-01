@@ -35,7 +35,7 @@
 //	return m_pPimple->mLuaInstance.RunString(pCommand);
 //};
 ////
-////void		OvLua::ReadyFunction(const char* _pFuncName,int _iArgCount,int _iReturnCount){
+////void		OvLua::ReadyFunction(const char* _pFuncName,OvInt _iArgCount,OvInt _iReturnCount){
 ////
 ////	lua_getglobal(GetScriptContext(),_pFuncName);
 ////
@@ -90,7 +90,7 @@
 //			}
 //			else if(kArgTypeArray[i] == "%d")
 //			{
-//				int kpPushNum = va_arg(kvaArgs,int);
+//				OvInt kpPushNum = va_arg(kvaArgs,OvInt);
 //				PushNumber(kpPushNum);
 //			}else if(kArgTypeArray[i] == "%f")
 //			{
@@ -119,17 +119,17 @@
 //	return m_pPimple->mLuaInstance.AddFunction(pFunctionName,pFunction);
 //};
 //
-//const char *OvLua::GetStringArgument(int num, const char *pDefault)
+//const char *OvLua::GetStringArgument(OvInt num, const char *pDefault)
 //{
 //	return m_pPimple->mLuaInstance.GetStringArgument(num,pDefault);
 //};
 //
-//double		OvLua::GetNumberArgument(int num, double dDefault)
+//double		OvLua::GetNumberArgument(OvInt num, double dDefault)
 //{
 //	return m_pPimple->mLuaInstance.GetNumberArgument(num,dDefault);
 //};
 //
-//void*		OvLua::GetUserDataArgument(int num, void* dDefault)
+//void*		OvLua::GetUserDataArgument(OvInt num, void* dDefault)
 //{
 //	return m_pPimple->mLuaInstance.GetUserDataArgument(num,dDefault);
 //}

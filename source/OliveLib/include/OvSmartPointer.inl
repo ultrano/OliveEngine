@@ -85,7 +85,7 @@ inline OvSmartPointer<Type_0>&	OvSmartPointer<Type_0>::operator = ( Type_0* _pt)
 }
 
 template<typename Type_0>
-Type_0&							OvSmartPointer<Type_0>::operator [](int _ArrayCount)
+Type_0&							OvSmartPointer<Type_0>::operator [](OvInt _ArrayCount)
 {
 	return m_pReferenceTarget[_ArrayCount];
 };

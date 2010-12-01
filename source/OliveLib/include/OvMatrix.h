@@ -1,4 +1,5 @@
 #pragma once
+#include "OvTypeDef.h"
 #include "OvPoint3.h"
 #include "OvQuaternion.h"
 

@@ -38,7 +38,7 @@ OvMatrix	OvMatrix::operator * (float _fValue)
 {
 	OvMatrix	kOutputMat(*this);
 	float* kfpMatValue = (float*)&kOutputMat;
-	for (int i=0;i<16;++i)
+	for (OvInt i=0;i<16;++i)
 	{
 		kfpMatValue[i] = kfpMatValue[i] * _fValue;
 	}
@@ -52,7 +52,7 @@ OvMatrix operator * (float _fValue, const OvMatrix& _crMat)
 {
 	OvMatrix	kOutputMat(_crMat);
 	float* kfpOutputMatValue = (float*)&kOutputMat;
-	for (int i=0;i<16;++i)
+	for (OvInt i=0;i<16;++i)
 	{
 		kfpOutputMatValue[i] = kfpOutputMatValue[i] * _fValue;
 	}

@@ -17,13 +17,13 @@ OvRefBase::~OvRefBase()
 
 	//OvDeleteSection(m_qSectionKey);
 };
-int		OvRefBase::IncreaseReferenceCount()
+OvInt		OvRefBase::IncreaseReferenceCount()
 {
 	//OvTargetSectionLocker kLocker(m_qSectionKey);
 	++m_dReferenceCount;
 	return m_dReferenceCount;
 }
-int		OvRefBase::DecreaseReferenceCount()
+OvInt		OvRefBase::DecreaseReferenceCount()
 {
 	//OvTargetSectionLocker kLocker(m_qSectionKey);
 	--m_dReferenceCount;
@@ -37,7 +37,7 @@ int		OvRefBase::DecreaseReferenceCount()
 }
 
 
-int		OvRefBase::GetReferenceCount()
+OvInt		OvRefBase::GetReferenceCount()
 {
 	//OvTargetSectionLocker kLocker(m_qSectionKey);
 	return m_dReferenceCount;

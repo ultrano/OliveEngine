@@ -25,7 +25,7 @@
 //	void	CubeFaceMatrix( D3DCUBEMAP_FACES face_index, const OvPoint3& cube_pos, OvMatrix& outMat );
 //
 //private:
-//	int m_reservedRenderTargetIndex;
+//	OvInt m_reservedRenderTargetIndex;
 //	LPDIRECT3DSURFACE9 m_oldRenderTarget;
 //	LPDIRECT3DSURFACE9 m_oldDepthStencil;
 //

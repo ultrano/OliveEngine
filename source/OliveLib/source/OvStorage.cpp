@@ -148,7 +148,7 @@ bool	OvStorage::_read_property( TiXmlElement& objElem, OvObjectProperties& rStor
 	{
 
 		OvObjectID	formerId;
-		objElem.Attribute( "id", (int*)&formerId );
+		objElem.Attribute( "id", (OvInt*)&formerId );
 		OvString	typeName = objElem.Attribute( "type" );
 
 		rStore.SetObjectType(typeName);

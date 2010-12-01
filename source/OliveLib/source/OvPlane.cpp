@@ -21,7 +21,7 @@ OvPlane::OvPlane(const OvPoint3& _PlaneNormal,float _PlaneDistance):m_PlaneNorma
 	m_PlaneNormal = m_PlaneNormal.Normalize();
 };
 
-int			OvPlane::WhichSide(const OvPoint3& _SidePoint)
+OvInt			OvPlane::WhichSide(const OvPoint3& _SidePoint)
 {
 	float	kWhichSide	=	m_PlaneNormal.DotProduct(_SidePoint);
 

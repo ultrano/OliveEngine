@@ -7,7 +7,7 @@
 //struct lua_State;
 //
 //extern "C" {
-//	typedef int (*LuaFunctionType)(struct lua_State *pLuaState);
+//	typedef OvInt (*LuaFunctionType)(struct lua_State *pLuaState);
 //};
 //
 //void	OvLuaDefaultErrorHandler(const char* pErrorMsg);
@@ -28,9 +28,9 @@
 //	bool		RunString(const char *pCommand);
 //	const char *GetErrorString(void);
 //	bool		AddFunction(const char *pFunctionName, LuaFunctionType pFunction);
-//	const char *GetStringArgument(int num, const char *pDefault=NULL);
-//	double		GetNumberArgument(int num, double dDefault=0.0);
-//	void*		GetUserDataArgument(int num, void* dDefault=NULL);
+//	const char *GetStringArgument(OvInt num, const char *pDefault=NULL);
+//	double		GetNumberArgument(OvInt num, double dDefault=0.0);
+//	void*		GetUserDataArgument(OvInt num, void* dDefault=NULL);
 //	void		PushString(const char *pString);
 //	void		PushNumber(double value);
 //	void		PushUserData(void* pUserData);
@@ -70,7 +70,7 @@
 //
 //};
 //
-//OLIVE_LUA_SELECT_PUSH_METHOD_MACRO(int,PushNumber);
+//OLIVE_LUA_SELECT_PUSH_METHOD_MACRO(OvInt,PushNumber);
 //OLIVE_LUA_SELECT_PUSH_METHOD_MACRO(DWORD,PushNumber);
 //OLIVE_LUA_SELECT_PUSH_METHOD_MACRO(float,PushNumber);
 //OLIVE_LUA_SELECT_PUSH_METHOD_MACRO(double,PushNumber);

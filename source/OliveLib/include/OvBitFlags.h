@@ -5,8 +5,8 @@ class OvBitFlags : public OvMemObject
 {
 public:
 	OvBitFlags():m_flags(0){};
-	inline void	SetFlag(int _flag_bit,bool _set);
-	inline bool	GetFlag(int _flag_bit);
+	inline void	SetFlag(OvInt _flag_bit,bool _set);
+	inline bool	GetFlag(OvInt _flag_bit);
 	inline void	Clear( bool check = false );
 protected:
 private:
@@ -14,7 +14,7 @@ private:
 };
 
 template<typename Type0>
-inline void	OvBitFlags<Type0>::SetFlag(int _flag_bit,bool _set)
+inline void	OvBitFlags<Type0>::SetFlag(OvInt _flag_bit,bool _set)
 {
 	if (_set)
 	{
@@ -25,7 +25,7 @@ inline void	OvBitFlags<Type0>::SetFlag(int _flag_bit,bool _set)
 }
 
 template<typename Type0>
-inline bool	OvBitFlags<Type0>::GetFlag(int _flag_bit)
+inline bool	OvBitFlags<Type0>::GetFlag(OvInt _flag_bit)
 {
 	return (( m_flags & ( 1 << _flag_bit ) ) != 0);
 }

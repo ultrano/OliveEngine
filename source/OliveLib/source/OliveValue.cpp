@@ -176,11 +176,11 @@ OvString			Integer::GetValue()
 {
 	return OvString( OvFormatString( "%d", m_value ) );
 }
-void			Integer::SetInteger( int expValue )
+void			Integer::SetInteger( OvInt expValue )
 {
 	m_value = expValue;
 }
-int				Integer::GetInteger()
+OvInt				Integer::GetInteger()
 {
 	return m_value;
 }

@@ -27,7 +27,7 @@ public:
 	OvSmartPointer&		operator = ( Type_0* _pt);
 	OvSmartPointer&		operator = ( OvSmartPointer& _copy);
 	OvSmartPointer&		operator = (const OvSmartPointer& _copy);
-	Type_0&				operator [](int _ArrayCount);
+	Type_0&				operator [](OvInt _ArrayCount);
 
 	template<typename Type_1>
 	OvSmartPointer&		operator = (const OvSmartPointer<Type_1>& _copy);
