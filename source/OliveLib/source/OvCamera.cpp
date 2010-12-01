@@ -14,6 +14,8 @@ OvPROPERTY_BAG_BEGIN(OvCamera);
 	OvPROPERTY_BAG_REGISTER( OvPropAccesser_float, m_aspect )
 OvPROPERTY_BAG_END(OvCamera);
 
+OvFACTORY_OBJECT_IMPL(OvCamera);
+
 OvCamera::OvCamera()
 {
 	SetNearClip(1.0f);

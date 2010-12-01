@@ -27,7 +27,6 @@ class OvXObject : public OvObject
 	OvPROPERTY_BAG_DECL(OvXObject);
 
 	friend class OvXNode;
-	friend class OvObjectFactory;
 	friend class OvXComponent;
 
 public :

@@ -3,6 +3,7 @@
 #include "OvRefBase.h"
 #include "OvAutoPtr.h"
 #include "OvPropertyBag.h"
+#include "OvObjectFactory.h"
 #include <string>
 #include <map>
 

@@ -4,6 +4,7 @@
 #include "OvDataStream.h"
 
 OvRTTI_IMPL( OvTextureLoader );
+OvFACTORY_OBJECT_IMPL(OvTextureLoader);
 
 OvResourceSPtr OvTextureLoader::Load( OvDataStream& stream )
 {

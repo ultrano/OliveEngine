@@ -8,6 +8,7 @@
 class OvFileMeshLoader : public OvMeshLoaderBase
 {
 	OvRTTI_DECL(OvFileMeshLoader);
+	OvFACTORY_OBJECT_DECL(OvFileMeshLoader);
 public:
 	OvFileMeshLoader();
 	~OvFileMeshLoader();

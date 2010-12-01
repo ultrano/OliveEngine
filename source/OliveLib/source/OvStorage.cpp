@@ -93,7 +93,7 @@ void	OvStorage::_restore_object( TiXmlElement& objElem )
 	OvObjectProperties rStore;
 	if ( _read_property( objElem, rStore ) )
 	{
-		OvObject* restoreObj = TemporaryFactoryFunction( rStore.GetObjectType() );
+		OvObject* restoreObj = Olive::CreateObject_Ptr( rStore.GetObjectType() );
 		if ( _inject_property( restoreObj, rStore ) )
 		{
 			m_restoreObjectTable[ rStore.GetObjectID() ] = restoreObj;

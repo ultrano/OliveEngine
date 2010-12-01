@@ -11,6 +11,8 @@ OvPROPERTY_BAG_BEGIN(OvModel)
 	OvPROPERTY_BAG_REGISTER( OvPropAccesser_resource_ticket, m_mesh )
 OvPROPERTY_BAG_END(OvModel)
 
+OvFACTORY_OBJECT_IMPL(OvModel);
+
 OvModel::OvModel()
 : m_material( NULL )
 , m_mesh( NULL )

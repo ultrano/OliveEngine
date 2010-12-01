@@ -23,7 +23,8 @@ OvModelSPtr OvSingleScene::CreateModel()
 
 OvCameraSPtr OvSingleScene::CreateCamera()
 {
-	return _set_and_return( OvNew OvCamera );
+	//return _set_and_return( OvNew OvCamera );
+	return NULL;
 }
 
 void OvSingleScene::SetViewCamera( OvCameraSPtr camera )

@@ -6,7 +6,7 @@
 #include <d3dx9.h>
 
 OvRTTI_IMPL(OvCameraController);
-
+OvFACTORY_OBJECT_IMPL(OvCameraController);
 OvCameraController::OvCameraController()
 {
 

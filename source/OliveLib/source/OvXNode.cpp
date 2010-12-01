@@ -12,7 +12,7 @@ OvPROPERTY_BAG_BEGIN(OvXNode);
 	OvPROPERTY_BAG_REGISTER(OvPropAccesser_object_collector,m_clectrChildCollect);
 OvPROPERTY_BAG_END(OvXNode);
 
-
+OvFACTORY_OBJECT_IMPL(OvXNode);
 
 OvXNode::OvXNode()
 {

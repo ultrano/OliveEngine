@@ -1,6 +1,7 @@
 #pragma once
 #include "OvXNode.h"
 #include "OvTransform.h"
+#include "OvObjectFactory.h"
 //! Predeclare Class
 OvREF_POINTER(OvXObject);
 //
@@ -9,7 +10,9 @@ class OvCamera : public OvXNode
 {
 	OvRTTI_DECL(OvCamera);
 	OvPROPERTY_BAG_DECL(OvCamera);
-
+	OvFACTORY_OBJECT_DECL(OvCamera);
+private:
+	OvCamera();
 public:
 
 	enum	eCameraType
@@ -19,7 +22,6 @@ public:
 		eCameraType_Target,
 	};
 
-	OvCamera();
 	~OvCamera();
 
 

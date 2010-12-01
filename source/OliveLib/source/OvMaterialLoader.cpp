@@ -14,6 +14,7 @@
 using namespace std;
 
 OvRTTI_IMPL( OvMaterialLoader );
+OvFACTORY_OBJECT_IMPL(OvMaterialLoader);
 
 struct SStateTypeTable : OvMemObject
 {

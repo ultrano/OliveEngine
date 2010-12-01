@@ -7,6 +7,7 @@ OvREF_POINTER(OvCameraController)
 class OvCameraController : public OvXComponent
 {
 	OvRTTI_DECL(OvCameraController);
+	OvFACTORY_OBJECT_DECL(OvCameraController);
 public:
 	OvCameraController();
 	~OvCameraController();

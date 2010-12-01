@@ -9,6 +9,7 @@ class OvModel : public OvXNode
 {
 	OvRTTI_DECL(OvModel);
 	OvPROPERTY_BAG_DECL(OvModel);
+	OvFACTORY_OBJECT_DECL(OvModel);
 public:
 
 	// 요고는 마테리얼 부분으로 빼자

@@ -132,7 +132,7 @@ void InjectProperties( OvObject* obj, OvObjectProperties& prop )
 
 OvObjectSPtr OvObject::Clone()
 {
-	OvObjectSPtr clone = TemporaryFactoryFunction( OvRTTI_Util::TypeName( this ));
+	OvObjectSPtr clone = Olive::CreateObject( OvRTTI_Util::TypeName( this ) );
 	if ( clone )
 	{
 		OvObjectProperties objProp;
