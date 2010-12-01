@@ -8,7 +8,7 @@ void	OvMessageBox(const char* _msg,const char* _caption);
 
 void	OvErrorMsgBox(const char* _file,const char* _block,const char* _msg = NULL);
 
-bool	OvStringAllocator(LPTSTR* _lpp_dest,LPCTSTR lp_src);
+OvBool	OvStringAllocator(LPTSTR* _lpp_dest,LPCTSTR lp_src);
 
 OvString	OvGetDirectoryInFullFilePath(const OvString& strFileFullPath);
 OvString	OvGetFileNameInFullFilePath(const OvString& strFileFullPath);

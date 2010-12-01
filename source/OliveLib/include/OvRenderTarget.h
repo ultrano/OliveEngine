@@ -15,11 +15,11 @@
 //	OvRenderTarget();
 //	~OvRenderTarget();
 //
-//	bool	LockRenderTarget( unsigned render_target_index, LPDIRECT3DSURFACE9 renderTarget );
-//	bool	UnlockRenderTarget();
+//	OvBool	LockRenderTarget( unsigned render_target_index, LPDIRECT3DSURFACE9 renderTarget );
+//	OvBool	UnlockRenderTarget();
 //
-//	bool	LockDepthStencil( LPDIRECT3DSURFACE9 depthStencil );
-//	bool	UnlockDepthStencil();
+//	OvBool	LockDepthStencil( LPDIRECT3DSURFACE9 depthStencil );
+//	OvBool	UnlockDepthStencil();
 //
 //	// test method
 //	void	CubeFaceMatrix( D3DCUBEMAP_FACES face_index, const OvPoint3& cube_pos, OvMatrix& outMat );

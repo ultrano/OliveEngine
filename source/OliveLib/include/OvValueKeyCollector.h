@@ -17,8 +17,8 @@
 //	};
 //public:
 //
-//	bool			IsValidKeyIndex(OvUInt iIndex);
-//	bool			IsOverlapTickKey(float fTick);
+//	OvBool			IsValidKeyIndex(OvUInt iIndex);
+//	OvBool			IsOverlapTickKey(float fTick);
 //
 //	void			CollectValueKey(float fTick,const Type_0& crValue);
 //	void			BuildKeyNode();

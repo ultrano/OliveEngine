@@ -279,7 +279,7 @@ void OvResourceManager::_push_async_load_info( SAsyncLoadInfo& info )
 	m_aload_list.push_back( info );
 }
 
-bool OvResourceManager::_pop_async_load_info( SAsyncLoadInfo& info )
+OvBool OvResourceManager::_pop_async_load_info( SAsyncLoadInfo& info )
 {
 	OvSectionGuardian guardian( m_load_section );
 	if ( m_aload_list.size() )
@@ -303,10 +303,10 @@ struct SSection
 	}
 	CRITICAL_SECTION section;
 };
-bool& OvResourceManager::_get_async_life_flag()
+OvBool& OvResourceManager::_get_async_life_flag()
 {
 	static SSection block;
-	static bool life_flag(true);
+	static OvBool life_flag(true);
 
 	OvSectionGuardian guardian( block.section );
 	return life_flag;
@@ -316,7 +316,7 @@ OvString AbsolutePath( const OvString& file )
 	return OvResourceManager::GetInstance()->ResourceDirectory() + "\\" + file;
 }
 
-bool ClampPathIfResDir( OvString& file )
+OvBool ClampPathIfResDir( OvString& file )
 {
 	OvString output;
 	output = OvResourceManager::GetInstance()->ResourceDirectory() + "\\";

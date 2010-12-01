@@ -16,8 +16,8 @@ public:
 	OvInputManager();
 	~OvInputManager();
 
-	bool IsStateOfKey( byte dik_key, BUTTON_STATE state );
-	bool IsStateOfMouse( MOUSE_BUTTON button, BUTTON_STATE state );
+	OvBool IsStateOfKey( byte dik_key, BUTTON_STATE state );
+	OvBool IsStateOfMouse( MOUSE_BUTTON button, BUTTON_STATE state );
 	OvPoint3 GetMouseMoveDelta();
 
 private:

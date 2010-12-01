@@ -1,4 +1,5 @@
 #pragma once
+#include "OvTypeDef.h"
 /*
 //
 //	[OvAutoPtr]은 OvMemObject를 상속받은 객체여야 정확한 메모리관리를 받습니다.
@@ -19,7 +20,7 @@ public:
 	// 위험한 캐스팅 오퍼래이더 오버로드이지만, 사용상의 유연성과 활용범위를 위해 사용자의 현명함에 맞긴다.
 
 	//! check, is it valid
-	operator			bool()const;
+	operator			OvBool()const;
 
 	//! access to rear pointer address
 	Type_0*				GetRear()const;
@@ -57,7 +58,7 @@ public:
 	~OvArrayAutoPtr();
 
 	//! check, is it valid
-	operator			bool()const;
+	operator			OvBool()const;
 
 	//! access to rear pointer address
 	Type_0*				GetRear()const;

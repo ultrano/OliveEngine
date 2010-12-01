@@ -28,7 +28,7 @@ OvDevice::operator LPDIRECT3DDEVICE9()
 {
 	return m_device;
 }
-OvDevice::operator bool()
+OvDevice::operator OvBool()
 {
 	return (NULL != m_device);
 }

@@ -43,7 +43,7 @@ void	OvErrorMsgBox(const char* _file,const char* _block,const char* _msg )
 
 }
 
-bool		OvStringAllocator(LPTSTR* _lpp_dest,LPCTSTR lp_src)
+OvBool		OvStringAllocator(LPTSTR* _lpp_dest,LPCTSTR lp_src)
 {
 	if (!lp_src)
 	{
@@ -100,7 +100,7 @@ OvString	OvGetExtentionInFullFilePath(const OvString& strFileFullPath)
 	}
 	return kReturnString;
 }
-/*inline bool		OvStringAllocator(const char** _lpp_dest,const char* lp_src)
+/*inline OvBool		OvStringAllocator(const char** _lpp_dest,const char* lp_src)
 {
 if (!lp_src)
 {

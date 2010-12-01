@@ -55,13 +55,13 @@ void			OvObjectCollector::Clear()
 {
 	m_tdObjArray.clear();
 }
-bool			OvObjectCollector::AddObject(OvObjectSPtr pObj)
+OvBool			OvObjectCollector::AddObject(OvObjectSPtr pObj)
 {
 	m_tdObjArray.push_back(pObj);
 	return true;
 }
 
-bool			OvObjectCollector::AddObject(OvObjectCollector& pObjContainer)
+OvBool			OvObjectCollector::AddObject(OvObjectCollector& pObjContainer)
 {
 	m_tdObjArray.reserve( pObjContainer.Count() );
 	for ( unsigned  i = 0 ; i < (unsigned)pObjContainer.Count() ; ++i )
@@ -94,7 +94,7 @@ OvObjectSPtr OvObjectCollector::RemoveObject( const OvObjectID& objectID )
 	}
 	return NULL;
 }
-bool			OvObjectCollector::IsCollected(OvObjectSPtr pObj)
+OvBool			OvObjectCollector::IsCollected(OvObjectSPtr pObj)
 {
 	if (pObj)
 	{

@@ -1,4 +1,5 @@
 #pragma once
+#include "OvTypeDef.h"
 
 class OliveDevice
 {
@@ -7,6 +8,6 @@ public:
 	static void EngineOn();
 	static void EngineOff();
 
-	static bool Run();
+	static OvBool Run();
 
 };

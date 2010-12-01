@@ -18,8 +18,8 @@ public:
 	OvStorage();
 	~OvStorage();
 
-	bool	Save( const OvString& pFile, OvObjectCollector& saveObjects);
-	bool	Load( const OvString& pFile, OvObjectCollector& loadedObjects);
+	OvBool	Save( const OvString& pFile, OvObjectCollector& saveObjects);
+	OvBool	Load( const OvString& pFile, OvObjectCollector& loadedObjects);
 
 	void	Clear();
 
@@ -28,11 +28,11 @@ private:
 	void	_store_object	 (OvObject* pObj);
 	void	_restore_object( TiXmlElement& objElem );
 
-	bool	_extract_property	(OvObject* pObj,OvObjectProperties& rStore);
-	bool	_inject_property	(OvObject* pObj,OvObjectProperties& rStore);
+	OvBool	_extract_property	(OvObject* pObj,OvObjectProperties& rStore);
+	OvBool	_inject_property	(OvObject* pObj,OvObjectProperties& rStore);
 
-	bool	_write_property(OvObjectProperties& rStore, TiXmlElement& objElem);
-	bool	_read_property( TiXmlElement& objElem, OvObjectProperties& rStore );
+	OvBool	_write_property(OvObjectProperties& rStore, TiXmlElement& objElem);
+	OvBool	_read_property( TiXmlElement& objElem, OvObjectProperties& rStore );
 
 	void	_rebuild_related_link( restore_object_table& restoreTable, link_builder_list& linkBuilderList );
 

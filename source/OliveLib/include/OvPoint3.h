@@ -1,5 +1,5 @@
 #pragma once
-
+#include "OvTypeDef.h"
 
 //// 나중에 만들어 주자;
 //typedef	D3DXVECTOR3	OvPoint3;
@@ -30,8 +30,8 @@ public :
 
 	OvPoint3&	operator +=(const OvPoint3& _rPt) ;
 	OvPoint3&	operator -=(const OvPoint3& _rPt) ;
-	bool		operator ==(const OvPoint3& _rPt) const;
-	bool		operator !=(const OvPoint3& _rPt) const;
+	OvBool		operator ==(const OvPoint3& _rPt) const;
+	OvBool		operator !=(const OvPoint3& _rPt) const;
 
 	float x,y,z;
 };

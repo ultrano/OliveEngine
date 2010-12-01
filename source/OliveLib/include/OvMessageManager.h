@@ -15,19 +15,19 @@ public:
 
 public:
 
-	static bool	ListenMessage( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
+	static OvBool	ListenMessage( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
 public:
 
 	OvPoint2	GetLastMousePoint();
 	OvPoint2	GetMouseInterval();
 
-	bool		IsWindowAlive();
+	OvBool		IsWindowAlive();
 
 	void	_update();
 private:
 
-	bool	_listenMessage( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
+	OvBool	_listenMessage( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 	void	_register_listener( OvMessageListener* listener );
 	void	_remove_listener( OvMessageListener* listener );
 
@@ -35,5 +35,5 @@ private:
 	listener_list	m_listenerList;
 	OvPoint2	m_lastMousePoint;
 	OvPoint2	m_mouseMoveInterval;
-	bool		m_alive_flag;
+	OvBool		m_alive_flag;
 };

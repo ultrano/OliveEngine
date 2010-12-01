@@ -1,5 +1,5 @@
 template< typename TArg0>
-bool		OvLua::ExecuteFunction(const char* _pFuncName,TArg0 _tArg0)
+OvBool		OvLua::ExecuteFunction(const char* _pFuncName,TArg0 _tArg0)
 {
 	ReadyFunction(_pFuncName);
 	OvPushLuaStackData(this,_tArg0);
@@ -7,7 +7,7 @@ bool		OvLua::ExecuteFunction(const char* _pFuncName,TArg0 _tArg0)
 	return true;
 };
 template< typename TArg0,typename TArg1>
-bool		OvLua::ExecuteFunction(const char* _pFuncName,TArg0 _tArg0,TArg1 _tArg1)
+OvBool		OvLua::ExecuteFunction(const char* _pFuncName,TArg0 _tArg0,TArg1 _tArg1)
 {
 	ReadyFunction(_pFuncName);
 	OvPushLuaStackData(this,_tArg0);
@@ -16,7 +16,7 @@ bool		OvLua::ExecuteFunction(const char* _pFuncName,TArg0 _tArg0,TArg1 _tArg1)
 	return true;
 }
 template< typename TArg0,typename TArg1,typename TArg2>
-bool		OvLua::ExecuteFunction(const char* _pFuncName,TArg0 _tArg0,TArg1 _tArg1,TArg2 _tArg2)
+OvBool		OvLua::ExecuteFunction(const char* _pFuncName,TArg0 _tArg0,TArg1 _tArg1,TArg2 _tArg2)
 {
 	ReadyFunction(_pFuncName);
 	OvPushLuaStackData(this,_tArg0);
@@ -26,7 +26,7 @@ bool		OvLua::ExecuteFunction(const char* _pFuncName,TArg0 _tArg0,TArg1 _tArg1,TA
 	return true;
 }
 template< typename TArg0,typename TArg1,typename TArg2,typename TArg3>
-bool		OvLua::ExecuteFunction(const char* _pFuncName,TArg0 _tArg0,TArg1 _tArg1,TArg2 _tArg2,TArg3 _tArg3)
+OvBool		OvLua::ExecuteFunction(const char* _pFuncName,TArg0 _tArg0,TArg1 _tArg1,TArg2 _tArg2,TArg3 _tArg3)
 {
 	ReadyFunction(_pFuncName);
 	OvPushLuaStackData(this,_tArg0);
@@ -37,7 +37,7 @@ bool		OvLua::ExecuteFunction(const char* _pFuncName,TArg0 _tArg0,TArg1 _tArg1,TA
 	return true;
 }
 template< typename TArg0,typename TArg1,typename TArg2,typename TArg3,typename TArg4>
-bool		OvLua::ExecuteFunction(const char* _pFuncName,TArg0 _tArg0,TArg1 _tArg1,TArg2 _tArg2,TArg3 _tArg3,TArg4 _tArg4)
+OvBool		OvLua::ExecuteFunction(const char* _pFuncName,TArg0 _tArg0,TArg1 _tArg1,TArg2 _tArg2,TArg3 _tArg3,TArg4 _tArg4)
 {
 	ReadyFunction(_pFuncName);
 	OvPushLuaStackData(this,_tArg0);
@@ -49,7 +49,7 @@ bool		OvLua::ExecuteFunction(const char* _pFuncName,TArg0 _tArg0,TArg1 _tArg1,TA
 	return true;
 }
 template< typename TArg0,typename TArg1,typename TArg2,typename TArg3,typename TArg4,typename TArg5>
-bool		OvLua::ExecuteFunction(const char* _pFuncName,TArg0 _tArg0,TArg1 _tArg1,TArg2 _tArg2,TArg3 _tArg3,TArg4 _tArg4,TArg5 _tArg5)
+OvBool		OvLua::ExecuteFunction(const char* _pFuncName,TArg0 _tArg0,TArg1 _tArg1,TArg2 _tArg2,TArg3 _tArg3,TArg4 _tArg4,TArg5 _tArg5)
 {
 	ReadyFunction(_pFuncName);
 	OvPushLuaStackData(this,_tArg0);
@@ -63,7 +63,7 @@ bool		OvLua::ExecuteFunction(const char* _pFuncName,TArg0 _tArg0,TArg1 _tArg1,TA
 }
 
 template< typename TArg0,typename TArg1,typename TArg2,typename TArg3,typename TArg4,typename TArg5,typename TArg6>
-bool		OvLua::ExecuteFunction(const char* _pFuncName,TArg0 _tArg0,TArg1 _tArg1,TArg2 _tArg2,TArg3 _tArg3,TArg4 _tArg4,TArg5 _tArg5,TArg6 _tArg6)
+OvBool		OvLua::ExecuteFunction(const char* _pFuncName,TArg0 _tArg0,TArg1 _tArg1,TArg2 _tArg2,TArg3 _tArg3,TArg4 _tArg4,TArg5 _tArg5,TArg6 _tArg6)
 {
 	ReadyFunction(_pFuncName);
 	OvPushLuaStackData(this,_tArg0);

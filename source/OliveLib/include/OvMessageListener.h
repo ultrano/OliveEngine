@@ -21,7 +21,7 @@ public:
 	OvMessageListener();
 	~OvMessageListener();
 
-	virtual bool MessageListen(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) = 0;
+	virtual OvBool MessageListen(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) = 0;
 
 private:
 
@@ -31,5 +31,5 @@ private:
 private:
 	enum {MSG_QUEUE_SIZE = 10};
 	InputMessage m_message;
-	bool m_messageProcessed;
+	OvBool m_messageProcessed;
 };

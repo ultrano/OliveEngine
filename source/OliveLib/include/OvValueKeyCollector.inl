@@ -7,7 +7,7 @@
 //}
 //
 //template<typename Type_0>
-//bool			OvValueKeyCollector<Type_0>::IsValidKeyIndex(OvUInt iIndex)
+//OvBool			OvValueKeyCollector<Type_0>::IsValidKeyIndex(OvUInt iIndex)
 //{
 //	if (iIndex <0 || iIndex >= GetKeyCount())
 //	{
@@ -17,7 +17,7 @@
 //}
 //
 //template<typename Type_0>
-//bool		OvValueKeyCollector<Type_0>::IsOverlapTickKey(float fTick)
+//OvBool		OvValueKeyCollector<Type_0>::IsOverlapTickKey(float fTick)
 //{
 //	return (m_mapKeyTale.find(fTick) != m_mapKeyTale.end());
 //}

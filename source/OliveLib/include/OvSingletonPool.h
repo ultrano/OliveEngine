@@ -1,4 +1,5 @@
 #pragma once
+#include "OvTypeDef.h"
 
 class OvSingletonContextList;
 
@@ -11,7 +12,7 @@ public:
 
 	static void	StartUp();
 	static void	ShutDown();
-	static bool IsPoolStartedUp();
+	static OvBool IsPoolStartedUp();
 
 private:
 

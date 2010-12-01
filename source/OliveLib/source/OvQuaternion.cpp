@@ -107,11 +107,11 @@ OvQuaternion operator * (float _fValue, const OvQuaternion& _rQuat)
 }
 
 
-bool OvQuaternion::operator == ( const OvQuaternion& _rQuat) const
+OvBool OvQuaternion::operator == ( const OvQuaternion& _rQuat) const
 {
 	return ! (memcmp((void*)this,(void*)&_rQuat,sizeof(OvQuaternion)));
 }
-bool OvQuaternion::operator != ( const OvQuaternion& _rQuat) const
+OvBool OvQuaternion::operator != ( const OvQuaternion& _rQuat) const
 {
 	return !(*this == _rQuat);
 }

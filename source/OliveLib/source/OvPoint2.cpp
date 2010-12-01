@@ -55,11 +55,11 @@ OvPoint2& OvPoint2::operator -=(const OvPoint2& _rPt)
 	y -= _rPt.y;
 	return *this;
 }
-bool	OvPoint2::operator ==(const OvPoint2& _rPt) const
+OvBool	OvPoint2::operator ==(const OvPoint2& _rPt) const
 {
 	return ((x == _rPt.x)&&(y == _rPt.y));
 }
-bool	OvPoint2::operator !=(const OvPoint2& _rPt) const
+OvBool	OvPoint2::operator !=(const OvPoint2& _rPt) const
 {
 	return ((x != _rPt.x)&&(y != _rPt.y));
 }

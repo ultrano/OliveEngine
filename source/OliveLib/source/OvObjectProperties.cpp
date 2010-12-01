@@ -51,7 +51,7 @@ void	OvObjectProperties::PushValue(const OvString& rValue)
 	m_queValueQueue.push(rValue);
 }
 
-bool	OvObjectProperties::PopValue(OvString& rValue)
+OvBool	OvObjectProperties::PopValue(OvString& rValue)
 {
 	if (m_queValueQueue.size())
 	{
@@ -65,7 +65,7 @@ void	OvObjectProperties::PushValue( OliveValue::Value& rValue )
 {
 	PushValue(rValue.GetValue());
 }
-bool	OvObjectProperties::PopValue( OliveValue::Value& rValue )
+OvBool	OvObjectProperties::PopValue( OliveValue::Value& rValue )
 {
 	OvString popedValue;
 	if(PopValue(popedValue))

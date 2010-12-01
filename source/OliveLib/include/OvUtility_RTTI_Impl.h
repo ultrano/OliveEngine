@@ -78,7 +78,7 @@ const OvString&	TypeName( Type_0 typePointer )
 //////////////////////////////////////////////////////////////////////////
 
 template<typename Type_0, typename Type_1>
-bool	IsSame( Type_1 typePointer0, Type_1 typePointer1 )
+OvBool	IsSame( Type_1 typePointer0, Type_1 typePointer1 )
 {
 	if ( typePointer0 && typePointer1 )
 	{

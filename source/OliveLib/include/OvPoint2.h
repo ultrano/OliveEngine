@@ -1,4 +1,5 @@
 #pragma once
+#include "OvTypeDef.h"
 
 class OvPoint2
 {
@@ -21,8 +22,8 @@ public:
 
 	OvPoint2&	operator +=(const OvPoint2& _rPt) ;
 	OvPoint2&	operator -=(const OvPoint2& _rPt) ;
-	bool		operator ==(const OvPoint2& _rPt) const;
-	bool		operator !=(const OvPoint2& _rPt) const;
+	OvBool		operator ==(const OvPoint2& _rPt) const;
+	OvBool		operator !=(const OvPoint2& _rPt) const;
 public:
 	float x,y;
 };

@@ -48,8 +48,8 @@ public:
 	OliveValue::Value* FindExtraProperty( const OvString& propName );
 
 	//! RegisterExtraProperty는 성능상의 부하를 고려 해야 겠다. (구현부가 부하를 발생시키게 생겼다.)
-	bool		RegisterExtraProperty( const OvString& propName, OliveValue::Value& extraProp );
-	bool		RemoveExtraProperty( const OvString& propName );
+	OvBool		RegisterExtraProperty( const OvString& propName, OliveValue::Value& extraProp );
+	OvBool		RemoveExtraProperty( const OvString& propName );
 	void		ClearExtraProperty();
 
 

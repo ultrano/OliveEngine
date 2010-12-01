@@ -1,8 +1,9 @@
 #pragma once
+#include "OvTypeDef.h"
 #include "OvMemObject.h"
 
 class OvStreamAgent : public OvMemObject
 {
-	bool	Extract();
-	bool	Inject();
+	OvBool	Extract();
+	OvBool	Inject();
 };

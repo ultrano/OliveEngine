@@ -66,12 +66,12 @@ OvString OliveValue::Bool::GetValue()
 	return OvString( OvFormatString( "%d", m_value ) );
 }
 
-void OliveValue::Bool::SetBool( bool expData )
+void OliveValue::Bool::SetBool( OvBool expData )
 {
 	m_value = expData;
 }
 
-bool OliveValue::Bool::GetBool()
+OvBool OliveValue::Bool::GetBool()
 {
 	return m_value;
 }

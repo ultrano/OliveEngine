@@ -23,4 +23,4 @@ public:
 OvMatrix	MakeTransformMatrix(const OvPoint3& scale, const OvQuaternion& quat, const OvPoint3& pos);
 OvMatrix	MakeTransformMatrix(const OvTransform& transform);
 OvTransform ExtractTransformFromMatrix( const OvMatrix& mat );
-bool		MakeViewMatrix( const OvPoint3& lookDir, const OvPoint3& upDir, const OvPoint3& pos, OvMatrix& outMat );
+OvBool		MakeViewMatrix( const OvPoint3& lookDir, const OvPoint3& upDir, const OvPoint3& pos, OvMatrix& outMat );

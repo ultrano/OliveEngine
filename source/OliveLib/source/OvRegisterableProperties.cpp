@@ -12,14 +12,14 @@ using namespace std;
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////				bool					/////////////////////////////
+///////////////////////////				OvBool					/////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////
 OvRTTI_IMPL(OvPropAccesser_bool)
-bool	OvPropAccesser_bool::Extract(OvObject* pObj, OvObjectProperties& rObjStore)
+OvBool	OvPropAccesser_bool::Extract(OvObject* pObj, OvObjectProperties& rObjStore)
 {
 	if (pObj)
 	{
-		bool* kpProp = (bool*)Access(pObj);
+		OvBool* kpProp = (OvBool*)Access(pObj);
 		if ( kpProp )
 		{
 			OliveValue::Bool converter = *kpProp;
@@ -30,11 +30,11 @@ bool	OvPropAccesser_bool::Extract(OvObject* pObj, OvObjectProperties& rObjStore)
 	}
 	return false;
 }
-bool	OvPropAccesser_bool::Inject(OvObject* pObj, OvObjectProperties& rObjStore)
+OvBool	OvPropAccesser_bool::Inject(OvObject* pObj, OvObjectProperties& rObjStore)
 {
 	if (pObj)
 	{
-		bool* kpProp = (bool*)Access(pObj);
+		OvBool* kpProp = (OvBool*)Access(pObj);
 		if (kpProp)
 		{
 			OliveValue::Bool converter;
@@ -52,7 +52,7 @@ bool	OvPropAccesser_bool::Inject(OvObject* pObj, OvObjectProperties& rObjStore)
 ///////////////////////////				Interger					/////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////
 OvRTTI_IMPL(OvPropAccesser_integer)
-bool	OvPropAccesser_integer::Extract(OvObject* pObj, OvObjectProperties& rObjStore)
+OvBool	OvPropAccesser_integer::Extract(OvObject* pObj, OvObjectProperties& rObjStore)
 {
 	if (pObj)
 	{
@@ -67,7 +67,7 @@ bool	OvPropAccesser_integer::Extract(OvObject* pObj, OvObjectProperties& rObjSto
 	}
 	return false;
 }
-bool	OvPropAccesser_integer::Inject(OvObject* pObj, OvObjectProperties& rObjStore)
+OvBool	OvPropAccesser_integer::Inject(OvObject* pObj, OvObjectProperties& rObjStore)
 {
 	if (pObj)
 	{
@@ -89,7 +89,7 @@ bool	OvPropAccesser_integer::Inject(OvObject* pObj, OvObjectProperties& rObjStor
 ///////////////////////////				stl::OvString					/////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////
 OvRTTI_IMPL(OvPropAccesser_STL_string)
-bool	OvPropAccesser_STL_string::Extract(OvObject* pObj, OvObjectProperties& rObjStore)
+OvBool	OvPropAccesser_STL_string::Extract(OvObject* pObj, OvObjectProperties& rObjStore)
 {
 	if (pObj)
 	{
@@ -102,7 +102,7 @@ bool	OvPropAccesser_STL_string::Extract(OvObject* pObj, OvObjectProperties& rObj
 	}
 	return false;
 }
-bool	OvPropAccesser_STL_string::Inject(OvObject* pObj, OvObjectProperties& rObjStore)
+OvBool	OvPropAccesser_STL_string::Inject(OvObject* pObj, OvObjectProperties& rObjStore)
 {
 	if (pObj)
 	{
@@ -120,7 +120,7 @@ bool	OvPropAccesser_STL_string::Inject(OvObject* pObj, OvObjectProperties& rObjS
 ///////////////////////////				object_pointer					/////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////
 OvRTTI_IMPL(OvPropAccesser_object_pointer)
-bool	OvPropAccesser_object_pointer::Extract(OvObject* pObj, OvObjectProperties& rObjStore)
+OvBool	OvPropAccesser_object_pointer::Extract(OvObject* pObj, OvObjectProperties& rObjStore)
 {
 	OvObject** kpProp = (OvObject**)Access(pObj);
 	if ( kpProp )
@@ -140,7 +140,7 @@ bool	OvPropAccesser_object_pointer::Extract(OvObject* pObj, OvObjectProperties& 
 	}
 	return false;
 }
-bool	OvPropAccesser_object_pointer::Inject(OvObject* pObj, OvObjectProperties& rObjStore)
+OvBool	OvPropAccesser_object_pointer::Inject(OvObject* pObj, OvObjectProperties& rObjStore)
 {
 	OvObject** kpProp = (OvObject**)Access(pObj);
 	if (kpProp)
@@ -166,7 +166,7 @@ bool	OvPropAccesser_object_pointer::Inject(OvObject* pObj, OvObjectProperties& r
 ///////////////////////////				object_smart_pointer					/////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////
 OvRTTI_IMPL(OvPropAccesser_object_smart_pointer)
-bool	OvPropAccesser_object_smart_pointer::Extract(OvObject* pObj, OvObjectProperties& rObjStore)
+OvBool	OvPropAccesser_object_smart_pointer::Extract(OvObject* pObj, OvObjectProperties& rObjStore)
 {
 	OvObjectSPtr* kpProp = (OvObjectSPtr*)Access(pObj);
 	if (kpProp)
@@ -186,7 +186,7 @@ bool	OvPropAccesser_object_smart_pointer::Extract(OvObject* pObj, OvObjectProper
 	}
 	return false;
 }
-bool	OvPropAccesser_object_smart_pointer::Inject(OvObject* pObj, OvObjectProperties& rObjStore)
+OvBool	OvPropAccesser_object_smart_pointer::Inject(OvObject* pObj, OvObjectProperties& rObjStore)
 {
 	OvObjectSPtr* kpProp = (OvObjectSPtr*)Access(pObj);
 	if (kpProp)
@@ -212,7 +212,7 @@ bool	OvPropAccesser_object_smart_pointer::Inject(OvObject* pObj, OvObjectPropert
 ///////////////////////////				float					/////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////
 OvRTTI_IMPL(OvPropAccesser_float)
-bool	OvPropAccesser_float::Extract(OvObject* pObj, OvObjectProperties& rObjStore)
+OvBool	OvPropAccesser_float::Extract(OvObject* pObj, OvObjectProperties& rObjStore)
 {
 	if (pObj)
 	{
@@ -227,7 +227,7 @@ bool	OvPropAccesser_float::Extract(OvObject* pObj, OvObjectProperties& rObjStore
 	}
 	return false;
 }
-bool	OvPropAccesser_float::Inject(OvObject* pObj, OvObjectProperties& rObjStore)
+OvBool	OvPropAccesser_float::Inject(OvObject* pObj, OvObjectProperties& rObjStore)
 {
 	if (pObj)
 	{
@@ -251,7 +251,7 @@ bool	OvPropAccesser_float::Inject(OvObject* pObj, OvObjectProperties& rObjStore)
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
 OvRTTI_IMPL(OvPropAccesser_float2)
-bool	OvPropAccesser_float2::Extract(OvObject* pObj, OvObjectProperties& rObjStore)
+OvBool	OvPropAccesser_float2::Extract(OvObject* pObj, OvObjectProperties& rObjStore)
 {
 	float* kpProp = (float*)Access(pObj);
 	if (kpProp)
@@ -262,7 +262,7 @@ bool	OvPropAccesser_float2::Extract(OvObject* pObj, OvObjectProperties& rObjStor
 	}
 	return false;
 }
-bool	OvPropAccesser_float2::Inject(OvObject* pObj, OvObjectProperties& rObjStore)
+OvBool	OvPropAccesser_float2::Inject(OvObject* pObj, OvObjectProperties& rObjStore)
 {
 	float* kpProp = (float*)Access(pObj);
 	if (kpProp)
@@ -282,7 +282,7 @@ bool	OvPropAccesser_float2::Inject(OvObject* pObj, OvObjectProperties& rObjStore
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
 OvRTTI_IMPL(OvPropAccesser_float3)
-bool	OvPropAccesser_float3::Extract(OvObject* pObj, OvObjectProperties& rObjStore)
+OvBool	OvPropAccesser_float3::Extract(OvObject* pObj, OvObjectProperties& rObjStore)
 {
 	float* kpProp = (float*)Access(pObj);
 	if (kpProp)
@@ -293,7 +293,7 @@ bool	OvPropAccesser_float3::Extract(OvObject* pObj, OvObjectProperties& rObjStor
 	}
 	return false;
 }
-bool	OvPropAccesser_float3::Inject(OvObject* pObj, OvObjectProperties& rObjStore)
+OvBool	OvPropAccesser_float3::Inject(OvObject* pObj, OvObjectProperties& rObjStore)
 {
 	float* kpProp = (float*)Access(pObj);
 	if (kpProp)
@@ -313,7 +313,7 @@ bool	OvPropAccesser_float3::Inject(OvObject* pObj, OvObjectProperties& rObjStore
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
 OvRTTI_IMPL(OvPropAccesser_float4)
-bool	OvPropAccesser_float4::Extract(OvObject* pObj, OvObjectProperties& rObjStore)
+OvBool	OvPropAccesser_float4::Extract(OvObject* pObj, OvObjectProperties& rObjStore)
 {
 	float* kpProp = (float*)Access(pObj);
 	if ( kpProp )
@@ -324,7 +324,7 @@ bool	OvPropAccesser_float4::Extract(OvObject* pObj, OvObjectProperties& rObjStor
 	}
 	return false;
 }
-bool	OvPropAccesser_float4::Inject(OvObject* pObj, OvObjectProperties& rObjStore)
+OvBool	OvPropAccesser_float4::Inject(OvObject* pObj, OvObjectProperties& rObjStore)
 {
 	float* kpProp = (float*)Access(pObj);
 	if ( kpProp )
@@ -344,7 +344,7 @@ bool	OvPropAccesser_float4::Inject(OvObject* pObj, OvObjectProperties& rObjStore
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
 OvRTTI_IMPL(OvPropAccesser_transform)
-bool	OvPropAccesser_transform::Extract(OvObject* pObj, OvObjectProperties& rObjStore)
+OvBool	OvPropAccesser_transform::Extract(OvObject* pObj, OvObjectProperties& rObjStore)
 {
 	OvTransform* kpProp = (OvTransform*)Access(pObj);
 	if (kpProp)
@@ -360,7 +360,7 @@ bool	OvPropAccesser_transform::Extract(OvObject* pObj, OvObjectProperties& rObjS
 	}
 	return false;
 }
-bool	OvPropAccesser_transform::Inject(OvObject* pObj, OvObjectProperties& rObjStore)
+OvBool	OvPropAccesser_transform::Inject(OvObject* pObj, OvObjectProperties& rObjStore)
 {
 	OvTransform* kpProp = (OvTransform*)Access(pObj);
 	if (kpProp)
@@ -388,7 +388,7 @@ bool	OvPropAccesser_transform::Inject(OvObject* pObj, OvObjectProperties& rObjSt
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
 OvRTTI_IMPL(OvPropAccesser_extra_data)
-bool	OvPropAccesser_extra_data::Extract(OvObject* pObj, OvObjectProperties& rObjStore)
+OvBool	OvPropAccesser_extra_data::Extract(OvObject* pObj, OvObjectProperties& rObjStore)
 {
 	
 	OvObject::extra_property_table* kpProp = (OvObject::extra_property_table*)Access(pObj);
@@ -438,7 +438,7 @@ bool	OvPropAccesser_extra_data::Extract(OvObject* pObj, OvObjectProperties& rObj
 	}
 	return false;
 }
-bool	OvPropAccesser_extra_data::Inject(OvObject* pObj, OvObjectProperties& rObjStore)
+OvBool	OvPropAccesser_extra_data::Inject(OvObject* pObj, OvObjectProperties& rObjStore)
 {
 	OvObject::extra_property_table* kpProp = (OvObject::extra_property_table*)Access(pObj);
 
@@ -500,7 +500,7 @@ bool	OvPropAccesser_extra_data::Inject(OvObject* pObj, OvObjectProperties& rObjS
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
 OvRTTI_IMPL(OvPropAccesser_object_collector);
-bool OvPropAccesser_object_collector::Extract(OvObject* pObj, OvObjectProperties& rObjStore)
+OvBool OvPropAccesser_object_collector::Extract(OvObject* pObj, OvObjectProperties& rObjStore)
 {
 	if (pObj)
 	{
@@ -525,7 +525,7 @@ bool OvPropAccesser_object_collector::Extract(OvObject* pObj, OvObjectProperties
 	}
 	return false;
 }
-bool OvPropAccesser_object_collector::Inject(OvObject* pObj, OvObjectProperties& rObjStore)
+OvBool OvPropAccesser_object_collector::Inject(OvObject* pObj, OvObjectProperties& rObjStore)
 {
 
 	OvObjectCollector* kpProp = (OvObjectCollector*)Access(pObj);
@@ -569,7 +569,7 @@ bool OvPropAccesser_object_collector::Inject(OvObject* pObj, OvObjectProperties&
 
 OvRTTI_IMPL(OvPropAccesser_resource);
 
-bool OvPropAccesser_resource::Extract( OvObject* pObj, OvObjectProperties& rObjStore )
+OvBool OvPropAccesser_resource::Extract( OvObject* pObj, OvObjectProperties& rObjStore )
 {
 	OvResourceSPtr* accessProp = (OvResourceSPtr*)Access(pObj);
 	if ( accessProp )
@@ -588,7 +588,7 @@ bool OvPropAccesser_resource::Extract( OvObject* pObj, OvObjectProperties& rObjS
 	return false;
 }
 
-bool OvPropAccesser_resource::Inject( OvObject* pObj, OvObjectProperties& rObjStore )
+OvBool OvPropAccesser_resource::Inject( OvObject* pObj, OvObjectProperties& rObjStore )
 {
 	OvResourceSPtr* accessProp = (OvResourceSPtr*)Access(pObj);
 	if ( accessProp )
@@ -615,7 +615,7 @@ bool OvPropAccesser_resource::Inject( OvObject* pObj, OvObjectProperties& rObjSt
 
 OvRTTI_IMPL(OvPropAccesser_resource_ticket);
 
-bool OvPropAccesser_resource_ticket::Extract( OvObject* pObj, OvObjectProperties& rObjStore )
+OvBool OvPropAccesser_resource_ticket::Extract( OvObject* pObj, OvObjectProperties& rObjStore )
 {
 	OvResourceTicketSPtr* accessProp = (OvResourceTicketSPtr*)Access(pObj);
 	if ( accessProp )
@@ -635,7 +635,7 @@ bool OvPropAccesser_resource_ticket::Extract( OvObject* pObj, OvObjectProperties
 	return false;
 }
 
-bool OvPropAccesser_resource_ticket::Inject( OvObject* pObj, OvObjectProperties& rObjStore )
+OvBool OvPropAccesser_resource_ticket::Inject( OvObject* pObj, OvObjectProperties& rObjStore )
 {
 	OvResourceTicketSPtr* accessProp = (OvResourceTicketSPtr*)Access(pObj);
 	if ( accessProp )

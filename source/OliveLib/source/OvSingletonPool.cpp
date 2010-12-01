@@ -31,7 +31,7 @@ void	OvSingletonPool::ShutDown()
 		sm_pSingletonContextList = NULL;
 	}
 }
-bool OvSingletonPool::IsPoolStartedUp()
+OvBool OvSingletonPool::IsPoolStartedUp()
 {
 	return ( sm_pSingletonContextList != NULL );
 }

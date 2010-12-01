@@ -24,7 +24,7 @@
 //		m_oldDepthStencil = NULL;
 //	}
 //}
-//bool OvRenderTarget::LockRenderTarget( unsigned render_target_index, LPDIRECT3DSURFACE9 renderTarget )
+//OvBool OvRenderTarget::LockRenderTarget( unsigned render_target_index, LPDIRECT3DSURFACE9 renderTarget )
 //{
 //	if ( -1 == m_reservedRenderTargetIndex )
 //	{
@@ -38,7 +38,7 @@
 //	return false;
 //}
 //
-//bool OvRenderTarget::UnlockRenderTarget()
+//OvBool OvRenderTarget::UnlockRenderTarget()
 //{
 //	if ( m_oldRenderTarget && -1 != m_reservedRenderTargetIndex )
 //	{
@@ -51,13 +51,13 @@
 //	return false;
 //}
 //
-//bool OvRenderTarget::LockDepthStencil( LPDIRECT3DSURFACE9 depthStencil )
+//OvBool OvRenderTarget::LockDepthStencil( LPDIRECT3DSURFACE9 depthStencil )
 //{
 //	m_oldDepthStencil = OvRenderer::GetInstance()->SetDepthStencil( depthStencil );
 //	return ( m_oldDepthStencil != NULL );
 //}
 //
-//bool OvRenderTarget::UnlockDepthStencil()
+//OvBool OvRenderTarget::UnlockDepthStencil()
 //{
 //	if ( m_oldDepthStencil )
 //	{
@@ -106,7 +106,7 @@
 //
 //}
 //// 
-//// bool OvRenderTexture::Unlock()
+//// OvBool OvRenderTexture::Unlock()
 //// {
 //// 	if ( m_reservedTargetIndex != -1 )
 //// 	{

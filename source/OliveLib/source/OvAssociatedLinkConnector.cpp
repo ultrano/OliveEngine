@@ -38,7 +38,7 @@ OvObject** OvPointerLinkConnector::GetDestination()
 	return m_destination;
 }
 
-bool OvPointerLinkConnector::BuildLink( restore_object_table &restoreTable)
+OvBool OvPointerLinkConnector::BuildLink( restore_object_table &restoreTable)
 {
 	restore_object_table::iterator tableIter = restoreTable.find( GetFormerID() );
 	
@@ -88,7 +88,7 @@ OvObjectSPtr* OvSmartPtrLinkConnector::GetSmartDestination()
 	return m_destination;
 }
 
-bool OvSmartPtrLinkConnector::BuildLink( restore_object_table& restoreTable )
+OvBool OvSmartPtrLinkConnector::BuildLink( restore_object_table& restoreTable )
 {
 	restore_object_table::iterator tableIter = restoreTable.find( GetFormerID() );
 
@@ -146,7 +146,7 @@ void	OvCollectedObjectsLinkConnector::AddRelatedObjectID( const OvObjectID& obje
 	}
 }
 
-bool OvCollectedObjectsLinkConnector::BuildLink( restore_object_table& restoreTable )
+OvBool OvCollectedObjectsLinkConnector::BuildLink( restore_object_table& restoreTable )
 {
 	OvObjectCollector* destAddress = GetDestinateCollector();
 	if (destAddress)

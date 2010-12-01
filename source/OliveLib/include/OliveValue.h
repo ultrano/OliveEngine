@@ -51,13 +51,13 @@ namespace OliveValue
 	class Bool : public OliveValue::Value
 	{
 		OvRTTI_DECL(Bool);
-		OLIVE_VALUE_TYPE(bool);
+		OLIVE_VALUE_TYPE(OvBool);
 	public:
 		virtual void	SetValue( const OvString& expData );
 		virtual OvString	GetValue();
 	public:
-		void			SetBool( bool expData );
-		bool			GetBool();
+		void			SetBool( OvBool expData );
+		OvBool			GetBool();
 
 	};
 	class Float : public OliveValue::Value

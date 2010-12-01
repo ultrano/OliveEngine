@@ -55,4 +55,4 @@ private:
 	eTexUsage m_usage;
 };
 
-bool SaveTexture( const OvString& file, OvTextureSPtr texture, D3DXIMAGE_FILEFORMAT format);
+OvBool SaveTexture( const OvString& file, OvTextureSPtr texture, D3DXIMAGE_FILEFORMAT format);

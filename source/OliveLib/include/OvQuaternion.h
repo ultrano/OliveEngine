@@ -1,5 +1,6 @@
 #pragma once
 #pragma warning( disable : 4521 )
+#include "OvTypeDef.h"
 
 class OvPoint3;
 
@@ -31,8 +32,8 @@ public:
 
 	friend OvQuaternion operator * (float, const OvQuaternion& );
 
-	bool operator == ( const OvQuaternion& ) const;
-	bool operator != ( const OvQuaternion& ) const;
+	OvBool operator == ( const OvQuaternion& ) const;
+	OvBool operator != ( const OvQuaternion& ) const;
 
 	//!
 

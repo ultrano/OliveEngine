@@ -11,7 +11,7 @@ public:
 	
 	OvMeshBuilder(LPDIRECT3DDEVICE9 device):m_device(device){};
 	
-	bool	LoadMesh(/*블라 블라*/);
+	OvBool	LoadMesh(/*블라 블라*/);
 
 private:
 

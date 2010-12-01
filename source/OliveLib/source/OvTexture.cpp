@@ -92,7 +92,7 @@ eTexUsage OvCubeTexture::UsageType()
 //////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
 
-bool SaveTexture( const OvString& file, OvTextureSPtr texture, D3DXIMAGE_FILEFORMAT format )
+OvBool SaveTexture( const OvString& file, OvTextureSPtr texture, D3DXIMAGE_FILEFORMAT format )
 {
 	HRESULT hr = D3DXSaveTextureToFile( file.c_str(), format, texture->ToDxTexture() ,NULL);
 	return SUCCEEDED( hr );

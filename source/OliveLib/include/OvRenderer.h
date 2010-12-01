@@ -20,24 +20,24 @@ public:
 	OvRenderer();
 	~OvRenderer();
 
-	bool SetRenderTarget( OvTextureSPtr render_texture, bool clear_buffer = true, bool clear_zbuffer = true, const OvColor& color = OvColor(255,0,0,0) );
+	OvBool SetRenderTarget( OvTextureSPtr render_texture, OvBool clear_buffer = true, OvBool clear_zbuffer = true, const OvColor& color = OvColor(255,0,0,0) );
 	LPDIRECT3DSURFACE9 SetDepthStencil( LPDIRECT3DSURFACE9 depthStencil );
 
-	bool			BeginTarget(bool clear_buffer = true, bool clear_zbuffer = true, const OvColor& color = OvColor(255,0,0,0) );
-	bool			EndTarget();
-	bool			PresentTarget();
+	OvBool			BeginTarget(OvBool clear_buffer = true, OvBool clear_zbuffer = true, const OvColor& color = OvColor(255,0,0,0) );
+	OvBool			EndTarget();
+	OvBool			PresentTarget();
 
-	bool			SetSamplerState( DWORD sampler, DWORD type, DWORD value );
+	OvBool			SetSamplerState( DWORD sampler, DWORD type, DWORD value );
 
 	void			SetPixelShader( OvPixelShaderSPtr shader );
 	void			SetVertexShader( OvVertexShaderSPtr shader );
-	bool			SetTexture(UINT uiSamplerIndex,OvTextureSPtr pTexture);
-	bool			SetCubeTexture(UINT uiSamplerIndex,OvCubeTextureSPtr pTexture);
+	OvBool			SetTexture(UINT uiSamplerIndex,OvTextureSPtr pTexture);
+	OvBool			SetCubeTexture(UINT uiSamplerIndex,OvCubeTextureSPtr pTexture);
 
 	void			SetVertexStream( WORD streamIndex, const SVertexStreamInfo& streamInfo );
 	void			SetIndexStream( LPDIRECT3DINDEXBUFFER9 streamBuffer );
 	void			SetVertexDeclaration( LPDIRECT3DVERTEXDECLARATION9 decl );
-	bool			DrawPrimitive( D3DPRIMITIVETYPE primitiveType, UINT primCount );
+	OvBool			DrawPrimitive( D3DPRIMITIVETYPE primitiveType, UINT primCount );
 
 	void			RenderUnitRect( OvVertexShaderSPtr v_shader = NULL , OvPixelShaderSPtr p_shader = NULL );
 
@@ -59,7 +59,7 @@ public:
 
 private:
 
-	bool			_generate_renderer();
+	OvBool			_generate_renderer();
 
 private:
 

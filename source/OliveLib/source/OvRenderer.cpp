@@ -52,7 +52,7 @@ m_pDirect3D9Object(NULL)
 LPDIRECT3D9 m_pDirect3D9Object;
 };
 
-bool		OvRenderer::_generate_renderer()
+OvBool		OvRenderer::_generate_renderer()
 {
 
 	LPDIRECT3D9 kpDirect3D9Object = Direct3DCreate9(D3D_SDK_VERSION);
@@ -129,7 +129,7 @@ bool		OvRenderer::_generate_renderer()
 
 };
 
-bool OvRenderer::SetRenderTarget( OvTextureSPtr render_texture, bool clear_buffer, bool clear_zbuffer, const OvColor& color )
+OvBool OvRenderer::SetRenderTarget( OvTextureSPtr render_texture, OvBool clear_buffer, OvBool clear_zbuffer, const OvColor& color )
 {
 	if ( OvDevice device = GetDevice() )
 	{
@@ -171,7 +171,7 @@ LPDIRECT3DSURFACE9 OvRenderer::SetDepthStencil( LPDIRECT3DSURFACE9 depthStencil 
 	return NULL;
 }
 
-bool			OvRenderer::BeginTarget(bool clear_buffer, bool clear_zbuffer, const OvColor& color )
+OvBool			OvRenderer::BeginTarget(OvBool clear_buffer, OvBool clear_zbuffer, const OvColor& color )
 {
 	OvDevice device = GetDevice();
 	HRESULT hr = E_FAIL;
@@ -193,7 +193,7 @@ bool			OvRenderer::BeginTarget(bool clear_buffer, bool clear_zbuffer, const OvCo
 	return true;
 }
 
-bool			OvRenderer::EndTarget()
+OvBool			OvRenderer::EndTarget()
 {
 	OvDevice device = GetDevice();
 	HRESULT hr = E_FAIL;
@@ -205,7 +205,7 @@ bool			OvRenderer::EndTarget()
 	return false;
 }
 
-bool			OvRenderer::PresentTarget()
+OvBool			OvRenderer::PresentTarget()
 {
 	OvDevice device = GetDevice();
 	HRESULT hr = E_FAIL;
@@ -218,7 +218,7 @@ bool			OvRenderer::PresentTarget()
 	return false;
 }
 
-bool OvRenderer::SetSamplerState( DWORD sampler, DWORD type, DWORD value )
+OvBool OvRenderer::SetSamplerState( DWORD sampler, DWORD type, DWORD value )
 {
 	OvDevice device = GetDevice();
 	HRESULT hr = E_FAIL;
@@ -256,7 +256,7 @@ void OvRenderer::SetVertexShader( OvVertexShaderSPtr shader )
 	}
 }
 
-bool OvRenderer::SetTexture(UINT uiSamplerIndex,OvTextureSPtr pTexture)
+OvBool OvRenderer::SetTexture(UINT uiSamplerIndex,OvTextureSPtr pTexture)
 {
 	OvDevice kpDevice =  GetDevice();
 	if ( kpDevice )
@@ -272,7 +272,7 @@ bool OvRenderer::SetTexture(UINT uiSamplerIndex,OvTextureSPtr pTexture)
 	return false;
 }
 
-bool OvRenderer::SetCubeTexture(UINT uiSamplerIndex,OvCubeTextureSPtr pTexture)
+OvBool OvRenderer::SetCubeTexture(UINT uiSamplerIndex,OvCubeTextureSPtr pTexture)
 {
 	OvDevice kpDevice =  GetDevice();
 	if ( kpDevice && pTexture )
@@ -319,7 +319,7 @@ void OvRenderer::SetVertexDeclaration( LPDIRECT3DVERTEXDECLARATION9 decl )
 		OvAssert( SUCCEEDED( hr ) );
 	}
 }
-bool OvRenderer::DrawPrimitive( D3DPRIMITIVETYPE primitiveType, UINT primCount )
+OvBool OvRenderer::DrawPrimitive( D3DPRIMITIVETYPE primitiveType, UINT primCount )
 {
 	OvDevice device = GetDevice();
 	if ( device )

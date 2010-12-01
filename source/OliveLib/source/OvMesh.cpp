@@ -50,6 +50,6 @@ void	OvMesh::Rendering( StreamStage meshDetail )
 
 	OvRenderer::GetInstance()->SetVertexDeclaration( m_renderData->vertDecl );
 
-	bool result = OvRenderer::GetInstance()->DrawPrimitive( D3DPT_TRIANGLELIST, m_renderData->faceCount );
+	OvBool result = OvRenderer::GetInstance()->DrawPrimitive( D3DPT_TRIANGLELIST, m_renderData->faceCount );
 
 }

@@ -21,41 +21,41 @@ public:
 	/////////////////////////*  버텍스 쉐이더 관련 함수들 */////////////////////////////////////
 	////////////////////////////////////////////////////////////////////////////////////////////////
 
-	bool	SetVSConstB(const OvShaderConstInfo& rConstInfo,bool bCheck);
-	bool	GetVSConstB(const OvShaderConstInfo& rConstInfo,bool& bCheck);
+	OvBool	SetVSConstB(const OvShaderConstInfo& rConstInfo,OvBool bCheck);
+	OvBool	GetVSConstB(const OvShaderConstInfo& rConstInfo,OvBool& bCheck);
 
 	template<typename Type_0>
-	bool	SetVSConst(const OvShaderConstInfo& rConstInfo,const Type_0& rType);
+	OvBool	SetVSConst(const OvShaderConstInfo& rConstInfo,const Type_0& rType);
 	template<typename Type_0>
-	bool	GetVSConst(const OvShaderConstInfo& rConstInfo,Type_0& rType);
+	OvBool	GetVSConst(const OvShaderConstInfo& rConstInfo,Type_0& rType);
 
-	bool	SetVSConst(const OvShaderConstInfo& rConstInfo,const OvMatrix& rType);
-	bool	GetVSConst(const OvShaderConstInfo& rConstInfo,OvMatrix& rType);
+	OvBool	SetVSConst(const OvShaderConstInfo& rConstInfo,const OvMatrix& rType);
+	OvBool	GetVSConst(const OvShaderConstInfo& rConstInfo,OvMatrix& rType);
 
 	////////////////////////////////////////////////////////////////////////////////////////////////
 	/////////////////////////*  픽셀 관련 함수들 *///////////////////////////////////////////////
 	////////////////////////////////////////////////////////////////////////////////////////////////
 
 	template<typename Type_0>
-	bool	SetPSConst(const OvShaderConstInfo& rConstInfo,const Type_0& rType);
+	OvBool	SetPSConst(const OvShaderConstInfo& rConstInfo,const Type_0& rType);
 	template<typename Type_0>
-	bool	GetPSConst(const OvShaderConstInfo& rConstInfo,Type_0& rType);
+	OvBool	GetPSConst(const OvShaderConstInfo& rConstInfo,Type_0& rType);
 
-	bool	SetTexture(UINT uiSamplerIndex,OvTextureSPtr pTexture);
+	OvBool	SetTexture(UINT uiSamplerIndex,OvTextureSPtr pTexture);
 
 private:
 
 	////////////////////////////////////////////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////////////////////////////////////////
 
-	bool	_SetVSConstF(const OvShaderConstInfo& rConstInfo,float* pConst,size_t stConstSize);
-	bool	_GetVSConstF(const OvShaderConstInfo& rConstInfo,float* pConst,size_t stConstSize);
+	OvBool	_SetVSConstF(const OvShaderConstInfo& rConstInfo,float* pConst,size_t stConstSize);
+	OvBool	_GetVSConstF(const OvShaderConstInfo& rConstInfo,float* pConst,size_t stConstSize);
 
 	////////////////////////////////////////////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////////////////////////////////////////
 
-	bool	_SetPSConstF(const OvShaderConstInfo& rConstInfo,float* pConst,size_t stConstSize);
-	bool	_GetPSConstF(const OvShaderConstInfo& rConstInfo,float* pConst,size_t stConstSize);
+	OvBool	_SetPSConstF(const OvShaderConstInfo& rConstInfo,float* pConst,size_t stConstSize);
+	OvBool	_GetPSConstF(const OvShaderConstInfo& rConstInfo,float* pConst,size_t stConstSize);
 };
 
 class OvShaderConstInfo : public OvMemObject
@@ -84,12 +84,12 @@ private:
 };
 
 template<typename Type_0>
-bool	OvShaderManager::SetVSConst(const OvShaderConstInfo& rConstInfo,const Type_0& rType)
+OvBool	OvShaderManager::SetVSConst(const OvShaderConstInfo& rConstInfo,const Type_0& rType)
 {
 	return _SetVSConstF(rConstInfo,(float*)&(rType),sizeof(Type_0));
 }
 template<typename Type_0>
-bool	OvShaderManager::GetVSConst(const OvShaderConstInfo& rConstInfo,Type_0& rType)
+OvBool	OvShaderManager::GetVSConst(const OvShaderConstInfo& rConstInfo,Type_0& rType)
 {
 	return _GetVSConstF(rConstInfo,(float*)&(rType),sizeof(Type_0));
 }
@@ -98,12 +98,12 @@ bool	OvShaderManager::GetVSConst(const OvShaderConstInfo& rConstInfo,Type_0& rTy
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
 template<typename Type_0>
-bool	OvShaderManager::SetPSConst(const OvShaderConstInfo& rConstInfo,const Type_0& rType)
+OvBool	OvShaderManager::SetPSConst(const OvShaderConstInfo& rConstInfo,const Type_0& rType)
 {
 	return _SetPSConstF(rConstInfo,(float*)&(rType),sizeof(Type_0));
 }
 template<typename Type_0>
-bool	OvShaderManager::GetPSConst(const OvShaderConstInfo& rConstInfo,Type_0& rType)
+OvBool	OvShaderManager::GetPSConst(const OvShaderConstInfo& rConstInfo,Type_0& rType)
 {
 	return _GetPSConstF(rConstInfo,(float*)&(rType),sizeof(Type_0));
 }

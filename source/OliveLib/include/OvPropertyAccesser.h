@@ -15,8 +15,8 @@ public:
 	OvPropertyAccesser();
 	virtual ~OvPropertyAccesser();
 
-	virtual bool	Extract(OvObject* pObj, OvObjectProperties& rXml) = 0;
-	virtual bool	Inject(OvObject* pObj, OvObjectProperties& rXml) = 0;
+	virtual OvBool	Extract(OvObject* pObj, OvObjectProperties& rXml) = 0;
+	virtual OvBool	Inject(OvObject* pObj, OvObjectProperties& rXml) = 0;
 
 	void*			Access(OvObject* pObj);
 	OvUInt	GetOffset();

@@ -26,12 +26,12 @@ OvInputManager::~OvInputManager()
 	}
 }
 
-bool OvInputManager::IsStateOfKey( byte dik_key, BUTTON_STATE state )
+OvBool OvInputManager::IsStateOfKey( byte dik_key, BUTTON_STATE state )
 {
 	return m_keyboard_state[dik_key] == state;
 }
 
-bool OvInputManager::IsStateOfMouse( MOUSE_BUTTON button, BUTTON_STATE state )
+OvBool OvInputManager::IsStateOfMouse( MOUSE_BUTTON button, BUTTON_STATE state )
 {
 	return ( m_mouse_state[button] == state );
 }

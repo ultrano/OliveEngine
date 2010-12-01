@@ -26,12 +26,12 @@ public:
 	DWORD			Count();
 	void			Clear();
 
-	bool			AddObject(OvObjectSPtr pObj);
-	bool			AddObject(OvObjectCollector& pObjContainer);
+	OvBool			AddObject(OvObjectSPtr pObj);
+	OvBool			AddObject(OvObjectCollector& pObjContainer);
 	OvObjectSPtr	RemoveObject(OvObjectSPtr pObj);
 	OvObjectSPtr	RemoveObject( const OvObjectID& objectID );
 
-	bool			IsCollected(OvObjectSPtr pObj);
+	OvBool			IsCollected(OvObjectSPtr pObj);
 
 private:
 

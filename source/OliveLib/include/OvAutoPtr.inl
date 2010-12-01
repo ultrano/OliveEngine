@@ -28,7 +28,7 @@ OvAutoPtr<Type_0>::~OvAutoPtr()
 }
 
 template<typename Type_0>
-OvAutoPtr<Type_0>::operator	bool()const
+OvAutoPtr<Type_0>::operator	OvBool()const
 {
 	return (m_pReferenceTarget != NULL);
 }
@@ -93,35 +93,35 @@ Type_0&				OvAutoPtr<Type_0>::operator [](Tyep_Count _ArrayCount)
 
 
 template<typename Type_0,typename Type_1>
-bool	operator == (const OvAutoPtr<Type_0>& _copy0,const OvAutoPtr<Type_1>& _copy1)
+OvBool	operator == (const OvAutoPtr<Type_0>& _copy0,const OvAutoPtr<Type_1>& _copy1)
 {
 	return ((void*)_copy0.GetRear() == (void*)_copy1.GetRear());
 }
 template<typename Type_0,typename Type_1>
-bool	operator != (const OvAutoPtr<Type_0>& _copy0,const OvAutoPtr<Type_1>& _copy1)
+OvBool	operator != (const OvAutoPtr<Type_0>& _copy0,const OvAutoPtr<Type_1>& _copy1)
 {
 	return ((void*)_copy0.GetRear() != (void*)_copy1.GetRear());
 }
 
 template<typename Type_0,typename Type_1>
-bool	operator == (const OvAutoPtr<Type_0>& _copy0,const Type_1* _copy1)
+OvBool	operator == (const OvAutoPtr<Type_0>& _copy0,const Type_1* _copy1)
 {
 	return ((void*)_copy0.GetRear() == (void*)_copy1);
 }
 template<typename Type_0,typename Type_1>
-bool	operator != (const OvAutoPtr<Type_0>& _copy0,const Type_1* _copy1)
+OvBool	operator != (const OvAutoPtr<Type_0>& _copy0,const Type_1* _copy1)
 {
 	return ((void*)_copy0.GetRear() != (void*)_copy1);
 }
 
 
 template<typename Type_0,typename Type_1>
-bool	operator == (const Type_0* _copy0,const OvAutoPtr<Type_1>& _copy1)
+OvBool	operator == (const Type_0* _copy0,const OvAutoPtr<Type_1>& _copy1)
 {
 	return ((void*)_copy0 == (void*)_copy1.GetRear());
 }
 template<typename Type_0,typename Type_1>
-bool	operator != (const Type_0* _copy0,const OvAutoPtr<Type_1>& _copy1)
+OvBool	operator != (const Type_0* _copy0,const OvAutoPtr<Type_1>& _copy1)
 {
 	return ((void*)_copy0 != (void*)_copy1.GetRear());
 }

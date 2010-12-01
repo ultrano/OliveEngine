@@ -74,11 +74,11 @@ private:
 	void	_called_when_ticket_deleted( OvResourceTicket* ticket );
 
 	static	void	_thread_routine( void* data );
-	static bool&	_get_async_life_flag();
+	static OvBool&	_get_async_life_flag();
 	void	_async_routine();
 
 	void	_push_async_load_info( SAsyncLoadInfo& info );
-	bool	_pop_async_load_info( SAsyncLoadInfo& info );
+	OvBool	_pop_async_load_info( SAsyncLoadInfo& info );
 
 private:
 	resource_list			m_resourceList;
@@ -108,4 +108,4 @@ OvResourceManager::AsyncLoadResource( const OvString& fileLocation )
 };
 
 OvString	AbsolutePath( const OvString& file );
-bool	ClampPathIfResDir( OvString& file );
+OvBool	ClampPathIfResDir( OvString& file );

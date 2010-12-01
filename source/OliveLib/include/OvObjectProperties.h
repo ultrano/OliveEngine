@@ -29,10 +29,10 @@ public:
 	const OvObjectID& GetObjectID();
 
 	void	PushValue(const OvString& rValue);
-	bool	PopValue(OvString& rValue);
+	OvBool	PopValue(OvString& rValue);
 
 	void	PushValue( OliveValue::Value& rValue );
-	bool	PopValue( OliveValue::Value& rValue );
+	OvBool	PopValue( OliveValue::Value& rValue );
 
 	void	PushAssociatedObject(OvObject* pObject);
 	OvObject*	PopComponentObject();

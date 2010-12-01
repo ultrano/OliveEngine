@@ -16,12 +16,12 @@ OvMessageManager::~OvMessageManager()
 
 }
 
-bool	OvMessageManager::ListenMessage( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+OvBool	OvMessageManager::ListenMessage( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	return GetInstance()->_listenMessage( hWnd, message, wParam, lParam );
 }
 
-bool	OvMessageManager::_listenMessage( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+OvBool	OvMessageManager::_listenMessage( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	for each( OvMessageListener* listener in m_listenerList )
 	{
@@ -70,7 +70,7 @@ void OvMessageManager::_update()
 	}
 }
 
-bool OvMessageManager::IsWindowAlive()
+OvBool OvMessageManager::IsWindowAlive()
 {
 	return m_alive_flag;
 }

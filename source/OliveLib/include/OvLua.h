@@ -24,10 +24,10 @@
 //
 //public:
 //
-//	bool		RunScript(const char *pFilename);
-//	bool		RunString(const char *pCommand);
+//	OvBool		RunScript(const char *pFilename);
+//	OvBool		RunString(const char *pCommand);
 //	const char *GetErrorString(void);
-//	bool		AddFunction(const char *pFunctionName, LuaFunctionType pFunction);
+//	OvBool		AddFunction(const char *pFunctionName, LuaFunctionType pFunction);
 //	const char *GetStringArgument(OvInt num, const char *pDefault=NULL);
 //	double		GetNumberArgument(OvInt num, double dDefault=0.0);
 //	void*		GetUserDataArgument(OvInt num, void* dDefault=NULL);
@@ -37,30 +37,30 @@
 //	void		SetErrorHandler(void(*pErrHandler)(const char *pError)) ;
 //	lua_State	*GetScriptContext(void);
 //	void		ReadyFunction(const char* _pFuncName);
-//	bool		CallFunction(DWORD _dArgCount);
+//	OvBool		CallFunction(DWORD _dArgCount);
 // 
-//	bool		ExecuteFunctionWithArg(const char* _pFuncName,const char* _pArgRex = NULL,...);
+//	OvBool		ExecuteFunctionWithArg(const char* _pFuncName,const char* _pArgRex = NULL,...);
 //
 //	template< typename TArg0>
-//	bool		ExecuteFunction(const char* _pFuncName,TArg0 _tArg0);
+//	OvBool		ExecuteFunction(const char* _pFuncName,TArg0 _tArg0);
 //
 //	template< typename TArg0,typename TArg1>
-//	bool		ExecuteFunction(const char* _pFuncName,TArg0 _tArg0,TArg1 _tArg1);
+//	OvBool		ExecuteFunction(const char* _pFuncName,TArg0 _tArg0,TArg1 _tArg1);
 //
 //	template< typename TArg0,typename TArg1,typename TArg2>
-//	bool		ExecuteFunction(const char* _pFuncName,TArg0 _tArg0,TArg1 _tArg1,TArg2 _tArg2);
+//	OvBool		ExecuteFunction(const char* _pFuncName,TArg0 _tArg0,TArg1 _tArg1,TArg2 _tArg2);
 //
 //	template< typename TArg0,typename TArg1,typename TArg2,typename TArg3>
-//	bool		ExecuteFunction(const char* _pFuncName,TArg0 _tArg0,TArg1 _tArg1,TArg2 _tArg2,TArg3 _tArg3);
+//	OvBool		ExecuteFunction(const char* _pFuncName,TArg0 _tArg0,TArg1 _tArg1,TArg2 _tArg2,TArg3 _tArg3);
 //
 //	template< typename TArg0,typename TArg1,typename TArg2,typename TArg3,typename TArg4>
-//	bool		ExecuteFunction(const char* _pFuncName,TArg0 _tArg0,TArg1 _tArg1,TArg2 _tArg2,TArg3 _tArg3,TArg4 _tArg4);
+//	OvBool		ExecuteFunction(const char* _pFuncName,TArg0 _tArg0,TArg1 _tArg1,TArg2 _tArg2,TArg3 _tArg3,TArg4 _tArg4);
 //
 //	template< typename TArg0,typename TArg1,typename TArg2,typename TArg3,typename TArg4,typename TArg5>
-//	bool		ExecuteFunction(const char* _pFuncName,TArg0 _tArg0,TArg1 _tArg1,TArg2 _tArg2,TArg3 _tArg3,TArg4 _tArg4,TArg5 _tArg5);
+//	OvBool		ExecuteFunction(const char* _pFuncName,TArg0 _tArg0,TArg1 _tArg1,TArg2 _tArg2,TArg3 _tArg3,TArg4 _tArg4,TArg5 _tArg5);
 //
 //	template< typename TArg0,typename TArg1,typename TArg2,typename TArg3,typename TArg4,typename TArg5,typename TArg6>
-//	bool		ExecuteFunction(const char* _pFuncName,TArg0 _tArg0,TArg1 _tArg1,TArg2 _tArg2,TArg3 _tArg3,TArg4 _tArg4,TArg5 _tArg5,TArg6 _tArg6);
+//	OvBool		ExecuteFunction(const char* _pFuncName,TArg0 _tArg0,TArg1 _tArg1,TArg2 _tArg2,TArg3 _tArg3,TArg4 _tArg4,TArg5 _tArg5,TArg6 _tArg6);
 //
 //
 //private:

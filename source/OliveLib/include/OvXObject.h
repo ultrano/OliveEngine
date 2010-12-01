@@ -38,8 +38,8 @@ public :
 	OvXObject();
 	virtual ~OvXObject();
 
-	void			SetControlFlag( CONTROL_FLAG flag, bool check );
-	bool			GetControlFlag( CONTROL_FLAG flag );
+	void			SetControlFlag( CONTROL_FLAG flag, OvBool check );
+	OvBool			GetControlFlag( CONTROL_FLAG flag );
 
 	//! Update
 	void			Update(float _fElapse);
@@ -74,15 +74,15 @@ public :
 	const OvMatrix&		GetWorldMatrix();
 
 	//! Which Kind
-	bool			IsNode();
-	bool			IsLeaf();
+	OvBool			IsNode();
+	OvBool			IsLeaf();
 
 	//! Get Parent
 	OvXNodeSPtr			GetAttachedNode();
 
 	template<typename Type_0>
 	OvSmartPointer<Type_0>	GetFirstComponent();
-	bool				GetComponents( OvObjectCollector& extraComponents );
+	OvBool				GetComponents( OvObjectCollector& extraComponents );
 	OvXComponentSPtr	RemoveComponent( const OvObjectSPtr component );
 	OvXComponentSPtr	RemoveComponent( const OvObjectID& compoentID );
 	OvXComponentSPtr	RemoveComponent( const char* name );
@@ -90,8 +90,8 @@ public :
 private:
 
 	//! Set Object Controller (Do not use in application)
-	bool			_equip_component( OvXComponentSPtr component );
-	bool			_remove_component( OvXComponentSPtr component );
+	OvBool			_equip_component( OvXComponentSPtr component );
+	OvBool			_remove_component( OvXComponentSPtr component );
 
 	//! Set Parent (Do not use in application)
 	void			_set_parent(OvXNodeSPtr _pParentNode);

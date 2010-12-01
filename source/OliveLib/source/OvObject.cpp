@@ -41,7 +41,7 @@ OvObjectID		OvObject::GetObjectID()
 	return m_idObjectID;
 }
 
-bool OvObject::RegisterExtraProperty( const OvString& propName, OliveValue::Value& extraProp )
+OvBool OvObject::RegisterExtraProperty( const OvString& propName, OliveValue::Value& extraProp )
 {
 	if ( m_extraPropertyTable.find( propName ) == m_extraPropertyTable.end() )
 	{
@@ -56,7 +56,7 @@ bool OvObject::RegisterExtraProperty( const OvString& propName, OliveValue::Valu
 	return false;
 }
 
-bool		OvObject::RemoveExtraProperty( const OvString& propName )
+OvBool		OvObject::RemoveExtraProperty( const OvString& propName )
 {
 	extra_property_table::iterator tableIter = m_extraPropertyTable.find(propName) ;
 	if ( m_extraPropertyTable.end() != tableIter )

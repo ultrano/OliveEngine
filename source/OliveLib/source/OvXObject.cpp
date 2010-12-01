@@ -24,12 +24,12 @@ OvXObject::~OvXObject()
 {
 }
 
-void OvXObject::SetControlFlag( CONTROL_FLAG flag, bool check )
+void OvXObject::SetControlFlag( CONTROL_FLAG flag, OvBool check )
 {
 	m_controlFlags.SetFlag( flag, check );
 }
 
-bool OvXObject::GetControlFlag( CONTROL_FLAG flag )
+OvBool OvXObject::GetControlFlag( CONTROL_FLAG flag )
 {
 	return m_controlFlags.GetFlag( flag );
 }
@@ -186,12 +186,12 @@ const OvMatrix&		OvXObject::GetWorldMatrix()
 	return m_worldBuildMatrix;
 }
 
-bool OvXObject::IsNode()
+OvBool OvXObject::IsNode()
 {
 	return ( OvRTTI_Util::IsKindOf< OvXNode >( this ) != NULL );
 }
 
-bool OvXObject::IsLeaf()
+OvBool OvXObject::IsLeaf()
 {
 	return ! IsNode();
 }
@@ -208,12 +208,12 @@ OvXNodeSPtr	OvXObject::GetAttachedNode()
 }
 
 
-bool	OvXObject::GetComponents( OvObjectCollector& extraComponents )
+OvBool	OvXObject::GetComponents( OvObjectCollector& extraComponents )
 {
 	return extraComponents.AddObject( m_extraComponents );
 };
 
-bool	OvXObject::_equip_component( OvXComponentSPtr component )
+OvBool	OvXObject::_equip_component( OvXComponentSPtr component )
 {
 	if( component && component->GetTarget() == this )
 	{
@@ -223,7 +223,7 @@ bool	OvXObject::_equip_component( OvXComponentSPtr component )
 	return false;
 };
 
-bool OvXObject::_remove_component( OvXComponentSPtr component )
+OvBool OvXObject::_remove_component( OvXComponentSPtr component )
 {
 	if( component && component->GetTarget() == this )
 	{

@@ -7,7 +7,7 @@
 
 
 
-bool OvMeshBuilder::LoadMesh(/*블라 블라*/)
+OvBool OvMeshBuilder::LoadMesh(/*블라 블라*/)
 {
 	
 	//m_device->CreateVertexDeclaration(MESH_VERT_ELEMENT,&renderData.vertDecl);

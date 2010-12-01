@@ -24,7 +24,7 @@ struct SAutoStoreCleaner
 	SAutoStoreCleaner(OvStorage* cleanTarget):m_cleanTarget(cleanTarget){};
 	~SAutoStoreCleaner(){if(m_cleanTarget)m_cleanTarget->Clear();};
 };
-bool	OvStorage::Save( const OvString& pFile, OvObjectCollector& saveObjects )
+OvBool	OvStorage::Save( const OvString& pFile, OvObjectCollector& saveObjects )
 {
 	SAutoStoreCleaner autoCleaner(this);
 
@@ -40,7 +40,7 @@ bool	OvStorage::Save( const OvString& pFile, OvObjectCollector& saveObjects )
 	return m_xmlDoc.SaveFile( pFile.c_str() );
 }
 
-bool	OvStorage::Load( const OvString& pFile, OvObjectCollector& loadedObjects)
+OvBool	OvStorage::Load( const OvString& pFile, OvObjectCollector& loadedObjects)
 {
 	SAutoStoreCleaner autoCleaner(this);
 
@@ -101,7 +101,7 @@ void	OvStorage::_restore_object( TiXmlElement& objElem )
 		}
 	}
 }
-bool	OvStorage::_extract_property(OvObject* pObj,OvObjectProperties& rStore)
+OvBool	OvStorage::_extract_property(OvObject* pObj,OvObjectProperties& rStore)
 {
 	if (pObj && m_storeObjectTable.IsCollected(pObj) == false )
 	{
@@ -117,7 +117,7 @@ bool	OvStorage::_extract_property(OvObject* pObj,OvObjectProperties& rStore)
 	}
 	return false;
 }
-bool	OvStorage::_inject_property(OvObject* pObj,OvObjectProperties& rStore)
+OvBool	OvStorage::_inject_property(OvObject* pObj,OvObjectProperties& rStore)
 {
 	if (pObj)
 	{
@@ -126,7 +126,7 @@ bool	OvStorage::_inject_property(OvObject* pObj,OvObjectProperties& rStore)
 	}
 	return false;
 }
-bool	OvStorage::_write_property(OvObjectProperties& rStore, TiXmlElement& objElem)
+OvBool	OvStorage::_write_property(OvObjectProperties& rStore, TiXmlElement& objElem)
 {
 	objElem.SetValue("Object");
 	objElem.SetAttribute("type", rStore.GetObjectType().c_str() );
@@ -142,7 +142,7 @@ bool	OvStorage::_write_property(OvObjectProperties& rStore, TiXmlElement& objEle
 	return true;
 }
 
-bool	OvStorage::_read_property( TiXmlElement& objElem, OvObjectProperties& rStore )
+OvBool	OvStorage::_read_property( TiXmlElement& objElem, OvObjectProperties& rStore )
 {
 	if ( OvString("Object") == objElem.Value() )
 	{

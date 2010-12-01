@@ -30,7 +30,7 @@ public:
 	~OvMaterial();
 
 	void	SetSamplerState( DWORD sampler, DWORD type, DWORD value );
-	bool	GetSamplerState( DWORD sampler, DWORD type, DWORD& value );
+	OvBool	GetSamplerState( DWORD sampler, DWORD type, DWORD& value );
 
 	void	SetVertexShader( OvVertexShaderSPtr shader );
 	OvVertexShaderSPtr GetVertexShader();

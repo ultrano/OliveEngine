@@ -89,12 +89,12 @@ OvPoint3& OvPoint3::operator -=(const OvPoint3& _rPt)
 	z -= _rPt.z;
 	return *this;
 }
-bool	OvPoint3::operator ==(const OvPoint3& _rPt) const
+OvBool	OvPoint3::operator ==(const OvPoint3& _rPt) const
 {
 	return ((x == _rPt.x)&&(y == _rPt.y)&&(z == _rPt.z));
 }
 
-bool	OvPoint3::operator !=(const OvPoint3& _rPt) const
+OvBool	OvPoint3::operator !=(const OvPoint3& _rPt) const
 {
 	return ((x != _rPt.x)&&(y != _rPt.y)&&(z != _rPt.z));
 }

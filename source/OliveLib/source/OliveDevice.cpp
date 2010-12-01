@@ -14,7 +14,7 @@ void OliveDevice::EngineOff()
 	OvSingletonPool::ShutDown();
 }
 
-bool OliveDevice::Run()
+OvBool OliveDevice::Run()
 {
 	OvInputManager::GetInstance()->_update();
 	OvMessageManager::GetInstance()->_update();

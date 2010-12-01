@@ -27,11 +27,11 @@
 //OvLua::~OvLua(){
 //};
 //
-//bool		OvLua::RunScript(const char *pFilename){
+//OvBool		OvLua::RunScript(const char *pFilename){
 //	return m_pPimple->mLuaInstance.RunScript(pFilename);
 //};
 //
-//bool		OvLua::RunString(const char *pCommand){
+//OvBool		OvLua::RunString(const char *pCommand){
 //	return m_pPimple->mLuaInstance.RunString(pCommand);
 //};
 ////
@@ -56,7 +56,7 @@
 ////
 ////};
 //
-//bool		OvLua::ExecuteFunctionWithArg(const char* _pFuncName,const char* _pArgRex,...)
+//OvBool		OvLua::ExecuteFunctionWithArg(const char* _pFuncName,const char* _pArgRex,...)
 //{
 //	lua_getglobal(GetScriptContext(),_pFuncName);
 //	vector<OvString> kArgTypeArray;
@@ -114,7 +114,7 @@
 //	return m_pPimple->mLuaInstance.GetErrorString();
 //};
 //
-//bool		OvLua::AddFunction(const char *pFunctionName, LuaFunctionType pFunction)
+//OvBool		OvLua::AddFunction(const char *pFunctionName, LuaFunctionType pFunction)
 //{
 //	return m_pPimple->mLuaInstance.AddFunction(pFunctionName,pFunction);
 //};
@@ -163,7 +163,7 @@
 //{
 //	lua_getglobal(GetScriptContext(),_pFuncName);
 //}
-//bool		OvLua::CallFunction(DWORD _dArgCount)
+//OvBool		OvLua::CallFunction(DWORD _dArgCount)
 //{
 //	if (!lua_pcall(GetScriptContext(),_dArgCount,LUA_MULTRET,0))
 //	{

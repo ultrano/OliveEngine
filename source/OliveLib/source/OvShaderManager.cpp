@@ -19,7 +19,7 @@ OvShaderManager::~OvShaderManager()
 }
 
 
-bool	OvShaderManager::SetVSConstB(const OvShaderConstInfo& rConstInfo,bool bCheck)
+OvBool	OvShaderManager::SetVSConstB(const OvShaderConstInfo& rConstInfo,OvBool bCheck)
 {
 	OvDevice kpDevice =  OvRenderer::GetInstance()->GetDevice();
 	if (kpDevice)
@@ -30,7 +30,7 @@ bool	OvShaderManager::SetVSConstB(const OvShaderConstInfo& rConstInfo,bool bChec
 	}
 	return false;
 }
-bool	OvShaderManager::GetVSConstB(const OvShaderConstInfo& rConstInfo,bool& bCheck)
+OvBool	OvShaderManager::GetVSConstB(const OvShaderConstInfo& rConstInfo,OvBool& bCheck)
 {
 	OvDevice kpDevice =  OvRenderer::GetInstance()->GetDevice();
 	if (kpDevice)
@@ -42,7 +42,7 @@ bool	OvShaderManager::GetVSConstB(const OvShaderConstInfo& rConstInfo,bool& bChe
 	return false;
 }
 
-bool	OvShaderManager::_SetVSConstF(const OvShaderConstInfo& rConstInfo,float* pConst,size_t stConstSize)
+OvBool	OvShaderManager::_SetVSConstF(const OvShaderConstInfo& rConstInfo,float* pConst,size_t stConstSize)
 {
 	OvDevice kpDevice =  OvRenderer::GetInstance()->GetDevice();
 	if (kpDevice)
@@ -64,7 +64,7 @@ bool	OvShaderManager::_SetVSConstF(const OvShaderConstInfo& rConstInfo,float* pC
 	}
 	return false;
 }
-bool	OvShaderManager::_GetVSConstF(const OvShaderConstInfo& rConstInfo,float* pConst,size_t stConstSize)
+OvBool	OvShaderManager::_GetVSConstF(const OvShaderConstInfo& rConstInfo,float* pConst,size_t stConstSize)
 {
 	OvDevice kpDevice =  OvRenderer::GetInstance()->GetDevice();
 	if (kpDevice)
@@ -95,13 +95,13 @@ bool	OvShaderManager::_GetVSConstF(const OvShaderConstInfo& rConstInfo,float* pC
 	}
 	return false;
 }
-bool	OvShaderManager::SetVSConst(const OvShaderConstInfo& rConstInfo,const OvMatrix& rType)
+OvBool	OvShaderManager::SetVSConst(const OvShaderConstInfo& rConstInfo,const OvMatrix& rType)
 {
 	OvMatrix kMat;
 	kMat = OvMatrixTranspose(rType);
 	return _SetVSConstF(rConstInfo,(float*)&(kMat),sizeof(OvMatrix));
 }
-bool	OvShaderManager::GetVSConst(const OvShaderConstInfo& rConstInfo,OvMatrix& rType)
+OvBool	OvShaderManager::GetVSConst(const OvShaderConstInfo& rConstInfo,OvMatrix& rType)
 {
 	OvMatrix kMat;
 	if (_GetVSConstF(rConstInfo,(float*)&(kMat),sizeof(OvMatrix)))
@@ -113,7 +113,7 @@ bool	OvShaderManager::GetVSConst(const OvShaderConstInfo& rConstInfo,OvMatrix& r
 }
 //////////////////////////////////////
 
-bool	OvShaderManager::_SetPSConstF(const OvShaderConstInfo& rConstInfo,float* pConst,size_t stConstSize)
+OvBool	OvShaderManager::_SetPSConstF(const OvShaderConstInfo& rConstInfo,float* pConst,size_t stConstSize)
 {
 	OvDevice kpDevice =  OvRenderer::GetInstance()->GetDevice();
 	if (kpDevice)
@@ -125,7 +125,7 @@ bool	OvShaderManager::_SetPSConstF(const OvShaderConstInfo& rConstInfo,float* pC
 	return false;
 
 }
-bool	OvShaderManager::_GetPSConstF(const OvShaderConstInfo& rConstInfo,float* pConst,size_t stConstSize)
+OvBool	OvShaderManager::_GetPSConstF(const OvShaderConstInfo& rConstInfo,float* pConst,size_t stConstSize)
 {
 	OvDevice kpDevice =  OvRenderer::GetInstance()->GetDevice();
 	if (kpDevice)
