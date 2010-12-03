@@ -21,8 +21,9 @@ namespace Olive
 	};
 
 #define OvFACTORY_OBJECT_DECL( type_name ) \
-	static OvObject* _construct_function_(){ return OvNew type_name; };\
-	static Olive::OvFactoryMemberDeclarer _static_factory_declarer;
+	friend OvObject* _construct_function_##type_name();\
+	private: static OvObject* _construct_function_(){ return OvNew type_name; };\
+	private: static Olive::OvFactoryMemberDeclarer _static_factory_declarer;
 
 #define OvFACTORY_OBJECT_IMPL( type_name ) \
 	OvObject* _construct_function_##type_name(){ return type_name::_construct_function_(); }\
