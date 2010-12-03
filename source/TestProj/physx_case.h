@@ -106,7 +106,7 @@ public:
 	void Control()
 	{
 		OvInputManager* input = OvInputManager::GetInstance();
-		if ( input->IsStateOfMouse( L_BUTTON, PRESSING ) )
+		if ( input->IsStateOfMouse( L_BUTTON, PRESSED | RELEASED ) )
 		{
 			OvModelSPtr model = m_loadedObjects.GetByName("Ball");
 			if ( model )

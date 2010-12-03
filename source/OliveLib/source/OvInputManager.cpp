@@ -6,9 +6,22 @@
 
 OvInputManager::OvInputManager()
 {
+	OvUInt index = 0;
+
+	index = MAX_KEY;
+	while ( index-- )
+	{
+		m_keyboard_state[ index ] = RELEASING;
+	}
 	ZeroMemory( &m_newKeyState[0], sizeof( m_newKeyState ) );
+	
+
+	index = BUTTON_COUNT;
+	while ( index-- )
+	{
+		m_mouse_state[ index ] = RELEASING;
+	}
 	ZeroMemory( &m_new_mouse_state, sizeof( m_new_mouse_state ) );
-	ZeroMemory( &m_mouse_state, sizeof( m_mouse_state ) );
 	ZeroMemory( &m_mouse_state_time, sizeof( m_mouse_state_time ) );
 }
 
@@ -26,14 +39,18 @@ OvInputManager::~OvInputManager()
 	}
 }
 
-OvBool OvInputManager::IsStateOfKey( byte dik_key, BUTTON_STATE state )
+OvBool OvInputManager::IsStateOfKey( byte dik_key, OvUInt state )
 {
-	return m_keyboard_state[dik_key] == state;
+	OvUInt key = m_keyboard_state[dik_key];
+	OvBool result = (key & state);
+	return result;
 }
 
-OvBool OvInputManager::IsStateOfMouse( MOUSE_BUTTON button, BUTTON_STATE state )
+OvBool OvInputManager::IsStateOfMouse( MOUSE_BUTTON button, OvUInt state )
 {
-	return ( m_mouse_state[button] == state );
+	OvUInt key = m_mouse_state[button];
+	OvBool result = (key & state);
+	return result;
 }
 
 OvPoint3 OvInputManager::GetMouseMoveDelta()

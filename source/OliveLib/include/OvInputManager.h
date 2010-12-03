@@ -6,7 +6,14 @@
 
 
 enum MOUSE_BUTTON { L_BUTTON, R_BUTTON, M_BUTTON, BUTTON_COUNT = 8 };
-enum BUTTON_STATE { RELEASING, RELEASED, PRESSING, PRESSED, CLICKED, /*DBCLICKED,*/ STATE_COUNT };
+enum BUTTON_STATE 
+{ 
+	RELEASING	= 1 << 1, 
+	RELEASED	= 1 << 2, 
+	PRESSING	= 1 << 3, 
+	PRESSED		= 1 << 4, 
+	CLICKED		= 1 << 5, 
+	STATE_COUNT	= 6			};
 
 class OvInputManager : public OvSingletonBase< OvInputManager >
 {
@@ -16,8 +23,8 @@ public:
 	OvInputManager();
 	~OvInputManager();
 
-	OvBool IsStateOfKey( byte dik_key, BUTTON_STATE state );
-	OvBool IsStateOfMouse( MOUSE_BUTTON button, BUTTON_STATE state );
+	OvBool IsStateOfKey( byte dik_key, OvUInt state );
+	OvBool IsStateOfMouse( MOUSE_BUTTON button, OvUInt state );
 	OvPoint3 GetMouseMoveDelta();
 
 private:

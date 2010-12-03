@@ -76,23 +76,23 @@ void OxCameraController::Update( float _fElapse )
 	OvPoint3 direction;
 	OvPoint3 velocity;
 	float moveSpeed = 50.0f;
-	if ( input->IsStateOfKey( DIK_LSHIFT, PRESSING ))
+	if ( input->IsStateOfKey( DIK_LSHIFT, PRESSED | PRESSING ))
 	{
 		moveSpeed = moveSpeed * 5;
 	}
-	if ( input->IsStateOfKey( DIK_W, PRESSING ) )
+	if ( input->IsStateOfKey( DIK_W, PRESSED | PRESSING ) )
 	{
 		direction += target_camera->GetLocalLookDirection();
 	}
-	if ( input->IsStateOfKey( DIK_S, PRESSING ) )
+	if ( input->IsStateOfKey( DIK_S, PRESSED | PRESSING ) )
 	{
 		direction += -target_camera->GetLocalLookDirection();
 	}
-	if ( input->IsStateOfKey( DIK_A, PRESSING ) )
+	if ( input->IsStateOfKey( DIK_A, PRESSED | PRESSING ) )
 	{
 		direction += -target_camera->GetLocalRightDirection();
 	}
-	if ( input->IsStateOfKey( DIK_D, PRESSING ) )
+	if ( input->IsStateOfKey( DIK_D, PRESSED | PRESSING ) )
 	{
 		direction += target_camera->GetLocalRightDirection();
 	}
