@@ -404,7 +404,7 @@ OvBool	OvPropAccesser_extra_data::Extract(OvObject* pObj, OvObjectProperties& rO
 
 		for each( const OvObject::extra_property_table_pair extraProp in extraTable )
 		{
-			OliveValue::Value* extraValue = (OliveValue::Value*)extraProp.second;
+			OliveValue::ValueSPtr extraValue = extraProp.second;
 
 			OvString typeName = OvRTTI_Util::TypeName( extraValue );
 

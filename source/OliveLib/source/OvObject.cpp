@@ -23,7 +23,7 @@ OvObject::OvObject()
 }
 OvObject::~OvObject()
 {
-	ClearExtraProperty();
+	ClearExtraProperties();
 	OvObjectManager::GetInstance()->RecallObjectID(this);
 }
 
@@ -41,14 +41,14 @@ OvObjectID		OvObject::GetObjectID()
 	return m_idObjectID;
 }
 
-OvBool OvObject::RegisterExtraProperty( const OvString& propName, OliveValue::Value& extraProp )
+OvBool OvObject::AddExtraProperty( const OvString& propName, OliveValue::Value& extraProp )
 {
 	if ( m_extraPropertyTable.find( propName ) == m_extraPropertyTable.end() )
 	{
 		OliveValue::Value* copy = OliveValue::Factory( OvRTTI_Util::TypeName( &extraProp ) );
 		if ( copy )
 		{
-			copy->FromString( extraProp.ToString() );
+			copy->CopyFrom( extraProp );
 			m_extraPropertyTable[ propName ] = copy;
 			return true;
 		}
@@ -61,23 +61,17 @@ OvBool		OvObject::RemoveExtraProperty( const OvString& propName )
 	extra_property_table::iterator tableIter = m_extraPropertyTable.find(propName) ;
 	if ( m_extraPropertyTable.end() != tableIter )
 	{
-		delete tableIter->second;
 		m_extraPropertyTable.erase(tableIter);
-
 		return true;
 	}
 	return false;
 }
-void		OvObject::ClearExtraProperty()
+void		OvObject::ClearExtraProperties()
 {
-	for each( const extra_property_table_pair& propPair in m_extraPropertyTable )
-	{
-		OvDelete propPair.second;
-	}
 	m_extraPropertyTable.clear();
 }
 
-OliveValue::Value* OvObject::FindExtraProperty( const OvString& propName )
+OliveValue::ValueSPtr OvObject::FindExtraProperty( const OvString& propName )
 {
 	extra_property_table::iterator tableIter = m_extraPropertyTable.find(propName) ;
 	if ( m_extraPropertyTable.end() != tableIter )

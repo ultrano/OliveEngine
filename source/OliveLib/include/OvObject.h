@@ -13,7 +13,7 @@ class OvObjectProperties;
 OvREF_POINTER(OvObject);
 namespace OliveValue
 {
-	class Value;
+	OvREF_POINTER(Value);
 };
 class OvObject : public OvRefBase
 {
@@ -26,8 +26,8 @@ private:
 
 public:
 
-	typedef std::map< OvString, OliveValue::Value* > extra_property_table;
-	typedef std::pair< OvString, OliveValue::Value* > extra_property_table_pair;
+	typedef std::map< OvString, OliveValue::ValueSPtr > extra_property_table;
+	typedef std::pair< OvString, OliveValue::ValueSPtr > extra_property_table_pair;
 
 	OvObject();
 	virtual ~OvObject(); 
@@ -44,13 +44,16 @@ public:
 
 	//! Extra Property
 	template<typename Type_0>
-	Type_0* FindExtraProperty( const OvString& propName );
-	OliveValue::Value* FindExtraProperty( const OvString& propName );
+	OvSmartPointer<Type_0> FindExtraProperty( const OvString& propName );
+	OliveValue::ValueSPtr FindExtraProperty( const OvString& propName );
 
-	//! RegisterExtraProperty는 성능상의 부하를 고려 해야 겠다. (구현부가 부하를 발생시키게 생겼다.)
-	OvBool		RegisterExtraProperty( const OvString& propName, OliveValue::Value& extraProp );
+	//!< AddExtraProperty에 의해 추가되는 추가 속성들은 독점적(exclusive)이다.
+	//!< 레퍼런스로 넘겨지며, 내부에서 OliveValue의 CopyFrom을 복사본을 소지하게 된다.
+	//!< 포인터를 사용해 여러 객체가 하나의 속성을 공유할수도 있겠지만, 현재로서는 독점적인게
+	//!< 맞는거 같아 이러하게 구현했다.
+	OvBool		AddExtraProperty( const OvString& propName, OliveValue::Value& extraProp );
 	OvBool		RemoveExtraProperty( const OvString& propName );
-	void		ClearExtraProperty();
+	void		ClearExtraProperties();
 
 
 private:
@@ -63,13 +66,13 @@ private:
 };
 
 template<typename Type_0>
-Type_0* OvObject::FindExtraProperty( const OvString& propName )
+OvSmartPointer<Type_0> OvObject::FindExtraProperty( const OvString& propName )
 {
-	OliveValue::Value* extraValue = NULL;
+	OliveValue::ValueSPtr extraValue = NULL;
 	extraValue = FindExtraProperty( propName );
 	if ( OvRTTI_Util::IsTypeOf<Type_0>( extraValue ) )
 	{
-		return ( Type_0* ) extraValue;
+		return extraValue;
 	}
 	return NULL;
 }

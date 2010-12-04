@@ -1,11 +1,12 @@
 #pragma once
 #include "OvTypeDef.h"
-#include "OvMemObject.h"
+#include "OvRefBase.h"
 #include "OvUtility_RTTI.h"
 #include "OvPoint2.h"
 #include "OvPoint3.h"
 #include "OvQuaternion.h"
 #include "OvObjectID.h"
+#include "OvColor.h"
 
 namespace OliveValue
 {
@@ -35,7 +36,8 @@ namespace OliveValue
 		return NULL;
 	};
 
-	class Value : public OvMemObject
+	OvREF_POINTER(Value);
+	class Value : public OvRefBase
 	{
 		friend Value*	Factory(const OvString& valueType);
 		friend class OvObject;
@@ -46,8 +48,12 @@ namespace OliveValue
 		void			FromString( const char* expData );
 		virtual void	FromString( const OvString& expData ) = 0;
 		virtual OvString	ToString() = 0;
+
+		//!< 기본 복사함수 구현, 오버헤드가 심할수 있는 방법이지만 공통된 방법이므로 기본적으로 제공.
+		virtual void	CopyFrom( Value& val ) { FromString( val.ToString() ); };
 	};
 
+	OvREF_POINTER(Bool);
 	class Bool : public OliveValue::Value
 	{
 		OvRTTI_DECL(Bool);
@@ -60,6 +66,8 @@ namespace OliveValue
 		OvBool			GetBool();
 
 	};
+
+	OvREF_POINTER(Float);
 	class Float : public OliveValue::Value
 	{
 		OvRTTI_DECL(Float);
@@ -71,7 +79,8 @@ namespace OliveValue
 		void			SetFloat( OvFloat expValue );
 		OvFloat			GetFloat();
 	};
-	
+
+	OvREF_POINTER(Point2);
 	class Point2 : public OliveValue::Value
 	{
 		OvRTTI_DECL(Point2);
@@ -85,6 +94,7 @@ namespace OliveValue
 		const OvPoint2&	GetPoint2();
 	};
 
+	OvREF_POINTER(Point3);
 	class Point3 : public OliveValue::Value
 	{
 		OvRTTI_DECL(Point3);
@@ -98,6 +108,7 @@ namespace OliveValue
 		const OvPoint3&	GetPoint3();
 	};
 
+	OvREF_POINTER(Quaternion);
 	class Quaternion : public OliveValue::Value
 	{
 		OvRTTI_DECL(Quaternion);
@@ -111,6 +122,7 @@ namespace OliveValue
 		const OvQuaternion& GetQuaternion();
 	};
 
+	OvREF_POINTER(Integer);
 	class Integer : public OliveValue::Value
 	{
 		OvRTTI_DECL(Integer);
@@ -123,6 +135,7 @@ namespace OliveValue
 		OvInt				GetInteger();
 	};
 
+	OvREF_POINTER(String);
 	class String : public OliveValue::Value
 	{
 		OvRTTI_DECL(String);
@@ -135,6 +148,7 @@ namespace OliveValue
 		const OvString&	GetString();
 	};
 
+	OvREF_POINTER(ObjectID);
 	class ObjectID : public OliveValue::Value
 	{
 		OvRTTI_DECL(ObjectID);
@@ -147,6 +161,7 @@ namespace OliveValue
 		const OvObjectID&	GetObjectID();
 	};
 
+	OvREF_POINTER(UserData);
 	class UserData : public OliveValue::Value
 	{
 		typedef void* void_pointer;
@@ -160,6 +175,18 @@ namespace OliveValue
 		void*			GetUserData();
 	};
 
+	OvREF_POINTER(Color);
+	class Color : public OliveValue::Value
+	{
+		OvRTTI_DECL(Color);
+		OLIVE_VALUE_TYPE(OvColor);
+	public:
+		virtual void	FromString( const OvString& expData );
+		virtual OvString	ToString();
+	public:
+		void			SetColor( const OvColor& userData );
+		const OvColor&		GetColor();
+	};
 // 	class ValueTuple : public OliveValue::Value
 // 	{
 // 

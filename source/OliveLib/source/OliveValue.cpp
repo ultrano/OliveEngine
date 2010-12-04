@@ -13,6 +13,8 @@ OvRTTI_IMPL(Integer);
 OvRTTI_IMPL(String);
 OvRTTI_IMPL(ObjectID);
 OvRTTI_IMPL(UserData);
+OvRTTI_IMPL(Color);
+
 
 //////////////////////////////////////////////////////////////////////////
 #define REGIST_VALUE_TYPE_BEGINE OliveValue::Value*	OliveValue::Factory(const OvString& valueType){\
@@ -30,6 +32,7 @@ REGIST_VALUE_TYPE_BEGINE
 	REGIST_VALUE_TYPE( String )
 	REGIST_VALUE_TYPE( ObjectID )
 	REGIST_VALUE_TYPE( UserData )
+	REGIST_VALUE_TYPE( Color )
 REGIST_VALUE_TYPE_END
 //////////////////////////////////////////////////////////////////////////
 
@@ -247,3 +250,36 @@ void* OliveValue::UserData::GetUserData()
 {
 	return m_value;
 }
+
+//////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////
+void OliveValue::Color::FromString( const OvString& expData )
+{
+	//!< 읽어오는 형식은 %d에 의해 숫자형으로 써져있기 때문에 숫자형인 OvInt나 OvUInt 로 받아야한다.
+	//!< OvColor::a r g b 멤버로 바로 받으면 가장 마지막인 b를 받는순간 arg는 b의 4바이트읽기에 의해 덮여 쓰여지게 된다.
+	//!< 그렇다고 char a,r,g,b; 로 받으면 스택 오버플로우로 함수가 무너진게 된다.
+	OvUInt a,r,g,b;
+	sscanf_s( expData.c_str(), "a:%d,r:%d,g:%d,b:%d", &a, &r, &g, &b );
+
+	m_value.a =	a;
+	m_value.r =	r;
+	m_value.g =	g;
+	m_value.b =	b;
+}
+
+OvString OliveValue::Color::ToString()
+{
+	return OvString(OvFormatString( "a:%d,r:%d,g:%d,b:%d", m_value.a, m_value.r, m_value.g, m_value.b ));
+}
+
+void OliveValue::Color::SetColor( const OvColor& userData )
+{
+	m_value = userData;
+}
+
+const OvColor& OliveValue::Color::GetColor()
+{
+	return m_value;
+}
+//////////////////////////////////////////////////////////////////////////
