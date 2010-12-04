@@ -90,7 +90,8 @@ void OvInputManager::_update_keyboard_state( DWORD time )
 		m_keyboard_device->GetDeviceState( sizeof( m_newKeyState ), &(m_newKeyState[0]) );
 		DWORD click_limit_time = 1000;
 
-		for ( unsigned i = 0 ; i < MAX_KEY ; ++i )
+		unsigned i = MAX_KEY; 
+		while ( i-- )
 		{
 			BUTTON_STATE new_state = (m_newKeyState[i] == 0x80)? PRESSED : RELEASED;
 			BUTTON_STATE old_state = m_keyboard_state[i];
@@ -121,6 +122,14 @@ void OvInputManager::_update_keyboard_state( DWORD time )
 			}
 		}
 	}
+	else
+	{
+		unsigned i = MAX_KEY; 
+		while ( i-- )
+		{
+			m_keyboard_state[i] = RELEASING;
+		}
+	}
 }
 
 void OvInputManager::_update_mouse_state( DWORD time )
@@ -131,7 +140,8 @@ void OvInputManager::_update_mouse_state( DWORD time )
 
 		DWORD click_limit_time = 1000;
 
-		for ( unsigned i = 0 ; i < BUTTON_COUNT ; ++i )
+		unsigned i = BUTTON_COUNT; 
+		while ( i-- )
 		{
 			BUTTON_STATE new_state = (m_new_mouse_state.rgbButtons[i] == 0x80)? PRESSED : RELEASED;
 			BUTTON_STATE old_state = m_mouse_state[i];
@@ -160,6 +170,14 @@ void OvInputManager::_update_mouse_state( DWORD time )
 			}
 		}
 	}
+	else
+	{
+		unsigned i = BUTTON_COUNT; 
+		while ( i-- )
+		{
+			m_mouse_state[i] = RELEASING;
+		}
+	}
 }
 
 void OvInputManager::_initialize( HWND hWnd )
@@ -184,7 +202,7 @@ void OvInputManager::_initialize( HWND hWnd )
 			, &m_mouse_device
 			, NULL);
 		m_mouse_device->SetDataFormat( &c_dfDIMouse2 );
-		m_mouse_device->SetCooperativeLevel( hWnd, DISCL_EXCLUSIVE |
+		m_mouse_device->SetCooperativeLevel( hWnd, DISCL_NONEXCLUSIVE |
 			DISCL_FOREGROUND);
 	}
 

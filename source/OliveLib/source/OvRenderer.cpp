@@ -55,6 +55,9 @@ LPDIRECT3D9 m_pDirect3D9Object;
 OvBool		OvRenderer::_generate_renderer()
 {
 
+	OvUInt width = 800;
+	OvUInt height = 600;
+
 	LPDIRECT3D9 kpDirect3D9Object = Direct3DCreate9(D3D_SDK_VERSION);
 
 	if (!kpDirect3D9Object)
@@ -89,7 +92,7 @@ OvBool		OvRenderer::_generate_renderer()
 		, windowClassName
 		, WS_OVERLAPPEDWINDOW | WS_VISIBLE
 		, 300, 50
-		, 800, 600
+		, width, height
 		, NULL
 		, NULL
 		, GetModuleHandle(NULL)
@@ -102,6 +105,8 @@ OvBool		OvRenderer::_generate_renderer()
 
 	d3dpp.Windowed					=	TRUE;
 	d3dpp.BackBufferFormat			=	D3DFMT_UNKNOWN;
+	d3dpp.BackBufferWidth			=	width;
+	d3dpp.BackBufferHeight			=	height;
 	d3dpp.SwapEffect				=	D3DSWAPEFFECT_DISCARD;
 	d3dpp.EnableAutoDepthStencil	=	TRUE;
 	d3dpp.AutoDepthStencilFormat	=	D3DFMT_D16;
@@ -116,14 +121,11 @@ OvBool		OvRenderer::_generate_renderer()
 		&(m_device)
 		);
 	OvDevice device = GetDevice();
-	;
+
 	device->GetRenderTarget( 0, &m_default_display_buffer );
 	//m_device->SetRenderState(D3DRS_ZENABLE,TRUE);
-
 	//m_device->SetRenderState(D3DRS_LIGHTING,false);
-	 	device->SetRenderState(D3DRS_CULLMODE,D3DCULL_NONE);
-
-	OvInputManager::GetInstance()->_initialize( GetWindowHandle() );
+	 device->SetRenderState(D3DRS_CULLMODE,D3DCULL_NONE);
 
 	return SUCCEEDED(hr);
 

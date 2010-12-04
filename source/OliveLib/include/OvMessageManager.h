@@ -15,7 +15,7 @@ public:
 
 public:
 
-	static OvBool	ListenMessage( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK	ListenMessage( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
 public:
 
@@ -27,7 +27,7 @@ public:
 	void	_update();
 private:
 
-	OvBool	_listenMessage( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
+	LRESULT	_listenMessage( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 	void	_register_listener( OvMessageListener* listener );
 	void	_remove_listener( OvMessageListener* listener );
 

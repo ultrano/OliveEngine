@@ -16,21 +16,20 @@ OvMessageManager::~OvMessageManager()
 
 }
 
-OvBool	OvMessageManager::ListenMessage( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT	CALLBACK OvMessageManager::ListenMessage( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
+	switch( message )
+	{
+	case WM_DESTROY:
+		PostQuitMessage(0);
+		return 0;
+	}
 	return GetInstance()->_listenMessage( hWnd, message, wParam, lParam );
 }
 
-OvBool	OvMessageManager::_listenMessage( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT	OvMessageManager::_listenMessage( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	for each( OvMessageListener* listener in m_listenerList )
-	{
-		if ( listener && listener->GetTarget() )
-		{
-			listener->_push_message(OvMessageListener::InputMessage(hWnd,message,wParam,lParam));
-		}
-	}
-	return true;
+	return DefWindowProc( hWnd, message, wParam, lParam );
 }
 OvPoint2	OvMessageManager::GetLastMousePoint()
 {
@@ -64,9 +63,11 @@ void OvMessageManager::_update()
 	ZeroMemory( &msg, sizeof( msg ) );
 	if ( PeekMessage( &msg, NULL, NULL, NULL, PM_REMOVE ) )
 	{
-		TranslateMessage( &msg );
-		DispatchMessage( &msg );
-		m_alive_flag = (msg.message != WM_QUIT);
+		if ( m_alive_flag = (msg.message != WM_QUIT) )
+		{
+			TranslateMessage( &msg );
+			DispatchMessage( &msg );
+		}
 	}
 }
 
