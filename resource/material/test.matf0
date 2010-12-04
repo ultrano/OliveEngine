@@ -38,10 +38,11 @@ void main( in float2 in_tex0	: TEXCOORD1
 
 	// collecting channels
 	float4 diffuse		= tex2D( SAMPLER_0, in_tex0 );
+  float4 normal		= tex2D( SAMPLER_1, in_tex0 );
 	//
 	
 	// manufaturing channels
-  col0 = diffuse;
+  col0 = diffuse * normal;
 	//
 	
 }

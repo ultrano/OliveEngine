@@ -128,7 +128,7 @@ public:
 		OvMatrix view_project = camera->GetViewMatrix() * camera->GetProjectMatrix();
 		shader->SetVSConst( OvVShaderConst::ViewProject, view_project );
 
-		renderer->SetRenderTarget( m_diffuseScene );
+		renderer->SetRenderTarget( m_diffuseScene, true, true, OvColor( 255,0,255,255 ));
 		
 		Draw( xobj );
 
