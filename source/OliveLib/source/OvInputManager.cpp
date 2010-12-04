@@ -5,6 +5,9 @@
 #pragma comment(lib, "Dxguid.lib")
 
 OvInputManager::OvInputManager()
+: m_direct_input( NULL )
+, m_keyboard_device( NULL )
+, m_mouse_device( NULL )
 {
 	OvUInt index = 0;
 
