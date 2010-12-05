@@ -6,6 +6,7 @@
 #include "OvSingleton.h"
 #include "OvDevice.h"
 #include "OvColor.h"
+#include "OliveValue.h"
 
 OvREF_POINTER(OvPixelShader);
 OvREF_POINTER(OvVertexShader);
@@ -23,9 +24,10 @@ public:
 	OvBool SetRenderTarget( OvTextureSPtr render_texture, OvBool clear_buffer = true, OvBool clear_zbuffer = true, const OvColor& color = OvColor(255,0,0,0) );
 	LPDIRECT3DSURFACE9 SetDepthStencil( LPDIRECT3DSURFACE9 depthStencil );
 
-	OvBool			BeginTarget(OvBool clear_buffer = true, OvBool clear_zbuffer = true, const OvColor& color = OvColor(255,0,0,0) );
-	OvBool			EndTarget();
-	OvBool			PresentTarget();
+	OvBool			BeginFrame(OvBool clear_buffer = true, OvBool clear_zbuffer = true, const OvColor& color = OvColor(255,0,0,0) );
+	OvBool			DrawPrimitive( D3DPRIMITIVETYPE primitiveType, UINT primCount );
+	OvBool			EndFrame();
+	OvBool			PresentFrame();
 
 	OvBool			SetSamplerState( DWORD sampler, DWORD type, DWORD value );
 
@@ -37,7 +39,6 @@ public:
 	void			SetVertexStream( WORD streamIndex, const SVertexStreamInfo& streamInfo );
 	void			SetIndexStream( LPDIRECT3DINDEXBUFFER9 streamBuffer );
 	void			SetVertexDeclaration( LPDIRECT3DVERTEXDECLARATION9 decl );
-	OvBool			DrawPrimitive( D3DPRIMITIVETYPE primitiveType, UINT primCount );
 
 	void			RenderUnitRect( OvVertexShaderSPtr v_shader = NULL , OvPixelShaderSPtr p_shader = NULL );
 
@@ -67,5 +68,6 @@ private:
 	LPDIRECT3DSURFACE9			m_default_display_buffer;
 	CRITICAL_SECTION			m_device_occupy;
 	HWND						m_window_handle;
+	OliveValue::Integer			m_count_frame_drawn_triangle;
 
 };

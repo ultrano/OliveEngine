@@ -173,7 +173,7 @@ LPDIRECT3DSURFACE9 OvRenderer::SetDepthStencil( LPDIRECT3DSURFACE9 depthStencil 
 	return NULL;
 }
 
-OvBool			OvRenderer::BeginTarget(OvBool clear_buffer, OvBool clear_zbuffer, const OvColor& color )
+OvBool			OvRenderer::BeginFrame(OvBool clear_buffer, OvBool clear_zbuffer, const OvColor& color )
 {
 	OvDevice device = GetDevice();
 	HRESULT hr = E_FAIL;
@@ -192,22 +192,25 @@ OvBool			OvRenderer::BeginTarget(OvBool clear_buffer, OvBool clear_zbuffer, cons
 		OvAssertMsg("Failed Begin RenderTarget");
 		return false;
 	}
+	m_count_frame_drawn_triangle = 0;
 	return true;
 }
 
-OvBool			OvRenderer::EndTarget()
+OvBool			OvRenderer::EndFrame()
 {
 	OvDevice device = GetDevice();
 	HRESULT hr = E_FAIL;
 	if ( device && SUCCEEDED( hr = device->EndScene()))
 	{
+		OutputDebugStr( m_count_frame_drawn_triangle.ToString().c_str() );
+		OutputDebugStr( "\n" );
 		return true;
 	}
 	OvAssertMsg("Failed End RenderTarget");
 	return false;
 }
 
-OvBool			OvRenderer::PresentTarget()
+OvBool			OvRenderer::PresentFrame()
 {
 	OvDevice device = GetDevice();
 	HRESULT hr = E_FAIL;
@@ -330,6 +333,7 @@ OvBool OvRenderer::DrawPrimitive( D3DPRIMITIVETYPE primitiveType, UINT primCount
 			( primitiveType
 			, 0
 			, primCount);
+		m_count_frame_drawn_triangle = m_count_frame_drawn_triangle + primCount;
 		return SUCCEEDED( hr );
 	}
 	return false;

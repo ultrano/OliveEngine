@@ -33,3 +33,19 @@ private:
 	OvObjectCollector	m_clectrChildCollect;
 
 };
+
+class OvScene;
+class OvSceneNode : public OvXNode
+{
+	OvRTTI_DECL(OvSceneNode);
+	OvPROPERTY_BAG_DECL(OvSceneNode);
+	OvFACTORY_OBJECT_DECL(OvSceneNode);
+	
+	//<! pseudo code
+	void	UpdateScene( OvFloat elapse );
+	void	SetScene( OvScene* scene );
+	OvScene* GetScene();
+private:
+	OvScene*		m_scene;
+
+};

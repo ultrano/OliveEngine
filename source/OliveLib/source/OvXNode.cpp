@@ -107,3 +107,42 @@ OvXObjectSPtr	OvXNode::GetChildeAt(OvUInt iIndex)
 	
 	return m_clectrChildCollect.GetByAt(iIndex);
 }
+
+//////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
+
+
+OvRTTI_IMPL(OvSceneNode);
+
+
+OvFACTORY_OBJECT_IMPL(OvSceneNode);
+
+void OvSceneNode::UpdateScene( OvFloat elapse )
+{
+	OvXObjectSPtr obj = NULL;
+	OvSceneNode* sc_obj = NULL;
+	OvUInt count = GetChildCount();
+	while ( count-- )
+	{
+		obj = GetChildeAt( count );
+		if ( sc_obj = OvCastTo<OvSceneNode>( obj ) )
+		{
+			sc_obj->SetScene( GetScene() );
+		}
+	}
+}
+
+void OvSceneNode::SetScene( OvScene* scene )
+{
+	if ( scene )
+	{
+// 		scene->ListUpSceneNode( this );
+// 		m_scene = scene;
+	}
+}
+
+OvScene* OvSceneNode::GetScene()
+{
+	return m_scene;
+}

@@ -139,7 +139,7 @@ public:
 	{
 		OvRenderer* renderer = OvRenderer::GetInstance();
 
-		renderer->BeginTarget();
+		renderer->BeginFrame();
 
 		RenderDiffuse( camera, xobj );
 		renderer->SetTexture( 0, m_diffuseScene );
@@ -148,8 +148,8 @@ public:
 			( m_shader_code->FindShader( "rectV", "vs_2_0" ) 
 			, m_shader_code->FindShader( "rectP", "ps_2_0" ) );
 
-		renderer->EndTarget();
-		renderer->PresentTarget();
+		renderer->EndFrame();
+		renderer->PresentFrame();
 
 	}
 
