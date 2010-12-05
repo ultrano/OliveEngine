@@ -2,6 +2,7 @@
 #include "OvSingleton.h"
 #include "OvPoint2.h"
 #include "OvPoint3.h"
+#include "OvBitFlags.h"
 #include <dinput.h>
 
 
@@ -13,7 +14,14 @@ enum BUTTON_STATE
 	PRESSING	= 1 << 3, 
 	PRESSED		= 1 << 4, 
 	CLICKED		= 1 << 5, 
-	STATE_COUNT	= 6			};
+	STATE_COUNT	= 6			
+};
+
+
+enum INPUT_OPTION
+{
+	OPT_CAPTURE_MOUSE,
+};
 
 class OvInputManager : public OvSingletonBase< OvInputManager >
 {
@@ -26,20 +34,27 @@ public:
 	OvBool IsStateOfKey( byte dik_key, OvUInt state );
 	OvBool IsStateOfMouse( MOUSE_BUTTON button, OvUInt state );
 	OvPoint3 GetMouseMoveDelta();
+	void	SetInputOption( INPUT_OPTION opt, OvBool check );
+	OvBool	GetInputOption( INPUT_OPTION opt );
+	OvBool	IsChangedOption( INPUT_OPTION opt );
 
 private:
 
 	void	_initialize( HWND hWnd );
 	void	_update();
 
+	void	_update_input_option( DWORD time );
 	void	_update_keyboard_state( DWORD time );
 	void	_update_mouse_state( DWORD time );
 
 private:
 
 	enum {MAX_KEY = 256};
+	Ov8SetFlags		m_input_options;
+	Ov8SetFlags		m_input_options_backup;
 
 	LPDIRECTINPUT8	m_direct_input;
+	HWND			m_window_handle;
 
 	LPDIRECTINPUTDEVICE8 m_keyboard_device;
 	byte				 m_newKeyState[ MAX_KEY ];

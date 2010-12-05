@@ -6,6 +6,7 @@
 
 OvInputManager::OvInputManager()
 : m_direct_input( NULL )
+, m_window_handle( NULL )
 , m_keyboard_device( NULL )
 , m_mouse_device( NULL )
 {
@@ -78,8 +79,30 @@ void OvInputManager::_update()
 	}*/
 
 	DWORD time = GetTickCount();
+	_update_input_option( time );
 	_update_keyboard_state( time );
 	_update_mouse_state( time );
+
+}
+
+void OvInputManager::_update_input_option( DWORD time )
+{
+	//!< 옵션 변경이 있을때만 장치 요청을 포기하고 옵션을 변경한다.
+	if ( m_input_options_backup != m_input_options )
+	{
+		// 옵션을 변경하기 위해선, 장치에 대한 요청을 포기해야 한다.
+		m_keyboard_device->Unacquire();
+		m_mouse_device->Unacquire();
+
+		if ( IsChangedOption( OPT_CAPTURE_MOUSE ) )
+		{
+			OvUInt exculsivity = GetInputOption( OPT_CAPTURE_MOUSE )? DISCL_EXCLUSIVE:DISCL_NONEXCLUSIVE;
+			m_mouse_device->SetCooperativeLevel( m_window_handle, exculsivity |
+				DISCL_FOREGROUND);
+		}
+
+		m_input_options_backup = m_input_options;
+	}
 
 }
 
@@ -204,7 +227,24 @@ void OvInputManager::_initialize( HWND hWnd )
 		m_mouse_device->SetDataFormat( &c_dfDIMouse2 );
 		m_mouse_device->SetCooperativeLevel( hWnd, DISCL_NONEXCLUSIVE |
 			DISCL_FOREGROUND);
+
+		m_window_handle = hWnd;
 	}
 
 
+}
+
+void OvInputManager::SetInputOption( INPUT_OPTION opt, OvBool check )
+{
+	m_input_options.SetFlag( opt, check );
+}
+
+OvBool OvInputManager::GetInputOption( INPUT_OPTION opt )
+{
+	return m_input_options.GetFlag( opt );
+}
+
+OvBool OvInputManager::IsChangedOption( INPUT_OPTION opt )
+{
+	return ( m_input_options_backup.GetFlag( opt ) != m_input_options.GetFlag( opt ) );
 }
