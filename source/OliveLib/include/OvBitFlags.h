@@ -1,4 +1,5 @@
 #pragma once
+#include "OvMemObject.h"
 
 template<typename Type0>
 class OvBitFlags : public OvMemObject
@@ -8,6 +9,8 @@ public:
 	inline void	SetFlag(OvInt _flag_bit,OvBool _set);
 	inline OvBool	GetFlag(OvInt _flag_bit);
 	inline void	Clear( OvBool check = false );
+	inline OvBool	operator ==( const OvBitFlags<Type0> flag ) { return flag.m_flags == m_flags; };
+	inline OvBool	operator !=( const OvBitFlags<Type0> flag ) { return flag.m_flags != m_flags; };
 protected:
 private:
 	Type0	m_flags;
