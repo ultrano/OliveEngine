@@ -38,6 +38,24 @@ public:\
 
 //////////////////////////////////////////////////////////////////////////
 
+#ifdef OvRTTI_DECL_EX
+#undef OvRTTI_DECL_EX
+#endif
+
+#define	OvRTTI_DECL_EX(classname,baseclass1,baseclass2) \
+private:\
+	static const OvRTTI msh_OvRTTI;\
+public:\
+	static const OvRTTI*	GetRTTI(){return &classname::msh_OvRTTI;};\
+	static const OvRTTI*	GetBaseRTTI1(){return baseclass1::GetRTTI();};\
+	static const OvRTTI*	GetBaseRTTI2(){return baseclass2::GetRTTI();};\
+	virtual const OvRTTI*	QueryRTTI()const{return &classname::msh_OvRTTI;};\
+	classname*				_this_pointer(){ return this; };\
+	typedef classname __this_class;
+
+//////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
 
 #ifdef OvRTTI_IMPL_ROOT
@@ -57,6 +75,17 @@ public:\
 
 
 #define	OvRTTI_IMPL(classname) const OvRTTI classname::msh_OvRTTI(#classname,*(classname::GetBaseRTTI()));
+
+//////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////
+
+#ifdef OvRTTI_IMPL_EX
+#undef OvRTTI_IMPL_EX
+#endif
+
+
+#define	OvRTTI_IMPL_EX(classname) const OvRTTI classname::msh_OvRTTI(#classname,*(classname::GetBaseRTTI1()),*(classname::GetBaseRTTI2()));
 
 //////////////////////////////////////////////////////////////////////////
 

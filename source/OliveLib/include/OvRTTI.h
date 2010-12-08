@@ -31,6 +31,13 @@ public:
 		m_pBaseClassRTTI[0] = &baseclass;
 		m_pBaseClassRTTI[1] = NULL;
 	};
+	OvRTTI(const OvString & classname, const OvRTTI& baseclass1, const OvRTTI& baseclass2)
+		:m_strClassName(classname)
+		,m_pPropertyBag(NULL)
+	{
+		m_pBaseClassRTTI[0] = &baseclass1;
+		m_pBaseClassRTTI[1] = &baseclass2;
+	};
 
 	void					SetPropertyBag(OvPropertyBag* propBag){m_pPropertyBag = propBag;};
 	inline OvPropertyBag*	PropertyBag(){return m_pPropertyBag;};

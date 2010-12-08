@@ -8,8 +8,10 @@ namespace OvUtility
 	{
 		#define	OvRTTI_DECL_ROOT( classname )
 		#define	OvRTTI_DECL( classname )
+		#define	OvRTTI_DECL_EX(classname,baseclass1,baseclass2)
 		#define	OvRTTI_IMPL_ROOT( classname )
 		#define	OvRTTI_IMPL( classname )
+		#define	OvRTTI_IMPL_EX(classname)
 
 		template<typename Type_0>
 		const OvString&	TypeName( Type_0 typePointer );
