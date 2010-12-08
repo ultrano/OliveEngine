@@ -13,11 +13,11 @@ namespace Olive
 	typedef OvObject* (*construct_function)(void);
 	OvObjectSPtr	CreateObject( const OvString& type_name );
 	OvObject*		CreateObject_Ptr( const OvString& type_name );
-	void			RegisterConstructFunc( const char* type_name, construct_function func );
+	void			RegisterConstructFunc( const OvChar* type_name, construct_function func );
 
 	struct OvFactoryMemberDeclarer
 	{
-		OvFactoryMemberDeclarer( const char* type_name, construct_function func );
+		OvFactoryMemberDeclarer( const OvChar* type_name, construct_function func );
 	};
 
 #define OvFACTORY_OBJECT_DECL( type_name ) \

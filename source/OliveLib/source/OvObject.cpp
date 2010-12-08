@@ -27,7 +27,7 @@ OvObject::~OvObject()
 	OvObjectManager::GetInstance()->RecallObjectID(this);
 }
 
-void	OvObject::SetName( const char* _pName )
+void	OvObject::SetName( const OvChar* _pName )
 {
 	m_name = _pName;
 }

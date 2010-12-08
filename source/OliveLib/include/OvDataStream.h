@@ -16,10 +16,10 @@ public:
 	OvDataStream( size_t reserve_size );
 	~OvDataStream();
 
-	const char*	Ptr();
+	const OvChar*	Ptr();
 	size_t	Size();
 
-	const char*	CaretPtr();
+	const OvChar*	CaretPtr();
 	size_t	CaretPos();
 
 	OvString&	Read( OvString& , size_t );

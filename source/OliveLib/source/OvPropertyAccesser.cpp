@@ -14,7 +14,7 @@ void*			OvPropertyAccesser::Access(OvObject* pObj)
 {
 	if (pObj)
 	{
-		return (void*)(((char*)pObj) + GetOffset());
+		return (void*)(((OvChar*)pObj) + GetOffset());
 	}
 	return (void*)0;
 }

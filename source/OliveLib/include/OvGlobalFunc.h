@@ -4,9 +4,9 @@
 
 void	OvGetLastError();
 
-void	OvMessageBox(const char* _msg,const char* _caption);
+void	OvMessageBox(const OvChar* _msg,const OvChar* _caption);
 
-void	OvErrorMsgBox(const char* _file,const char* _block,const char* _msg = NULL);
+void	OvErrorMsgBox(const OvChar* _file,const OvChar* _block,const OvChar* _msg = NULL);
 
 OvBool	OvStringAllocator(LPTSTR* _lpp_dest,LPCTSTR lp_src);
 

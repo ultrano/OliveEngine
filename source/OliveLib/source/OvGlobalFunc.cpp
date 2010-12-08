@@ -21,14 +21,14 @@ void	OvGetLastError()
 	LocalFree( lpMsgBuf );
 };
 
-void	OvMessageBox(const char* _msg,const char* _caption)
+void	OvMessageBox(const OvChar* _msg,const OvChar* _caption)
 {
 	MessageBox(NULL,_msg,_caption,MB_OK);
 }
 
-void	OvErrorMsgBox(const char* _file,const char* _block,const char* _msg )
+void	OvErrorMsgBox(const OvChar* _file,const OvChar* _block,const OvChar* _msg )
 {
-	char k_code_location[1024] = {0,};
+	OvChar k_code_location[1024] = {0,};
 
 	strcat_s(k_code_location,"File : ");
 	strcat_s(k_code_location,_file);
@@ -50,20 +50,20 @@ OvBool		OvStringAllocator(LPTSTR* _lpp_dest,LPCTSTR lp_src)
 		return false;
 	}
 	size_t	k_len = strlen(lp_src) + 1;
-	*_lpp_dest = new CHAR[k_len];
-	memset((void*)(*_lpp_dest),0,k_len*sizeof(CHAR));
+	*_lpp_dest = new OvChar[k_len];
+	memset((void*)(*_lpp_dest),0,k_len*sizeof(OvChar));
 	if (!(*_lpp_dest))
 	{
 		return false;
 	}
-	memcpy((void*)(*_lpp_dest),(void*)lp_src,k_len*sizeof(CHAR));
+	memcpy((void*)(*_lpp_dest),(void*)lp_src,k_len*sizeof(OvChar));
 	return true;
 };
 OvString	OvGetDirectoryInFullFilePath(const OvString& strFileFullPath)
 {
 	OvString kReturnString= "";
-	char separator[] = {'\\','/'};
-	for ( unsigned short i = 0 ; i < 2 ; ++i )
+	OvChar separator[] = {'\\','/'};
+	for ( OvUShort i = 0 ; i < 2 ; ++i )
 	{
 		size_t stTok = strFileFullPath.rfind( separator[i] );
 		if (stTok != OvString::npos)
@@ -77,8 +77,8 @@ OvString	OvGetDirectoryInFullFilePath(const OvString& strFileFullPath)
 OvString	OvGetFileNameInFullFilePath(const OvString& strFileFullPath)
 {
 	OvString kReturnString= "";
-	char separator[] = {'\\','/'};
-	for ( unsigned short i = 0 ; i < 2 ; ++i )
+	OvChar separator[] = {'\\','/'};
+	for ( OvUShort i = 0 ; i < 2 ; ++i )
 	{
 		size_t stTok = strFileFullPath.rfind( separator[i] );
 		if (stTok != OvString::npos)
@@ -100,20 +100,20 @@ OvString	OvGetExtentionInFullFilePath(const OvString& strFileFullPath)
 	}
 	return kReturnString;
 }
-/*inline OvBool		OvStringAllocator(const char** _lpp_dest,const char* lp_src)
+/*inline OvBool		OvStringAllocator(const OvChar** _lpp_dest,const OvChar* lp_src)
 {
 if (!lp_src)
 {
 return false;
 }
 OvString	k_src(lp_src);
-*_lpp_dest = new char[k_src.length()];
-memset((void*)(*_lpp_dest),0,k_src.length()*sizeof(char));
+*_lpp_dest = new OvChar[k_src.length()];
+memset((void*)(*_lpp_dest),0,k_src.length()*sizeof(OvChar));
 if (!(*_lpp_dest))
 {
 return false;
 }
-memcpy((void*)(*_lpp_dest),(void*)k_src.data(),k_src.length()*sizeof(char));
+memcpy((void*)(*_lpp_dest),(void*)k_src.data(),k_src.length()*sizeof(OvChar));
 return true;
 };*/
 

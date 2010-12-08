@@ -27,11 +27,11 @@ OvObject* Olive::CreateObject_Ptr( const OvString& type_name )
 	return ( func )? ( func() ) : ( 0 );
 }
 
-void Olive::RegisterConstructFunc( const char* type_name, construct_function func )
+void Olive::RegisterConstructFunc( const OvChar* type_name, construct_function func )
 {
 	GetFactory().factory_table[ OvString( type_name ) ] = func;
 }
-Olive::OvFactoryMemberDeclarer::OvFactoryMemberDeclarer( const char* type_name, construct_function func )
+Olive::OvFactoryMemberDeclarer::OvFactoryMemberDeclarer( const OvChar* type_name, construct_function func )
 {
 	RegisterConstructFunc( type_name, func );
 }

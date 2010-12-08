@@ -70,7 +70,7 @@ OvBool		OvRenderer::_generate_renderer()
 	kpDirect3D9Object->GetDeviceCaps(D3DADAPTER_DEFAULT,D3DDEVTYPE_HAL,&kCapability);
 	OvMessageBox(OvFormatString("랜더 타겟 한계 개수: %d",kCapability.NumSimultaneousRTs),"MRT Limit Count");*/
 
-	char windowClassName[] = "Olive_Renderer_View";
+	OvChar windowClassName[] = "Olive_Renderer_View";
 
 	WNDCLASS WndClass;
 

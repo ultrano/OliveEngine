@@ -36,7 +36,7 @@ public:
 	OvObjectSPtr Clone();
 
 	//! Object Name
-	void			SetName(const char* _pName);
+	void			SetName(const OvChar* _pName);
 	const OvString&	GetName();
 
 	//! ID of Object

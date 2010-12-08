@@ -39,6 +39,6 @@ inline void	OvBitFlags<Type0>::Clear( OvBool check )
 	m_flags = check? -1 : 0;
 }
 
-typedef	OvBitFlags<unsigned char>	Ov8SetFlags;
-typedef	OvBitFlags<unsigned short>	Ov16SetFlags;
+typedef	OvBitFlags<OvByte>	Ov8SetFlags;
+typedef	OvBitFlags<OvUShort>	Ov16SetFlags;
 typedef	OvBitFlags<OvUInt>	Ov32SetFlags;

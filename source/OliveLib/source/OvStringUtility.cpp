@@ -2,7 +2,7 @@
 #include <stdio.h>
 #define FORMATTING_LENGTH 1024
 
-OvArrayAutoPtr<char> FormatString(const char* _pFormat,...)
+OvArrayAutoPtr<OvChar> FormatString(const OvChar* _pFormat,...)
 {
 	if(!_pFormat)
 		return NULL;
@@ -10,7 +10,7 @@ OvArrayAutoPtr<char> FormatString(const char* _pFormat,...)
 	va_list kpArg;
 	va_start(kpArg,_pFormat);
 
-	char* kFormatBuf = NULL;
+	OvChar* kFormatBuf = NULL;
 	size_t kFormatLen = 0;
 
 	if(kpArg)
@@ -18,7 +18,7 @@ OvArrayAutoPtr<char> FormatString(const char* _pFormat,...)
 
 		kFormatLen = _vscprintf(_pFormat,kpArg)+1;
 
-		kFormatBuf = new char[kFormatLen];
+		kFormatBuf = new OvChar[kFormatLen];
 
 		memset(kFormatBuf,0,kFormatLen);
 		vsprintf_s( kFormatBuf, kFormatLen, _pFormat, kpArg);
@@ -31,13 +31,13 @@ OvArrayAutoPtr<char> FormatString(const char* _pFormat,...)
 }
 
 
-char* Formatting(const char* pFormat,va_list pArg)
+OvChar* Formatting(const OvChar* pFormat,va_list pArg)
 {
-	char* kFormatBuf = NULL;
+	OvChar* kFormatBuf = NULL;
 	size_t kFormatLen = 0;
 	kFormatLen = _vscprintf(pFormat,pArg)+1;
 
-	kFormatBuf = new char[kFormatLen];
+	kFormatBuf = new OvChar[kFormatLen];
 
 	memset(kFormatBuf,0,kFormatLen);
 	vsprintf_s( kFormatBuf, kFormatLen, pFormat, pArg);
@@ -53,14 +53,14 @@ OvFormatString::OvFormatString()
 
 };
 
-OvFormatString::OvFormatString(const char* _pFormat,...):m_pBuffer(NULL)
+OvFormatString::OvFormatString(const OvChar* _pFormat,...):m_pBuffer(NULL)
 {
 	if(!_pFormat)
 		return ;
 
 	//! if it has buffer, release that.
 	if (m_pBuffer)
-		OvArrayAutoPtr<char> kpLocal = m_pBuffer;
+		OvArrayAutoPtr<OvChar> kpLocal = m_pBuffer;
 
 	va_list kpArg;
 	va_start(kpArg,_pFormat);
@@ -69,14 +69,14 @@ OvFormatString::OvFormatString(const char* _pFormat,...):m_pBuffer(NULL)
 
 	va_end(kpArg); 
 }
-char* OvFormatString::operator()(const char* _pFormat,...)
+OvChar* OvFormatString::operator()(const OvChar* _pFormat,...)
 {
 	if(!_pFormat)
 		return NULL;
 
 	// 지역 변수인 오토피티알에 넣어 자동 삭제를 유도한다.
 	if (m_pBuffer)
-		OvArrayAutoPtr<char> kpLocal = m_pBuffer;
+		OvArrayAutoPtr<OvChar> kpLocal = m_pBuffer;
 
 	va_list kpArg;
 	va_start(kpArg,_pFormat);
@@ -87,7 +87,7 @@ char* OvFormatString::operator()(const char* _pFormat,...)
 	return m_pBuffer.GetRear();
 
 }
-OvFormatString::operator char*()
+OvFormatString::operator OvChar*()
 {
 	return m_pBuffer.GetRear();
 }

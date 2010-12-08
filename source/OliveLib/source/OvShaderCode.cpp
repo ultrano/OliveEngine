@@ -45,7 +45,7 @@ LPD3DXBUFFER	CompileShaderFromCode( const OvString& code, const OvString& funcNa
 		SDxAutoRelease autoRelease1( shaderBuffer );
 		if ( compileResult )
 		{
-			OvAssertMsg( ( char* )compileResult->GetBufferPointer() );
+			OvAssertMsg( ( OvChar* )compileResult->GetBufferPointer() );
 		}
 		return NULL;
 	}

@@ -16,7 +16,7 @@ namespace OliveValue
 	private:type_name m_value;\
 	public:\
 	__this_class(){};\
-	__this_class( const char* strValue ){FromString( OvString( strValue ) );};\
+	__this_class( const OvChar* strValue ){FromString( OvString( strValue ) );};\
 	__this_class( OvString& strValue ){FromString(strValue);};\
 	__this_class( const type_name& typeValue ){m_value = typeValue;};\
 	const __this_class& operator=( const type_name& typeValue ){ m_value = typeValue; return *this; };\
@@ -45,7 +45,7 @@ namespace OliveValue
 		Value();
 		virtual ~Value();
 	public:
-		void			FromString( const char* expData );
+		void			FromString( const OvChar* expData );
 		virtual void	FromString( const OvString& expData ) = 0;
 		virtual OvString	ToString() = 0;
 

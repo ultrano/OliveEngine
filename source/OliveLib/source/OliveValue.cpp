@@ -45,7 +45,7 @@ Value::~Value()
 
 }
 
-void OliveValue::Value::FromString( const char* expData )
+void OliveValue::Value::FromString( const OvChar* expData )
 {
 	FromString( OvString( expData ) );
 }

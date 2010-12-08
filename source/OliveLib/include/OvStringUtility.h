@@ -6,12 +6,12 @@ class OvFormatString : public OvMemObject
 {
 public:
 	OvFormatString();
-	OvFormatString(const char* _pFormat,...);
-	char* operator()(const char* _pFormat,...);
-	operator char*();
+	OvFormatString(const OvChar* _pFormat,...);
+	OvChar* operator()(const OvChar* _pFormat,...);
+	operator OvChar*();
 protected:
 private:
-	OvArrayAutoPtr<char>	m_pBuffer;
+	OvArrayAutoPtr<OvChar>	m_pBuffer;
 };
 
 
@@ -23,20 +23,20 @@ public:
 	OvLexical(){};
 	virtual ~OvLexical(){};
 public:
-	char* operator()(DWORD _UnsignedLong)
+	OvChar* operator()(DWORD _UnsignedLong)
 	{
 		sprintf(m_CovertedString,"%d",_UnsignedLong);
-		return (char*)m_CovertedString;
+		return (OvChar*)m_CovertedString;
 	};
-	char* operator()(OvFloat _UnsignedLong)
+	OvChar* operator()(OvFloat _UnsignedLong)
 	{
 		sprintf(m_CovertedString,"%f",_UnsignedLong);
-		return (char*)m_CovertedString;
+		return (OvChar*)m_CovertedString;
 	};
 
 private:
 
-	char	m_CovertedString[LEXICAL_BUFLEN];
+	OvChar	m_CovertedString[LEXICAL_BUFLEN];
 
 };
 */

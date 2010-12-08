@@ -50,7 +50,7 @@ OvDataStream::~OvDataStream()
 	m_read_caret = 0;
 }
 
-const char* OvDataStream::Ptr()
+const OvChar* OvDataStream::Ptr()
 {
 	return m_buffer.data();
 }
@@ -60,11 +60,11 @@ size_t OvDataStream::Size()
 	return m_buffer.size();
 }
 
-const char* OvDataStream::CaretPtr()
+const OvChar* OvDataStream::CaretPtr()
 {
 	if ( CaretPos() < Size() )
 	{
-		const char* buf = Ptr();
+		const OvChar* buf = Ptr();
 		return &(buf[ CaretPos() ]);
 	}
 	return NULL;

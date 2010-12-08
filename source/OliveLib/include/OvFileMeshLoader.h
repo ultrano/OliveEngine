@@ -14,7 +14,7 @@ public:
 	virtual OvResourceSPtr Load( OvDataStream& stream ) override;
 private:
 	
-	const char*	_readLine();
+	const OvChar*	_readLine();
 
 	SVertexStreamInfo _parseStreamLow();
 	SVertexStreamInfo _parseStreamMedium();

@@ -70,12 +70,12 @@ struct SStateValueTable : OvMemObject
 	std::map<OvString, DWORD> state_value_table;
 };
 
-DWORD StringToStateType( const char* type )
+DWORD StringToStateType( const OvChar* type )
 {
 	static SStateTypeTable table;
 	return table.state_type_table[ type ];
 }
-DWORD StringToStateValue( const char* value )
+DWORD StringToStateValue( const OvChar* value )
 {
 	static SStateValueTable tavle;
 	return tavle.state_value_table[ value ];

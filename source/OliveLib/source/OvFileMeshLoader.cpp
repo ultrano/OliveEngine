@@ -116,7 +116,7 @@ OvResourceSPtr OvFileMeshLoader::Load( OvDataStream& stream )
 }
 
 
-const char* OvFileMeshLoader::_readLine()
+const OvChar* OvFileMeshLoader::_readLine()
 {
 	// fgets() 의 특성상 '\n' 개행 문자가 끌려 온다.
 	// 개행 문자가 있으면 문자를 다른 데이터타입으로 변환시 
@@ -220,7 +220,7 @@ LPDIRECT3DINDEXBUFFER9 OvFileMeshLoader::_parseIndexStream()
 	{
 		OliveValue::Point3 readIndex( _readLine() );
 		OvPoint3 findex3 = readIndex.GetPoint3();
-		faceBuffer.push_back( SFaceIndex( (short)findex3.x, (short)findex3.y, (short)findex3.z ) );
+		faceBuffer.push_back( SFaceIndex( (OvShort)findex3.x, (OvShort)findex3.y, (OvShort)findex3.z ) );
 	}
 	if ( faceBuffer.size() )
 	{

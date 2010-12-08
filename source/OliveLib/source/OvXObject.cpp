@@ -251,7 +251,7 @@ OvXComponentSPtr OvXObject::RemoveComponent( const OvObjectID& compoentID )
 	return removedComponent;
 }
 
-OvXComponentSPtr OvXObject::RemoveComponent( const char* name )
+OvXComponentSPtr OvXObject::RemoveComponent( const OvChar* name )
 {
 	if ( NULL == name ) return NULL;
 	OvXComponentSPtr removedComponent = NULL;

@@ -6,7 +6,7 @@ OvColor::OvColor()
 
 }
 
-OvColor::OvColor( unsigned char _a, unsigned char _r, unsigned char _g, unsigned char _b )
+OvColor::OvColor( OvByte _a, OvByte _r, OvByte _g, OvByte _b )
 : a( _a )
 , r( _r )
 , g( _g )
