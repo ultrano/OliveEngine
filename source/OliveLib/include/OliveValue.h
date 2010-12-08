@@ -7,10 +7,10 @@
 #include "OvQuaternion.h"
 #include "OvObjectID.h"
 #include "OvColor.h"
-
+class OvInputStream;
+class OvOutputStream;
 namespace OliveValue
 {
-
 // 유틸리티 매크로, 자주 쓰이는 몇몇 생성자와 함수형태,멤버 형태를 지정한다.
 #define	OLIVE_VALUE_TYPE( type_name )	\
 	private:type_name m_value;\
@@ -49,8 +49,8 @@ namespace OliveValue
 		virtual void		FromString( const OvString& expData ) = 0;
 		virtual OvString	ToString() = 0;
 	/*public:
-		void				FromStream( const OvByte* buf );
-		void				ToStream( OvByte* buf, OvUInt& ret_size );*/
+		void				FromStream( OvOutputStream& stream );
+		void				ToStream( OvInputStream& stream );*/
 	public:
 		//!< 기본 복사함수 구현, 오버헤드가 심할수 있는 방법이지만 공통된 방법이므로 기본적으로 제공.
 		virtual void	CopyFrom( Value& val ) { FromString( val.ToString() ); };

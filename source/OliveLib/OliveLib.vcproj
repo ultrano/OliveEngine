@@ -1216,6 +1216,18 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="OvIOStream"
+				>
+				<File
+					RelativePath=".\source\OvIOStream.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\OvIOStream.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<File
 			RelativePath=".\ReadMe.txt"

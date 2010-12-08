@@ -1,14 +1,9 @@
 #pragma once
-#pragma warning( disable : 4521)
+#include "OvIOStream.h"
 
-#include "OvTypeDef.h"
-#include "OvMemObject.h"
-#include "OvOutputStream.h"
-#include "OvInputStream.h"
-
-class OvDataStream : public OvInputStream, public OvOutputStream, public OvMemObject
+class OvDataStream : public OvIOStream, public OvMemObject
 {
-	OvRTTI_DECL_EX(OvDataStream,OvInputStream,OvOutputStream);
+	OvRTTI_DECL(OvDataStream);
 private:
 	OvDataStream();
 	OvDataStream( OvDataStream& );
@@ -25,8 +20,8 @@ public:
 	const OvChar*	CaretPtr();
 	size_t	CaretPos();
 
-	OvString&	Read( OvString& , size_t );
-	OvString&	ReadLine( OvString&, OvString delimiter = "\n" );
+	virtual OvInputStream& Read( OvString& buf, OvUInt read_size ) override ;
+	virtual OvInputStream& ReadLine( OvString& buf )  override ;
 
 private:
 

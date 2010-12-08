@@ -1,6 +1,6 @@
 #include "OvDataStream.h"
-OvRTTI_IMPL_EX(OvDataStream);
 using namespace std;
+OvRTTI_IMPL(OvDataStream);
 
 // 출처 : http://www.gammon.com.au/forum/bbshowpost.php?bbsubject_id=2896
 // ㅜ_ㅜ 좋당.
@@ -76,18 +76,19 @@ size_t OvDataStream::CaretPos()
 	return m_read_caret;
 }
 
-OvString& OvDataStream::Read( OvString& buf, size_t sz )
+OvInputStream& OvDataStream::Read( OvString& buf, OvUInt read_size )
 {
 	if ( Size() )
 	{
-		buf = m_buffer.substr( m_read_caret, sz );
-		m_read_caret += sz;
+		buf = m_buffer.substr( m_read_caret, read_size );
+		m_read_caret += read_size;
 	}
-	return buf;
+	return *this;
 }
 
-OvString& OvDataStream::ReadLine( OvString& buf, OvString delimiter /*= '\n'*/ )
+OvInputStream& OvDataStream::ReadLine( OvString& buf )
 {
+	OvString delimiter = "\n";
 	OvString::size_type pos = m_buffer.find( delimiter, m_read_caret );
 	if ( pos != OvString::npos )
 	{
@@ -97,5 +98,5 @@ OvString& OvDataStream::ReadLine( OvString& buf, OvString delimiter /*= '\n'*/ )
 		m_read_caret += sz;
 		buf = trim( buf );
 	}
-	return buf;
+	return *this;
 }
