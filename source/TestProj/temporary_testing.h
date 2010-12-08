@@ -4,6 +4,20 @@
 #include "OvTexture.h"
 #include "OvResourceManager.h"
 #include "OvShaderCodeIncluder.h"
+#include "OvDataStream.h"
+
+GL_TEST_CASE_FUNC( rtti_ex_test )
+{
+	OvSingletonPool::StartUp();
+	{
+		OvDataStream data(NULL);
+		bool check = false;
+		check = OvIsKindOf<OvInputStream>(&data);
+		check = OvIsKindOf<OvOutputStream>(&data);
+		check = false;
+	}
+	OvSingletonPool::ShutDown();
+}
 
 GL_TEST_CASE_FUNC( rtti_modify )
 {

@@ -1,4 +1,5 @@
 #include "OvDataStream.h"
+OvRTTI_IMPL_EX(OvDataStream);
 using namespace std;
 
 // √‚√≥ : http://www.gammon.com.au/forum/bbshowpost.php?bbsubject_id=2896

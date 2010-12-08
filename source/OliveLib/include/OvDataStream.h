@@ -3,9 +3,12 @@
 
 #include "OvTypeDef.h"
 #include "OvMemObject.h"
+#include "OvOutputStream.h"
+#include "OvInputStream.h"
 
-class OvDataStream : public OvMemObject
+class OvDataStream : public OvInputStream, public OvOutputStream, public OvMemObject
 {
+	OvRTTI_DECL_EX(OvDataStream,OvInputStream,OvOutputStream);
 private:
 	OvDataStream();
 	OvDataStream( OvDataStream& );

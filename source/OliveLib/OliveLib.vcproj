@@ -1192,6 +1192,30 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="OvInputStream"
+				>
+				<File
+					RelativePath=".\source\OvInputStream.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\OvInputStream.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="OvOutputStream"
+				>
+				<File
+					RelativePath=".\source\OvOutputStream.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\OvOutputStream.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<File
 			RelativePath=".\ReadMe.txt"

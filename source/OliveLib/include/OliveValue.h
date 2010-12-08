@@ -45,10 +45,13 @@ namespace OliveValue
 		Value();
 		virtual ~Value();
 	public:
-		void			FromString( const OvChar* expData );
-		virtual void	FromString( const OvString& expData ) = 0;
+		void				FromString( const OvChar* expData );
+		virtual void		FromString( const OvString& expData ) = 0;
 		virtual OvString	ToString() = 0;
-
+	/*public:
+		void				FromStream( const OvByte* buf );
+		void				ToStream( OvByte* buf, OvUInt& ret_size );*/
+	public:
 		//!< 기본 복사함수 구현, 오버헤드가 심할수 있는 방법이지만 공통된 방법이므로 기본적으로 제공.
 		virtual void	CopyFrom( Value& val ) { FromString( val.ToString() ); };
 	};
