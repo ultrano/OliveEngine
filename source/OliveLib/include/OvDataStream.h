@@ -1,9 +1,8 @@
 #pragma once
 #include "OvIOStream.h"
 
-class OvDataStream : public OvIOStream, public OvMemObject
+class OvDataStream : public OvMemObject
 {
-	OvRTTI_DECL(OvDataStream);
 private:
 	OvDataStream();
 	OvDataStream( OvDataStream& );
@@ -20,8 +19,8 @@ public:
 	const OvChar*	CaretPtr();
 	size_t	CaretPos();
 
-	virtual OvInputStream& Read( OvString& buf, OvUInt read_size ) override ;
-	virtual OvInputStream& ReadLine( OvString& buf )  override ;
+	OvUInt Read( OvString& buf, OvUInt read_size ) ;
+	OvUInt ReadLine( OvString& buf )  ;
 
 private:
 
