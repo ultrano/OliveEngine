@@ -1,5 +1,7 @@
 #pragma once
-#include "OvIOStream.h"
+#pragma warning( disable : 4521)
+#include "OvTypeDef.h"
+#include "OvMemObject.h"
 
 class OvDataStream : public OvMemObject
 {

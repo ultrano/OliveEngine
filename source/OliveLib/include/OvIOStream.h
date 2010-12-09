@@ -1,5 +1,4 @@
 #pragma once
-#pragma warning( disable : 4521)
 
 #include "OvTypeDef.h"
 #include "OvMemObject.h"

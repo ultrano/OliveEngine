@@ -1192,18 +1192,10 @@
 					>
 				</File>
 			</Filter>
-			<Filter
-				Name="OvInputStream"
-				>
-				<File
-					RelativePath=".\source\OvInputStream.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\include\OvInputStream.h"
-					>
-				</File>
-			</Filter>
+		</Filter>
+		<Filter
+			Name="º¸·ù"
+			>
 			<Filter
 				Name="OvOutputStream"
 				>
@@ -1225,6 +1217,18 @@
 				</File>
 				<File
 					RelativePath=".\include\OvIOStream.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="OvInputStream"
+				>
+				<File
+					RelativePath=".\source\OvInputStream.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\OvInputStream.h"
 					>
 				</File>
 			</Filter>
