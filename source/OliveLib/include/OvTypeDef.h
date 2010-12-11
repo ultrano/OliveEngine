@@ -14,3 +14,4 @@ typedef unsigned char		OvUChar;
 typedef unsigned char		OvByte;
 
 #define interface_class		class
+#define template_class		class

@@ -106,7 +106,7 @@
 //
 //}
 //// 
-//// OvBool OvRenderTexture::Unlock()
+//// OvBool OvTextDrawerure::Unlock()
 //// {
 //// 	if ( m_reservedTargetIndex != -1 )
 //// 	{

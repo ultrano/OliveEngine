@@ -9,7 +9,7 @@
 //
 */
 template<typename Type_0>
-class	OvAutoPtr
+template_class	OvAutoPtr
 {
 public:
 	OvAutoPtr();
@@ -49,7 +49,7 @@ private:
 //
 */
 template<typename Type_0>
-class	OvArrayAutoPtr 
+template_class	OvArrayAutoPtr 
 {
 public:
 	OvArrayAutoPtr();

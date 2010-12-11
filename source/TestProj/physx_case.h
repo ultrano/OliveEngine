@@ -12,6 +12,7 @@
 #include "OvInputManager.h"
 #include "OxTestPhysx.h"
 #include "OliveDevice.h"
+#include "OvTextDrawer.h"
 
 // 테스트 환경 구축
 GL_TEST_ENVIROMENT( OliveLibTest )
@@ -28,6 +29,8 @@ protected:
 	OvXNodeSPtr	m_root;
 
 	OxTestPhysx	m_physx;
+
+	OvTextDrawerSPtr m_text;
 
 public:
 	GL_ENV_SET_UP
@@ -58,7 +61,7 @@ public:
 		//////////////////////////////////////////////////////////////////////////
 		//////////////////////////////////////////////////////////////////////////
 		//////////////////////////////////////////////////////////////////////////
-		m_diffuseScene = OvRenderer::GetInstance()->CreateRenderTexture( 800, 600 );
+		m_diffuseScene = OvRenderer::GetInstance()->CreateRenderTexture( WindowWidth, WindowHeight );
 
 		//////////////////////////////////////////////////////////////////////////
 		//////////////////////////////////////////////////////////////////////////
@@ -71,6 +74,8 @@ public:
 		//////////////////////////////////////////////////////////////////////////
 		//////////////////////////////////////////////////////////////////////////
 
+		m_text = OvNew OvTextDrawer;
+		m_text->BuildFont( 16, 8, 1 );
 
 		(OvNew OxCameraController( m_physx.GetScene() ))->SetTarget( m_mainCamera );
 	};
@@ -84,6 +89,7 @@ public:
 
 		m_shader_code = NULL;
 
+		m_text = NULL;
 
 		OliveDevice::EngineOff();
 
@@ -142,11 +148,14 @@ public:
 		renderer->BeginFrame();
 
 		RenderDiffuse( camera, xobj );
+		OliveValue::Point3 pt = camera->GetWorldTranslate();
+		m_text->DrawToTexture( m_diffuseScene, pt.ToString().c_str(), OvIRect(0,10,50,50), DT_NOCLIP, OvColor(255,0,0,0) );
 		renderer->SetTexture( 0, m_diffuseScene );
 
 		renderer->RenderUnitRect
 			( m_shader_code->FindShader( "rectV", "vs_2_0" ) 
 			, m_shader_code->FindShader( "rectP", "ps_2_0" ) );
+
 
 		renderer->EndFrame();
 		renderer->PresentFrame();

@@ -55,8 +55,8 @@ LPDIRECT3D9 m_pDirect3D9Object;
 OvBool		OvRenderer::_generate_renderer()
 {
 
-	OvUInt width = 800;
-	OvUInt height = 600;
+	OvUInt width = WindowWidth;
+	OvUInt height = WindowHeight;
 
 	LPDIRECT3D9 kpDirect3D9Object = Direct3DCreate9(D3D_SDK_VERSION);
 

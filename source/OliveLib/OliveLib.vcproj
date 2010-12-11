@@ -1192,6 +1192,30 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="OvRenderText"
+				>
+				<File
+					RelativePath=".\source\OvTextDrawer.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\OvTextDrawer.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="OvRect"
+				>
+				<File
+					RelativePath=".\source\OvRect.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\OvRect.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="º¸·ù"

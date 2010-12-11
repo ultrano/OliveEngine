@@ -8,6 +8,12 @@
 #include "OvColor.h"
 #include "OliveValue.h"
 
+enum 
+{
+	WindowWidth = 1024,
+	WindowHeight = 800
+};
+
 OvREF_POINTER(OvPixelShader);
 OvREF_POINTER(OvVertexShader);
 OvREF_POINTER(OvTexture);
@@ -69,5 +75,4 @@ private:
 	CRITICAL_SECTION			m_device_occupy;
 	HWND						m_window_handle;
 	OliveValue::Integer			m_count_frame_drawn_triangle;
-
 };

@@ -6,7 +6,7 @@
 	typedef OvSmartPointer<__class_name>	__class_name##SPtr;
 
 template<typename Type_0>
-class	OvSmartPointer : public OvMemObject
+template_class	OvSmartPointer : public OvMemObject
 {
 public:
 	OvSmartPointer();

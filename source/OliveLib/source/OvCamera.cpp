@@ -21,7 +21,7 @@ OvCamera::OvCamera()
 	SetNearClip(1.0f);
 	SetFarClip(10000.0f);
 	SetFOV( ( D3DX_PI * 45.0f ) / 180.0f );
-	SetAspect( 800.0f / 600.0f );
+	SetAspect( (OvFloat)WindowWidth / (OvFloat)WindowHeight );
 }
 OvCamera::~OvCamera()
 {
