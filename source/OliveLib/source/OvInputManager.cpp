@@ -225,7 +225,7 @@ void OvInputManager::_initialize( HWND hWnd )
 			, &m_mouse_device
 			, NULL);
 		m_mouse_device->SetDataFormat( &c_dfDIMouse2 );
-		m_mouse_device->SetCooperativeLevel( hWnd, DISCL_NONEXCLUSIVE |
+		m_mouse_device->SetCooperativeLevel( hWnd, DISCL_EXCLUSIVE |
 			DISCL_FOREGROUND);
 
 		m_window_handle = hWnd;

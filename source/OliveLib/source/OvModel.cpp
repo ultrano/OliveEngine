@@ -44,27 +44,6 @@ OvMaterialSPtr OvModel::GetMaterial()
 	return m_material->CheckOut();
 }
 
-
-void OvModel::RenderWithoutMaterial()
-{
-	if ( false == GetControlFlag( VISIBLE ) )
-	{
-		return ;
-	}
-
-	OvShaderManager::GetInstance()->SetVSConst( OvVShaderConst::World, GetWorldMatrix() );
-
-	OvMatrix temp_mat;
-	
-	OvShaderManager::GetInstance()->GetVSConst( OvVShaderConst::ViewProject, temp_mat );
-	OvShaderManager::GetInstance()->SetVSConst( OvVShaderConst::WorldViewProject, GetWorldMatrix() * temp_mat );
-
-	if ( GetMesh() )
-	{
-		GetMesh()->Rendering();
-	}
-}
-
 void	OvModel::Render()
 {
 	if ( false == GetControlFlag( VISIBLE ) )
