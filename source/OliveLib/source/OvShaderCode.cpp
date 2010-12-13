@@ -45,7 +45,7 @@ LPD3DXBUFFER	CompileShaderFromCode( const OvString& code, const OvString& funcNa
 		SDxAutoRelease autoRelease1( shaderBuffer );
 		if ( compileResult )
 		{
-			OvAssertMsg( ( OvChar* )compileResult->GetBufferPointer() );
+			OvError( ( OvChar* )compileResult->GetBufferPointer() );
 		}
 		return NULL;
 	}
@@ -130,7 +130,7 @@ OvShaderSPtr OvShaderCode::FindShader( const OvString& entry_func, const OvStrin
 	OvShaderSPtr precompiled_shader = _find_precompiled_shader( entry_func, compile_version );
 	if ( NULL == precompiled_shader )
 	{
-		OvAssertMsg( 
+		OvError( 
 			OvFormatString("[func: %s, compile_version: %s] can't found, maybe not complied"
 			,entry_func.c_str()
 			, compile_version.c_str() ) 

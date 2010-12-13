@@ -62,7 +62,7 @@ OvBool		OvRenderer::_generate_renderer()
 
 	if (!kpDirect3D9Object)
 	{
-		OvAssertMsg("Direct3DCreate9() is Failed");
+		OvError("Direct3DCreate9() is Failed");
 		return false;
 	}
 
@@ -133,7 +133,8 @@ OvBool		OvRenderer::_generate_renderer()
 
 OvBool OvRenderer::SetRenderTarget( OvTextureSPtr render_texture, OvBool clear_buffer, OvBool clear_zbuffer, const OvColor& color )
 {
-	if ( OvDevice device = GetDevice() )
+	OvDevice device = GetDevice();
+	if( OvAssert( device )  )
 	{
 		LPDIRECT3DSURFACE9 oldRenderTarget = NULL;
 		LPDIRECT3DSURFACE9 newRenderTarget = m_default_display_buffer;
@@ -160,7 +161,8 @@ OvBool OvRenderer::SetRenderTarget( OvTextureSPtr render_texture, OvBool clear_b
 
 LPDIRECT3DSURFACE9 OvRenderer::SetDepthStencil( LPDIRECT3DSURFACE9 depthStencil )
 {
-	if ( OvDevice device = GetDevice() )
+	OvDevice device = GetDevice();
+	if( OvAssert( device )  )
 	{
 		LPDIRECT3DSURFACE9 oldDepthStencil = NULL;
 		HRESULT hr0 = device->GetDepthStencilSurface( &oldDepthStencil );
@@ -177,19 +179,19 @@ OvBool			OvRenderer::BeginFrame(OvBool clear_buffer, OvBool clear_zbuffer, const
 {
 	OvDevice device = GetDevice();
 	HRESULT hr = E_FAIL;
-	if ( device && FAILED( hr = device->Clear( 0
+	if ( OvAssert( device ) && FAILED( hr = device->Clear( 0
 											 , NULL
 											 , ( D3DCLEAR_TARGET * clear_buffer) | (D3DCLEAR_ZBUFFER * clear_zbuffer)
 											 , (D3DCOLOR)color.color
 											 , 1.0f
 											 , 0)))
 	{
-		OvAssertMsg("Failed Clear RenderTarget");
+		OvError("Failed Clear RenderTarget");
 		return false;
 	}
-	if ( device && FAILED( hr = device->BeginScene()))
+	if ( OvAssert( device ) && FAILED( hr = device->BeginScene()))
 	{
-		OvAssertMsg("Failed Begin RenderTarget");
+		OvError("Failed Begin RenderTarget");
 		return false;
 	}
 	m_count_frame_drawn_triangle = 0;
@@ -200,13 +202,12 @@ OvBool			OvRenderer::EndFrame()
 {
 	OvDevice device = GetDevice();
 	HRESULT hr = E_FAIL;
-	if ( device && SUCCEEDED( hr = device->EndScene()))
+	if ( OvAssert( device ) && SUCCEEDED( hr = device->EndScene()))
 	{
 		OutputDebugStr( m_count_frame_drawn_triangle.ToString().c_str() );
 		OutputDebugStr( "\n" );
 		return true;
 	}
-	OvAssertMsg("Failed End RenderTarget");
 	return false;
 }
 
@@ -219,7 +220,7 @@ OvBool			OvRenderer::PresentFrame()
 		return true;
 	}
 
-	OvAssertMsg(OvFormatString("Failed Present RenderTarget code: %d", (DWORD)hr ));
+	OvError(OvFormatString("Failed Present RenderTarget code: %d", (DWORD)hr ));
 	return false;
 }
 
@@ -231,19 +232,19 @@ OvBool OvRenderer::SetSamplerState( DWORD sampler, DWORD type, DWORD value )
 	{
 		return true;
 	}
-	OvAssertMsg("Failed SetSamplerState");
+	OvError("Failed SetSamplerState");
 	return false;
 }
 
 void OvRenderer::SetPixelShader( OvPixelShaderSPtr shader )
 {
 	OvDevice device = GetDevice();
-	if ( device && shader )
+	if ( OvAssert( ( device && shader ) ) )
 	{
 		HRESULT hr = device->SetPixelShader( shader->ToDirectShader() );
 		if ( FAILED( hr ) )
 		{
-			OvAssertMsg("Failed SetPixelShader");
+			OvError("Failed SetPixelShader");
 		}
 	}
 }
@@ -251,12 +252,12 @@ void OvRenderer::SetPixelShader( OvPixelShaderSPtr shader )
 void OvRenderer::SetVertexShader( OvVertexShaderSPtr shader )
 {
 	OvDevice device = GetDevice();
-	if ( device && shader )
+	if ( OvAssert( ( device && shader ) ) )
 	{
 		HRESULT hr = device->SetVertexShader( shader->ToDirectShader() );
 		if ( FAILED( hr ) )
 		{
-			OvAssertMsg("Failed SetVertexShader");
+			OvError("Failed SetVertexShader");
 		}
 	}
 }
@@ -264,7 +265,7 @@ void OvRenderer::SetVertexShader( OvVertexShaderSPtr shader )
 OvBool OvRenderer::SetTexture(UINT uiSamplerIndex,OvTextureSPtr pTexture)
 {
 	OvDevice kpDevice =  GetDevice();
-	if ( kpDevice )
+	if ( OvAssert( kpDevice ) )
 	{
 		HRESULT kHs = E_FAIL;
 		kpDevice->SetTexture( uiSamplerIndex, NULL );
@@ -280,7 +281,7 @@ OvBool OvRenderer::SetTexture(UINT uiSamplerIndex,OvTextureSPtr pTexture)
 OvBool OvRenderer::SetCubeTexture(UINT uiSamplerIndex,OvCubeTextureSPtr pTexture)
 {
 	OvDevice kpDevice =  GetDevice();
-	if ( kpDevice && pTexture )
+	if ( OvAssert( ( kpDevice && pTexture ) ) )
 	{
 		HRESULT kHs = E_FAIL;
 		kHs = kpDevice->SetTexture( uiSamplerIndex, pTexture->ToDxCubeTexture() );
@@ -292,7 +293,7 @@ OvBool OvRenderer::SetCubeTexture(UINT uiSamplerIndex,OvCubeTextureSPtr pTexture
 void OvRenderer::SetVertexStream( WORD streamIndex, const SVertexStreamInfo& streamInfo )
 {
 	OvDevice device = GetDevice();
-	if ( device )
+	if ( OvAssert( device ) )
 	{		
 		LPDIRECT3DVERTEXBUFFER9 Stream = NULL;
 		UINT Stride = 0;
@@ -309,7 +310,7 @@ void OvRenderer::SetVertexStream( WORD streamIndex, const SVertexStreamInfo& str
 void OvRenderer::SetIndexStream( LPDIRECT3DINDEXBUFFER9 streamBuffer )
 {
 	OvDevice device = GetDevice();
-	if ( device )
+	if ( OvAssert( device ) )
 	{
 		HRESULT hr = device->SetIndices( streamBuffer );
 		OvAssert( SUCCEEDED( hr ) );
@@ -318,7 +319,7 @@ void OvRenderer::SetIndexStream( LPDIRECT3DINDEXBUFFER9 streamBuffer )
 void OvRenderer::SetVertexDeclaration( LPDIRECT3DVERTEXDECLARATION9 decl )
 {
 	OvDevice device = GetDevice();
-	if ( device )
+	if ( OvAssert( device ) )
 	{
 		HRESULT hr = device->SetVertexDeclaration( decl );
 		OvAssert( SUCCEEDED( hr ) );
@@ -327,7 +328,7 @@ void OvRenderer::SetVertexDeclaration( LPDIRECT3DVERTEXDECLARATION9 decl )
 OvBool OvRenderer::DrawPrimitive( D3DPRIMITIVETYPE primitiveType, UINT primCount )
 {
 	OvDevice device = GetDevice();
-	if ( device )
+	if ( OvAssert( device ) )
 	{
 		HRESULT hr = device->DrawPrimitive
 			( primitiveType

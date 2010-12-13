@@ -62,7 +62,7 @@ template<typename Type_0>
 inline Type_0*					OvSmartPointer<Type_0>::operator ->()const
 {
 	if(!m_pReferenceTarget)
-		OvAssertMsg("NULL에대한 접근 경고:OvSmartPointer이 NULL을 읽으려 합니다.");
+		OvError("NULL에대한 접근 경고:OvSmartPointer이 NULL을 읽으려 합니다.");
 
 	return m_pReferenceTarget;
 }

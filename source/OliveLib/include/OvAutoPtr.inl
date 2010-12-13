@@ -51,7 +51,7 @@ template<typename Type_0>
 Type_0&				OvAutoPtr<Type_0>::operator *()
 {
 	if(!m_pReferenceTarget)
-		OvAssertMsg("NULL에대한 접근 경고:OvAutoPtr이 NULL을 읽으려 합니다.");
+		OvError("NULL에대한 접근 경고:OvAutoPtr이 NULL을 읽으려 합니다.");
 
 	return *m_pReferenceTarget;
 }
@@ -59,7 +59,7 @@ template<typename Type_0>
 Type_0*				OvAutoPtr<Type_0>::operator ->()
 {
 	if(!m_pReferenceTarget)
-		OvAssertMsg("NULL에대한 접근 경고:OvAutoPtr이 NULL을 읽으려 합니다.");
+		OvError("NULL에대한 접근 경고:OvAutoPtr이 NULL을 읽으려 합니다.");
 
 	return m_pReferenceTarget;
 }

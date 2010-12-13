@@ -9,7 +9,7 @@ OvRefBase::~OvRefBase()
 {
 	if(m_dReferenceCount != 0)
 	{
-		OvAssertMsg(
+		OvError(
 			"Object still shared is forced to delete,check this out man\n"
 			"[Do not use Funtion'delete' on object using 'reference counting']");
 		OvAssert( (! (m_dReferenceCount>0 || m_dReferenceCount<0)));

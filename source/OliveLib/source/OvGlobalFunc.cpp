@@ -1,4 +1,5 @@
 #include "OvGlobalFunc.h"
+#include "OvStringUtility.h"
 using namespace std;
 
 void	OvGetLastError()
@@ -26,20 +27,18 @@ void	OvMessageBox(const OvChar* _msg,const OvChar* _caption)
 	MessageBox(NULL,_msg,_caption,MB_OK);
 }
 
-void	OvErrorMsgBox(const OvChar* _file,const OvChar* _block,const OvChar* _msg )
+void	OvErrorMsgBox(const OvChar* _file,const OvChar* _block, const OvUInt _line, const OvChar* _msg )
 {
-	OvChar k_code_location[1024] = {0,};
+	OvString errmsg = OvFormatString(	"File: %s\n"
+					"Block: %s\n"
+					"Line: %d\n"
+					"Assert: %s"
+					,_file
+					,_block
+					,_line
+					,_msg);
 
-	strcat_s(k_code_location,"File : ");
-	strcat_s(k_code_location,_file);
-
-	strcat_s(k_code_location,"\nBlock : ");
-	strcat_s(k_code_location,_block);
-
-	strcat_s(k_code_location,"\nAdditionMsg : ");
-	strcat_s(k_code_location,_msg);
-
-	MessageBox(NULL, k_code_location ,"[Run time error]",MB_OK);
+	MessageBox(NULL, errmsg.c_str() ,"[Run time error]",MB_OK);
 
 }
 

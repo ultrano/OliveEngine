@@ -171,7 +171,7 @@ OvShaderConstInfo OvShaderConstInfo::operator[](const UINT uiIndex)const
 			"규약된 쉐이더 상수 배열 크기를 벗어났습니다.\n"
 			"접근 허용 인덱스: 0~%d \n"
 			"접근 요청된 인덱스: %d ",ArrayCount-1,uiIndex);
-		OvAssertMsg(kErrMsg);
+		OvError(kErrMsg);
 		kuiAccess = ArrayCount;
 	}
 	return OvShaderConstInfo(Type,Name,RegistIndex+(ConstCount*uiIndex),ConstCount);
