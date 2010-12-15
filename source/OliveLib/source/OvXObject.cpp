@@ -240,9 +240,13 @@ void OvXObject::_update_system( OvFloat _fElapse )
 
 OvXComponentSPtr OvXObject::RemoveComponent( const OvObjectSPtr component )
 {
-	OvXComponentSPtr removedComponent = m_extraComponents.RemoveObject( component );
-	removedComponent->SetTarget( NULL );
-	return removedComponent;
+	if ( component )
+	{
+		OvXComponentSPtr removedComponent = m_extraComponents.RemoveObject( component );
+		removedComponent->SetTarget( NULL );
+		return removedComponent;
+	}
+	return NULL;
 }
 OvXComponentSPtr OvXObject::RemoveComponent( const OvObjectID& compoentID )
 {
