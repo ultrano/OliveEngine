@@ -204,8 +204,6 @@ OvBool			OvRenderer::EndFrame()
 	HRESULT hr = E_FAIL;
 	if ( OvAssert( device ) && SUCCEEDED( hr = device->EndScene()))
 	{
-		OutputDebugStr( m_count_frame_drawn_triangle.ToString().c_str() );
-		OutputDebugStr( "\n" );
 		return true;
 	}
 	return false;
