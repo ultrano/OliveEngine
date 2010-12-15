@@ -67,23 +67,26 @@ OvBool	OvStorage::Load( const OvString& pFile, OvObjectCollector& loadedObjects)
 
 void	OvStorage::_store_object(OvObject* pObj)
 {
-	OvObjectProperties rStore;
-	if ( _extract_property(pObj,rStore) )
+	if ( Olive::IsObjectCreatable( OvTypeName( pObj ) ) )
 	{
-		TiXmlElement objElem("");
-		if ( _write_property( rStore, objElem ) )
+		OvObjectProperties rStore;
+		if ( _extract_property(pObj,rStore) )
 		{
-			TiXmlElement* rootElem = m_xmlDoc.RootElement();
-			if (rootElem)
+			TiXmlElement objElem("");
+			if ( _write_property( rStore, objElem ) )
 			{
-				rootElem->InsertEndChild( objElem );
-			}
+				TiXmlElement* rootElem = m_xmlDoc.RootElement();
+				if (rootElem)
+				{
+					rootElem->InsertEndChild( objElem );
+				}
 
-			for (OvObject* kpSubObj = rStore.PopComponentObject()
-				;kpSubObj != NULL
-				;kpSubObj = rStore.PopComponentObject())
-			{
-				_store_object(kpSubObj);
+				for (OvObject* kpSubObj = rStore.PopComponentObject()
+					;kpSubObj != NULL
+					;kpSubObj = rStore.PopComponentObject())
+				{
+					_store_object(kpSubObj);
+				}
 			}
 		}
 	}
