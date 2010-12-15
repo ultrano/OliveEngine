@@ -15,6 +15,12 @@ OvObjectFactory& GetFactory()
 	return static_factory;
 }
 
+OvBool Olive::IsObjectCreatable( const OvString& type_name )
+{
+	map<OvString, construct_function >::iterator itor = GetFactory().factory_table.find( type_name );
+	return ( itor != GetFactory().factory_table.end() );
+}
+
 OvObjectSPtr Olive::CreateObject( const OvString& type_name )
 {
 	construct_function func = GetFactory().factory_table[ type_name ];
