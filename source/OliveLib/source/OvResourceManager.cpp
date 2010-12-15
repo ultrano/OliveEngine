@@ -84,11 +84,8 @@ OvResourceTicketSPtr OvResourceManager::AsyncLoadResource( const OvRTTI* resourc
 	OvResourceSPtr resource = _find_loaded_resource( resourceType, fileLocation );
 	if ( NULL == resource )
 	{
-		SAsyncLoadInfo info;
-		info.file = fileLocation;
-		info.loader = _find_resource_loader( resourceType );
-		info.loader = info.loader->Clone();
-		_push_async_load_info( info );
+		resource = LoadResource( resourceType, fileLocation );
+		ticket->_check_in( resource.GetRear() );
 	}
 	return ticket;
 }
