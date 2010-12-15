@@ -32,7 +32,8 @@ OvResourceManager::OvResourceManager()
 
 	m_resourceDirectory.resize( m_resourceDirectory.length() );
 
-	m_async_handle = (HANDLE)_beginthread( OvResourceManager::_thread_routine, 0, (void*)this );
+	m_async_handle = NULL;
+	//m_async_handle = (HANDLE)_beginthread( OvResourceManager::_thread_routine, 0, (void*)this );
 
 }
 
@@ -40,7 +41,10 @@ OvResourceManager::~OvResourceManager()
 {
 
 	_get_async_life_flag() = false;
-	WaitForSingleObject( m_async_handle, INFINITE );
+	if (m_async_handle)
+	{
+		WaitForSingleObject( m_async_handle, INFINITE );
+	}
 
 	m_cacheList.clear();
 	::DeleteCriticalSection( &m_load_section );
