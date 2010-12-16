@@ -190,8 +190,15 @@ namespace OliveValue
 		void			SetColor( const OvColor& userData );
 		const OvColor&		GetColor();
 	};
-// 	class ValueTuple : public OliveValue::Value
+	
+// 	class Tuple : public OliveValue::Value
 // 	{
+// 		OvRTTI_DECL(Tuple);
+// 	public:
+// 		virtual void	FromString( const OvString& expData ) override;
+// 		virtual OvString ToString() override;
+// 	public:
+// 		void			Insert( ValueSPtr val );
 // 
 // 	};
 

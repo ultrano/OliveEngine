@@ -1216,6 +1216,18 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="OliveValue_Tuple"
+				>
+				<File
+					RelativePath=".\source\OvTuple.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\OvTuple.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="º¸·ù"
