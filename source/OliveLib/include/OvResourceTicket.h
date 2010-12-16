@@ -23,5 +23,4 @@ private:
 	OvResourceSPtr		m_resource;
 	const OvRTTI*		m_resourceType;
 	const OvString&	m_fileName;
-	CRITICAL_SECTION	m_section;
 };

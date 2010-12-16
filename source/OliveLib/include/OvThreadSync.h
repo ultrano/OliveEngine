@@ -63,32 +63,19 @@ private:
 	CRITICAL_SECTION&	m_critical_section;
 };
 template<typename T>
-class	OvMultiThreadSync
+class	OvThreadSyncer
 {
-	friend struct OvSectionLock;
 public:
-	OvMultiThreadSync()
-	{
-	}
-	~OvMultiThreadSync()
-	{
-	}
-protected:
 	struct OvSectionLock 
 	{
-		OvSectionLock()
-		{
-			OvMultiThreadSync<T>::__msh_sesstion_key.Enter();
-		}
-		~OvSectionLock()
-		{
-			OvMultiThreadSync<T>::__msh_sesstion_key.Leave();
-		}
+		OvSectionLock() { OvThreadSyncer<T>::Enter(); }
+		~OvSectionLock() { OvThreadSyncer<T>::Leave(); }
 	};
+	static void	Enter() { __msh_sesstion_key.Enter(); };
+	static void	Leave() { __msh_sesstion_key.Leave(); };
 private:
 	static OvCriticalSection	__msh_sesstion_key;
 };
 
 template<typename T>
-OvCriticalSection OvMultiThreadSync<T>::__msh_sesstion_key;
-#define OvSECTION_LOCK OvSectionLock __lock__;
+OvCriticalSection OvThreadSyncer<T>::__msh_sesstion_key;
