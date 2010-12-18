@@ -7,6 +7,7 @@
 #include "OvQuaternion.h"
 #include "OvObjectID.h"
 #include "OvColor.h"
+#include <map>
 class OvInputStream;
 class OvOutputStream;
 namespace OliveValue
@@ -22,6 +23,7 @@ namespace OliveValue
 	const __this_class& operator=( const type_name& typeValue ){ m_value = typeValue; return *this; };\
 	operator const type_name& (){ return m_value; };
 
+	//////////////////////////////////////////////////////////////////////////
 
 	class Value;
 	Value*	Factory(const OvString& valueType);
@@ -35,6 +37,8 @@ namespace OliveValue
 		}
 		return NULL;
 	};
+
+	//////////////////////////////////////////////////////////////////////////
 
 	OvREF_POINTER(Value);
 	class Value : public OvRefBase
@@ -56,6 +60,8 @@ namespace OliveValue
 		virtual void	CopyFrom( Value& val ) { FromString( val.ToString() ); };
 	};
 
+	//////////////////////////////////////////////////////////////////////////
+
 	OvREF_POINTER(Bool);
 	class Bool : public OliveValue::Value
 	{
@@ -70,6 +76,8 @@ namespace OliveValue
 
 	};
 
+	//////////////////////////////////////////////////////////////////////////
+
 	OvREF_POINTER(Float);
 	class Float : public OliveValue::Value
 	{
@@ -82,6 +90,8 @@ namespace OliveValue
 		void			SetFloat( OvFloat expValue );
 		OvFloat			GetFloat();
 	};
+
+	//////////////////////////////////////////////////////////////////////////
 
 	OvREF_POINTER(Point2);
 	class Point2 : public OliveValue::Value
@@ -97,6 +107,8 @@ namespace OliveValue
 		const OvPoint2&	GetPoint2();
 	};
 
+	//////////////////////////////////////////////////////////////////////////
+
 	OvREF_POINTER(Point3);
 	class Point3 : public OliveValue::Value
 	{
@@ -110,6 +122,8 @@ namespace OliveValue
 		void			SetPoint3( OvFloat x, OvFloat y, OvFloat z );
 		const OvPoint3&	GetPoint3();
 	};
+
+	//////////////////////////////////////////////////////////////////////////
 
 	OvREF_POINTER(Quaternion);
 	class Quaternion : public OliveValue::Value
@@ -125,6 +139,8 @@ namespace OliveValue
 		const OvQuaternion& GetQuaternion();
 	};
 
+	//////////////////////////////////////////////////////////////////////////
+
 	OvREF_POINTER(Integer);
 	class Integer : public OliveValue::Value
 	{
@@ -137,6 +153,8 @@ namespace OliveValue
 		void			SetInteger( OvInt expValue );
 		OvInt				GetInteger();
 	};
+
+	//////////////////////////////////////////////////////////////////////////
 
 	OvREF_POINTER(String);
 	class String : public OliveValue::Value
@@ -151,6 +169,8 @@ namespace OliveValue
 		const OvString&	GetString();
 	};
 
+	//////////////////////////////////////////////////////////////////////////
+
 	OvREF_POINTER(ObjectID);
 	class ObjectID : public OliveValue::Value
 	{
@@ -163,6 +183,8 @@ namespace OliveValue
 		void			SetObjectID( const OvObjectID& expValue );
 		const OvObjectID&	GetObjectID();
 	};
+	
+	//////////////////////////////////////////////////////////////////////////
 
 	OvREF_POINTER(UserData);
 	class UserData : public OliveValue::Value
@@ -178,6 +200,8 @@ namespace OliveValue
 		void*			GetUserData();
 	};
 
+	//////////////////////////////////////////////////////////////////////////
+
 	OvREF_POINTER(Color);
 	class Color : public OliveValue::Value
 	{
@@ -190,16 +214,25 @@ namespace OliveValue
 		void			SetColor( const OvColor& userData );
 		const OvColor&		GetColor();
 	};
-	
-// 	class Tuple : public OliveValue::Value
-// 	{
-// 		OvRTTI_DECL(Tuple);
-// 	public:
-// 		virtual void	FromString( const OvString& expData ) override;
-// 		virtual OvString ToString() override;
-// 	public:
-// 		void			Insert( ValueSPtr val );
-// 
-// 	};
+
+	//////////////////////////////////////////////////////////////////////////
+
+	OvREF_POINTER(Table);
+	class Table : public OliveValue::Value
+	{
+		OvRTTI_DECL(Table);
+		typedef std::map<OvString,ValueSPtr> value_table;
+	public:
+		virtual void		FromString( const OvString& expData ) override;
+		virtual OvString	ToString() override;
+	public:
+		void				Insert( const OvString& key, ValueSPtr val );
+		void				Insert( const OvString& key, Value& val );
+		ValueSPtr			Find( const OvString& key );
+
+		OvUInt				Size();
+	private:
+		value_table m_table;
+	};
 
 }

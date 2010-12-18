@@ -4,20 +4,8 @@
 #include "OvTexture.h"
 #include "OvResourceManager.h"
 #include "OvShaderCodeIncluder.h"
-#include "OvDataStream.h"
+#include "OliveDevice.h"
 
-GL_TEST_CASE_FUNC( rtti_ex_test )
-{
-	OvSingletonPool::StartUp();
-	{
-		OvDataStream data(NULL);
-		bool check = false;
-		check = OvIsKindOf<OvInputStream>(&data);
-		check = OvIsKindOf<OvOutputStream>(&data);
-		check = false;
-	}
-	OvSingletonPool::ShutDown();
-}
 
 GL_TEST_CASE_FUNC( rtti_modify )
 {
@@ -47,7 +35,7 @@ GL_TEST_CASE_FUNC( excuted_location_test )
 }
 GL_TEST_CASE_FUNC( olive_value_test )
 {
-	
+	OliveDevice::EngineOn();
 	OvString exp;
 	{
 		OliveValue::Bool val( OvBool( false ) );
@@ -57,28 +45,28 @@ GL_TEST_CASE_FUNC( olive_value_test )
 		OvBool val2 = val;
 	}
 	{
-		OliveValue::Float  val( OvFloat( 1357.548 ) );
+		OliveValue::Float  val( OvFloat( 1357.548f ) );
 		exp = val.ToString();
 		exp = "112.119";
 		val.FromString( exp );
 		OvFloat val2 = val;
 	}
 	{
-		OliveValue::Point2 val( OvPoint2( 123.123,456.456 ) );
+		OliveValue::Point2 val( OvPoint2( 123.123f, 456.456f ) );
 		exp = val.ToString();
 		exp = "111.111,222.222";
 		val.FromString( exp );
 		OvPoint2 val2 = val;
 	}
 	{
-		OliveValue::Point3 val( OvPoint3( 987.987,654.654,321.321 ) );
+		OliveValue::Point3 val( OvPoint3( 987.987f, 654.654f, 321.321f ) );
 		exp = val.ToString();
 		exp = "111.111,222.222,333.333";
 		val.FromString( exp );
 		OvPoint3 val2 = val;
 	}
 	{
-		OliveValue::Quaternion val( OvQuaternion( 123.123, 456.456, 789.789, 753.753 ) );
+		OliveValue::Quaternion val( OvQuaternion( 123.123f, 456.456f, 789.789f, 753.753f ) );
 		exp = val.ToString();
 		exp = "111.111,222.222,333.333,444.444";
 		val.FromString( exp );
@@ -119,5 +107,30 @@ GL_TEST_CASE_FUNC( olive_value_test )
 		val.FromString( exp );
 		OvColor val2 = val;
 	}
+
+	{
+		OliveValue::Table table;
+		OliveValue::Table table2;
+		OliveValue::Table table3;
+		
+		OliveValue::Integer integer0( 100 );
+		OliveValue::String  str("¤»¤»¤»µÇ³ª?");
+		OliveValue::Color   col(OvColor(255,255,255,255));
+
+		table.Insert( "integer", integer0 );
+		table.Insert( "string", str );
+		table.Insert( "color", col );
+
+		table2.CopyFrom( table );
+		table2.Insert( "table", table );
+
+		OvString tostr = table2.ToString();
+		tostr = table2.ToString();
+		
+		table3.CopyFrom( table2 );
+		tostr = table3.ToString();
+
+	}
+	OliveDevice::EngineOff();
 
 }

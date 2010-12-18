@@ -14,6 +14,7 @@ OvRTTI_IMPL(String);
 OvRTTI_IMPL(ObjectID);
 OvRTTI_IMPL(UserData);
 OvRTTI_IMPL(Color);
+OvRTTI_IMPL(Table)
 
 
 //////////////////////////////////////////////////////////////////////////
@@ -33,6 +34,7 @@ REGIST_VALUE_TYPE_BEGINE
 	REGIST_VALUE_TYPE( ObjectID )
 	REGIST_VALUE_TYPE( UserData )
 	REGIST_VALUE_TYPE( Color )
+	REGIST_VALUE_TYPE( Table )
 REGIST_VALUE_TYPE_END
 //////////////////////////////////////////////////////////////////////////
 
@@ -283,3 +285,84 @@ const OvColor& OliveValue::Color::GetColor()
 	return m_value;
 }
 //////////////////////////////////////////////////////////////////////////
+
+
+//////////////////////////////////////////////////////////////////////////
+void OliveValue::Table::FromString( const OvString& expData )
+{
+	OvString copyData = expData;
+	OvUInt size = 0;
+	sscanf_s( copyData.c_str(), "%d:%s", &size, &(copyData[0]), copyData.size() );
+
+	OvUInt totaloffset = 0;
+	while ( size-- )
+	{
+		OvUInt typelength, keylength, datalength;
+		typelength = keylength = datalength = 0;
+
+		totaloffset = copyData.find( "[", totaloffset );
+		sscanf_s( &copyData[totaloffset], "[%d-%d-%d]", &typelength, &keylength, &datalength );
+		totaloffset = copyData.find( "]", totaloffset ) + 1;
+
+		OvString type = copyData.substr( totaloffset, typelength );
+		totaloffset += typelength;
+		OvString key  = copyData.substr( totaloffset, keylength );
+		totaloffset += keylength;
+		OvString data = copyData.substr( totaloffset, datalength );
+		totaloffset += datalength;
+
+		if ( ValueSPtr val = Factory( type ) )
+		{
+			val->FromString( data );
+			Insert( key, val );
+		}
+	}
+}
+
+OvString OliveValue::Table::ToString()
+{
+	OvString tostr;
+	tostr = OvFormatString( "%d:", Size() );
+	value_table::iterator itor = m_table.begin();
+	for( ; itor != m_table.end() ; ++itor )
+	{
+		ValueSPtr val = itor->second;
+
+		const OvString& type	= OvTypeName( val );
+		const OvString& key		= itor->first;
+		OvString		data	= val->ToString();
+
+		tostr += OvFormatString( "[%d-%d-%d]%s"
+			, type.size()
+			, key.size()
+			, data.size()
+			, (type+key+data).c_str() );
+	}
+	return tostr;
+}
+
+void OliveValue::Table::Insert( const OvString& key, ValueSPtr val )
+{
+	m_table[ key ] = val;
+}
+
+void OliveValue::Table::Insert( const OvString& key, Value& val )
+{
+	ValueSPtr clone = OliveValue::Factory( OvRTTI_Util::TypeName( &val ) );
+	clone->CopyFrom( val );
+	Insert( key, clone );
+}
+OliveValue::ValueSPtr OliveValue::Table::Find( const OvString& key )
+{
+	value_table::iterator itor = m_table.find( key );
+	if ( itor == m_table.end() )
+	{
+		return itor->second;
+	}
+	return NULL;
+}
+
+OvUInt OliveValue::Table::Size()
+{
+	return m_table.size();
+}
