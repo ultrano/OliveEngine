@@ -48,3 +48,13 @@ void OvXComponent::ShutDown()
 {
 
 }
+
+void OvXComponent::SetName( const OvString& name )
+{
+	m_name = name;
+}
+
+const OvString& OvXComponent::GetName()
+{
+	return m_name;
+}

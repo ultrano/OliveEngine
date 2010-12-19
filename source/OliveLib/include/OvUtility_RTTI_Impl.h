@@ -92,7 +92,7 @@ public:\
 //////////////////////////////////////////////////////////////////////////
 
 template<typename Type_0>
-const OvString&	TypeName( Type_0 typePointer )
+const OvString&	OvTypeName( Type_0 typePointer )
 {
 	if (typePointer)
 	{
@@ -107,7 +107,7 @@ const OvString&	TypeName( Type_0 typePointer )
 //////////////////////////////////////////////////////////////////////////
 
 template<typename Type_0, typename Type_1>
-OvBool	IsSame( Type_1 typePointer0, Type_1 typePointer1 )
+OvBool	OvIsSame( Type_1 typePointer0, Type_1 typePointer1 )
 {
 	if ( typePointer0 && typePointer1 )
 	{
@@ -118,7 +118,7 @@ OvBool	IsSame( Type_1 typePointer0, Type_1 typePointer1 )
 
 //////////////////////////////////////////////////////////////////////////
 template<typename Type_0, typename Type_1>
-Type_0*	IsTypeOf(const Type_1 typePointer)
+Type_0*	OvIsTypeOf(const Type_1 typePointer)
 {
 	if ( NULL != typePointer->_this_pointer() && Type_0::GetRTTI() == typePointer->QueryRTTI() )
 	{
@@ -130,7 +130,7 @@ Type_0*	IsTypeOf(const Type_1 typePointer)
 
 
 template<typename Type_0, typename Type_1>
-Type_0*	IsKindOf(Type_1 typePointer)
+Type_0*	OvIsKindOf( Type_1 typePointer )
 {
 	if( NULL == typePointer->_this_pointer() )
 		return NULL;
@@ -140,6 +140,19 @@ Type_0*	IsKindOf(Type_1 typePointer)
 	return _TraverseTypeTree<Type_0>(kpRTTI);
 
 }
+//////////////////////////////////////////////////////////////////////////
+
+template<typename Type_0, typename Type_1>
+Type_0*	OvCastTo( Type_1 typePointer )
+{
+	if( NULL == typePointer->_this_pointer() )
+		return NULL;
+
+	const OvRTTI* kpRTTI = typePointer->QueryRTTI();
+
+	return ( _TraverseTypeTree<Type_0>(kpRTTI) )? (Type_0*)typePointer->_this_pointer():NULL;
+}
+
 
 template<typename Type_0>
 Type_0*	_TraverseTypeTree(const OvRTTI* typeInfo)

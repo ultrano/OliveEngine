@@ -71,7 +71,6 @@ void OxBoxMovement::SetUp()
 
 		OliveValue::UserData actorData;
 		actorData.SetUserData( (void*)m_actor );
-		GetTarget()->AddExtraProperty( "PhysxActor", actorData );
 	}
 	else
 	{

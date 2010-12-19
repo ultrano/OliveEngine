@@ -49,7 +49,7 @@ public:
 		for ( unsigned i = 0 ; i < m_loadedObjects.Count() ; ++i )
 		{
 			OvObjectSPtr obj = m_loadedObjects.GetByAt(i);
-			if ( OvRTTI_Util::IsKindOf<OvXObject>(obj) )
+			if ( OvIsKindOf<OvXObject>(obj) )
 			{
 				m_root->AttachChild( obj );
 			}
@@ -178,7 +178,7 @@ public:
 		if ( xobj )
 		{
 			xobj->Update( 0 );
-			if ( OvRTTI_Util::IsTypeOf<OvXNode>(xobj) )
+			if ( OvIsTypeOf<OvXNode>(xobj) )
 			{
 				OvXObjectSPtr child = NULL;
 				OvXNodeSPtr xnode = xobj;
@@ -195,14 +195,14 @@ public:
 	{
 		if ( xobj )
 		{
-			if ( OvRTTI_Util::IsTypeOf<OvModel>(xobj) )
+			if ( OvIsTypeOf<OvModel>(xobj) )
 			{
 				OvModelSPtr model = xobj;
 				model->Render();
 				++m_draw_obj_count;
 			}
 
-			if ( OvRTTI_Util::IsTypeOf<OvXNode>(xobj) )
+			if ( OvIsTypeOf<OvXNode>(xobj) )
 			{
 				OvXObjectSPtr child = NULL;
 				OvXNodeSPtr xnode = xobj;

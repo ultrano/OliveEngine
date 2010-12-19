@@ -1,9 +1,9 @@
 #include "OvXObject.h"
 #include "OvXNode.h"
+#include "OliveValue.h"
 #include "OvXComponent.h"
 #include "OvObjectCollector.h"
 #include "OvStringUtility.h"
-#include "OvPropertyAccesser.h"
 #include "OvRegisterableProperties.h"
 
 OvRTTI_IMPL(OvXObject);
@@ -188,7 +188,7 @@ const OvMatrix&		OvXObject::GetWorldMatrix()
 
 OvBool OvXObject::IsNode()
 {
-	return ( OvRTTI_Util::IsKindOf< OvXNode >( this ) != NULL );
+	return ( OvIsKindOf< OvXNode >( this ) != NULL );
 }
 
 OvBool OvXObject::IsLeaf()

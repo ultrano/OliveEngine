@@ -2,7 +2,7 @@
 // maker : Han,sang woon
 // OvXObject
 #pragma once
-#include "OvObject.h"
+#include "OvObjectNex.h"
 #include "OvTransform.h"
 #include "OvSphere.h"
 #include "OvObjectCollector.h"
@@ -21,7 +21,7 @@ OvREF_POINTER(OvXComponent);
 
 OvREF_POINTER(OvXNode);
 OvREF_POINTER(OvXObject);
-class OvXObject : public OvObject
+class OvXObject : public OvObjectNex
 {
 	OvRTTI_DECL(OvXObject);
 	OvPROPERTY_BAG_DECL(OvXObject);
@@ -140,7 +140,7 @@ OvXObject::GetFirstComponent()
 		for ( unsigned i = 0 ; i < extraComponents.Count() ; ++i )
 		{
 			component = extraComponents.GetByAt( i );
-			if ( component = OvRTTI_Util::IsTypeOf<Type_0>( component.GetRear() ) )
+			if ( component = OvIsTypeOf<Type_0>( component.GetRear() ) )
 			{
 				return component;
 			}

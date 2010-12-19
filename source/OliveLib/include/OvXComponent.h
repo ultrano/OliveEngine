@@ -27,8 +27,12 @@ public:
 	virtual void	ShutDown();
 	virtual void	Update(OvFloat _fElapse) = 0;
 
+	void			SetName( const OvString& name);
+	const OvString&	GetName();
+
 private:
 
-	OvXObject*				m_equippedObject;
+	OvXObject*		m_equippedObject;
+	OvString		m_name;
 
 };

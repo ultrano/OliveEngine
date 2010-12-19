@@ -229,6 +229,8 @@ namespace OliveValue
 		void				Insert( const OvString& key, ValueSPtr val );
 		void				Insert( const OvString& key, Value& val );
 		ValueSPtr			Find( const OvString& key );
+		ValueSPtr			Remove( const OvString& key );
+		void				Clear();
 
 		OvUInt				Size();
 	private:

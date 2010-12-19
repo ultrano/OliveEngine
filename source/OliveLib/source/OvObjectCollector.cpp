@@ -1,5 +1,5 @@
 #include "OvObjectCollector.h"
-#include "OvObject.h"
+#include "OvObjectNex.h"
 #include "OvObjectID.h"
 #include <algorithm>
 using namespace std;
@@ -28,7 +28,8 @@ OvObjectSPtr	OvObjectCollector::GetByName( const OvString& name )
 {
 	for each( tdObjectArray::value_type obj in m_tdObjArray )
 	{
-		if ( obj->GetName() == name )
+		OvObjectNex* nex = OvCastTo<OvObjectNex>(obj);
+		if ( nex && nex->GetName() == name )
 		{
 			return obj;
 		}

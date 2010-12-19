@@ -53,9 +53,6 @@ OvObjectSPtr OvSingleScene::_set_and_return( OvObjectSPtr object )
 	{
 		const OvRTTI * rtti = object->QueryRTTI();
 		OliveValue::ObjectID objID( object->GetObjectID() );
-
-		OvString name = rtti->TypeName() + objID.ToString();
-		object->SetName( name.c_str() );
 		
 		m_object_table[ rtti ].AddObject( object );
 	}

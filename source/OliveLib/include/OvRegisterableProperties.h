@@ -91,15 +91,6 @@ class OvPropAccesser_transform : public OvPropertyAccesser
 };
 //
 
-// extra Property
-class OvPropAccesser_extra_data : public OvPropertyAccesser
-{
-	OvRTTI_DECL(OvPropAccesser_extra_data);
-	virtual OvBool	Extract(OvObject* pObj, OvObjectProperties& rObjStore);
-	virtual OvBool	Inject(OvObject* pObj, OvObjectProperties& rObjStore);
-};
-//
-
 // objectcollector Property
 class OvPropAccesser_object_collector : public OvPropertyAccesser
 {
@@ -123,6 +114,14 @@ class OvResourceLoader;
 class OvPropAccesser_resource_ticket : public OvPropertyAccesser
 {
 	OvRTTI_DECL( OvPropAccesser_resource_ticket );
+	virtual OvBool	Extract(OvObject* pObj, OvObjectProperties& rObjStore);
+	virtual OvBool	Inject(OvObject* pObj, OvObjectProperties& rObjStore);
+};
+
+// olive_value Property
+class OvPropAccesser_olive_value : public OvPropertyAccesser
+{
+	OvRTTI_DECL( OvPropAccesser_olive_value );
 	virtual OvBool	Extract(OvObject* pObj, OvObjectProperties& rObjStore);
 	virtual OvBool	Inject(OvObject* pObj, OvObjectProperties& rObjStore);
 };

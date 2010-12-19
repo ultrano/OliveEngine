@@ -110,7 +110,7 @@ OvBool	OvStorage::_extract_property(OvObject* pObj,OvObjectProperties& rStore)
 	{
 
 		ExtractProperties( pObj, rStore );
-		OvString typeName = OvRTTI_Util::TypeName( pObj );
+		OvString typeName = OvTypeName( pObj );
 		rStore.SetObjectType( typeName );
 		rStore.SetObjectID(pObj->GetObjectID());
 

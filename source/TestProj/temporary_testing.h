@@ -5,8 +5,36 @@
 #include "OvResourceManager.h"
 #include "OvShaderCodeIncluder.h"
 #include "OliveDevice.h"
+#include "OvRegisterableProperties.h"
 
 
+GL_TEST_CASE_FUNC( olive_value_streaming_test )
+{
+	OvSingletonPool::StartUp();
+	{
+		OliveValue::Table table;
+		OliveValue::Table table2;
+		OliveValue::Table table3;
+
+		OliveValue::Integer integer0( 100 );
+		OliveValue::String  str("¤»¤»¤»µÇ³ª?");
+		OliveValue::Color   col(OvColor(255,255,255,255));
+
+		table.Insert( "integer", integer0 );
+		table.Insert( "string", str );
+		table.Insert( "color", col );
+
+		table2.CopyFrom( table );
+		table2.Insert( "table", table );
+
+		OvString tostr = table2.ToString();
+		tostr = table2.ToString();
+
+		table3.CopyFrom( table2 );
+		tostr = table3.ToString();
+	}
+	OvSingletonPool::ShutDown();
+}
 GL_TEST_CASE_FUNC( rtti_modify )
 {
 	OvSingletonPool::StartUp();

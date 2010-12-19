@@ -10,5 +10,3 @@
 #include "OvUtility_RTTI.h"
 #include "OvMacro.h"
 #include "OvThreadSync.h"
-
-namespace OvUtil = OvUtility;

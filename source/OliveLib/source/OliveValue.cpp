@@ -348,14 +348,14 @@ void OliveValue::Table::Insert( const OvString& key, ValueSPtr val )
 
 void OliveValue::Table::Insert( const OvString& key, Value& val )
 {
-	ValueSPtr clone = OliveValue::Factory( OvRTTI_Util::TypeName( &val ) );
+	ValueSPtr clone = OliveValue::Factory( OvTypeName( &val ) );
 	clone->CopyFrom( val );
 	Insert( key, clone );
 }
 OliveValue::ValueSPtr OliveValue::Table::Find( const OvString& key )
 {
 	value_table::iterator itor = m_table.find( key );
-	if ( itor == m_table.end() )
+	if ( itor != m_table.end() )
 	{
 		return itor->second;
 	}
@@ -365,4 +365,21 @@ OliveValue::ValueSPtr OliveValue::Table::Find( const OvString& key )
 OvUInt OliveValue::Table::Size()
 {
 	return m_table.size();
+}
+
+OliveValue::ValueSPtr OliveValue::Table::Remove( const OvString& key )
+{
+	value_table::iterator itor = m_table.find( key );
+	if ( itor != m_table.end() )
+	{
+		ValueSPtr val =itor->second;
+		m_table.erase( itor );
+		return val;
+	}
+	return NULL;
+}
+
+void OliveValue::Table::Clear()
+{
+	m_table.clear();
 }

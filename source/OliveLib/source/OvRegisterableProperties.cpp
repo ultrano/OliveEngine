@@ -382,119 +382,6 @@ OvBool	OvPropAccesser_transform::Inject(OvObject* pObj, OvObjectProperties& rObj
 	return false;
 }
 
-
-////////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////				extra					/////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////
-
-OvRTTI_IMPL(OvPropAccesser_extra_data)
-OvBool	OvPropAccesser_extra_data::Extract(OvObject* pObj, OvObjectProperties& rObjStore)
-{
-	
-	OvObject::extra_property_table* kpProp = (OvObject::extra_property_table*)Access(pObj);
-
-	if (kpProp)
-	{
-		OvObject::extra_property_table& extraTable = *kpProp;
-
-		OliveValue::Integer extraCount( (OvInt)extraTable.size() );
-		
-		unsigned savedPropCount = 0;
-		OvString extraInfo;
-
-		for each( const OvObject::extra_property_table_pair extraProp in extraTable )
-		{
-			OliveValue::ValueSPtr extraValue = extraProp.second;
-
-			OvString typeName = OvRTTI_Util::TypeName( extraValue );
-
-			OliveValue::Integer typeLength( (OvInt)typeName.size() );
-			OliveValue::Integer nameLength( (OvInt)extraProp.first.size() );
-			OliveValue::Integer valueLength( (OvInt)extraValue->ToString().size() );
-
-			if ( valueLength.GetInteger() )
-			{
-				// [9-5-1]somethingtest0
-				// type: something
-				// name: test
-				// value: 0
-				extraInfo += "[";
-				extraInfo += typeLength.ToString();
-				extraInfo += "-";
-				extraInfo += nameLength.ToString();
-				extraInfo += "-";
-				extraInfo += valueLength.ToString();
-				extraInfo += "]";
-				extraInfo += typeName + extraProp.first + extraValue->ToString();
-
-				++savedPropCount;
-			}
-		}
-
-		extraInfo = OliveValue::Integer( savedPropCount ).ToString() + ":" + extraInfo;
-		rObjStore.PushValue( extraInfo );
-
-		return true;
-	}
-	return false;
-}
-OvBool	OvPropAccesser_extra_data::Inject(OvObject* pObj, OvObjectProperties& rObjStore)
-{
-	OvObject::extra_property_table* kpProp = (OvObject::extra_property_table*)Access(pObj);
-
-	if (kpProp)
-	{
-		OvObject::extra_property_table& extraTable = *kpProp;
-
-		OvString extraInfo;
-
-		OvUInt count = 0;
-
-		rObjStore.PopValue( extraInfo );
-
-		sscanf_s( extraInfo.c_str(), "%d:%s", &count, &(extraInfo[0]), extraInfo.size() );
-
-		OvString propInfo;
-		propInfo = extraInfo;
-
-		for ( unsigned i = 0 ; i < count ; ++i)
-		{
-			// [9-5-1]somethingtest0
-			// type: something
-			// name: test
-			// value: 0
-			OvUInt typeLength = 0;
-			OvUInt nameLength = 0;
-			OvUInt valueLength = 0;
-
-			sscanf_s( propInfo.c_str(), "[%d-%d-%d]%s", &typeLength, &nameLength, &valueLength, &propInfo[0], propInfo.length() );
-
-			OvString extra_type = propInfo;
-			extra_type.resize( typeLength );
-
-			OliveValue::Value*	extraValue = OliveValue::Factory( extra_type );
-			if ( extraValue )
-			{
-
-				OvString extra_name = &( propInfo[ typeLength ] );
-				OvString extra_value = &( propInfo[ typeLength + nameLength ] );
-
-				extra_name.resize( nameLength );
-				extra_value.resize( valueLength );
-
-				extraValue->FromString( extra_value );
-
-				extraTable[ extra_name ] = extraValue;
-			}
-
-			propInfo = &( propInfo[ typeLength + nameLength + valueLength ] );
-		}
-		return true;
-	}
-	return false;
-}
-
-
 ////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////				object_collector     		/////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -574,7 +461,7 @@ OvBool OvPropAccesser_resource::Extract( OvObject* pObj, OvObjectProperties& rOb
 	OvResourceSPtr* accessProp = (OvResourceSPtr*)Access(pObj);
 	if ( accessProp )
 	{
-		OvString typeName = OvRTTI_Util::TypeName( (*accessProp) );
+		OvString typeName = OvTypeName( (*accessProp) );
 		OvString fileLocation = OvResourceManager::GetInstance()->FindFileLocation( (*accessProp) );
 		ClampPathIfResDir( fileLocation );
 
@@ -653,5 +540,49 @@ OvBool OvPropAccesser_resource_ticket::Inject( OvObject* pObj, OvObjectPropertie
 		
 	}
 
+	return false;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////				olive_value     		/////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
+
+OvRTTI_IMPL(OvPropAccesser_olive_value);
+
+OvBool OvPropAccesser_olive_value::Extract( OvObject* pObj, OvObjectProperties& rObjStore )
+{
+	OliveValue::ValueSPtr* accessProp = (OliveValue::ValueSPtr*)Access(pObj);
+	if ( accessProp )
+	{
+		OliveValue::ValueSPtr val = *accessProp;
+		OvString type = "0";
+		OvString data = "0";
+		if ( val )
+		{
+			type = OvTypeName(val);
+			data = val->ToString();
+		}
+		rObjStore.PushValue( type+"="+data );
+		return true;
+	}
+	return false;
+}
+
+OvBool OvPropAccesser_olive_value::Inject( OvObject* pObj, OvObjectProperties& rObjStore )
+{
+	OliveValue::ValueSPtr* accessProp = (OliveValue::ValueSPtr*)Access(pObj);
+	if ( accessProp )
+	{
+		OvString data;
+		rObjStore.PopValue( data );
+		OvUInt part = data.find("=");
+		OvString type = data.substr( 0, part );
+		if ( OliveValue::ValueSPtr val = OliveValue::Factory( type ) )
+		{
+			val->FromString( &(data[ part+1 ]) );
+			*accessProp = val;
+		}
+		return true;
+	}
 	return false;
 }
