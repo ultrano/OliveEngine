@@ -228,8 +228,15 @@ namespace OliveValue
 	public:
 		void				Insert( const OvString& key, ValueSPtr val );
 		void				Insert( const OvString& key, Value& val );
-		ValueSPtr			Find( const OvString& key );
+
+		void				Merge( TableSPtr table );
+		
 		ValueSPtr			Remove( const OvString& key );
+
+		template<typename T>
+		OvSmartPointer<T>	Find( const OvString& key );
+		ValueSPtr			Find( const OvString& key );
+		
 		void				Clear();
 
 		OvUInt				Size();
@@ -237,4 +244,9 @@ namespace OliveValue
 		value_table m_table;
 	};
 
+	template<typename T>
+	OvSmartPointer<T> OliveValue::Table::Find( const OvString& key )
+	{
+		return OvCastTo<T>( Find(key) );
+	}
 }

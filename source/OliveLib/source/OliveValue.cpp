@@ -300,9 +300,9 @@ void OliveValue::Table::FromString( const OvString& expData )
 		OvUInt typelength, keylength, datalength;
 		typelength = keylength = datalength = 0;
 
-		totaloffset = copyData.find( "[", totaloffset );
+		totaloffset = (OvUInt)copyData.find( "[", totaloffset );
 		sscanf_s( &copyData[totaloffset], "[%d-%d-%d]", &typelength, &keylength, &datalength );
-		totaloffset = copyData.find( "]", totaloffset ) + 1;
+		totaloffset = (OvUInt)copyData.find( "]", totaloffset ) + 1;
 
 		OvString type = copyData.substr( totaloffset, typelength );
 		totaloffset += typelength;
@@ -352,6 +352,16 @@ void OliveValue::Table::Insert( const OvString& key, Value& val )
 	clone->CopyFrom( val );
 	Insert( key, clone );
 }
+
+void OliveValue::Table::Merge( TableSPtr table )
+{
+	value_table::iterator itor = table->m_table.begin();
+	for ( ; itor != m_table.end() ; ++itor )
+	{
+		m_table[ itor->first ] = itor->second;
+	}
+}
+
 OliveValue::ValueSPtr OliveValue::Table::Find( const OvString& key )
 {
 	value_table::iterator itor = m_table.find( key );
@@ -364,7 +374,7 @@ OliveValue::ValueSPtr OliveValue::Table::Find( const OvString& key )
 
 OvUInt OliveValue::Table::Size()
 {
-	return m_table.size();
+	return (OvUInt)m_table.size();
 }
 
 OliveValue::ValueSPtr OliveValue::Table::Remove( const OvString& key )

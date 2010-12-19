@@ -25,7 +25,8 @@ public:
 	virtual ~OvObject(); 
 
 	//! Clone Object
-	OvObjectSPtr Clone();
+	OvObjectSPtr		 Clone();
+	virtual OvObjectSPtr CustomClone();
 
 	//! ID of Object
 	OvObjectID		GetObjectID();

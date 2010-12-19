@@ -1163,18 +1163,6 @@
 						>
 					</File>
 				</Filter>
-				<Filter
-					Name="OvObjectNex"
-					>
-					<File
-						RelativePath=".\source\OvObjectNex.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\include\OvObjectNex.h"
-						>
-					</File>
-				</Filter>
 			</Filter>
 		</Filter>
 		<Filter
@@ -1225,6 +1213,18 @@
 				</File>
 				<File
 					RelativePath=".\include\OvRect.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="OvObjectNex"
+				>
+				<File
+					RelativePath=".\source\OvObjectNex.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\OvObjectNex.h"
 					>
 				</File>
 			</Filter>

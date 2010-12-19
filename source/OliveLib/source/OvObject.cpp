@@ -80,3 +80,8 @@ OvObjectSPtr OvObject::Clone()
 	}
 	return clone;
 }
+
+OvObjectSPtr OvObject::CustomClone()
+{
+	return Clone();
+}
