@@ -14,12 +14,14 @@ OvPROPERTY_BAG_BEGIN(OvCamera);
 	OvPROPERTY_BAG_REGISTER( OvPropAccesser_float, m_aspect )
 OvPROPERTY_BAG_END(OvCamera);
 
+OvFACTORY_OBJECT_IMPL(OvCamera);
+
 OvCamera::OvCamera()
 {
 	SetNearClip(1.0f);
 	SetFarClip(10000.0f);
 	SetFOV( ( D3DX_PI * 45.0f ) / 180.0f );
-	SetAspect( 800.0f / 600.0f );
+	SetAspect( (OvFloat)WindowWidth / (OvFloat)WindowHeight );
 }
 OvCamera::~OvCamera()
 {
@@ -75,7 +77,7 @@ const OvMatrix&	OvCamera::GetProjectMatrix()
 	return m_mxProjectMatrix;
 }
 
-void			OvCamera::UpdateSubordinate(float _fElapse)
+void			OvCamera::UpdateSubordinate(OvFloat _fElapse)
 {
 	UpdateProjection();
 	UpdateView();
@@ -92,36 +94,36 @@ OvCamera::eCameraType	OvCamera::GetCameraType()
 {
 	return m_eCameraType;
 }
-void			OvCamera::SetFOV(float fFOV)
+void			OvCamera::SetFOV(OvFloat fFOV)
 {
 	m_fFOV = fFOV;
 }
-float			OvCamera::GetFOV()
+OvFloat			OvCamera::GetFOV()
 {
 	return m_fFOV;
 }
-void			OvCamera::SetNearClip(float fDistance)
+void			OvCamera::SetNearClip(OvFloat fDistance)
 {
 	m_fNearClip = fDistance;
 }
-float			OvCamera::GetNearClip()
+OvFloat			OvCamera::GetNearClip()
 {
 	return m_fNearClip;
 }
-void			OvCamera::SetFarClip(float fDistance)
+void			OvCamera::SetFarClip(OvFloat fDistance)
 {
 	m_fFarClip = fDistance;
 }
-float			OvCamera::GetFarClip()
+OvFloat			OvCamera::GetFarClip()
 {
 	return m_fFarClip ;
 }
 
-void			OvCamera::SetAspect( float aspect )
+void			OvCamera::SetAspect( OvFloat aspect )
 {
 	m_aspect = aspect;
 }
-float			OvCamera::GetAspect()
+OvFloat			OvCamera::GetAspect()
 {
 	return m_aspect;
 }
@@ -149,7 +151,7 @@ void			OvCamera::UpdateLookAt()
 		OvPoint3	kLookDir = kLookTarget->GetTranslate() - GetTranslate();
 		kLookDir = kLookDir.Normalize();
 		OvPoint3	kRotAxis = OvPoint3CrossProduct(kLookDir,OvPoint3::AXIS_Y);
-		float		kRotAngle = acosf(kLookDir.DotProduct(OvPoint3::AXIS_Y));
+		OvFloat		kRotAngle = acosf(kLookDir.DotProduct(OvPoint3::AXIS_Y));
 		OvQuaternion	kLookQuat;
 		kLookQuat.MakeQuaternion(-kRotAxis,-kRotAngle);
 		SetRotation(kLookQuat);*/

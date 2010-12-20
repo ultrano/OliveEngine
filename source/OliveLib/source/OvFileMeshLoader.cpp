@@ -3,8 +3,10 @@
 #include "OliveValue.h"
 #include "OvPoint2.h"
 #include "OvPoint3.h"
+#include "OvDataStream.h"
 
 OvRTTI_IMPL(OvFileMeshLoader);
+OvFACTORY_OBJECT_IMPL(OvFileMeshLoader);
 //////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
@@ -76,6 +78,7 @@ typedef vector<SVertex_Medium> medium_stream_buffer;
 
 
 OvFileMeshLoader::OvFileMeshLoader()
+: m_data( NULL )
 {
 	m_readBuffer.resize( MAX_READ_BUFFER_SIZE );
 }
@@ -83,24 +86,17 @@ OvFileMeshLoader::OvFileMeshLoader()
 OvFileMeshLoader::~OvFileMeshLoader()
 {
 	m_readBuffer.clear();
+	m_data = NULL;
 }
 
-OvResourceSPtr OvFileMeshLoader::Load( const std::string& fileLocation )
+OvResourceSPtr OvFileMeshLoader::Load( OvDataStream& stream )
 {
-	FILE* meshFile = m_file = NULL;
-	fopen_s( &meshFile, fileLocation.c_str(), "r" );
-	m_file = meshFile;
-	if ( NULL == meshFile )
-	{
-		return NULL;
-	}
+	m_data = &stream;
 
 	SVertexStreamInfo streamInfoLow;
 	SVertexStreamInfo streamInfoMedium;
 	SVertexStreamInfo streamInfoHigh;
 	LPDIRECT3DINDEXBUFFER9	  streamFace = NULL;
-
-	
 
 	OliveValue::Integer vertexCount( _readLine() );
 	OliveValue::Integer faceCount( _readLine() );
@@ -108,7 +104,6 @@ OvResourceSPtr OvFileMeshLoader::Load( const std::string& fileLocation )
 	streamInfoMedium = _parseStreamMedium();
 	streamFace = _parseIndexStream();
 
-	fclose( meshFile );
 	return _buildMesh
 		( streamInfoLow
 		, streamInfoMedium
@@ -121,13 +116,12 @@ OvResourceSPtr OvFileMeshLoader::Load( const std::string& fileLocation )
 }
 
 
-const char* OvFileMeshLoader::_readLine()
+const OvChar* OvFileMeshLoader::_readLine()
 {
 	// fgets() 의 특성상 '\n' 개행 문자가 끌려 온다.
 	// 개행 문자가 있으면 문자를 다른 데이터타입으로 변환시 
 	// 문제가 발생할수 있으므로 '\0'터미널 문자로 바꿔준다.
-	fgets( &m_readBuffer[0], (int)m_readBuffer.size(), m_file);
-	m_readBuffer.at(m_readBuffer.find("\n")) = '\0';
+	m_data->ReadLine( m_readBuffer );
 	return m_readBuffer.c_str();
 }
 
@@ -141,7 +135,7 @@ SVertexStreamInfo OvFileMeshLoader::_parseStreamLow()
 	vector< OvPoint3 > normBuffer;
 	vector< OvPoint3 > tanBuffer;
 
-	vertNum.SetValue( _readLine() );
+	vertNum.FromString( _readLine() );
 	posBuffer.reserve( vertNum.GetInteger() );
 	for ( unsigned i = 0 ; i < (unsigned)vertNum.GetInteger() ; ++i )
 	{
@@ -226,7 +220,7 @@ LPDIRECT3DINDEXBUFFER9 OvFileMeshLoader::_parseIndexStream()
 	{
 		OliveValue::Point3 readIndex( _readLine() );
 		OvPoint3 findex3 = readIndex.GetPoint3();
-		faceBuffer.push_back( SFaceIndex( (short)findex3.x, (short)findex3.y, (short)findex3.z ) );
+		faceBuffer.push_back( SFaceIndex( (OvShort)findex3.x, (OvShort)findex3.y, (OvShort)findex3.z ) );
 	}
 	if ( faceBuffer.size() )
 	{

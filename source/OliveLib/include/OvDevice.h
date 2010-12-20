@@ -1,4 +1,5 @@
 #pragma once
+#include "OvTypeDef.h"
 #include "OvRenderingCommon.h"
 
 class OvDevice
@@ -13,7 +14,7 @@ public:
 
 	LPDIRECT3DDEVICE9 operator ->()const;;
 	operator	LPDIRECT3DDEVICE9();
-	operator	bool();
+	operator	OvBool();
 
 private:
 	LPDIRECT3DDEVICE9 m_device;

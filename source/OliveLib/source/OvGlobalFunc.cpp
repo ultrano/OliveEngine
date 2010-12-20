@@ -1,4 +1,5 @@
 #include "OvGlobalFunc.h"
+#include "OvStringUtility.h"
 using namespace std;
 
 void	OvGetLastError()
@@ -21,52 +22,50 @@ void	OvGetLastError()
 	LocalFree( lpMsgBuf );
 };
 
-void	OvMessageBox(const char* _msg,const char* _caption)
+void	OvMessageBox(const OvChar* _msg,const OvChar* _caption)
 {
 	MessageBox(NULL,_msg,_caption,MB_OK);
 }
 
-void	OvErrorMsgBox(const char* _file,const char* _block,const char* _msg )
+void	OvErrorMsgBox(const OvChar* _file,const OvChar* _block, const OvUInt _line, const OvChar* _msg )
 {
-	char k_code_location[1024] = {0,};
+	OvString errmsg = OvFormatString(	"File: %s\n"
+					"Block: %s\n"
+					"Line: %d\n"
+					"Assert: %s"
+					,_file
+					,_block
+					,_line
+					,_msg);
 
-	strcat_s(k_code_location,"File : ");
-	strcat_s(k_code_location,_file);
-
-	strcat_s(k_code_location,"\nBlock : ");
-	strcat_s(k_code_location,_block);
-
-	strcat_s(k_code_location,"\nAdditionMsg : ");
-	strcat_s(k_code_location,_msg);
-
-	MessageBox(NULL, k_code_location ,"[Run time error]",MB_OK);
+	MessageBox(NULL, errmsg.c_str() ,"[Run time error]",MB_OK);
 
 }
 
-bool		OvStringAllocator(LPTSTR* _lpp_dest,LPCTSTR lp_src)
+OvBool		OvStringAllocator(LPTSTR* _lpp_dest,LPCTSTR lp_src)
 {
 	if (!lp_src)
 	{
 		return false;
 	}
 	size_t	k_len = strlen(lp_src) + 1;
-	*_lpp_dest = new CHAR[k_len];
-	memset((void*)(*_lpp_dest),0,k_len*sizeof(CHAR));
+	*_lpp_dest = new OvChar[k_len];
+	memset((void*)(*_lpp_dest),0,k_len*sizeof(OvChar));
 	if (!(*_lpp_dest))
 	{
 		return false;
 	}
-	memcpy((void*)(*_lpp_dest),(void*)lp_src,k_len*sizeof(CHAR));
+	memcpy((void*)(*_lpp_dest),(void*)lp_src,k_len*sizeof(OvChar));
 	return true;
 };
-string	OvGetDirectoryInFullFilePath(const string& strFileFullPath)
+OvString	OvGetDirectoryInFullFilePath(const OvString& strFileFullPath)
 {
-	string kReturnString= "";
-	char separator[] = {'\\','/'};
-	for ( unsigned short i = 0 ; i < 2 ; ++i )
+	OvString kReturnString= "";
+	OvChar separator[] = {'\\','/'};
+	for ( OvUShort i = 0 ; i < 2 ; ++i )
 	{
 		size_t stTok = strFileFullPath.rfind( separator[i] );
-		if (stTok != string::npos)
+		if (stTok != OvString::npos)
 		{
 			kReturnString = strFileFullPath;
 			kReturnString.resize( stTok );
@@ -74,14 +73,14 @@ string	OvGetDirectoryInFullFilePath(const string& strFileFullPath)
 	}
 	return kReturnString;
 }
-std::string	OvGetFileNameInFullFilePath(const std::string& strFileFullPath)
+OvString	OvGetFileNameInFullFilePath(const OvString& strFileFullPath)
 {
-	string kReturnString= "";
-	char separator[] = {'\\','/'};
-	for ( unsigned short i = 0 ; i < 2 ; ++i )
+	OvString kReturnString= "";
+	OvChar separator[] = {'\\','/'};
+	for ( OvUShort i = 0 ; i < 2 ; ++i )
 	{
 		size_t stTok = strFileFullPath.rfind( separator[i] );
-		if (stTok != string::npos)
+		if (stTok != OvString::npos)
 		{
 			kReturnString = &strFileFullPath[stTok+1];
 			stTok = kReturnString.rfind('.');
@@ -90,36 +89,36 @@ std::string	OvGetFileNameInFullFilePath(const std::string& strFileFullPath)
 	}
 	return kReturnString;
 }
-std::string	OvGetExtentionInFullFilePath(const std::string& strFileFullPath)
+OvString	OvGetExtentionInFullFilePath(const OvString& strFileFullPath)
 {
-	string kReturnString= "";
+	OvString kReturnString= "";
 	size_t stTok = strFileFullPath.rfind('.');
-	if (stTok != string::npos)
+	if (stTok != OvString::npos)
 	{
 		kReturnString = &strFileFullPath[stTok];
 	}
 	return kReturnString;
 }
-/*inline bool		OvStringAllocator(const char** _lpp_dest,const char* lp_src)
+/*inline OvBool		OvStringAllocator(const OvChar** _lpp_dest,const OvChar* lp_src)
 {
 if (!lp_src)
 {
 return false;
 }
-std::string	k_src(lp_src);
-*_lpp_dest = new char[k_src.length()];
-memset((void*)(*_lpp_dest),0,k_src.length()*sizeof(char));
+OvString	k_src(lp_src);
+*_lpp_dest = new OvChar[k_src.length()];
+memset((void*)(*_lpp_dest),0,k_src.length()*sizeof(OvChar));
 if (!(*_lpp_dest))
 {
 return false;
 }
-memcpy((void*)(*_lpp_dest),(void*)k_src.data(),k_src.length()*sizeof(char));
+memcpy((void*)(*_lpp_dest),(void*)k_src.data(),k_src.length()*sizeof(OvChar));
 return true;
 };*/
 
-unsigned int OvMath::Factorial( unsigned int total )
+OvUInt OvMath::Factorial( OvUInt total )
 {
-	unsigned int result = 1;
+	OvUInt result = 1;
 	while ( total )
 	{
 		result *= total;
@@ -128,17 +127,17 @@ unsigned int OvMath::Factorial( unsigned int total )
 	return result;
 }
 
-unsigned int OvMath::Factorial( unsigned int total, unsigned int select )
+OvUInt OvMath::Factorial( OvUInt total, OvUInt select )
 {
 	return ( OvMath::Factorial( total ) / OvMath::Factorial( select ) );
 }
 
-unsigned int OvMath::Combination( unsigned int total, unsigned int select )
+OvUInt OvMath::Combination( OvUInt total, OvUInt select )
 {
 	return ( OvMath::Factorial( total ) / ( OvMath::Factorial( select ) * OvMath::Factorial( total - select ) ) );
 }
 
-unsigned int OvMath::Sigma( unsigned int total )
+OvUInt OvMath::Sigma( OvUInt total )
 {
 	return ((total * ( total + 1 )) / 2);
 }

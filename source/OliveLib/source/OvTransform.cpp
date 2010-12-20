@@ -42,7 +42,7 @@ OvTransform ExtractTransformFromMatrix( const OvMatrix& mat )
 	return outPut;
 }
 
-bool MakeViewMatrix( const OvPoint3& lookDir, const OvPoint3& upDir, const OvPoint3& pos, OvMatrix& outMat )
+OvBool MakeViewMatrix( const OvPoint3& lookDir, const OvPoint3& upDir, const OvPoint3& pos, OvMatrix& outMat )
 {
 	OvPoint3 rightDir = OvPoint3CrossProduct( upDir, lookDir );
 

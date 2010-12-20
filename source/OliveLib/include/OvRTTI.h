@@ -1,5 +1,4 @@
 #pragma once
-#include <string>
 
 using namespace std;
 
@@ -18,29 +17,36 @@ public:
 		OvRTTI_MAX_PARENT_COUNT = 2
 	};
 
-	OvRTTI(const string & classname)
+	OvRTTI(const OvString & classname)
 		:m_strClassName(classname)
 		,m_pPropertyBag(NULL)
 	{
 		m_pBaseClassRTTI[0] = NULL;
 		m_pBaseClassRTTI[1] = NULL;
 	};
-	OvRTTI(const string & classname, const OvRTTI& baseclass)
+	OvRTTI(const OvString & classname, const OvRTTI& baseclass)
 		:m_strClassName(classname)
 		,m_pPropertyBag(NULL)
 	{
 		m_pBaseClassRTTI[0] = &baseclass;
 		m_pBaseClassRTTI[1] = NULL;
 	};
+	OvRTTI(const OvString & classname, const OvRTTI& baseclass1, const OvRTTI& baseclass2)
+		:m_strClassName(classname)
+		,m_pPropertyBag(NULL)
+	{
+		m_pBaseClassRTTI[0] = &baseclass1;
+		m_pBaseClassRTTI[1] = &baseclass2;
+	};
 
 	void					SetPropertyBag(OvPropertyBag* propBag){m_pPropertyBag = propBag;};
 	inline OvPropertyBag*	PropertyBag(){return m_pPropertyBag;};
-	inline const string&	TypeName(){return m_strClassName;};
-	const OvRTTI*		GetBaseRTTI(unsigned int uiIndex = 0){return m_pBaseClassRTTI[uiIndex];};
+	inline const OvString&	TypeName() const {return m_strClassName;};
+	const OvRTTI*		GetBaseRTTI(OvUInt uiIndex = 0){return m_pBaseClassRTTI[uiIndex];};
 
 private:
 
-	const string					m_strClassName;
+	const OvString					m_strClassName;
 
 	const OvRTTI*					m_pBaseClassRTTI[OvRTTI_MAX_PARENT_COUNT];
 

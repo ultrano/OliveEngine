@@ -1,8 +1,7 @@
 #pragma once
 #pragma warning( disable : 4521)
-
+#include "OvTypeDef.h"
 #include "OvMemObject.h"
-#include <string>
 
 class OvDataStream : public OvMemObject
 {
@@ -12,21 +11,21 @@ private:
 	OvDataStream( const OvDataStream& );
 public:
 
-	OvDataStream( const std::string& buf );
-	OvDataStream( const char* data, size_t data_size );
+	OvDataStream( const OvString& buf );
+	OvDataStream( size_t reserve_size );
 	~OvDataStream();
 
-	const char*	Ptr();
+	const OvChar*	Ptr();
 	size_t	Size();
 
-	const char*	CaretPtr();
+	const OvChar*	CaretPtr();
 	size_t	CaretPos();
 
-	std::string&	Read( std::string& , size_t );
-	std::string&	ReadLine( std::string&, std::string delimiter = "\n" );
+	OvUInt Read( OvString& buf, OvUInt read_size ) ;
+	OvUInt ReadLine( OvString& buf )  ;
 
 private:
 
-	std::string	m_buffer;
+	OvString	m_buffer;
 	size_t		m_read_caret;
 };

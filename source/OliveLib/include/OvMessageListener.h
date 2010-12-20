@@ -5,7 +5,7 @@
 class OvMessageListener : public OvXComponent
 {
 	OvRTTI_DECL(OvMessageListener);
-	friend class OvWinMsgManager;
+	friend class OvMessageManager;
 public:
 	struct InputMessage
 	{
@@ -21,15 +21,15 @@ public:
 	OvMessageListener();
 	~OvMessageListener();
 
-	virtual bool MessageListen(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) = 0;
+	virtual OvBool MessageListen(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) = 0;
 
 private:
 
-	virtual void	Update(float _fElapse) override;
+	virtual void	Update(OvFloat _fElapse) override;
 	void	_push_message( const InputMessage& message );
 
 private:
 	enum {MSG_QUEUE_SIZE = 10};
 	InputMessage m_message;
-	bool m_messageProcessed;
+	OvBool m_messageProcessed;
 };

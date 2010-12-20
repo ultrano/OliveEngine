@@ -6,10 +6,10 @@
 struct SFaceIndex
 {
 	SFaceIndex():_1(0),_2(0),_3(0){};
-	SFaceIndex(short s1, short s2, short s3):_1(s1),_2(s2),_3(s3){};
-	short _1;
-	short _2;
-	short _3;
+	SFaceIndex(OvShort s1, OvShort s2, OvShort s3):_1(s1),_2(s2),_3(s3){};
+	OvShort _1;
+	OvShort _2;
+	OvShort _3;
 } ;
 
 typedef std::vector< SFaceIndex > face_buffer;

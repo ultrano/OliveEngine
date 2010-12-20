@@ -12,7 +12,7 @@ OvPROPERTY_BAG_BEGIN(OvXNode);
 	OvPROPERTY_BAG_REGISTER(OvPropAccesser_object_collector,m_clectrChildCollect);
 OvPROPERTY_BAG_END(OvXNode);
 
-
+OvFACTORY_OBJECT_IMPL(OvXNode);
 
 OvXNode::OvXNode()
 {
@@ -24,7 +24,7 @@ OvXNode::~OvXNode()
 	m_clectrChildCollect.Clear();
 }
 
-void OvXNode::_update_system( float _fElapse )
+void OvXNode::_update_system( OvFloat _fElapse )
 {
 	//! 자식의 업데이트중 자식 리스트에서 임의의 자식을
 	//! 때어달라는 요청을 할수 있다.
@@ -94,7 +94,7 @@ size_t			OvXNode::GetChildCount()
 	return m_clectrChildCollect.Count();
 }
 
-OvXObjectSPtr	OvXNode::GetChildeAt(unsigned int iIndex)
+OvXObjectSPtr	OvXNode::GetChildeAt(OvUInt iIndex)
 {
 	if (0 > iIndex)
 	{
@@ -106,4 +106,43 @@ OvXObjectSPtr	OvXNode::GetChildeAt(unsigned int iIndex)
 	}
 	
 	return m_clectrChildCollect.GetByAt(iIndex);
+}
+
+//////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
+
+
+OvRTTI_IMPL(OvSceneNode);
+
+
+OvFACTORY_OBJECT_IMPL(OvSceneNode);
+
+void OvSceneNode::UpdateScene( OvFloat elapse )
+{
+	OvXObjectSPtr obj = NULL;
+	OvSceneNode* sc_obj = NULL;
+	OvUInt count = GetChildCount();
+	while ( count-- )
+	{
+		obj = GetChildeAt( count );
+		if ( sc_obj = OvCastTo<OvSceneNode>( obj ) )
+		{
+			sc_obj->SetScene( GetScene() );
+		}
+	}
+}
+
+void OvSceneNode::SetScene( OvScene* scene )
+{
+	if ( scene )
+	{
+// 		scene->ListUpSceneNode( this );
+// 		m_scene = scene;
+	}
+}
+
+OvScene* OvSceneNode::GetScene()
+{
+	return m_scene;
 }

@@ -28,7 +28,7 @@ void OvMaterial::SetSamplerState( DWORD sampler, DWORD type, DWORD value )
 	m_sampler_states[ make_pair( sampler, type ) ] = value;
 }
 
-bool OvMaterial::GetSamplerState( DWORD sampler, DWORD type, DWORD& value )
+OvBool OvMaterial::GetSamplerState( DWORD sampler, DWORD type, DWORD& value )
 {
 	sampler_state_table::iterator itor = m_sampler_states.find( make_pair( sampler, type ) );
 	if ( itor != m_sampler_states.end() )
@@ -91,7 +91,7 @@ void OvMaterial::ApplyMaterial()
 		OvRenderer::GetInstance()->SetSamplerState( sampler, type, value );
 	}
 
-	for ( int i = 0 
+	for ( OvInt i = 0 
 		; i < MaxStage 
 		; ++i )
 	{

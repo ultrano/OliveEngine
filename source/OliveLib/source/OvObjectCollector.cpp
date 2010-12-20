@@ -1,5 +1,5 @@
 #include "OvObjectCollector.h"
-#include "OvObject.h"
+#include "OvObjectNex.h"
 #include "OvObjectID.h"
 #include <algorithm>
 using namespace std;
@@ -20,15 +20,16 @@ OvObjectCollector::~OvObjectCollector()
 {
 	Clear();
 }
-OvObjectSPtr	OvObjectCollector::GetByAt(int iIndex)
+OvObjectSPtr	OvObjectCollector::GetByAt(OvInt iIndex)
 {
 	return m_tdObjArray[iIndex];
 }
-OvObjectSPtr	OvObjectCollector::GetByName( const string& name )
+OvObjectSPtr	OvObjectCollector::GetByName( const OvString& name )
 {
 	for each( tdObjectArray::value_type obj in m_tdObjArray )
 	{
-		if ( obj->GetName() == name )
+		OvObjectNex* nex = OvCastTo<OvObjectNex>(obj);
+		if ( nex && nex->GetName() == name )
 		{
 			return obj;
 		}
@@ -55,13 +56,13 @@ void			OvObjectCollector::Clear()
 {
 	m_tdObjArray.clear();
 }
-bool			OvObjectCollector::AddObject(OvObjectSPtr pObj)
+OvBool			OvObjectCollector::AddObject(OvObjectSPtr pObj)
 {
 	m_tdObjArray.push_back(pObj);
 	return true;
 }
 
-bool			OvObjectCollector::AddObject(OvObjectCollector& pObjContainer)
+OvBool			OvObjectCollector::AddObject(OvObjectCollector& pObjContainer)
 {
 	m_tdObjArray.reserve( pObjContainer.Count() );
 	for ( unsigned  i = 0 ; i < (unsigned)pObjContainer.Count() ; ++i )
@@ -94,7 +95,7 @@ OvObjectSPtr OvObjectCollector::RemoveObject( const OvObjectID& objectID )
 	}
 	return NULL;
 }
-bool			OvObjectCollector::IsCollected(OvObjectSPtr pObj)
+OvBool			OvObjectCollector::IsCollected(OvObjectSPtr pObj)
 {
 	if (pObj)
 	{

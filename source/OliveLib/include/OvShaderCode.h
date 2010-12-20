@@ -1,6 +1,5 @@
 #pragma once
 #include "OvResource.h"
-#include <string>
 #include <map>
 
 OvREF_POINTER(OvShader);
@@ -10,26 +9,26 @@ OvREF_POINTER(OvShaderCode);
 class OvShaderCode : public OvResource
 {
 	OvRTTI_DECL( OvShaderCode );
-	typedef std::map< std::pair<std::string,std::string>, OvShaderSPtr > precompiled_shader_table;
+	typedef std::map< std::pair<OvString,OvString>, OvShaderSPtr > precompiled_shader_table;
 public:
 
-	OvShaderCode( const std::string& code);
-	const string&	GetCodeString();
+	OvShaderCode( const OvString& code);
+	const OvString&	GetCodeString();
 	void*			GetCodeBuffer();
 	size_t			GetCodeSize();
 
-	OvVertexShaderSPtr	CompileVertexShader( const std::string& entry_func, const std::string& compile_version );
-	OvPixelShaderSPtr	CompilePixelShader( const std::string& entry_func, const std::string& compile_version );
+	OvVertexShaderSPtr	CompileVertexShader( const OvString& entry_func, const OvString& compile_version );
+	OvPixelShaderSPtr	CompilePixelShader( const OvString& entry_func, const OvString& compile_version );
 
-	OvShaderSPtr	FindShader( const std::string& entry_func, const std::string& compile_version );
+	OvShaderSPtr	FindShader( const OvString& entry_func, const OvString& compile_version );
 
 	void			RefreshShader( OvShaderSPtr shader );
 private:
 
-	OvShaderSPtr	_find_precompiled_shader( const std::string& entry_func, const std::string& compile_version );
-	void			_register_compiled_shader( const std::string& entry_func, const std::string& compile_version, OvShaderSPtr compiled_shader );
+	OvShaderSPtr	_find_precompiled_shader( const OvString& entry_func, const OvString& compile_version );
+	void			_register_compiled_shader( const OvString& entry_func, const OvString& compile_version, OvShaderSPtr compiled_shader );
 
 private:
-	string m_code;
+	OvString m_code;
 	precompiled_shader_table	m_precompiledShaderTable;
 };

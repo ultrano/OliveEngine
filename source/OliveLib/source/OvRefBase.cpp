@@ -9,7 +9,7 @@ OvRefBase::~OvRefBase()
 {
 	if(m_dReferenceCount != 0)
 	{
-		OvAssertMsg(
+		OvError(
 			"Object still shared is forced to delete,check this out man\n"
 			"[Do not use Funtion'delete' on object using 'reference counting']");
 		OvAssert( (! (m_dReferenceCount>0 || m_dReferenceCount<0)));
@@ -17,13 +17,13 @@ OvRefBase::~OvRefBase()
 
 	//OvDeleteSection(m_qSectionKey);
 };
-int		OvRefBase::IncreaseReferenceCount()
+OvInt		OvRefBase::IncreaseReferenceCount()
 {
 	//OvTargetSectionLocker kLocker(m_qSectionKey);
 	++m_dReferenceCount;
 	return m_dReferenceCount;
 }
-int		OvRefBase::DecreaseReferenceCount()
+OvInt		OvRefBase::DecreaseReferenceCount()
 {
 	//OvTargetSectionLocker kLocker(m_qSectionKey);
 	--m_dReferenceCount;
@@ -37,7 +37,7 @@ int		OvRefBase::DecreaseReferenceCount()
 }
 
 
-int		OvRefBase::GetReferenceCount()
+OvInt		OvRefBase::GetReferenceCount()
 {
 	//OvTargetSectionLocker kLocker(m_qSectionKey);
 	return m_dReferenceCount;

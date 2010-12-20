@@ -8,6 +8,7 @@ class OvXNode : public OvXObject
 {
 	OvRTTI_DECL(OvXNode);
 	OvPROPERTY_BAG_DECL(OvXNode);
+	OvFACTORY_OBJECT_DECL(OvXNode);
 
 public:
 
@@ -21,14 +22,30 @@ public:
 
 	size_t			GetChildCount();
 
-	OvXObjectSPtr	GetChildeAt( unsigned int iIndex);
+	OvXObjectSPtr	GetChildeAt( OvUInt iIndex);
 private:
 
-	virtual void	_update_system( float _fElapse ) override;
+	virtual void	_update_system( OvFloat _fElapse ) override;
 
 private:
 
 
 	OvObjectCollector	m_clectrChildCollect;
+
+};
+
+class OvScene;
+class OvSceneNode : public OvXNode
+{
+	OvRTTI_DECL(OvSceneNode);
+	OvPROPERTY_BAG_DECL(OvSceneNode);
+	OvFACTORY_OBJECT_DECL(OvSceneNode);
+	
+	//<! pseudo code
+	void	UpdateScene( OvFloat elapse );
+	void	SetScene( OvScene* scene );
+	OvScene* GetScene();
+private:
+	OvScene*		m_scene;
 
 };

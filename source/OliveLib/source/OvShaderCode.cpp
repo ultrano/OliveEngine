@@ -20,7 +20,7 @@ struct SDxAutoRelease
 };
 //////////////////////////////////////////////////////////////////////////
 
-LPD3DXBUFFER	CompileShaderFromCode( const string& code, const string& funcName, const string& version, LPD3DXINCLUDE includer = NULL)
+LPD3DXBUFFER	CompileShaderFromCode( const OvString& code, const OvString& funcName, const OvString& version, LPD3DXINCLUDE includer = NULL)
 {
 	LPD3DXBUFFER	shaderBuffer = NULL;
 	LPD3DXBUFFER	compileResult = NULL;
@@ -45,7 +45,7 @@ LPD3DXBUFFER	CompileShaderFromCode( const string& code, const string& funcName, 
 		SDxAutoRelease autoRelease1( shaderBuffer );
 		if ( compileResult )
 		{
-			OvAssertMsg( ( char* )compileResult->GetBufferPointer() );
+			OvError( ( OvChar* )compileResult->GetBufferPointer() );
 		}
 		return NULL;
 	}
@@ -55,13 +55,13 @@ LPD3DXBUFFER	CompileShaderFromCode( const string& code, const string& funcName, 
 //////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
 
-OvShaderCode::OvShaderCode( const string& code )
+OvShaderCode::OvShaderCode( const OvString& code )
 : m_code( code )
 {
 
 }
 
-const string& OvShaderCode::GetCodeString()
+const OvString& OvShaderCode::GetCodeString()
 {
 	return m_code;
 }
@@ -76,7 +76,7 @@ size_t OvShaderCode::GetCodeSize()
 	return m_code.size();
 }
 
-OvVertexShaderSPtr OvShaderCode::CompileVertexShader( const string& entry_func, const string& compile_version )
+OvVertexShaderSPtr OvShaderCode::CompileVertexShader( const OvString& entry_func, const OvString& compile_version )
 {
 	OvShaderCodeIncluder includer;
 	OvVertexShaderSPtr outShader = _find_precompiled_shader( entry_func, compile_version );
@@ -100,7 +100,7 @@ OvVertexShaderSPtr OvShaderCode::CompileVertexShader( const string& entry_func, 
 	}
 	return outShader;
 }
-OvPixelShaderSPtr	OvShaderCode::CompilePixelShader( const string& entry_func, const string& compile_version )
+OvPixelShaderSPtr	OvShaderCode::CompilePixelShader( const OvString& entry_func, const OvString& compile_version )
 {
 	OvShaderCodeIncluder includer;
 	OvPixelShaderSPtr outShader = _find_precompiled_shader( entry_func, compile_version );
@@ -125,12 +125,12 @@ OvPixelShaderSPtr	OvShaderCode::CompilePixelShader( const string& entry_func, co
 	return outShader;
 }
 
-OvShaderSPtr OvShaderCode::FindShader( const std::string& entry_func, const std::string& compile_version )
+OvShaderSPtr OvShaderCode::FindShader( const OvString& entry_func, const OvString& compile_version )
 {
 	OvShaderSPtr precompiled_shader = _find_precompiled_shader( entry_func, compile_version );
 	if ( NULL == precompiled_shader )
 	{
-		OvAssertMsg( 
+		OvError( 
 			OvFormatString("[func: %s, compile_version: %s] can't found, maybe not complied"
 			,entry_func.c_str()
 			, compile_version.c_str() ) 
@@ -139,7 +139,7 @@ OvShaderSPtr OvShaderCode::FindShader( const std::string& entry_func, const std:
 	return precompiled_shader;
 }
 
-OvShaderSPtr OvShaderCode::_find_precompiled_shader( const std::string& entry_func, const std::string& compile_version )
+OvShaderSPtr OvShaderCode::_find_precompiled_shader( const OvString& entry_func, const OvString& compile_version )
 {
 	OvShaderSPtr precompiled_shader = NULL;
 	
@@ -154,7 +154,7 @@ OvShaderSPtr OvShaderCode::_find_precompiled_shader( const std::string& entry_fu
 	return precompiled_shader;
 }
 
-void OvShaderCode::_register_compiled_shader( const std::string& entry_func, const std::string& compile_version, OvShaderSPtr compiled_shader )
+void OvShaderCode::_register_compiled_shader( const OvString& entry_func, const OvString& compile_version, OvShaderSPtr compiled_shader )
 {
 	precompiled_shader_table::key_type key( entry_func, compile_version );
 	precompiled_shader_table::value_type table_value( key, compiled_shader );

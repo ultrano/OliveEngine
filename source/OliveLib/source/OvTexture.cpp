@@ -8,8 +8,9 @@ OvTexture::OvTexture()
 {
 };
 
-OvTexture::OvTexture( LPDIRECT3DTEXTURE9 texture )
+OvTexture::OvTexture( LPDIRECT3DTEXTURE9 texture, eTexUsage usage )
 : m_texture( texture )
+, m_usage( usage )
 {
 
 }
@@ -37,6 +38,11 @@ LPDIRECT3DSURFACE9 OvTexture::GetSurface( unsigned level /*= 0 */ )
 	}
 	return surface;
 }
+
+eTexUsage OvTexture::UsageType()
+{
+	return m_usage;
+}
 //////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
@@ -47,8 +53,9 @@ OvCubeTexture::OvCubeTexture()
 {
 };
 
-OvCubeTexture::OvCubeTexture( LPDIRECT3DCUBETEXTURE9 cube_texture )
+OvCubeTexture::OvCubeTexture( LPDIRECT3DCUBETEXTURE9 cube_texture, eTexUsage usage )
 : m_cube_texture( cube_texture )
+, m_usage( usage )
 {
 
 }
@@ -76,11 +83,16 @@ LPDIRECT3DSURFACE9 OvCubeTexture::GetCubeSurface( D3DCUBEMAP_FACES face_index, u
 	}
 	return surface;
 }
+
+eTexUsage OvCubeTexture::UsageType()
+{
+	return m_usage;
+}
 //////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
 
-bool SaveTexture( const std::string& file, OvTextureSPtr texture, D3DXIMAGE_FILEFORMAT format )
+OvBool SaveTexture( const OvString& file, OvTextureSPtr texture, D3DXIMAGE_FILEFORMAT format )
 {
 	HRESULT hr = D3DXSaveTextureToFile( file.c_str(), format, texture->ToDxTexture() ,NULL);
 	return SUCCEEDED( hr );

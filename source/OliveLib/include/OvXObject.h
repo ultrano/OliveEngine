@@ -2,7 +2,7 @@
 // maker : Han,sang woon
 // OvXObject
 #pragma once
-#include "OvObject.h"
+#include "OvObjectNex.h"
 #include "OvTransform.h"
 #include "OvSphere.h"
 #include "OvObjectCollector.h"
@@ -21,13 +21,12 @@ OvREF_POINTER(OvXComponent);
 
 OvREF_POINTER(OvXNode);
 OvREF_POINTER(OvXObject);
-class OvXObject : public OvObject
+class OvXObject : public OvObjectNex
 {
 	OvRTTI_DECL(OvXObject);
 	OvPROPERTY_BAG_DECL(OvXObject);
 
 	friend class OvXNode;
-	friend class OvObjectFactory;
 	friend class OvXComponent;
 
 public :
@@ -39,28 +38,28 @@ public :
 	OvXObject();
 	virtual ~OvXObject();
 
-	void			SetControlFlag( CONTROL_FLAG flag, bool check );
-	bool			GetControlFlag( CONTROL_FLAG flag );
+	void			SetControlFlag( CONTROL_FLAG flag, OvBool check );
+	OvBool			GetControlFlag( CONTROL_FLAG flag );
 
 	//! Update
-	void			Update(float _fElapse);
+	void			Update(OvFloat _fElapse);
 
 	//! updating for application
-	virtual void	UpdateSubordinate(float _fElapse);
+	virtual void	UpdateSubordinate(OvFloat _fElapse);
 
 	//! Set Local Transform
 	void			SetTranslate(OvPoint3& _rPosition);
-	void			SetTranslate(float x,float y,float z);
+	void			SetTranslate(OvFloat x,OvFloat y,OvFloat z);
 	void			SetRotation(OvQuaternion& _rRotation);
 	void			SetScale(const OvPoint3& ptAxisScale);
-	void			SetScale(float _fScale);
+	void			SetScale(OvFloat _fScale);
 
 	//! Set World Transform
 	void			SetTranslateFromWorldCoord(OvPoint3&);
-	void			SetTranslateFromWorldCoord(float x,float y,float z);
+	void			SetTranslateFromWorldCoord(OvFloat x,OvFloat y,OvFloat z);
 	void			SetRotationFromWorldCoord(OvQuaternion& );
 	void			SetScaleFromWorldCoord(OvPoint3&);
-	void			SetScaleFromWorldCoord(float _fScale);
+	void			SetScaleFromWorldCoord(OvFloat _fScale);
 
 	//! Get Local Transform
 	OvPoint3&		GetTranslate();
@@ -75,30 +74,30 @@ public :
 	const OvMatrix&		GetWorldMatrix();
 
 	//! Which Kind
-	bool			IsNode();
-	bool			IsLeaf();
+	OvBool			IsNode();
+	OvBool			IsLeaf();
 
 	//! Get Parent
 	OvXNodeSPtr			GetAttachedNode();
 
 	template<typename Type_0>
 	OvSmartPointer<Type_0>	GetFirstComponent();
-	bool				GetComponents( OvObjectCollector& extraComponents );
+	OvBool				GetComponents( OvObjectCollector& extraComponents );
 	OvXComponentSPtr	RemoveComponent( const OvObjectSPtr component );
 	OvXComponentSPtr	RemoveComponent( const OvObjectID& compoentID );
-	OvXComponentSPtr	RemoveComponent( const char* name );
+	OvXComponentSPtr	RemoveComponent( const OvChar* name );
 
 private:
 
 	//! Set Object Controller (Do not use in application)
-	bool			_equip_component( OvXComponentSPtr component );
-	bool			_remove_component( OvXComponentSPtr component );
+	OvBool			_equip_component( OvXComponentSPtr component );
+	OvBool			_remove_component( OvXComponentSPtr component );
 
 	//! Set Parent (Do not use in application)
 	void			_set_parent(OvXNodeSPtr _pParentNode);
 
 	//! Updating for system (Do not override in application, Use the "UpdateSubordinate" Method)
-	virtual void	_update_system( float _fElapse );
+	virtual void	_update_system( OvFloat _fElapse );
 
 private:
 
@@ -141,7 +140,7 @@ OvXObject::GetFirstComponent()
 		for ( unsigned i = 0 ; i < extraComponents.Count() ; ++i )
 		{
 			component = extraComponents.GetByAt( i );
-			if ( component = OvRTTI_Util::IsTypeOf<Type_0>( component.GetRear() ) )
+			if ( component = OvIsTypeOf<Type_0>( component.GetRear() ) )
 			{
 				return component;
 			}

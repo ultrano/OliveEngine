@@ -1,7 +1,6 @@
 #pragma once
 #include "OvRefBase.h"
 #include <vector>
-#include <string>
 
 OvREF_POINTER(OvObject);
 class OvObjectID;
@@ -20,19 +19,19 @@ public:
 	template<typename Type_0>
 	DWORD			CollectTreeObject(OvObjectSPtr	pObject);
 
-	OvObjectSPtr	GetByAt(int iIndex);
-	OvObjectSPtr	GetByName( const std::string& name );
+	OvObjectSPtr	GetByAt(OvInt iIndex);
+	OvObjectSPtr	GetByName( const OvString& name );
 	OvObjectSPtr	GetByID( const OvObjectID& objectID );
 
 	DWORD			Count();
 	void			Clear();
 
-	bool			AddObject(OvObjectSPtr pObj);
-	bool			AddObject(OvObjectCollector& pObjContainer);
+	OvBool			AddObject(OvObjectSPtr pObj);
+	OvBool			AddObject(OvObjectCollector& pObjContainer);
 	OvObjectSPtr	RemoveObject(OvObjectSPtr pObj);
 	OvObjectSPtr	RemoveObject( const OvObjectID& objectID );
 
-	bool			IsCollected(OvObjectSPtr pObj);
+	OvBool			IsCollected(OvObjectSPtr pObj);
 
 private:
 

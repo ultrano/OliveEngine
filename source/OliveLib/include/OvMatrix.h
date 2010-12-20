@@ -1,4 +1,5 @@
 #pragma once
+#include "OvTypeDef.h"
 #include "OvPoint3.h"
 #include "OvQuaternion.h"
 
@@ -11,41 +12,41 @@ public:
 	OvMatrix();
 	OvMatrix(const OvMatrix& );
 	OvMatrix
-		(float k11,float k12,float k13,float k14
-		,float k21,float k22,float k23,float k24
-		,float k31,float k32,float k33,float k34
-		,float k41,float k42,float k43,float k44);
+		(OvFloat k11,OvFloat k12,OvFloat k13,OvFloat k14
+		,OvFloat k21,OvFloat k22,OvFloat k23,OvFloat k24
+		,OvFloat k31,OvFloat k32,OvFloat k33,OvFloat k34
+		,OvFloat k41,OvFloat k42,OvFloat k43,OvFloat k44);
 
 	OvMatrix	operator * (const OvMatrix&);
-	OvMatrix	operator * (float );
+	OvMatrix	operator * (OvFloat );
 
-	friend OvMatrix operator * (float, const OvMatrix& );
+	friend OvMatrix operator * (OvFloat, const OvMatrix& );
 	friend OvMatrix operator * (const OvMatrix&, const OvMatrix& );
 
 	OvMatrix&	Identity();
 
-	OvMatrix&	Scale(float _fTotalScale);
-	OvMatrix&	Scale(float x,float y,float z);
+	OvMatrix&	Scale(OvFloat _fTotalScale);
+	OvMatrix&	Scale(OvFloat x,OvFloat y,OvFloat z);
 	OvMatrix&	Scale(const OvPoint3& _fTotalScale);
 
-	OvMatrix&	Rotate(float x,float y,float z,float w);
+	OvMatrix&	Rotate(OvFloat x,OvFloat y,OvFloat z,OvFloat w);
 	OvMatrix&	Rotate(const OvQuaternion& _crQuaternion);
 
-	OvMatrix&	Translate(float x,float y,float z);
+	OvMatrix&	Translate(OvFloat x,OvFloat y,OvFloat z);
 	OvMatrix&	Translate(const OvPoint3& _crTraslate);
 
-	OvMatrix&	Inverse(float fDet = 0);
+	OvMatrix&	Inverse(OvFloat fDet = 0);
 
 	union
 	{
 		struct 
 		{
-			float _11,_12,_13,_14;
-			float _21,_22,_23,_24;
-			float _31,_32,_33,_34;
-			float _41,_42,_43,_44;
+			OvFloat _11,_12,_13,_14;
+			OvFloat _21,_22,_23,_24;
+			OvFloat _31,_32,_33,_34;
+			OvFloat _41,_42,_43,_44;
 		};
-		float m[4][4];
+		OvFloat m[4][4];
 	};
 
 };

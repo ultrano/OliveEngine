@@ -38,10 +38,11 @@ void main( in float2 in_tex0	: TEXCOORD1
 
 	// collecting channels
 	float4 diffuse		= tex2D( SAMPLER_0, in_tex0 );
+  float4 normal		= tex2D( SAMPLER_1, in_tex0 );
 	//
 	
 	// manufaturing channels
-  col0 = diffuse;
+  col0 = diffuse * normal;
 	//
 	
 }
@@ -51,7 +52,7 @@ void main( in float2 in_tex0	: TEXCOORD1
   
   <sampler_stage>
     <sampler stage="0">
-      <texture>texture/test.jpg</texture>
+      <texture>texture/barrett.jpg</texture>
       <state type="addressu">mirror</state>
       <state type="addressv">mirror</state>
       <state type="mipfilter">none</state>

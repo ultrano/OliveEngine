@@ -54,7 +54,7 @@ void OxBoxMovement::SetUp()
 	OvPoint3 scale = GetTarget()->GetScale();
 	NxBoxShapeDesc desc;
 	desc.dimensions = OvConvert::xyz<NxVec3>( scale / 2.0f );
-	desc.materialIndex = 1;
+	//desc.materialIndex = 1;
 	desc.localPose.t = NxVec3(0.0f,scale.y * 0.5f,0.0f);
 
 	NxActorDesc actorDesc;
@@ -71,7 +71,6 @@ void OxBoxMovement::SetUp()
 
 		OliveValue::UserData actorData;
 		actorData.SetUserData( (void*)m_actor );
-		GetTarget()->RegisterExtraProperty( "PhysxActor", actorData );
 	}
 	else
 	{

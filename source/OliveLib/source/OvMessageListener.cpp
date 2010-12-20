@@ -5,15 +5,15 @@ OvRTTI_IMPL(OvMessageListener);
 OvMessageListener::OvMessageListener()
 : m_messageProcessed( true )
 {
-	OvWinMsgManager::GetInstance()->_register_listener( this );
+	OvMessageManager::GetInstance()->_register_listener( this );
 }
 
 OvMessageListener::~OvMessageListener()
 {
-	OvWinMsgManager::GetInstance()->_remove_listener( this );
+	OvMessageManager::GetInstance()->_remove_listener( this );
 }
 
-void OvMessageListener::Update( float _fElapse )
+void OvMessageListener::Update( OvFloat _fElapse )
 {
 	if ( ! m_messageProcessed )
 	{

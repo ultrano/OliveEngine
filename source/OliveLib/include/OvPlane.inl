@@ -11,11 +11,11 @@ inline void		OvPlane::SetNormal(OvPoint3& _PlaneNormal)
 	m_PlaneNormal	=	m_PlaneNormal.Normalize();
 };
 
-inline float	OvPlane::GetDistance()
+inline OvFloat	OvPlane::GetDistance()
 {
 	return m_PlaneDistance;
 };
-inline void		OvPlane::SetDistance(float	_PlaneDistance)
+inline void		OvPlane::SetDistance(OvFloat	_PlaneDistance)
 {
 	m_PlaneDistance		=	_PlaneDistance;
 };
@@ -36,7 +36,7 @@ inline void		OvPlane::SetPlane(const OvPoint3& _PlaneNormal,const OvPoint3& _P0)
 	m_PlaneDistance	=	m_PlaneNormal.DotProduct(_P0);
 };
 
-inline void		OvPlane::SetPlane(const OvPoint3& _PlaneNormal,float _PlaneDistance)
+inline void		OvPlane::SetPlane(const OvPoint3& _PlaneNormal,OvFloat _PlaneDistance)
 {
 	m_PlaneDistance		=	_PlaneDistance;
 	m_PlaneNormal	=	_PlaneNormal;

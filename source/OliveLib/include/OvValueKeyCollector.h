@@ -17,15 +17,15 @@
 //	};
 //public:
 //
-//	bool			IsValidKeyIndex(unsigned int iIndex);
-//	bool			IsOverlapTickKey(float fTick);
+//	OvBool			IsValidKeyIndex(OvUInt iIndex);
+//	OvBool			IsOverlapTickKey(OvFloat fTick);
 //
-//	void			CollectValueKey(float fTick,const Type_0& crValue);
+//	void			CollectValueKey(OvFloat fTick,const Type_0& crValue);
 //	void			BuildKeyNode();
 //	void			SortAccessCash();
 //
-//	unsigned int	GetKeyCount();
-//	ContainKeyType	GetKeyAt(unsigned int iIndex)
+//	OvUInt	GetKeyCount();
+//	ContainKeyType	GetKeyAt(OvUInt iIndex)
 //	{
 //		if (IsValidKeyIndex(iIndex))
 //			return m_vecKeyArray[iIndex];
@@ -33,7 +33,7 @@
 //	};
 //
 //private:
-//	map<float,ContainKeyType>	m_mapKeyTale;
+//	map<OvFloat,ContainKeyType>	m_mapKeyTale;
 //	vector<ContainKeyType>		m_vecKeyArray;
 //	vector<SKeyNode>			m_vecKeyNodeArray;
 //};

@@ -9,10 +9,12 @@
 #include "OvShaderCodeIncluder.h"
 #include "OvShaderCode.h"
 #include "OliveValue.h"
+#include "OvDataStream.h"
 #include <map>
 using namespace std;
 
 OvRTTI_IMPL( OvMaterialLoader );
+OvFACTORY_OBJECT_IMPL(OvMaterialLoader);
 
 struct SStateTypeTable : OvMemObject
 {
@@ -36,7 +38,7 @@ struct SStateTypeTable : OvMemObject
 		state_type_table["dmapoffset"]		= D3DSAMP_DMAPOFFSET;
 
 	};
-	std::map<std::string, DWORD> state_type_table;
+	std::map<OvString, DWORD> state_type_table;
 };
 
 struct SStateValueTable : OvMemObject
@@ -65,25 +67,25 @@ struct SStateValueTable : OvMemObject
 		
 
 	};
-	std::map<std::string, DWORD> state_value_table;
+	std::map<OvString, DWORD> state_value_table;
 };
 
-DWORD StringToStateType( const char* type )
+DWORD StringToStateType( const OvChar* type )
 {
 	static SStateTypeTable table;
 	return table.state_type_table[ type ];
 }
-DWORD StringToStateValue( const char* value )
+DWORD StringToStateValue( const OvChar* value )
 {
 	static SStateValueTable tavle;
 	return tavle.state_value_table[ value ];
 }
 
-OvResourceSPtr OvMaterialLoader::Load( const std::string& fileLocation )
+OvResourceSPtr OvMaterialLoader::Load( OvDataStream& stream )
 {
 	TiXmlDocument doc("material_doc");
 	
-	if ( ! doc.LoadFile( fileLocation.c_str() ) )
+	if ( ! doc.Parse( stream.Ptr() ) )
 	{	
 		return NULL;
 	}
@@ -95,9 +97,9 @@ OvResourceSPtr OvMaterialLoader::Load( const std::string& fileLocation )
 	OvShaderCodeIncluder includer;
 	OvVertexShaderSPtr	vertexShader = NULL;
 	OvPixelShaderSPtr	pixelShader	 = NULL;
-	string shader_code;
-	string entry_function;
-	string complie_version;
+	OvString shader_code;
+	OvString entry_function;
+	OvString complie_version;
 	//////////////////////////////////////////////////////////////////////////
 
 	//////////////////////////////////////////////////////////////////////////
@@ -126,14 +128,14 @@ OvResourceSPtr OvMaterialLoader::Load( const std::string& fileLocation )
 
 	//////////////////////////////////////////////////////////////////////////
 	TiXmlElement* sampler_stage_elem = root->FirstChildElement( "sampler_stage" );
-	std::map<unsigned int, OvResourceTicketSPtr> stageImage;
+	std::map<OvUInt, OvResourceTicketSPtr> stageImage;
 	OvMaterial::sampler_state_table	state_table;
 
 	for ( TiXmlElement* sampler_elem = sampler_stage_elem->FirstChildElement( "sampler" )
 		; NULL != sampler_elem
 		; sampler_elem = sampler_elem->NextSiblingElement( "sampler" ) )
 	{
-		int stage = 0;
+		OvInt stage = 0;
 		sampler_elem->Attribute( "stage", &stage );
 		
 		TiXmlElement* texture_elem = sampler_elem->FirstChildElement( "texture" );
@@ -158,7 +160,7 @@ OvResourceSPtr OvMaterialLoader::Load( const std::string& fileLocation )
 	OvMaterialSPtr material = OvNew OvMaterial;
 	material->SetVertexShader( vertexShader );
 	material->SetPixelShader( pixelShader );
-	for ( int i = 0 ; i < OvMaterial::MaxStage ; ++i )
+	for ( OvInt i = 0 ; i < OvMaterial::MaxStage ; ++i )
 	{
 		material->SetStageTexture( (OvMaterial::TextureStage)i, stageImage[i] );
 	}

@@ -16,18 +16,18 @@ public:
 	const OvMatrix&	GetLightMatrix();
 	const OvMatrix&	GetProjectMatrix();
 
-	virtual void	UpdateSubordinate( float _fElapse ) override;
+	virtual void	UpdateSubordinate( OvFloat _fElapse ) override;
 
-	void			SetFOV(float fFOV);
-	float			GetFOV();
+	void			SetFOV(OvFloat fFOV);
+	OvFloat			GetFOV();
 
-	void			SetNearClip(float fDistance);
-	float			GetNearClip();
-	void			SetFarClip(float fDistance);
-	float			GetFarClip();
+	void			SetNearClip(OvFloat fDistance);
+	OvFloat			GetNearClip();
+	void			SetFarClip(OvFloat fDistance);
+	OvFloat			GetFarClip();
 
-	void			SetAspect( float aspect );
-	float			GetAspect();
+	void			SetAspect( OvFloat aspect );
+	OvFloat			GetAspect();
 private:
 	void			UpdateProjection();
 	void			UpdateLight();
@@ -36,8 +36,8 @@ private:
 	OvMatrix	m_light_matrix;
 	OvMatrix	m_project_matrix;
 
-	float		m_fov;
-	float		m_near_clip;
-	float		m_far_clip;
-	float		m_aspect;
+	OvFloat		m_fov;
+	OvFloat		m_near_clip;
+	OvFloat		m_far_clip;
+	OvFloat		m_aspect;
 };

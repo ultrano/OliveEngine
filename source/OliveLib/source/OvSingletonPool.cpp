@@ -20,7 +20,7 @@ void	OvSingletonPool::StartUp()
 	}
 	else
 	{
-		OvAssertMsg("[OvSingletonPool::StartUp()]는 한번만 호출하셔야 합니다.");
+		OvError("[OvSingletonPool::StartUp()]는 한번만 호출하셔야 합니다.");
 	}
 }
 void	OvSingletonPool::ShutDown()
@@ -31,7 +31,7 @@ void	OvSingletonPool::ShutDown()
 		sm_pSingletonContextList = NULL;
 	}
 }
-bool OvSingletonPool::IsPoolStartedUp()
+OvBool OvSingletonPool::IsPoolStartedUp()
 {
 	return ( sm_pSingletonContextList != NULL );
 }

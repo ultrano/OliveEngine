@@ -10,18 +10,18 @@ OvPoint3 OvPoint3::AXIS_Z(0,0,1);
 
 OvPoint3 OvPoint3::Normalize()
 {
-	float kfLength = Length();
+	OvFloat kfLength = Length();
 	return kfLength? OvPoint3(x/kfLength,y/kfLength,z/kfLength) : *this;
 }
-float	OvPoint3::DotProduct(const OvPoint3& _rPt)
+OvFloat	OvPoint3::DotProduct(const OvPoint3& _rPt)
 {
-	return float(x*_rPt.x + y*_rPt.y + z*_rPt.z);
+	return OvFloat(x*_rPt.x + y*_rPt.y + z*_rPt.z);
 }
-float	OvPoint3::Length()
+OvFloat	OvPoint3::Length()
 {
 	return  Length3D(x,y,z,0,0,0);
 }
-float	OvPoint3::Length(const OvPoint3& _rTargetPoint)
+OvFloat	OvPoint3::Length(const OvPoint3& _rTargetPoint)
 {
 	return OvPoint3Length(*this,_rTargetPoint);
 }
@@ -41,11 +41,11 @@ OvPoint3 OvPoint3::operator -() const
 	return OvPoint3(-x,-y,-z);
 }
 
-OvPoint3 OvPoint3::operator *(float _fScalar) const
+OvPoint3 OvPoint3::operator *(OvFloat _fScalar) const
 {
 	return OvPoint3(x * _fScalar ,y * _fScalar ,z * _fScalar );
 }
-OvPoint3	OvPoint3::operator /(float _fScalar) const
+OvPoint3	OvPoint3::operator /(OvFloat _fScalar) const
 {
 	return OvPoint3(x / _fScalar ,y / _fScalar ,z / _fScalar );
 }
@@ -61,7 +61,7 @@ OvPoint3	OvPoint3::operator *(const OvMatrix mulMat) const
 	, ( x * mulMat._13 ) + ( y * mulMat._23 ) + ( z * mulMat._33 ) + ( 1 * mulMat._43 )
 	, ( x * mulMat._14 ) + ( y * mulMat._24 ) + ( z * mulMat._34 ) + ( 1 * mulMat._44 )
 	);
-	float w = (outPut.w)? outPut.w : 1;
+	OvFloat w = (outPut.w)? outPut.w : 1;
 	return OvPoint3
 		( outPut.x / w
 		, outPut.y / w
@@ -89,18 +89,18 @@ OvPoint3& OvPoint3::operator -=(const OvPoint3& _rPt)
 	z -= _rPt.z;
 	return *this;
 }
-bool	OvPoint3::operator ==(const OvPoint3& _rPt) const
+OvBool	OvPoint3::operator ==(const OvPoint3& _rPt) const
 {
 	return ((x == _rPt.x)&&(y == _rPt.y)&&(z == _rPt.z));
 }
 
-bool	OvPoint3::operator !=(const OvPoint3& _rPt) const
+OvBool	OvPoint3::operator !=(const OvPoint3& _rPt) const
 {
 	return ((x != _rPt.x)&&(y != _rPt.y)&&(z != _rPt.z));
 }
-float	 OvPoint3DotProduct(const OvPoint3& _rPt0,const OvPoint3& _rPt1)
+OvFloat	 OvPoint3DotProduct(const OvPoint3& _rPt0,const OvPoint3& _rPt1)
 {
-	return float(_rPt0.x*_rPt1.x + _rPt0.y*_rPt1.y + _rPt0.z*_rPt1.z);
+	return OvFloat(_rPt0.x*_rPt1.x + _rPt0.y*_rPt1.y + _rPt0.z*_rPt1.z);
 }
 
 OvPoint3 OvPoint3CrossProduct(const OvPoint3& _rPt0,const OvPoint3& _rPt1)
@@ -108,7 +108,7 @@ OvPoint3 OvPoint3CrossProduct(const OvPoint3& _rPt0,const OvPoint3& _rPt1)
 	return OvPoint3(_rPt0.y*_rPt1.z - _rPt0.z*_rPt1.y,_rPt0.z*_rPt1.x - _rPt0.x*_rPt1.z,_rPt0.x*_rPt1.y - _rPt0.y*_rPt1.x);
 }
 
-float	 OvPoint3Length(const OvPoint3& _rPt0,const OvPoint3& _rPt1)
+OvFloat	 OvPoint3Length(const OvPoint3& _rPt0,const OvPoint3& _rPt1)
 {
 	return Length3D(_rPt0.x,_rPt0.y,_rPt0.z,_rPt1.x,_rPt1.y,_rPt1.z);
 }

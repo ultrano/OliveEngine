@@ -16,14 +16,14 @@ OvPlane::OvPlane(const OvPoint3& _PlaneNormal,const OvPoint3& _P0):m_PlaneNormal
 	m_PlaneDistance	=	m_PlaneNormal.DotProduct(_P0);
 };
 
-OvPlane::OvPlane(const OvPoint3& _PlaneNormal,float _PlaneDistance):m_PlaneNormal(_PlaneNormal),m_PlaneDistance(_PlaneDistance)
+OvPlane::OvPlane(const OvPoint3& _PlaneNormal,OvFloat _PlaneDistance):m_PlaneNormal(_PlaneNormal),m_PlaneDistance(_PlaneDistance)
 {
 	m_PlaneNormal = m_PlaneNormal.Normalize();
 };
 
-int			OvPlane::WhichSide(const OvPoint3& _SidePoint)
+OvInt			OvPlane::WhichSide(const OvPoint3& _SidePoint)
 {
-	float	kWhichSide	=	m_PlaneNormal.DotProduct(_SidePoint);
+	OvFloat	kWhichSide	=	m_PlaneNormal.DotProduct(_SidePoint);
 
 	kWhichSide	=	kWhichSide - m_PlaneDistance;
 

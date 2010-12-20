@@ -11,6 +11,8 @@ OvPROPERTY_BAG_BEGIN(OvModel)
 	OvPROPERTY_BAG_REGISTER( OvPropAccesser_resource_ticket, m_mesh )
 OvPROPERTY_BAG_END(OvModel)
 
+OvFACTORY_OBJECT_IMPL(OvModel);
+
 OvModel::OvModel()
 : m_material( NULL )
 , m_mesh( NULL )
@@ -40,27 +42,6 @@ void OvModel::SetMaterial( OvMaterialSPtr material )
 OvMaterialSPtr OvModel::GetMaterial()
 {
 	return m_material->CheckOut();
-}
-
-
-void OvModel::RenderWithoutMaterial()
-{
-	if ( false == GetControlFlag( VISIBLE ) )
-	{
-		return ;
-	}
-
-	OvShaderManager::GetInstance()->SetVSConst( OvVShaderConst::World, GetWorldMatrix() );
-
-	OvMatrix temp_mat;
-	
-	OvShaderManager::GetInstance()->GetVSConst( OvVShaderConst::ViewProject, temp_mat );
-	OvShaderManager::GetInstance()->SetVSConst( OvVShaderConst::WorldViewProject, GetWorldMatrix() * temp_mat );
-
-	if ( GetMesh() )
-	{
-		GetMesh()->Rendering();
-	}
 }
 
 void	OvModel::Render()

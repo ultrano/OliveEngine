@@ -79,4 +79,5 @@ private:
 	// 설명 : 보시다시피 이름 그대로 입죠 -_- 아... 밤새겠네 이거...
 	//		  이게 주석처리 첫번째 헤더파일인데 =_=;;;
 	OvMemoryPoolList*	m_pMemoryPoolList;
+	CRITICAL_SECTION	m_section;
 };

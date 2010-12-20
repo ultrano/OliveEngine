@@ -6,7 +6,7 @@
 	typedef OvSmartPointer<__class_name>	__class_name##SPtr;
 
 template<typename Type_0>
-class	OvSmartPointer : public OvMemObject
+template_class	OvSmartPointer : public OvMemObject
 {
 public:
 	OvSmartPointer();
@@ -21,13 +21,13 @@ public:
 	Type_0*				GetRear()const;
 
 	//! check, is it valid
-	operator			bool()const;
+	operator			OvBool()const;
 
 	Type_0*				operator ->()const;
 	OvSmartPointer&		operator = ( Type_0* _pt);
 	OvSmartPointer&		operator = ( OvSmartPointer& _copy);
 	OvSmartPointer&		operator = (const OvSmartPointer& _copy);
-	Type_0&				operator [](int _ArrayCount);
+	Type_0&				operator [](OvInt _ArrayCount);
 
 	template<typename Type_1>
 	OvSmartPointer&		operator = (const OvSmartPointer<Type_1>& _copy);

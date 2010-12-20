@@ -27,7 +27,7 @@ OvArrayAutoPtr<Type_0>::~OvArrayAutoPtr()
 }
 
 template<typename Type_0>
-OvArrayAutoPtr<Type_0>::operator	bool()const
+OvArrayAutoPtr<Type_0>::operator	OvBool()const
 {
 	return (m_pReferenceTarget != NULL);
 }
@@ -41,7 +41,7 @@ template<typename Type_0>
 Type_0&				OvArrayAutoPtr<Type_0>::operator *()
 {
 	if(!m_pReferenceTarget)
-		OvAssertMsg("NULL에대한 접근 경고:OvArrayAutoPtr이 NULL을 읽으려 합니다.");
+		OvError("NULL에대한 접근 경고:OvArrayAutoPtr이 NULL을 읽으려 합니다.");
 
 	return *m_pReferenceTarget;
 }
@@ -49,7 +49,7 @@ template<typename Type_0>
 Type_0*				OvArrayAutoPtr<Type_0>::operator ->()
 {
 	if(!m_pReferenceTarget)
-		OvAssertMsg("NULL에대한 접근 경고:OvArrayAutoPtr이 NULL을 읽으려 합니다.");
+		OvError("NULL에대한 접근 경고:OvArrayAutoPtr이 NULL을 읽으려 합니다.");
 	return m_pReferenceTarget;
 }
 template<typename Type_0>
@@ -81,35 +81,35 @@ Type_0&				OvArrayAutoPtr<Type_0>::operator [](Tyep_Count _ArrayCount)
 
 
 template<typename Type_0,typename Type_1>
-bool	operator == (const OvArrayAutoPtr<Type_0>& _copy0,const OvArrayAutoPtr<Type_1>& _copy1)
+OvBool	operator == (const OvArrayAutoPtr<Type_0>& _copy0,const OvArrayAutoPtr<Type_1>& _copy1)
 {
 	return ((void*)_copy0.GetRear() == (void*)_copy1.GetRear());
 }
 template<typename Type_0,typename Type_1>
-bool	operator != (const OvArrayAutoPtr<Type_0>& _copy0,const OvArrayAutoPtr<Type_1>& _copy1)
+OvBool	operator != (const OvArrayAutoPtr<Type_0>& _copy0,const OvArrayAutoPtr<Type_1>& _copy1)
 {
 	return ((void*)_copy0.GetRear() != (void*)_copy1.GetRear());
 }
 
 template<typename Type_0,typename Type_1>
-bool	operator == (const OvArrayAutoPtr<Type_0>& _copy0,const Type_1* _copy1)
+OvBool	operator == (const OvArrayAutoPtr<Type_0>& _copy0,const Type_1* _copy1)
 {
 	return ((void*)_copy0.GetRear() == (void*)_copy1);
 }
 template<typename Type_0,typename Type_1>
-bool	operator != (const OvArrayAutoPtr<Type_0>& _copy0,const Type_1* _copy1)
+OvBool	operator != (const OvArrayAutoPtr<Type_0>& _copy0,const Type_1* _copy1)
 {
 	return ((void*)_copy0.GetRear() != (void*)_copy1);
 }
 
 
 template<typename Type_0,typename Type_1>
-bool	operator == (const Type_0* _copy0,const OvArrayAutoPtr<Type_1>& _copy1)
+OvBool	operator == (const Type_0* _copy0,const OvArrayAutoPtr<Type_1>& _copy1)
 {
 	return ((void*)_copy0 == (void*)_copy1.GetRear());
 }
 template<typename Type_0,typename Type_1>
-bool	operator != (const Type_0* _copy0,const OvArrayAutoPtr<Type_1>& _copy1)
+OvBool	operator != (const Type_0* _copy0,const OvArrayAutoPtr<Type_1>& _copy1)
 {
 	return ((void*)_copy0 != (void*)_copy1.GetRear());
 }

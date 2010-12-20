@@ -1,5 +1,4 @@
 #pragma once
-#include <string>
 #include <d3dx9.h>
 
 class OvShaderCodeIncluder : public ID3DXInclude

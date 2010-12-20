@@ -8,15 +8,9 @@
 #include "OvObjectProperties.h"
 #include "OvStorage.h"
 
-#include <string>
 using namespace std;
 
 OvRTTI_IMPL(OvObject);
-
-OvPROPERTY_BAG_BEGIN(OvObject);
-	OvPROPERTY_BAG_REGISTER( OvPropAccesser_STL_string, m_name );
-	OvPROPERTY_BAG_REGISTER( OvPropAccesser_extra_data, m_extraPropertyTable );
-OvPROPERTY_BAG_END(OvObject);
 
 OvObject::OvObject()
 {
@@ -24,17 +18,7 @@ OvObject::OvObject()
 }
 OvObject::~OvObject()
 {
-	ClearExtraProperty();
 	OvObjectManager::GetInstance()->RecallObjectID(this);
-}
-
-void	OvObject::SetName( const char* _pName )
-{
-	m_name = _pName;
-}
-const string& OvObject::GetName()
-{
-	return m_name;
 }
 
 OvObjectID		OvObject::GetObjectID()
@@ -42,54 +26,9 @@ OvObjectID		OvObject::GetObjectID()
 	return m_idObjectID;
 }
 
-OliveValue::Value* OvObject::RegisterExtraProperty( const string& propName, OliveValue::Value& extraProp )
-{
-	if ( m_extraPropertyTable.find( propName ) == m_extraPropertyTable.end() )
-	{
-		OliveValue::Value* copy = OliveValue::Factory( OvRTTI_Util::TypeName( &extraProp ) );
-		if ( copy )
-		{
-			copy->SetValue( extraProp.GetValue() );
-			m_extraPropertyTable[ propName ] = copy;
-			return copy;
-		}
-	}
-	return NULL;
-}
-
-bool		OvObject::RemoveExtraProperty( const string& propName )
-{
-	extra_property_table::iterator tableIter = m_extraPropertyTable.find(propName) ;
-	if ( m_extraPropertyTable.end() != tableIter )
-	{
-		OvDelete tableIter->second;
-		m_extraPropertyTable.erase(tableIter);
-
-		return true;
-	}
-	return false;
-}
-void		OvObject::ClearExtraProperty()
-{
-	for each( const extra_property_table_pair& propPair in m_extraPropertyTable )
-	{
-		OvDelete propPair.second;
-	}
-	m_extraPropertyTable.clear();
-}
-
-OliveValue::Value* OvObject::FindExtraProperty( const string& propName )
-{
-	extra_property_table::iterator tableIter = m_extraPropertyTable.find(propName) ;
-	if ( m_extraPropertyTable.end() != tableIter )
-	{
-		return tableIter->second;
-	}
-	return NULL;
-}
 void ExtractProperties( OvObject* obj, OvObjectProperties& prop )
 {
-	if ( OvRTTI_Util::IsKindOf<OvObject>( obj ) )
+	if ( OvIsKindOf<OvObject>( obj ) )
 	{
 		for ( OvRTTI * rtti = const_cast<OvRTTI*>(obj->QueryRTTI())
 			; NULL != rtti
@@ -111,7 +50,7 @@ void ExtractProperties( OvObject* obj, OvObjectProperties& prop )
 
 void InjectProperties( OvObject* obj, OvObjectProperties& prop )
 {
-	if ( OvRTTI_Util::IsKindOf<OvObject>( obj ) )
+	if ( OvIsKindOf<OvObject>( obj ) )
 	{
 		for ( OvRTTI * rtti = const_cast<OvRTTI*>(obj->QueryRTTI())
 			; NULL != rtti
@@ -132,7 +71,7 @@ void InjectProperties( OvObject* obj, OvObjectProperties& prop )
 
 OvObjectSPtr OvObject::Clone()
 {
-	OvObjectSPtr clone = TemporaryFactoryFunction( OvRTTI_Util::TypeName( this ));
+	OvObjectSPtr clone = Olive::CreateObject( OvTypeName( this ) );
 	if ( clone )
 	{
 		OvObjectProperties objProp;
@@ -140,4 +79,9 @@ OvObjectSPtr OvObject::Clone()
 		InjectProperties( clone.GetRear(), objProp );
 	}
 	return clone;
+}
+
+OvObjectSPtr OvObject::CustomClone()
+{
+	return Clone();
 }

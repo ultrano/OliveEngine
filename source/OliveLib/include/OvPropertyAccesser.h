@@ -1,5 +1,5 @@
 #pragma once
-#include <string>
+#include "OvTypeDef.h"
 #include "OvUtility_RTTI.h"
 #include "OvMemObject.h"
 
@@ -15,19 +15,19 @@ public:
 	OvPropertyAccesser();
 	virtual ~OvPropertyAccesser();
 
-	virtual bool	Extract(OvObject* pObj, OvObjectProperties& rXml) = 0;
-	virtual bool	Inject(OvObject* pObj, OvObjectProperties& rXml) = 0;
+	virtual OvBool	Extract(OvObject* pObj, OvObjectProperties& rXml) = 0;
+	virtual OvBool	Inject(OvObject* pObj, OvObjectProperties& rXml) = 0;
 
 	void*			Access(OvObject* pObj);
-	unsigned int	GetOffset();
-	void			SetOffset(unsigned int uiOffset);
+	OvUInt	GetOffset();
+	void			SetOffset(OvUInt uiOffset);
 
-	std::string&	GetPropertyName();
-	void			SetPropertyName(const std::string& strPropName);
+	OvString&	GetPropertyName();
+	void			SetPropertyName(const OvString& strPropName);
 
 private:
 
-	std::string		m_strPropertyName;
-	unsigned int	m_uiOffset;
+	OvString		m_strPropertyName;
+	OvUInt	m_uiOffset;
 
 };

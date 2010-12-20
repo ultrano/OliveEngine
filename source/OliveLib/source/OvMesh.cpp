@@ -13,7 +13,7 @@ OvMesh::~OvMesh()
 {
 	if ( m_renderData )
 	{
-		for( int i = 0 
+		for( OvInt i = 0 
 			; i < STAGE_MAX
 			; ++i)
 		{
@@ -39,7 +39,7 @@ void	OvMesh::Rendering( StreamStage meshDetail )
 	meshDetail = (meshDetail < Geometry)? Geometry : meshDetail;
 	meshDetail = (meshDetail > Blend)? Blend : meshDetail;
 
-	for( int i = 0 
+	for( OvInt i = 0 
 		; i < STAGE_MAX
 		; ++i)
 	{
@@ -50,6 +50,6 @@ void	OvMesh::Rendering( StreamStage meshDetail )
 
 	OvRenderer::GetInstance()->SetVertexDeclaration( m_renderData->vertDecl );
 
-	bool result = OvRenderer::GetInstance()->DrawPrimitive( D3DPT_TRIANGLELIST, m_renderData->faceCount );
+	OvBool result = OvRenderer::GetInstance()->DrawPrimitive( D3DPT_TRIANGLELIST, m_renderData->faceCount );
 
 }

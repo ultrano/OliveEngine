@@ -16,7 +16,7 @@ public:
 	OvAssociatedLinkConnector();
 	virtual ~OvAssociatedLinkConnector();
 
-	virtual bool	ConnectLink( OvLinkageTable& restoreTable ) = 0;
+	virtual OvBool	BuildLink( restore_object_table& restoreTable ) = 0;
 
 };
 
@@ -34,7 +34,7 @@ public:
 	void	SetFormerID( const OvObjectID& );
 	const OvObjectID& GetFormerID();
 
-	virtual bool	ConnectLink( OvLinkageTable& restoreTable ) override ;
+	virtual OvBool	BuildLink( restore_object_table& restoreTable ) override ;
 private:
 
 	OvObjectID	m_formerID;
@@ -55,7 +55,7 @@ public:
 	void	SetFormerID( const OvObjectID& );
 	const OvObjectID& GetFormerID();
 
-	virtual bool	ConnectLink( OvLinkageTable& restoreTable ) override ;
+	virtual OvBool	BuildLink( restore_object_table& restoreTable ) override ;
 
 private:
 
@@ -78,7 +78,7 @@ public:
 
 	void	AddRelatedObjectID( const OvObjectID& objectID );
 
-	virtual bool	ConnectLink( OvLinkageTable& restoreTable ) override ;
+	virtual OvBool	BuildLink( restore_object_table& restoreTable ) override ;
 
 private:
 

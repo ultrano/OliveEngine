@@ -5,7 +5,6 @@
 #include "OvStreamCommon.h"
 #include <queue>
 #include <list>
-#include <string>
 using namespace std;
 
 class OvObject;
@@ -20,26 +19,26 @@ public:
 	OvObjectProperties();
 	~OvObjectProperties();
 
-	void	SetObjectType(const string& );
-	const string& GetObjectType();
+	void	SetObjectType(const OvString& );
+	const OvString& GetObjectType();
 
 	void	SetObjectID(const OvObjectID& rObjID);
 	const OvObjectID& GetObjectID();
 
-	void	PushValue(const string& rValue);
-	bool	PopValue(string& rValue);
+	void	PushValue(const OvString& rValue);
+	OvBool	PopValue(OvString& rValue);
 
 	void	PushValue( OliveValue::Value& rValue );
-	bool	PopValue( OliveValue::Value& rValue );
+	OvBool	PopValue( OliveValue::Value& rValue );
 
 	void	PushAssociatedObject(OvObject* pObject);
 
 	void	PushAssociatedLinkConnector( OvAssociatedLinkConnector* linkBuilder);
 
 private:
-	queue<string>		m_queValueQueue;
+	queue<OvString>		m_queValueQueue;
 	queue<OvObject*>	m_queObjects;
-	string				m_objectType;
+	OvString				m_objectType;
 	OvObjectID			m_idObjectID;
 	link_builder_list	m_collectedLinkBuilder;
 };

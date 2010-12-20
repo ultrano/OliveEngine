@@ -3,24 +3,31 @@
 #include "OvRefBase.h"
 #include "OvSingleton.h"
 #include "OvObjectID.h"
-#include <map>
-#include <string>
 using namespace std;
 OvREF_POINTER(OvObject);
 
-class OvStorage;
-class OvObjectFactory : public OvSingletonBase< OvObjectFactory >
+
+namespace Olive
 {
-public:
-	OvObjectFactory();
-	~OvObjectFactory();
-	OvObjectSPtr	CreateInstance(const string& rClass);
 
-private:
+	typedef OvObject* (*construct_function)(void);
+	OvBool			IsObjectCreatable( const OvString& type_name );
+	OvObjectSPtr	CreateObject( const OvString& type_name );
+	OvObject*		CreateObject_Ptr( const OvString& type_name );
+	void			RegisterConstructFunc( const OvChar* type_name, construct_function func );
 
-	typedef map<string,OvObjectSPtr (*)(OvObjectID&)> tdFactoryCallback;
-	tdFactoryCallback	m_mapFactoryCallback;
-};
+	struct OvFactoryMemberDeclarer
+	{
+		OvFactoryMemberDeclarer( const OvChar* type_name, construct_function func );
+	};
 
+#define OvFACTORY_OBJECT_DECL( type_name ) \
+	friend OvObject* _construct_function_##type_name();\
+	private: static OvObject* _construct_function_(){ return OvNew type_name; };\
+	private: static Olive::OvFactoryMemberDeclarer _static_factory_declarer;
 
+#define OvFACTORY_OBJECT_IMPL( type_name ) \
+	OvObject* _construct_function_##type_name(){ return type_name::_construct_function_(); }\
+	Olive::OvFactoryMemberDeclarer type_name::_static_factory_declarer( #type_name, _construct_function_##type_name);
 
+}

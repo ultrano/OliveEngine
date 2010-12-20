@@ -1,13 +1,14 @@
 #pragma once
 #pragma warning( disable : 4521 )
+#include "OvTypeDef.h"
 #include "OvMemObject.h"
-//typedef unsigned int OvObjectID;;
+//typedef OvUInt OvObjectID;;
 
 class OvObjectID : public OvMemObject
 {
 public:
 
-	typedef unsigned int id_core_type;
+	typedef OvUInt id_core_type;
 
 	static OvObjectID	INVALID;
 
@@ -17,25 +18,25 @@ public:
 	OvObjectID( const OvObjectID& );
 	~OvObjectID();
 
-	friend bool operator==(const OvObjectID& idRef0, const OvObjectID& idRef1);
-	friend bool operator==( OvObjectID& idRef0,  OvObjectID& idRef1);
+	friend OvBool operator==(const OvObjectID& idRef0, const OvObjectID& idRef1);
+	friend OvBool operator==( OvObjectID& idRef0,  OvObjectID& idRef1);
 
-	friend bool operator!=(const OvObjectID& idRef0, const OvObjectID& idRef1);
-	friend bool operator!=( OvObjectID& idRef0,  OvObjectID& idRef1);
+	friend OvBool operator!=(const OvObjectID& idRef0, const OvObjectID& idRef1);
+	friend OvBool operator!=( OvObjectID& idRef0,  OvObjectID& idRef1);
 
-	bool operator==(const OvObjectID& idRef);
-	bool operator==(OvObjectID& idRef);
+	OvBool operator==(const OvObjectID& idRef);
+	OvBool operator==(OvObjectID& idRef);
 
-	bool operator!=(const OvObjectID& idRef);
-	bool operator!=(OvObjectID& idRef);
+	OvBool operator!=(const OvObjectID& idRef);
+	OvBool operator!=(OvObjectID& idRef);
 
-	friend bool operator<(const OvObjectID& idRef0, const OvObjectID& idRef1);
-	bool operator<(const OvObjectID& idRef);
-	bool operator<(OvObjectID& idRef);
+	friend OvBool operator<(const OvObjectID& idRef0, const OvObjectID& idRef1);
+	OvBool operator<(const OvObjectID& idRef);
+	OvBool operator<(OvObjectID& idRef);
 
-	friend bool operator>(const OvObjectID& idRef0, const OvObjectID& idRef1);
-	bool operator>(const OvObjectID& idRef);
-	bool operator>(OvObjectID& idRef);
+	friend OvBool operator>(const OvObjectID& idRef0, const OvObjectID& idRef1);
+	OvBool operator>(const OvObjectID& idRef);
+	OvBool operator>(OvObjectID& idRef);
 
 private:
 

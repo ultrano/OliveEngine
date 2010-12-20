@@ -2,7 +2,6 @@
 #include "OvGlobalFunc.h"
 #include "OvResourceManager.h"
 #include "OvShaderCode.h"
-#include <string>
 #include <iostream>
 #include <fstream>
 using namespace std;
@@ -15,7 +14,7 @@ OvShaderCodeIncluder::OvShaderCodeIncluder()
 
 STDMETHODIMP OvShaderCodeIncluder::Open( THIS_ D3DXINCLUDE_TYPE IncludeType, LPCSTR pFileName, LPCVOID pParentData, LPCVOID *ppData, UINT *pBytes )
 {
-	string fileLocation = AbsolutePath( "shader\\" + std::string( pFileName ) );
+	OvString fileLocation = AbsolutePath( "shader\\" + OvString( pFileName ) );
 
 	OvShaderCodeSPtr code_resource = OvResourceManager::GetInstance()->LoadResource<OvShaderCode>( fileLocation );
 

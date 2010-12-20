@@ -2,7 +2,6 @@
 
 #include "OvAutoPtr.h"
 #include <vector>
-#include <string>
 
 class OvPropertyAccesser;
 
@@ -15,7 +14,7 @@ public:
 
 	unsigned			GetPropertiesCount();
 	OvPropertyAccesser* GetPropertyAt( unsigned index );
-	OvPropertyAccesser* FindProperty( const std::string& name );
+	OvPropertyAccesser* FindProperty( const OvString& name );
 
 	void				AddProperty(OvPropertyAccesser* pProperty);
 

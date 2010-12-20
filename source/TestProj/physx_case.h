@@ -11,13 +11,14 @@
 #include "OxBoxMovement.h"
 #include "OvInputManager.h"
 #include "OxTestPhysx.h"
+#include "OliveDevice.h"
+#include "OvTextDrawer.h"
 
 // 테스트 환경 구축
 GL_TEST_ENVIROMENT( OliveLibTest )
 {
 private:
 protected:
-	OvRenderTarget m_renderTarget;
 	OvTextureSPtr m_diffuseScene;
 	
 	OvShaderCodeSPtr m_shader_code;
@@ -29,7 +30,10 @@ protected:
 
 	OxTestPhysx	m_physx;
 
-	bool m_exitFlag;
+	OvTextDrawerSPtr m_text;
+
+	OvUInt m_draw_obj_count;
+
 public:
 	GL_ENV_SET_UP
 	{
@@ -37,26 +41,15 @@ public:
 		//////////////////////////////////////////////////////////////////////////
 		//////////////////////////////////////////////////////////////////////////
 
-		m_exitFlag = false;
-		OvSingletonPool::StartUp();
-		OvRenderer::GetInstance()->GenerateRenderer();
-
-// 		lua_State* state = lua_open();
-// 		luaL_openlibs(state);
-// 		lua_tinker::def(state,"messagebox", OvMessageBox);
-// 		lua_tinker::dofile(state,ResDirPath("script/lua/testsrvr.lua").c_str());
+		OliveDevice::EngineOn();
 
 		OvStorage store;
-		if ( ! store.Load( AbsolutePath("ovf/scene_test.xml"), m_loadedObjects) )
-		{
-			OvMessageBox("망햇어염^_^ 로딩 ㄴㄴ","");
-			m_exitFlag = true;
-		}
+		OvAssert( store.Load( AbsolutePath("ovf/scene_test.xml"), m_loadedObjects) );
 		m_root = OvNew OvXNode;
 		for ( unsigned i = 0 ; i < m_loadedObjects.Count() ; ++i )
 		{
 			OvObjectSPtr obj = m_loadedObjects.GetByAt(i);
-			if ( OvRTTI_Util::IsKindOf<OvXObject>(obj) )
+			if ( OvIsKindOf<OvXObject>(obj) )
 			{
 				m_root->AttachChild( obj );
 			}
@@ -67,7 +60,7 @@ public:
 		//////////////////////////////////////////////////////////////////////////
 		//////////////////////////////////////////////////////////////////////////
 		//////////////////////////////////////////////////////////////////////////
-		m_diffuseScene = CreateRenderTexture( 800, 600, 1, D3DFMT_A8B8G8R8 );
+		m_diffuseScene = OvRenderer::GetInstance()->CreateRenderTexture( WindowWidth, WindowHeight );
 
 		//////////////////////////////////////////////////////////////////////////
 		//////////////////////////////////////////////////////////////////////////
@@ -80,8 +73,11 @@ public:
 		//////////////////////////////////////////////////////////////////////////
 		//////////////////////////////////////////////////////////////////////////
 
+		m_text = OvNew OvTextDrawer;
+		m_text->BuildFont( 16, 8, 1 );
 
 		(OvNew OxCameraController( m_physx.GetScene() ))->SetTarget( m_mainCamera );
+		m_draw_obj_count = 0;
 	};
 	GL_ENV_TEAR_DOWN
 	{
@@ -93,48 +89,30 @@ public:
 
 		m_shader_code = NULL;
 
+		m_text = NULL;
 
-		OvSingletonPool::ShutDown();
+		OliveDevice::EngineOff();
 
 	}
 public:
 	void Run()
 	{
-
-		MSG msg;
-		ZeroMemory( &msg, sizeof( msg ) );
-		if ( msg.message != WM_QUIT )
+		OvInputManager* input = OvInputManager::GetInstance();
+		while ( OliveDevice::Run() && !input->IsStateOfKey( DIK_ESCAPE, PRESSED ) )
 		{
-			while ( !m_exitFlag && msg.message != WM_QUIT )
-			{
-				if ( PeekMessage( &msg, NULL, NULL, NULL, PM_REMOVE ) )
-				{
-					TranslateMessage( &msg );
-					DispatchMessage( &msg );
-				}
-				{
-					Control();
-					Update(  m_root );
-					m_physx.GetScene()->simulate(1.0f/6.0f);
-					Render( m_mainCamera, m_root );
-					m_physx.GetScene()->flushStream();
-					m_physx.GetScene()->fetchResults(NX_RIGID_BODY_FINISHED, true);
-				}
-			}
+			Control();
+			Update(  m_root );
+			m_physx.GetScene()->simulate(1.0f/6.0f);
+			Render( m_mainCamera, m_root );
+			m_physx.GetScene()->flushStream();
+			m_physx.GetScene()->fetchResults(NX_RIGID_BODY_FINISHED, true);
 		}
 	}
 
 	void Control()
 	{
-		if ( OvInputManager::IsPushed(VK_ESCAPE) )
-		{
-			if ( !m_exitFlag )
-			{
-				m_exitFlag = true;
-			}
-		}
-
-		if ( OvInputManager::IsStateOf( L_BUTTON, CLICKED ) )
+		OvInputManager* input = OvInputManager::GetInstance();
+		if ( input->IsStateOfMouse( L_BUTTON, PRESSED | PRESSING ) )
 		{
 			OvModelSPtr model = m_loadedObjects.GetByName("Ball");
 			if ( model )
@@ -146,38 +124,51 @@ public:
 				m_root->AttachChild( copymodel );
 			}
 		}
+		if ( input->IsStateOfKey( DIK_I, PRESSED ) )
+		{
+			OvObjectCollector savecollector;
+			savecollector.AddObject(m_root);
+			OvStorage store;
+			OvAssert( store.Save( AbsolutePath("ovf/scene_test.xml"), savecollector) );
+		}
 	}
 
 	void	RenderDiffuse( OvCameraSPtr camera, OvXObjectSPtr xobj )
 	{
+		OvRenderer* renderer = OvRenderer::GetInstance();
+		OvShaderManager* shader = OvShaderManager::GetInstance();
+
 		OvMatrix view_project = camera->GetViewMatrix() * camera->GetProjectMatrix();
-		OvShaderManager::GetInstance()->SetVSConst( OvVShaderConst::ViewProject, view_project );
+		shader->SetVSConst( OvVShaderConst::ViewProject, view_project );
 
-		m_renderTarget.LockRenderTarget( 0, m_diffuseScene->GetSurface() );
-
-		OvRenderer::GetInstance()->ClearTarget();
-		OvRenderer::GetInstance()->BeginTarget();
+		renderer->SetRenderTarget( m_diffuseScene, true, true, OvColor( 255,0,255,255 ));
 		
 		Draw( xobj );
 
-		OvRenderer::GetInstance()->EndTarget();
-		m_renderTarget.UnlockRenderTarget();
+		renderer->SetRenderTarget( NULL );
+
 	}
 	void	Render( OvCameraSPtr camera, OvXObjectSPtr xobj )
 	{
+		OvRenderer* renderer = OvRenderer::GetInstance();
+
+		renderer->BeginFrame();
+
+		m_draw_obj_count = 0;
 		RenderDiffuse( camera, xobj );
+		OliveValue::Point3 pt = camera->GetWorldTranslate();
+		OliveValue::Integer objcount = m_draw_obj_count;
+		m_text->DrawToTexture( m_diffuseScene, pt.ToString().c_str(), OvIRect(0,10,50,50), DT_NOCLIP, OvColor(255,0,0,0) );
+		m_text->DrawToTexture( m_diffuseScene, objcount.ToString().c_str(), OvIRect(0,30,50,50), DT_NOCLIP, OvColor(255,0,0,0) );
+		renderer->SetTexture( 0, m_diffuseScene );
 
-		OvRenderer::GetInstance()->SetTexture( 0, m_diffuseScene );
-
-		OvRenderer::GetInstance()->ClearTarget();
-		OvRenderer::GetInstance()->BeginTarget();
-
-		OvRenderer::GetInstance()->RenderUnitRect
+		renderer->RenderUnitRect
 			( m_shader_code->FindShader( "rectV", "vs_2_0" ) 
 			, m_shader_code->FindShader( "rectP", "ps_2_0" ) );
 
-		OvRenderer::GetInstance()->EndTarget();
-		OvRenderer::GetInstance()->PresentTarget();
+
+		renderer->EndFrame();
+		renderer->PresentFrame();
 
 	}
 
@@ -187,7 +178,7 @@ public:
 		if ( xobj )
 		{
 			xobj->Update( 0 );
-			if ( OvRTTI_Util::IsTypeOf<OvXNode>(xobj) )
+			if ( OvIsTypeOf<OvXNode>(xobj) )
 			{
 				OvXObjectSPtr child = NULL;
 				OvXNodeSPtr xnode = xobj;
@@ -204,13 +195,14 @@ public:
 	{
 		if ( xobj )
 		{
-			if ( OvRTTI_Util::IsTypeOf<OvModel>(xobj) )
+			if ( OvIsTypeOf<OvModel>(xobj) )
 			{
 				OvModelSPtr model = xobj;
 				model->Render();
+				++m_draw_obj_count;
 			}
 
-			if ( OvRTTI_Util::IsTypeOf<OvXNode>(xobj) )
+			if ( OvIsTypeOf<OvXNode>(xobj) )
 			{
 				OvXObjectSPtr child = NULL;
 				OvXNodeSPtr xnode = xobj;

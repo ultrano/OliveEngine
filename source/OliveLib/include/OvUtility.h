@@ -2,7 +2,6 @@
 
 #include <windows.h>
 #include <assert.h>
-#include <string>
 #include <math.h>
 #include <stdlib.h>
 
@@ -11,5 +10,3 @@
 #include "OvUtility_RTTI.h"
 #include "OvMacro.h"
 #include "OvThreadSync.h"
-
-namespace OvUtil = OvUtility;

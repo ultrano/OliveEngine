@@ -3,7 +3,6 @@
 #include "OvResource.h"
 #include "OvResourceLoader.h"
 #include "OvResourceTicket.h"
-#include <string>
 #include <list>
 #include <map>
 
@@ -21,31 +20,31 @@ public:
 
 	//! sync load method
 	template<typename Type_0>
-	OvSmartPointer<Type_0>	LoadResource( const string& fileLocation );
-	OvResourceSPtr			LoadResource( const OvRTTI* resourceType, const string& fileLocation );
-	OvResourceSPtr			LoadResource( const string& resourceType, const string& fileLocation );
+	OvSmartPointer<Type_0>	LoadResource( const OvString& fileLocation );
+	OvResourceSPtr			LoadResource( const OvRTTI* resourceType, const OvString& fileLocation );
+	OvResourceSPtr			LoadResource( const OvString& resourceType, const OvString& fileLocation );
 	//
 
 	//! async load method
 	template<typename Type_0>
-	OvResourceTicketSPtr	AsyncLoadResource( const string& fileLocation );
-	OvResourceTicketSPtr	AsyncLoadResource( const OvRTTI* resourceType, const string& fileLocation );
-	OvResourceTicketSPtr	AsyncLoadResource( const string& resourceType, const string& fileLocation );
+	OvResourceTicketSPtr	AsyncLoadResource( const OvString& fileLocation );
+	OvResourceTicketSPtr	AsyncLoadResource( const OvRTTI* resourceType, const OvString& fileLocation );
+	OvResourceTicketSPtr	AsyncLoadResource( const OvString& resourceType, const OvString& fileLocation );
 
 	OvResourceTicketSPtr	FindTicket( OvResourceSPtr resource );
 	//
 
 
 	void					ResourceCache( OvResourceSPtr resource );
-	const string&			FindFileLocation( OvResourceSPtr resource );
+	const OvString&			FindFileLocation( OvResourceSPtr resource );
 
-	const string&			ResourceDirectory();
+	const OvString&			ResourceDirectory();
 
 private:
 
 	struct SAsyncLoadInfo
 	{ 
-		std::string file; 
+		OvString file; 
 		OvResourceLoaderSPtr loader; 
 	};
 	struct SResourceInfo
@@ -58,15 +57,15 @@ private:
 	typedef std::list< OvResourceSPtr >						resource_cache_list;
 	typedef std::list< SAsyncLoadInfo >						async_load_list;
 
-	typedef std::map< std::string, SResourceInfo >			loaded_resource_table;
+	typedef std::map< OvString, SResourceInfo >			loaded_resource_table;
 	typedef std::list< OvResource* >						resource_list;
 private:
 
-	OvResourceTicketSPtr	_reserve_ticket( const OvRTTI* type, const string& fileLocation );
-	void _register_loaded_resource( const string& location, OvResource* resource );
+	OvResourceTicketSPtr	_reserve_ticket( const OvRTTI* type, const OvString& fileLocation );
+	void _register_loaded_resource( const OvString& location, OvResource* resource );
 
 	OvResourceLoaderSPtr _find_resource_loader( const OvRTTI* resourceType );
-	OvResourceSPtr _find_loaded_resource( const OvRTTI* resourceType, const string& location);
+	OvResourceSPtr _find_loaded_resource( const OvRTTI* resourceType, const OvString& location);
 
 	void	_called_when_resource_created( OvResource* resource );
 	void	_called_when_resource_deleted( OvResource* resource );
@@ -75,11 +74,11 @@ private:
 	void	_called_when_ticket_deleted( OvResourceTicket* ticket );
 
 	static	void	_thread_routine( void* data );
-	static bool&	_get_async_life_flag();
+	static OvBool&	_get_async_life_flag();
 	void	_async_routine();
 
 	void	_push_async_load_info( SAsyncLoadInfo& info );
-	bool	_pop_async_load_info( SAsyncLoadInfo& info );
+	OvBool	_pop_async_load_info( SAsyncLoadInfo& info );
 
 private:
 	resource_list			m_resourceList;
@@ -92,21 +91,21 @@ private:
 	CRITICAL_SECTION		m_life_section;
 	HANDLE					m_async_handle;
 
-	std::string				m_resourceDirectory;
+	OvString				m_resourceDirectory;
 };
 
 template<typename Type_0>
 OvSmartPointer<Type_0> 
-OvResourceManager::LoadResource( const string& fileLocation )
+OvResourceManager::LoadResource( const OvString& fileLocation )
 {
 	return LoadResource( Type_0::GetRTTI(), fileLocation );
 };
 template<typename Type_0>
 OvResourceTicketSPtr
-OvResourceManager::AsyncLoadResource( const string& fileLocation )
+OvResourceManager::AsyncLoadResource( const OvString& fileLocation )
 {
 	return AsyncLoadResource( Type_0::GetRTTI(), fileLocation );
 };
 
-string	AbsolutePath( const std::string& file );
-bool	ClampPathIfResDir( std::string& file );
+OvString	AbsolutePath( const OvString& file );
+OvBool	ClampPathIfResDir( OvString& file );

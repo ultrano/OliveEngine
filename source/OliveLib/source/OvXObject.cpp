@@ -1,9 +1,9 @@
 #include "OvXObject.h"
 #include "OvXNode.h"
+#include "OliveValue.h"
 #include "OvXComponent.h"
 #include "OvObjectCollector.h"
 #include "OvStringUtility.h"
-#include "OvPropertyAccesser.h"
 #include "OvRegisterableProperties.h"
 
 OvRTTI_IMPL(OvXObject);
@@ -24,17 +24,17 @@ OvXObject::~OvXObject()
 {
 }
 
-void OvXObject::SetControlFlag( CONTROL_FLAG flag, bool check )
+void OvXObject::SetControlFlag( CONTROL_FLAG flag, OvBool check )
 {
 	m_controlFlags.SetFlag( flag, check );
 }
 
-bool OvXObject::GetControlFlag( CONTROL_FLAG flag )
+OvBool OvXObject::GetControlFlag( CONTROL_FLAG flag )
 {
 	return m_controlFlags.GetFlag( flag );
 }
 
-void OvXObject::Update(float _fElapse)
+void OvXObject::Update(OvFloat _fElapse)
 {
 	if ( false == GetControlFlag( UPDATABLE ) )
 	{
@@ -73,7 +73,7 @@ void OvXObject::Update(float _fElapse)
 	_update_system(_fElapse);
 }
 
-void OvXObject::UpdateSubordinate( float _fElapse )
+void OvXObject::UpdateSubordinate( OvFloat _fElapse )
 {
 
 }
@@ -82,7 +82,7 @@ void	OvXObject::SetTranslate(OvPoint3& _rPosition)
 {
 	m_tfLocalTransform.Position = _rPosition;
 }
-void	OvXObject::SetTranslate(float x,float y,float z)
+void	OvXObject::SetTranslate(OvFloat x,OvFloat y,OvFloat z)
 {
 	SetTranslate(OvPoint3(x,y,z));
 }
@@ -90,7 +90,7 @@ void	OvXObject::SetRotation(OvQuaternion& _rRotation)
 {
 	m_tfLocalTransform.Quaternion = _rRotation;
 }
-void	OvXObject::SetScale(float _fScale)
+void	OvXObject::SetScale(OvFloat _fScale)
 {
 	m_tfLocalTransform.Scale = OvPoint3(1,1,1) * _fScale;
 }
@@ -131,7 +131,7 @@ void			OvXObject::SetTranslateFromWorldCoord(OvPoint3& _rPosition)
 	}
 }
 
-void			OvXObject::SetTranslateFromWorldCoord(float x,float y,float z)
+void			OvXObject::SetTranslateFromWorldCoord(OvFloat x,OvFloat y,OvFloat z)
 {
 	SetTranslateFromWorldCoord(OvPoint3(x,y,z));
 }
@@ -164,7 +164,7 @@ void			OvXObject::SetScaleFromWorldCoord(OvPoint3& _rScale)
 	}
 }
 
-void			OvXObject::SetScaleFromWorldCoord(float _fScale)
+void			OvXObject::SetScaleFromWorldCoord(OvFloat _fScale)
 {
 	SetScaleFromWorldCoord(OvPoint3(_fScale,_fScale,_fScale));
 }
@@ -186,12 +186,12 @@ const OvMatrix&		OvXObject::GetWorldMatrix()
 	return m_worldBuildMatrix;
 }
 
-bool OvXObject::IsNode()
+OvBool OvXObject::IsNode()
 {
-	return ( OvRTTI_Util::IsKindOf< OvXNode >( this ) != NULL );
+	return ( OvIsKindOf< OvXNode >( this ) != NULL );
 }
 
-bool OvXObject::IsLeaf()
+OvBool OvXObject::IsLeaf()
 {
 	return ! IsNode();
 }
@@ -208,12 +208,12 @@ OvXNodeSPtr	OvXObject::GetAttachedNode()
 }
 
 
-bool	OvXObject::GetComponents( OvObjectCollector& extraComponents )
+OvBool	OvXObject::GetComponents( OvObjectCollector& extraComponents )
 {
 	return extraComponents.AddObject( m_extraComponents );
 };
 
-bool	OvXObject::_equip_component( OvXComponentSPtr component )
+OvBool	OvXObject::_equip_component( OvXComponentSPtr component )
 {
 	if( component && component->GetTarget() == this )
 	{
@@ -223,7 +223,7 @@ bool	OvXObject::_equip_component( OvXComponentSPtr component )
 	return false;
 };
 
-bool OvXObject::_remove_component( OvXComponentSPtr component )
+OvBool OvXObject::_remove_component( OvXComponentSPtr component )
 {
 	if( component && component->GetTarget() == this )
 	{
@@ -233,16 +233,20 @@ bool OvXObject::_remove_component( OvXComponentSPtr component )
 	return false;
 }
 
-void OvXObject::_update_system( float _fElapse )
+void OvXObject::_update_system( OvFloat _fElapse )
 {
 
 }
 
 OvXComponentSPtr OvXObject::RemoveComponent( const OvObjectSPtr component )
 {
-	OvXComponentSPtr removedComponent = m_extraComponents.RemoveObject( component );
-	removedComponent->SetTarget( NULL );
-	return removedComponent;
+	if ( component )
+	{
+		OvXComponentSPtr removedComponent = m_extraComponents.RemoveObject( component );
+		removedComponent->SetTarget( NULL );
+		return removedComponent;
+	}
+	return NULL;
 }
 OvXComponentSPtr OvXObject::RemoveComponent( const OvObjectID& compoentID )
 {
@@ -251,14 +255,14 @@ OvXComponentSPtr OvXObject::RemoveComponent( const OvObjectID& compoentID )
 	return removedComponent;
 }
 
-OvXComponentSPtr OvXObject::RemoveComponent( const char* name )
+OvXComponentSPtr OvXObject::RemoveComponent( const OvChar* name )
 {
 	if ( NULL == name ) return NULL;
 	OvXComponentSPtr removedComponent = NULL;
 	for ( unsigned i = 0 ; i < m_extraComponents.Count() ; ++i )
 	{
 		removedComponent = m_extraComponents.GetByAt( i );
-		if ( removedComponent->GetName() == std::string( name ) )
+		if ( removedComponent->GetName() == OvString( name ) )
 		{
 			removedComponent->SetTarget( NULL );
 			return removedComponent;
