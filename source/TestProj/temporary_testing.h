@@ -5,7 +5,7 @@
 #include "OvResourceManager.h"
 #include "OvShaderCodeIncluder.h"
 #include "OliveDevice.h"
-#include "OvRegisterableProperties.h"
+//#include "OvRegisterableProperties.h"
 
 
 GL_TEST_CASE_FUNC( olive_value_streaming_test )
@@ -40,7 +40,7 @@ GL_TEST_CASE_FUNC( rtti_modify )
 	OvSingletonPool::StartUp();
 	{
 		OvXObjectSPtr obj = OvNew OvXObject;
-		OvModelSPtr model = OvRTTI_Util::IsTypeOf<OvModel>(obj);
+		OvModelSPtr model = OvIsTypeOf<OvModel>(obj);
 	}
 	OvSingletonPool::ShutDown();
 }

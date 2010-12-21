@@ -1,12 +1,11 @@
 #include "OvObject.h"
 #include "OvObjectManager.h"
 #include "OvStringUtility.h"
-#include "OvStorage.h"
+//#include "OvStorage.h"
 #include "OvPropertyAccesser.h"
-#include "OvRegisterableProperties.h"
+//#include "OvRegisterableProperties.h"
 #include "OliveValue.h"
-#include "OvObjectProperties.h"
-#include "OvStorage.h"
+//#include "OvObjectProperties.h"
 
 using namespace std;
 
@@ -72,12 +71,12 @@ void InjectProperties( OvObject* obj, OvObjectProperties& prop )
 OvObjectSPtr OvObject::Clone()
 {
 	OvObjectSPtr clone = Olive::CreateObject( OvTypeName( this ) );
-	if ( clone )
-	{
-		OvObjectProperties objProp;
-		ExtractProperties( this, objProp );
-		InjectProperties( clone.GetRear(), objProp );
-	}
+// 	if ( clone )
+// 	{
+// 		OvObjectProperties objProp;
+// 		ExtractProperties( this, objProp );
+// 		InjectProperties( clone.GetRear(), objProp );
+// 	}
 	return clone;
 }
 

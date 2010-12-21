@@ -1,7 +1,7 @@
 #include "OvXNode.h"
 #include <list>
 #include <algorithm>
-#include "OvRegisterableProperties.h"
+//#include "OvRegisterableProperties.h"
 #include "OliveValue.h"
 using namespace std;
 

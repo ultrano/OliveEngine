@@ -37,12 +37,13 @@ struct __SPropertiesDeclare_##_classname \
 	{\
 
 //
-
+#define OvPROPERTY_BAG_REGISTER(_prop_type,_property)
+/*
 #define OvPROPERTY_BAG_REGISTER(_prop_type,_property) {OvPropertyAccesser* kpProp = new _prop_type;\
 	kpProp->SetOffset(offsetof(target_class,_property));\
 	kpProp->SetPropertyName(#_property);\
 	target_class::_getPropertyBag()->AddProperty(kpProp);}
-
+*/
 //
 
 #define OvPROPERTY_BAG_END(_classname) ((OvRTTI*)_classname::GetRTTI())->SetPropertyBag(_classname::_getPropertyBag());\
