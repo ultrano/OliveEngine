@@ -218,17 +218,19 @@ namespace OliveValue
 	//////////////////////////////////////////////////////////////////////////
 
 	OvREF_POINTER(Table);
-	class Table : public OvObject, public OliveValue::Value
+	class Table : public OliveValue::Value
 	{
-		OvRTTI_DECL_EX( Table, OvObject, Value );
+		OvRTTI_DECL(Table);
 		typedef std::map<OvString,ValueSPtr> value_table;
 	public:
 		virtual void		FromString( const OvString& expData ) override;
 		virtual OvString	ToString() override;
 	public:
-
+		void				Insert( const OvString& key, ValueSPtr val );
 		void				Insert( const OvString& key, Value& val );
-		void				Merge( TableSPtr table );		
+
+		void				Merge( TableSPtr table );
+		
 		ValueSPtr			Remove( const OvString& key );
 
 		template<typename T>
@@ -247,6 +249,66 @@ namespace OliveValue
 	{
 		return OvCastTo<T>( Find(key) );
 	}
-};
-
+}
 namespace Ov = OliveValue;
+namespace OliveValue
+{
+	template<typename T>
+	T		FromString( const OvString& str );
+	template<typename T>
+	OvString ToString( const T& val );
+
+	/// Ovint
+	template<>
+	OvInt	FromString( const OvString& str );
+	template<>
+	OvString ToString( const OvInt& val );
+
+	/// OvUInt
+	template<>
+	OvUInt	FromString( const OvString& str );
+	template<>
+	OvString ToString( const OvUInt& val );
+
+	/// OvBool
+	template<>
+	OvBool	FromString( const OvString& str );
+	template<>
+	OvString ToString( const OvBool& val );
+
+	/// OvFloat
+	template<>
+	OvFloat	FromString( const OvString& str );
+	template<>
+	OvString ToString( const OvFloat& val );
+
+	/// OvPoint2
+	template<>
+	OvPoint2	FromString( const OvString& str );
+	template<>
+	OvString	ToString( const OvPoint2& val );
+
+	/// OvPoint3
+	template<>
+	OvPoint3	FromString( const OvString& str );
+	template<>
+	OvString	ToString( const OvPoint3& val );
+
+	/// OvQuaternion
+	template<>
+	OvQuaternion FromString( const OvString& str );
+	template<>
+	OvString	ToString( const OvQuaternion& val );
+
+	/// OvObjectID
+	template<>
+	OvObjectID	FromString( const OvString& str );
+	template<>
+	OvString	ToString( const OvObjectID& val );
+
+	/// OvColor
+	template<>
+	OvColor		FromString( const OvString& str );
+	template<>
+	OvString	ToString( const OvColor& val );
+}

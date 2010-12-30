@@ -69,8 +69,6 @@ void OxBoxMovement::SetUp()
 		m_actor->setGlobalOrientationQuat( OvConvert::xyzw<NxQuat>( GetTarget()->GetRotation() ) );
 		m_actor->addForce( OvConvert::xyz<NxVec3>( m_vel * 20000 ) );
 
-		OliveValue::UserData actorData;
-		actorData.SetUserData( (void*)m_actor );
 	}
 	else
 	{

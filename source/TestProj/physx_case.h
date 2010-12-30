@@ -156,10 +156,10 @@ public:
 
 		m_draw_obj_count = 0;
 		RenderDiffuse( camera, xobj );
-		OliveValue::Point3 pt = camera->GetWorldTranslate();
-		OliveValue::Integer objcount = m_draw_obj_count;
-		m_text->DrawToTexture( m_diffuseScene, pt.ToString().c_str(), OvIRect(0,10,50,50), DT_NOCLIP, OvColor(255,0,0,0) );
-		m_text->DrawToTexture( m_diffuseScene, objcount.ToString().c_str(), OvIRect(0,30,50,50), DT_NOCLIP, OvColor(255,0,0,0) );
+		OvPoint3 pt = camera->GetWorldTranslate();
+		OvUInt objcount = m_draw_obj_count;
+		m_text->DrawToTexture( m_diffuseScene, Ov::ToString(pt).c_str(), OvIRect(0,10,50,50), DT_NOCLIP, OvColor(255,0,0,0) );
+		m_text->DrawToTexture( m_diffuseScene, Ov::ToString(objcount).c_str(), OvIRect(0,30,50,50), DT_NOCLIP, OvColor(255,0,0,0) );
 		renderer->SetTexture( 0, m_diffuseScene );
 
 		renderer->RenderUnitRect
