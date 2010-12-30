@@ -70,7 +70,7 @@ void InjectProperties( OvObject* obj, OvObjectProperties& prop )
 
 OvObjectSPtr OvObject::Clone()
 {
-	OvObjectSPtr clone = Olive::CreateObject( OvTypeName( this ) );
+	OvObjectSPtr clone = OvCreateObject( OvTypeName( this ) );
 // 	if ( clone )
 // 	{
 // 		OvObjectProperties objProp;
