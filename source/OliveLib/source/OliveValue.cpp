@@ -314,7 +314,7 @@ void OliveValue::Table::FromString( const OvString& expData )
 		if ( ValueSPtr val = Factory( type ) )
 		{
 			val->FromString( data );
-			Insert( key, val );
+			m_table[ key ] = val;
 		}
 	}
 }
@@ -341,16 +341,11 @@ OvString OliveValue::Table::ToString()
 	return tostr;
 }
 
-void OliveValue::Table::Insert( const OvString& key, ValueSPtr val )
-{
-	m_table[ key ] = val;
-}
-
 void OliveValue::Table::Insert( const OvString& key, Value& val )
 {
 	ValueSPtr clone = OliveValue::Factory( OvTypeName( &val ) );
 	clone->CopyFrom( val );
-	Insert( key, clone );
+	m_table[ key ] = clone;
 }
 
 void OliveValue::Table::Merge( TableSPtr table )

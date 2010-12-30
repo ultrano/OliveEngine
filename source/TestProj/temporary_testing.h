@@ -7,7 +7,6 @@
 #include "OliveDevice.h"
 //#include "OvRegisterableProperties.h"
 
-
 GL_TEST_CASE_FUNC( olive_value_streaming_test )
 {
 	OvSingletonPool::StartUp();

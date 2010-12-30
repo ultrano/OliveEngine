@@ -161,6 +161,10 @@ Type_0*	_TraverseTypeTree(const OvRTTI* typeInfo)
 	{
 		return (Type_0*)false;
 	}
+	if ( Type_0::GetRTTI()->_inherit_count() < typeInfo->_inherit_count() )
+	{
+		return (Type_0*)false;
+	}
 	if ( Type_0::GetRTTI() == typeInfo )
 	{
 		return (Type_0*)true;

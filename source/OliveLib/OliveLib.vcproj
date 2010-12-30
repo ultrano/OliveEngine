@@ -1180,6 +1180,18 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="OvShareProperty"
+				>
+				<File
+					RelativePath=".\source\OvShareProperty.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\OvShareProperty.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="º¸·ù"

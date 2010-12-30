@@ -17,12 +17,12 @@ const OvString& OvObjectNex::GetName()
 	return m_name;
 }
 
-void OvObjectNex::SetExtraProperty( OliveValue::ValueSPtr val )
+void OvObjectNex::AddPrivateProperty( const OvString& key, OliveValue::Value& val )
 {
-	m_extra = val;
+	m_prop_table.Insert( key, val );
 }
 
-OliveValue::ValueSPtr OvObjectNex::GetExtraProperty( const OvString& key )
+OliveValue::ValueSPtr OvObjectNex::GetPrivateProperty( const OvString& key )
 {
-	return m_extra;
+	return m_prop_table.Find( key );
 }

@@ -218,19 +218,17 @@ namespace OliveValue
 	//////////////////////////////////////////////////////////////////////////
 
 	OvREF_POINTER(Table);
-	class Table : public OliveValue::Value
+	class Table : public OvObject, public OliveValue::Value
 	{
-		OvRTTI_DECL(Table);
+		OvRTTI_DECL_EX( Table, OvObject, Value );
 		typedef std::map<OvString,ValueSPtr> value_table;
 	public:
 		virtual void		FromString( const OvString& expData ) override;
 		virtual OvString	ToString() override;
 	public:
-		void				Insert( const OvString& key, ValueSPtr val );
-		void				Insert( const OvString& key, Value& val );
 
-		void				Merge( TableSPtr table );
-		
+		void				Insert( const OvString& key, Value& val );
+		void				Merge( TableSPtr table );		
 		ValueSPtr			Remove( const OvString& key );
 
 		template<typename T>
@@ -249,4 +247,6 @@ namespace OliveValue
 	{
 		return OvCastTo<T>( Find(key) );
 	}
-}
+};
+
+namespace Ov = OliveValue;
