@@ -98,8 +98,8 @@ OvResourceSPtr OvFileMeshLoader::Load( OvDataStream& stream )
 	SVertexStreamInfo streamInfoHigh;
 	LPDIRECT3DINDEXBUFFER9	  streamFace = NULL;
 
-	OliveValue::Integer vertexCount( _readLine() );
-	OliveValue::Integer faceCount( _readLine() );
+	OvUInt vertexCount = Ov::FromString<OvInt>( _readLine() );
+	OvUInt faceCount = Ov::FromString<OvInt>( _readLine() );
 	streamInfoLow = _parseStreamLow();
 	streamInfoMedium = _parseStreamMedium();
 	streamFace = _parseIndexStream();
@@ -109,9 +109,9 @@ OvResourceSPtr OvFileMeshLoader::Load( OvDataStream& stream )
 		, streamInfoMedium
 		, streamInfoHigh
 		, OvRenderer::GetInstance()->CreateVertexDeclaration( MESH_ELEMENT )
-		, vertexCount.GetInteger()
+		, vertexCount
 		, streamFace
-		, faceCount.GetInteger() );
+		, faceCount );
 
 }
 
@@ -127,38 +127,36 @@ const OvChar* OvFileMeshLoader::_readLine()
 
 SVertexStreamInfo OvFileMeshLoader::_parseStreamLow()
 {
-	OliveValue::Integer vertNum;
-	
 	low_stream_buffer bufferLow;
 
 	vector< OvPoint3 > posBuffer;
 	vector< OvPoint3 > normBuffer;
 	vector< OvPoint3 > tanBuffer;
 
-	vertNum.FromString( _readLine() );
-	posBuffer.reserve( vertNum.GetInteger() );
-	for ( unsigned i = 0 ; i < (unsigned)vertNum.GetInteger() ; ++i )
+	OvUInt vertNum = Ov::FromString<OvInt>( _readLine() );
+	posBuffer.reserve( vertNum );
+	for ( unsigned i = 0 ; i < (unsigned)vertNum ; ++i )
 	{
-		OliveValue::Point3 pos( _readLine() );
-		posBuffer.push_back( pos.GetPoint3() );
+		OvPoint3 pos = Ov::FromString<OvPoint3>( _readLine() );
+		posBuffer.push_back( pos );
 	}
 
-	normBuffer.reserve( vertNum.GetInteger() );
-	for ( unsigned i = 0 ; i < (unsigned)vertNum.GetInteger() ; ++i )
+	normBuffer.reserve( vertNum );
+	for ( unsigned i = 0 ; i < (unsigned)vertNum ; ++i )
 	{
-		OliveValue::Point3 norm( _readLine() );
-		normBuffer.push_back( norm.GetPoint3() );
+		OvPoint3 norm = Ov::FromString<OvPoint3>( _readLine() );
+		normBuffer.push_back( norm );
 	}
 
-	tanBuffer.reserve( vertNum.GetInteger() );
-	for ( unsigned i = 0 ; i < (unsigned)vertNum.GetInteger() ; ++i )
+	tanBuffer.reserve( vertNum );
+	for ( unsigned i = 0 ; i < (unsigned)vertNum ; ++i )
 	{
-		OliveValue::Point3 tan( _readLine() );
-		tanBuffer.push_back( tan.GetPoint3() );
+		OvPoint3 tan = Ov::FromString<OvPoint3>( _readLine() );
+		tanBuffer.push_back( tan );
 	}
 
-	bufferLow.reserve( vertNum.GetInteger() );
-	for ( unsigned i = 0 ; i < (unsigned)vertNum.GetInteger() ; ++i )
+	bufferLow.reserve( vertNum );
+	for ( unsigned i = 0 ; i < (unsigned)vertNum ; ++i )
 	{
 		SVertex_Low vertexLow
 			( posBuffer.at( i )
@@ -187,13 +185,13 @@ SVertexStreamInfo OvFileMeshLoader::_parseStreamMedium()
 	SVertexStreamInfo streamInfo;
 	medium_stream_buffer buffer;
 
-	OliveValue::Integer vertCount( _readLine() );
-	buffer.reserve( vertCount.GetInteger() );
-	for ( unsigned i = 0 ; i < (unsigned)vertCount.GetInteger() ; ++i )
+	OvUInt vertCount = Ov::FromString<OvInt>( _readLine() );
+	buffer.reserve( vertCount );
+	for ( unsigned i = 0 ; i < (unsigned)vertCount ; ++i )
 	{
-		OliveValue::Point2 tvert( _readLine() );
+		OvPoint2 tvert = Ov::FromString<OvPoint2>( _readLine() );
 		SVertex_Medium vertex;
-		vertex.tex0 = tvert.GetPoint2();
+		vertex.tex0 = tvert;
 		buffer.push_back( vertex );
 	}
 	if ( buffer.size() )
@@ -212,14 +210,14 @@ SVertexStreamInfo OvFileMeshLoader::_parseStreamMedium()
 LPDIRECT3DINDEXBUFFER9 OvFileMeshLoader::_parseIndexStream()
 {
 	LPDIRECT3DINDEXBUFFER9	indexStream = NULL;
-	OliveValue::Integer faceCount( _readLine() );
+	OvUInt faceCount = Ov::FromString<OvInt>( _readLine() );
 	face_buffer faceBuffer;
 
-	faceBuffer.reserve( faceCount.GetInteger() );
-	for ( size_t i = 0 ; i < (unsigned)faceCount.GetInteger() ; ++i)
+	faceBuffer.reserve( faceCount );
+	for ( size_t i = 0 ; i < (unsigned)faceCount ; ++i)
 	{
-		OliveValue::Point3 readIndex( _readLine() );
-		OvPoint3 findex3 = readIndex.GetPoint3();
+		OvPoint3 readIndex = Ov::FromString<OvPoint3>( _readLine() );
+		OvPoint3 findex3 = readIndex;
 		faceBuffer.push_back( SFaceIndex( (OvShort)findex3.x, (OvShort)findex3.y, (OvShort)findex3.z ) );
 	}
 	if ( faceBuffer.size() )

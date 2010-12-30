@@ -194,7 +194,6 @@ OvBool			OvRenderer::BeginFrame(OvBool clear_buffer, OvBool clear_zbuffer, const
 		OvError("Failed Begin RenderTarget");
 		return false;
 	}
-	m_count_frame_drawn_triangle = 0;
 	return true;
 }
 
@@ -332,7 +331,6 @@ OvBool OvRenderer::DrawPrimitive( D3DPRIMITIVETYPE primitiveType, UINT primCount
 			( primitiveType
 			, 0
 			, primCount);
-		m_count_frame_drawn_triangle = m_count_frame_drawn_triangle + primCount;
 		return SUCCEEDED( hr );
 	}
 	return false;

@@ -74,5 +74,4 @@ private:
 	LPDIRECT3DSURFACE9			m_default_display_buffer;
 	CRITICAL_SECTION			m_device_occupy;
 	HWND						m_window_handle;
-	OliveValue::Integer			m_count_frame_drawn_triangle;
 };

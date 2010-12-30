@@ -250,3 +250,65 @@ namespace OliveValue
 		return OvCastTo<T>( Find(key) );
 	}
 }
+namespace Ov = OliveValue;
+namespace OliveValue
+{
+	template<typename T>
+	T		FromString( const OvString& str );
+	template<typename T>
+	OvString ToString( const T& val );
+
+	/// Ovint
+	template<>
+	OvInt	FromString( const OvString& str );
+	template<>
+	OvString ToString( const OvInt& val );
+
+	/// OvUInt
+	template<>
+	OvUInt	FromString( const OvString& str );
+	template<>
+	OvString ToString( const OvUInt& val );
+
+	/// OvBool
+	template<>
+	OvBool	FromString( const OvString& str );
+	template<>
+	OvString ToString( const OvBool& val );
+
+	/// OvFloat
+	template<>
+	OvFloat	FromString( const OvString& str );
+	template<>
+	OvString ToString( const OvFloat& val );
+
+	/// OvPoint2
+	template<>
+	OvPoint2	FromString( const OvString& str );
+	template<>
+	OvString	ToString( const OvPoint2& val );
+
+	/// OvPoint3
+	template<>
+	OvPoint3	FromString( const OvString& str );
+	template<>
+	OvString	ToString( const OvPoint3& val );
+
+	/// OvQuaternion
+	template<>
+	OvQuaternion FromString( const OvString& str );
+	template<>
+	OvString	ToString( const OvQuaternion& val );
+
+	/// OvObjectID
+	template<>
+	OvObjectID	FromString( const OvString& str );
+	template<>
+	OvString	ToString( const OvObjectID& val );
+
+	/// OvColor
+	template<>
+	OvColor		FromString( const OvString& str );
+	template<>
+	OvString	ToString( const OvColor& val );
+}
