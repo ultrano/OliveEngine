@@ -119,7 +119,7 @@ void OvResourceManager::ResourceCache( OvResourceSPtr resource )
 }
 void OvResourceManager::_register_loaded_resource( const OvString& location, OvResource* resource )
 {
-	OvSectionGuardian guardian( m_load_section );
+	OvAutoSection guardian( m_load_section );
 	SResourceInfo& info = m_resourceInfoTable[ location ];
 	info.resource = resource;
 	if ( info.ticket )
@@ -130,13 +130,13 @@ void OvResourceManager::_register_loaded_resource( const OvString& location, OvR
 
 void OvResourceManager::_called_when_resource_created( OvResource* resource )
 {
-	OvSectionGuardian guardian( m_life_section );
+	OvAutoSection guardian( m_life_section );
 	m_resourceList.push_back( resource );
 }
 void OvResourceManager::_called_when_resource_deleted( OvResource* resource )
 {
 	{
-		OvSectionGuardian guardian( m_load_section );
+		OvAutoSection guardian( m_load_section );
 		loaded_resource_table::iterator itor = m_resourceInfoTable.begin();
 		for ( ; itor != m_resourceInfoTable.end() ; ++itor )
 		{
@@ -152,7 +152,7 @@ void OvResourceManager::_called_when_resource_deleted( OvResource* resource )
 			info.resource = NULL;
 		}
 	}
-	OvSectionGuardian guardian( m_life_section );
+	OvAutoSection guardian( m_life_section );
 	resource_list::iterator itor = std::find( m_resourceList.begin(), m_resourceList.end(), resource );
 	if ( itor != m_resourceList.end() )
 	{
@@ -162,21 +162,21 @@ void OvResourceManager::_called_when_resource_deleted( OvResource* resource )
 
 void OvResourceManager::_called_when_ticket_created( OvResourceTicket* ticket )
 {
-	OvSectionGuardian guardian( m_load_section );
+	OvAutoSection guardian( m_load_section );
 	SResourceInfo& info = m_resourceInfoTable[ ticket->GetFileName() ];
 	info.ticket = ticket;
 }
 
 void OvResourceManager::_called_when_ticket_deleted( OvResourceTicket* ticket )
 {
-	OvSectionGuardian guardian( m_load_section );
+	OvAutoSection guardian( m_load_section );
 	SResourceInfo& info = m_resourceInfoTable[ ticket->GetFileName() ];
 	info.ticket = NULL;
 }
 
 OvResourceSPtr OvResourceManager::_find_loaded_resource( const OvRTTI* resourceType, const OvString& location )
 {
-	OvSectionGuardian guardian( m_load_section );
+	OvAutoSection guardian( m_load_section );
 	OvResource* resource = NULL;
 	loaded_resource_table::iterator itor = m_resourceInfoTable.find( location );
 	if ( itor != m_resourceInfoTable.end() )
@@ -190,7 +190,7 @@ OvResourceSPtr OvResourceManager::_find_loaded_resource( const OvRTTI* resourceT
 const OvString& OvResourceManager::FindFileLocation( OvResourceSPtr resource )
 {
 	static OvString empty = "";
-	OvSectionGuardian guardian( m_load_section );
+	OvAutoSection guardian( m_load_section );
 	loaded_resource_table::iterator itor = m_resourceInfoTable.begin();
 	for ( ; itor != m_resourceInfoTable.end() ; ++itor )
 	{
@@ -210,7 +210,7 @@ OvResourceTicketSPtr OvResourceManager::_reserve_ticket(  const OvRTTI* type, co
 		loaded_resource_table::iterator itor;
 		SResourceInfo info;
 		{
-			OvSectionGuardian guardian( m_load_section );
+			OvAutoSection guardian( m_load_section );
 			info = m_resourceInfoTable[ fileLocation ];
 			itor = m_resourceInfoTable.find( fileLocation );
 		}
@@ -276,13 +276,13 @@ void OvResourceManager::_async_routine()
 
 void OvResourceManager::_push_async_load_info( SAsyncLoadInfo& info )
 {
-	OvSectionGuardian guardian( m_load_section );
+	OvAutoSection guardian( m_load_section );
 	m_aload_list.push_back( info );
 }
 
 OvBool OvResourceManager::_pop_async_load_info( SAsyncLoadInfo& info )
 {
-	OvSectionGuardian guardian( m_load_section );
+	OvAutoSection guardian( m_load_section );
 	if ( m_aload_list.size() )
 	{
 		info = m_aload_list.front();
@@ -309,7 +309,7 @@ OvBool& OvResourceManager::_get_async_life_flag()
 	static SSection block;
 	static OvBool life_flag(true);
 
-	OvSectionGuardian guardian( block.section );
+	OvAutoSection guardian( block.section );
 	return life_flag;
 }
 OvString AbsolutePath( const OvString& file )

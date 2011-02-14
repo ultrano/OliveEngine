@@ -1228,6 +1228,34 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="TaskSystem"
+				>
+				<Filter
+					Name="OvTask"
+					>
+					<File
+						RelativePath=".\source\OvTask.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\include\OvTask.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="OvTaskManager"
+					>
+					<File
+						RelativePath=".\source\OvTaskManager.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\include\OvTaskManager.h"
+						>
+					</File>
+				</Filter>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="º¸·ù"
