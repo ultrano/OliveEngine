@@ -204,6 +204,10 @@
 				RelativePath=".\temporary_testing.h"
 				>
 			</File>
+			<File
+				RelativePath=".\thread_test.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="PhysxTest"

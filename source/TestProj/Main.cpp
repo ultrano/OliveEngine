@@ -10,9 +10,11 @@
 #include "next_term_material_text_case.h"
 #include "math_function_case.h"
 #include "game_controller.h"
+#include "physx_case.h"
 #include "temporary_testing.h"
 */
-#include "physx_case.h"
+
+#include "thread_test.h"
 
 int	APIENTRY	WinMain(HINSTANCE hi,HINSTANCE,LPSTR,int)
 {

@@ -1234,24 +1234,28 @@
 				<Filter
 					Name="OvTask"
 					>
+				</Filter>
+				<Filter
+					Name="OvThreadManager"
+					>
 					<File
-						RelativePath=".\source\OvTask.cpp"
+						RelativePath=".\source\OvThreadManager.cpp"
 						>
 					</File>
 					<File
-						RelativePath=".\include\OvTask.h"
+						RelativePath=".\include\OvThreadManager.h"
 						>
 					</File>
 				</Filter>
 				<Filter
-					Name="OvTaskManager"
+					Name="OvThread"
 					>
 					<File
-						RelativePath=".\source\OvTaskManager.cpp"
+						RelativePath=".\source\OvThread.cpp"
 						>
 					</File>
 					<File
-						RelativePath=".\include\OvTaskManager.h"
+						RelativePath=".\include\OvThread.h"
 						>
 					</File>
 				</Filter>
