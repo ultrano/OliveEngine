@@ -193,6 +193,14 @@
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
 			<File
+				RelativePath=".\buffer_test.h"
+				>
+			</File>
+			<File
+				RelativePath=".\container_utility_test.h"
+				>
+			</File>
+			<File
 				RelativePath=".\include_header.h"
 				>
 			</File>

@@ -28,6 +28,10 @@ public:
 	OvObjectSPtr		 Clone();
 	virtual OvObjectSPtr CustomClone();
 
+	//! Stream
+	//virtual void Serialize( OvFile& file );
+	//virtual void Deserialize();
+
 	//! ID of Object
 	OvObjectID		GetObjectID();
 

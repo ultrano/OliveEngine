@@ -29,7 +29,6 @@
 #include "OvCamera.h"
 #include "OvObjectProperties.h"
 
-#include "GlTestHeader.h"
 
 #include "OliveValue.h"
 

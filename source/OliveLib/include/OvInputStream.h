@@ -1,11 +1,17 @@
 #pragma once
 #include "OvTypeDef.h"
 #include "OvUtility_RTTI.h"
+#include "OvRefBase.h"
 
-interface_class OvInputStream
+interface_class OvInputStream : public OvRefBase
 {
 	OvRTTI_DECL_ROOT(OvInputStream);
 
-	virtual OvInputStream& Read( OvString& buf, OvUInt read_size ) = 0 ;
-	virtual OvInputStream& ReadLine( OvString& buf )  = 0 ;
+	virtual OvBool ReadByte( OvByte & read ) = 0 ;
+	virtual OvSize ReadBytes( OvByte * dest, OvSize dest_size ) = 0 ;
+
 };
+
+
+//////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////

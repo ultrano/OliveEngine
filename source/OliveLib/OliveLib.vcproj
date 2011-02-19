@@ -734,18 +734,6 @@
 					</File>
 				</Filter>
 				<Filter
-					Name="OvMemoryPool"
-					>
-					<File
-						RelativePath=".\source\OvMemoryPool.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\include\OvMemoryPool.h"
-						>
-					</File>
-				</Filter>
-				<Filter
 					Name="OvObject"
 					>
 					<File
@@ -1163,6 +1151,18 @@
 						>
 					</File>
 				</Filter>
+				<Filter
+					Name="OvMemoryPool"
+					>
+					<File
+						RelativePath=".\source\OvMemoryPool.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\include\OvMemoryPool.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 		</Filter>
 		<Filter
@@ -1232,10 +1232,6 @@
 				Name="TaskSystem"
 				>
 				<Filter
-					Name="OvTask"
-					>
-				</Filter>
-				<Filter
 					Name="OvThreadManager"
 					>
 					<File
@@ -1260,46 +1256,86 @@
 					</File>
 				</Filter>
 			</Filter>
+			<Filter
+				Name="Stream"
+				>
+				<Filter
+					Name="Output"
+					>
+					<Filter
+						Name="OvOutputStream"
+						>
+						<File
+							RelativePath=".\source\OvOutputStream.cpp"
+							>
+						</File>
+						<File
+							RelativePath=".\include\OvOutputStream.h"
+							>
+						</File>
+					</Filter>
+					<Filter
+						Name="OvBufferOutputStream"
+						>
+						<File
+							RelativePath=".\source\OvBufferOutputStream.cpp"
+							>
+						</File>
+						<File
+							RelativePath=".\include\OvBufferOutputStream.h"
+							>
+						</File>
+					</Filter>
+				</Filter>
+				<Filter
+					Name="Stream"
+					>
+					<Filter
+						Name="OvBuffer"
+						>
+						<File
+							RelativePath=".\source\OvBuffer.cpp"
+							>
+						</File>
+						<File
+							RelativePath=".\include\OvBuffer.h"
+							>
+						</File>
+					</Filter>
+				</Filter>
+				<Filter
+					Name="Input"
+					>
+					<Filter
+						Name="OvBufferInputStream"
+						>
+						<File
+							RelativePath=".\source\OvBufferInputStream.cpp"
+							>
+						</File>
+						<File
+							RelativePath=".\include\OvBufferInputStream.h"
+							>
+						</File>
+					</Filter>
+					<Filter
+						Name="OvInputStream"
+						>
+						<File
+							RelativePath=".\source\OvInputStream.cpp"
+							>
+						</File>
+						<File
+							RelativePath=".\include\OvInputStream.h"
+							>
+						</File>
+					</Filter>
+				</Filter>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="º¸·ù"
 			>
-			<Filter
-				Name="OvOutputStream"
-				>
-				<File
-					RelativePath=".\source\OvOutputStream.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\include\OvOutputStream.h"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="OvIOStream"
-				>
-				<File
-					RelativePath=".\source\OvIOStream.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\include\OvIOStream.h"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="OvInputStream"
-				>
-				<File
-					RelativePath=".\source\OvInputStream.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\include\OvInputStream.h"
-					>
-				</File>
-			</Filter>
 		</Filter>
 		<File
 			RelativePath=".\ReadMe.txt"
