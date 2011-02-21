@@ -1,5 +1,5 @@
 #include "OvDataStream.h"
-#include "OvStringUtility.h"
+#include "OvUtility.h"
 using namespace std;
 
 OvDataStream::OvDataStream( const OvString& buf )

@@ -1,5 +1,4 @@
 #include "OvStorage.h"
-#include "OvStringUtility.h"
 #include "OvObjectProperties.h"
 #include "OvUtility_RTTI.h"
 #include "OvPropertyBag.h"
@@ -9,6 +8,7 @@
 #include "OvAssociatedLinkConnector.h"
 #include "OvObjectID.h"
 #include "tinyxml.h"
+#include "OvUtility.h"
 
 OvStorage::OvStorage()
 {
@@ -133,7 +133,7 @@ OvBool	OvStorage::_write_property(OvObjectProperties& rStore, TiXmlElement& objE
 {
 	objElem.SetValue("Object");
 	objElem.SetAttribute("type", rStore.GetObjectType().c_str() );
-	objElem.SetAttribute("id",OvFormatString("%d",rStore.GetObjectID()));
+	objElem.SetAttribute("id",OU::string::format("%d",rStore.GetObjectID()).c_str() );
 
 	OvString kstrValue;
 	while (rStore.PopValue(kstrValue))

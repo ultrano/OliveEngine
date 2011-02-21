@@ -3,7 +3,7 @@
 #include "OliveValue.h"
 #include "OvXComponent.h"
 #include "OvObjectCollector.h"
-#include "OvStringUtility.h"
+#include "OvUtility.h"
 #include "OvRegisterableProperties.h"
 
 OvRTTI_IMPL(OvXObject);

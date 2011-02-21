@@ -1,5 +1,5 @@
 #include "OvGlobalFunc.h"
-#include "OvStringUtility.h"
+#include "OvUtility.h"
 using namespace std;
 
 void	OvGetLastError()
@@ -29,7 +29,7 @@ void	OvMessageBox(const OvChar* _msg,const OvChar* _caption)
 
 void	OvErrorMsgBox(const OvChar* _file,const OvChar* _block, const OvUInt _line, const OvChar* _msg )
 {
-	OvString errmsg = OvFormatString(	"File: %s\n"
+	OvString errmsg = OU::string::format(	"File: %s\n"
 					"Block: %s\n"
 					"Line: %d\n"
 					"Assert: %s"

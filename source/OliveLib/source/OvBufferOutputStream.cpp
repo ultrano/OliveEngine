@@ -37,3 +37,8 @@ OvSize OvBufferOutputStream::WriteBytes( OvByte * src, OvSize write_size )
 	}
 	return 0;
 }
+
+OvBufferSPtr OvBufferOutputStream::GetBuffer()
+{
+	return m_buffer;
+}

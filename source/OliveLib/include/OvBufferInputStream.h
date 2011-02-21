@@ -28,6 +28,8 @@ public:
 		return !!ReadBytes( (OvByte*)&data[0], size );
 	};
 
+	OvBufferSPtr GetBuffer();
+
 private:
 
 	OvBufferSPtr m_buffer;

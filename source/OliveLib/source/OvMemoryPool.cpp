@@ -4,7 +4,7 @@
 #include "OvMemoryPool.h"
 
 #ifdef _DEBUG
-#include "OvStringUtility.h"
+#include "OvUtility.h"
 DWORD	g_dMemoryCount = 0;
 void		OvMemoryPool::report_abnormal_memory_release(OvPoolHeader* _pPoolList)
 {
@@ -19,7 +19,7 @@ void		OvMemoryPool::report_abnormal_memory_release(OvPoolHeader* _pPoolList)
 				if (k_sequence && k_sequence->m_pBlock )
 				{
 					OutputDebugString(
-						OvFormatString(
+						OU::string::format(
 						"=================================================\n"
 						"[Block: %8s]\n"
 						"[Line: %5d]\n"
@@ -30,7 +30,7 @@ void		OvMemoryPool::report_abnormal_memory_release(OvPoolHeader* _pPoolList)
 						,k_sequence->m_iLine
 						,m_stTypeIndexFromMemSize
 						,MEMORY(k_sequence)
-						)
+						).c_str()
 						);
 				}
 			}
@@ -64,7 +64,7 @@ void	OvMemoryPool::_destructor()
 
 		free(((void*)k_header));
 #ifdef _DEBUG
-		OutputDebugString(OvFormatString("Olive Memory Pool Report Free(%8d byte) CallCount: %4d\n",MEM_POOL_SIZE,g_dMemoryCount));
+		OutputDebugString(OU::string::format("Olive Memory Pool Report Free(%8d byte) CallCount: %4d\n",MEM_POOL_SIZE,g_dMemoryCount).c_str());
 		g_dMemoryCount--;
 #endif
 	} while (k_next);
@@ -103,7 +103,7 @@ bool		OvMemoryPool::add_pool()
 	}
 #ifdef _DEBUG
 	g_dMemoryCount++;
-	OutputDebugString(OvFormatString("Olive Memory Pool Report Alloc(%8d byte) CallCount: %4d\n",MEM_POOL_SIZE,g_dMemoryCount));
+	OutputDebugString(OU::string::format("Olive Memory Pool Report Alloc(%8d byte) CallCount: %4d\n",MEM_POOL_SIZE,g_dMemoryCount).c_str());
 #endif
 	return true;
 }

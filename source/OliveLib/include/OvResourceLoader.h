@@ -3,13 +3,13 @@
 
 OvREF_POINTER(OvResource);
 OvREF_POINTER(OvResourceLoader);
-class OvDataStream;
+OvREF_POINTER(OvBufferInputStream);
 
 class OvResourceLoader : public OvObject
 {
 	OvRTTI_DECL(OvResourceLoader);
 
-	virtual OvResourceSPtr Load( OvDataStream& stream ) = 0;
+	virtual OvResourceSPtr Load( OvBufferInputStream& bis ) = 0;
 
 private:
 	// OvResourceManager만을 위한 접근 인터페이스.

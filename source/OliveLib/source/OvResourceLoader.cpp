@@ -1,6 +1,7 @@
 #include "OvResourceLoader.h"
 #include "OvResource.h"
-#include "OvDataStream.h"
+#include "OvBuffer.h"
+#include "OvBufferInputStream.h"
 #include <io.h>
 
 OvRTTI_IMPL( OvResourceLoader );
@@ -21,16 +22,16 @@ OvResourceSPtr OvResourceLoader::_load_resource( const OvString& fileLocation )
 	{
 		size_t filesize = _filelength( _fileno( file ) );
 		
-		OvAutoPtr<OvDataStream> data = OvNew OvDataStream( filesize );
+		OvBufferSPtr buf = OvBuffer::CreateBuffer( filesize );
 
 		fseek( file, 0, SEEK_SET );
-		fread( (void*)data->Ptr(), 1, filesize, file );
+		fread( (void*)buf->Pointer(), 1, filesize, file );
 
 		fclose( file );
-		//LeaveCriticalSection( &section.m_section );
 
-		return Load( *data );
+		OvBufferInputStream bis( buf );
+		return Load( bis );
 	}
-	//LeaveCriticalSection( &section.m_section );
+
 	return NULL;
 }

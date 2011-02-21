@@ -13,6 +13,7 @@ class OvShaderCode : public OvResource
 public:
 
 	OvShaderCode( const OvString& code);
+	OvShaderCode( const OvChar* buf, OvSize size );
 	const OvString&	GetCodeString();
 	void*			GetCodeBuffer();
 	size_t			GetCodeSize();

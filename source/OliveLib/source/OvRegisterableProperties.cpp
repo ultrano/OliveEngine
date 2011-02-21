@@ -1,6 +1,6 @@
 #include "OvRegisterableProperties.h"
 #include "tinyxml.h"
-#include "OvStringUtility.h"
+#include "OvUtility.h"
 #include "OvObjectProperties.h"
 #include "OvObject.h"
 #include "OvTransform.h"

@@ -34,3 +34,8 @@ OvSize OvBufferInputStream::ReadBytes( OvByte * dest, OvSize dest_size )
 	}
 	return 0;
 }
+
+OvBufferSPtr OvBufferInputStream::GetBuffer()
+{
+	return m_buffer;
+}

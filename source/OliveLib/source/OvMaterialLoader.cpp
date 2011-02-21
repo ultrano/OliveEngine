@@ -9,7 +9,8 @@
 #include "OvShaderCodeIncluder.h"
 #include "OvShaderCode.h"
 #include "OliveValue.h"
-#include "OvDataStream.h"
+#include "OvBufferInputStream.h"
+#include "OvBuffer.h"
 #include <map>
 using namespace std;
 
@@ -81,11 +82,12 @@ DWORD StringToStateValue( const OvChar* value )
 	return tavle.state_value_table[ value ];
 }
 
-OvResourceSPtr OvMaterialLoader::Load( OvDataStream& stream )
+OvResourceSPtr OvMaterialLoader::Load( OvBufferInputStream& bis )
 {
 	TiXmlDocument doc("material_doc");
-	
-	if ( ! doc.Parse( stream.Ptr() ) )
+
+	OvBufferSPtr buf = bis.GetBuffer();
+	if ( ! doc.Parse( (const char*)buf->Pointer() ) )
 	{	
 		return NULL;
 	}

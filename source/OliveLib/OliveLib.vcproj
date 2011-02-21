@@ -1008,18 +1008,6 @@
 					</File>
 				</Filter>
 				<Filter
-					Name="OvStringUtility"
-					>
-					<File
-						RelativePath=".\source\OvStringUtility.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\include\OvStringUtility.h"
-						>
-					</File>
-				</Filter>
-				<Filter
 					Name="OvThreadSync"
 					>
 					<File
@@ -1042,6 +1030,10 @@
 				<Filter
 					Name="OvUtility"
 					>
+					<File
+						RelativePath=".\source\OvUtility.cpp"
+						>
+					</File>
 					<File
 						RelativePath=".\include\OvUtility.h"
 						>

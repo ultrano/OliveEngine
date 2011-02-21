@@ -9,6 +9,7 @@ GL_TEST_CASE_FUNC( buffer_test )
 {
 	OliveDevice::EngineOn();
 	{
+		OU::string::format("%d%d",1,2);
 		OvBufferSPtr buf = OvBuffer::CreateBuffer( 1 );
 		OvBufferInputStream bis( buf );
 		OvBufferOutputStream bos( buf );

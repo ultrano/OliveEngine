@@ -3,7 +3,7 @@
 #include "OvResourceManager.h"
 #include "OvShaderCode.h"
 #include "OvTransform.h"
-#include "OvStringUtility.h"
+#include "OvUtility.h"
 #include "OvVertexShader.h"
 #include "OvPixelShader.h"
 #include "OvTexture.h"
@@ -167,11 +167,11 @@ OvShaderConstInfo OvShaderConstInfo::operator[](const UINT uiIndex)const
 	UINT kuiAccess = uiIndex;
 	if (uiIndex>=ArrayCount)
 	{
-		OvFormatString kErrMsg(
+		OvString err = OU::string::format(
 			"규약된 쉐이더 상수 배열 크기를 벗어났습니다.\n"
 			"접근 허용 인덱스: 0~%d \n"
 			"접근 요청된 인덱스: %d ",ArrayCount-1,uiIndex);
-		OvError(kErrMsg);
+		OvError( err.c_str() );
 		kuiAccess = ArrayCount;
 	}
 	return OvShaderConstInfo(Type,Name,RegistIndex+(ConstCount*uiIndex),ConstCount);

@@ -3,7 +3,9 @@
 #include "OliveValue.h"
 #include "OvPoint2.h"
 #include "OvPoint3.h"
-#include "OvDataStream.h"
+#include "OvBufferInputStream.h"
+#include "OvBuffer.h"
+#include "OvUtility.h"
 
 OvRTTI_IMPL(OvFileMeshLoader);
 OvFACTORY_OBJECT_IMPL(OvFileMeshLoader);
@@ -78,7 +80,6 @@ typedef vector<SVertex_Medium> medium_stream_buffer;
 
 
 OvFileMeshLoader::OvFileMeshLoader()
-: m_data( NULL )
 {
 	m_readBuffer.resize( MAX_READ_BUFFER_SIZE );
 }
@@ -86,12 +87,13 @@ OvFileMeshLoader::OvFileMeshLoader()
 OvFileMeshLoader::~OvFileMeshLoader()
 {
 	m_readBuffer.clear();
-	m_data = NULL;
+	m_buf.clear();
 }
 
-OvResourceSPtr OvFileMeshLoader::Load( OvDataStream& stream )
+OvResourceSPtr OvFileMeshLoader::Load( OvBufferInputStream& bis )
 {
-	m_data = &stream;
+	OvBufferSPtr buf = bis.GetBuffer();
+	m_buf = (const char*)buf->Pointer();
 
 	SVertexStreamInfo streamInfoLow;
 	SVertexStreamInfo streamInfoMedium;
@@ -121,7 +123,7 @@ const OvChar* OvFileMeshLoader::_readLine()
 	// fgets() 의 특성상 '\n' 개행 문자가 끌려 온다.
 	// 개행 문자가 있으면 문자를 다른 데이터타입으로 변환시 
 	// 문제가 발생할수 있으므로 '\0'터미널 문자로 바꿔준다.
-	m_data->ReadLine( m_readBuffer );
+	m_readBuffer = OU::string::split( m_buf, "\n");
 	return m_readBuffer.c_str();
 }
 

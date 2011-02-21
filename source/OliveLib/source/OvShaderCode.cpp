@@ -3,7 +3,7 @@
 #include "OvPixelShader.h"
 #include "OvShaderCodeIncluder.h"
 #include "OvRenderer.h"
-#include "OvStringUtility.h"
+#include "OvUtility.h"
 #include "OvGlobalFunc.h"
 #include "OvMacro.h"
 #include <d3dx9.h>
@@ -59,6 +59,15 @@ OvShaderCode::OvShaderCode( const OvString& code )
 : m_code( code )
 {
 
+}
+
+OvShaderCode::OvShaderCode( const OvChar* buf, OvSize size )
+{
+	if ( buf && size )
+	{
+		m_code.resize( size );
+		memcpy( &m_code[0], buf, size );
+	}
 }
 
 const OvString& OvShaderCode::GetCodeString()
@@ -130,11 +139,10 @@ OvShaderSPtr OvShaderCode::FindShader( const OvString& entry_func, const OvStrin
 	OvShaderSPtr precompiled_shader = _find_precompiled_shader( entry_func, compile_version );
 	if ( NULL == precompiled_shader )
 	{
-		OvError( 
-			OvFormatString("[func: %s, compile_version: %s] can't found, maybe not complied"
+		OvString err = OU::string::format("[func: %s, compile_version: %s] can't found, maybe not complied"
 			,entry_func.c_str()
-			, compile_version.c_str() ) 
-			);
+			, compile_version.c_str() );
+		OvError( err.c_str() );
 	}
 	return precompiled_shader;
 }

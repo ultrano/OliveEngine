@@ -1,5 +1,5 @@
 #include "OliveValue.h"
-#include "OvStringUtility.h"
+#include "OvUtility.h"
 
 using namespace OliveValue;
 OvRTTI_IMPL_ROOT(Value);
@@ -68,7 +68,7 @@ void OliveValue::Bool::FromString( const OvString& expData )
 
 OvString OliveValue::Bool::ToString()
 {
-	return OvString( OvFormatString( "%d", m_value ) );
+	return ( OU::string::format( "%d", m_value ) );
 }
 
 void OliveValue::Bool::SetBool( OvBool expData )
@@ -88,7 +88,7 @@ void			Float::FromString( const OvString& expData )
 }
 OvString			Float::ToString()
 {
-	return OvString( OvFormatString( "%f", m_value ) );
+	return ( OU::string::format( "%f", m_value ) );
 }
 void			Float::SetFloat( OvFloat expValue )
 {
@@ -107,7 +107,7 @@ void			Point2::FromString( const OvString& expData )
 }
 OvString			Point2::ToString()
 {
-	return OvString( OvFormatString( "%f,%f", m_value.x, m_value.y ) );
+	return ( OU::string::format( "%f,%f", m_value.x, m_value.y ) );
 }
 void			Point2::SetPoint2( const OvPoint2& expValue )
 {
@@ -131,7 +131,7 @@ void			Point3::FromString( const OvString& expData )
 }
 OvString			Point3::ToString()
 {
-	return OvString( OvFormatString( "%f,%f,%f", m_value.x, m_value.y, m_value.z ) );
+	return ( OU::string::format( "%f,%f,%f", m_value.x, m_value.y, m_value.z ) );
 }
 void			Point3::SetPoint3( const OvPoint3& expValue )
 {
@@ -155,7 +155,7 @@ void				Quaternion::FromString( const OvString& expData )
 }
 OvString				Quaternion::ToString()
 {
-	return OvString( OvFormatString( "%f,%f,%f,%f", m_value.x, m_value.y, m_value.z, m_value.w ) );
+	return ( OU::string::format( "%f,%f,%f,%f", m_value.x, m_value.y, m_value.z, m_value.w ) );
 }
 void				Quaternion::SetQuaternion( const OvQuaternion& expValue )
 {
@@ -219,7 +219,7 @@ void			ObjectID::FromString( const OvString& expData )
 }
 OvString			ObjectID::ToString()
 {
-	return OvString( OvFormatString( "%d", m_value ) );
+	return ( OU::string::format( "%d", m_value ) );
 }
 void			ObjectID::SetObjectID( const OvObjectID& expValue )
 {
@@ -240,7 +240,7 @@ void OliveValue::UserData::FromString( const OvString& expData )
 
 OvString OliveValue::UserData::ToString()
 {
-	return OvString( OvFormatString( "%p", m_value ) );
+	return ( OU::string::format( "%p", m_value ) );
 }
 
 void OliveValue::UserData::SetUserData( void* userData )
@@ -272,7 +272,7 @@ void OliveValue::Color::FromString( const OvString& expData )
 
 OvString OliveValue::Color::ToString()
 {
-	return OvString(OvFormatString( "a:%d,r:%d,g:%d,b:%d", m_value.a, m_value.r, m_value.g, m_value.b ));
+	return (OU::string::format( "a:%d,r:%d,g:%d,b:%d", m_value.a, m_value.r, m_value.g, m_value.b ));
 }
 
 void OliveValue::Color::SetColor( const OvColor& userData )
@@ -322,7 +322,7 @@ void OliveValue::Table::FromString( const OvString& expData )
 OvString OliveValue::Table::ToString()
 {
 	OvString tostr;
-	tostr = OvFormatString( "%d:", Size() );
+	tostr = OU::string::format( "%d:", Size() );
 	value_table::iterator itor = m_table.begin();
 	for( ; itor != m_table.end() ; ++itor )
 	{
@@ -332,7 +332,7 @@ OvString OliveValue::Table::ToString()
 		const OvString& key		= itor->first;
 		OvString		data	= val->ToString();
 
-		tostr += OvFormatString( "[%d-%d-%d]%s"
+		tostr += OU::string::format( "[%d-%d-%d]%s"
 			, type.size()
 			, key.size()
 			, data.size()
@@ -410,7 +410,7 @@ OvInt			OliveValue::FromString( const OvString& str )
 template<> 
 OvString		OliveValue::ToString( const OvInt& val )
 {
-	return OvString( OvFormatString( "%d", val ) );
+	return ( OU::string::format( "%d", val ) );
 }
 
 /// OvUInt
@@ -425,7 +425,7 @@ OvUInt			OliveValue::FromString( const OvString& str )
 template<> 
 OvString		OliveValue::ToString( const OvUInt& val )
 {
-	return OvString( OvFormatString( "%d", val ) );
+	return ( OU::string::format( "%d", val ) );
 }
 
 /// OvBool
@@ -447,7 +447,7 @@ OvBool			OliveValue::FromString( const OvString& str )
 template<>
 OvString		OliveValue::ToString( const OvBool& val )
 {
-	return OvString( OvFormatString( "%d", val ) );
+	return ( OU::string::format( "%d", val ) );
 }
 
 /// OvFloat
@@ -463,7 +463,7 @@ OvFloat			OliveValue::FromString( const OvString& str )
 template<>
 OvString			OliveValue::ToString( const OvFloat& val )
 {
-	return OvString( OvFormatString( "%f", val ) );
+	return ( OU::string::format( "%f", val ) );
 }
 
 /// OvPoint2
@@ -479,7 +479,7 @@ OvPoint2			OliveValue::FromString( const OvString& str )
 template<>
 OvString			OliveValue::ToString( const OvPoint2& val )
 {
-	return OvString( OvFormatString( "%f,%f", val.x, val.y ) );
+	return ( OU::string::format( "%f,%f", val.x, val.y ) );
 }
 
 /// OvPoint3
@@ -496,7 +496,7 @@ OvPoint3			OliveValue::FromString( const OvString& str )
 template<>
 OvString			OliveValue::ToString( const OvPoint3& val )
 {
-	return OvString( OvFormatString( "%f,%f,%f", val.x, val.y, val.z ) );
+	return ( OU::string::format( "%f,%f,%f", val.x, val.y, val.z ) );
 }
 
 /// OvQuaternion
@@ -513,7 +513,7 @@ OvQuaternion		OliveValue::FromString( const OvString& str )
 template<>
 OvString			OliveValue::ToString( const OvQuaternion& val )
 {
-	return OvString( OvFormatString( "%f,%f,%f,%f", val.x, val.y, val.z, val.w ) );
+	return ( OU::string::format( "%f,%f,%f,%f", val.x, val.y, val.z, val.w ) );
 }
 
 ///OvObjectID
@@ -530,7 +530,7 @@ OvObjectID				OliveValue::FromString( const OvString& str )
 template<>
 OvString			OliveValue::ToString( const OvObjectID& val )
 {
-	return OvString( OvFormatString( "%d", val ) );
+	return ( OU::string::format( "%d", val ) );
 }
 
 /// OvColor
@@ -552,5 +552,5 @@ OvColor				OliveValue::FromString( const OvString& expData )
 template<>
 OvString			OliveValue::ToString( const OvColor& val )
 {
-	return OvString(OvFormatString( "a%dr%dg%db%d", val.a, val.r, val.g, val.b ));
+	return (OU::string::format( "a%dr%dg%db%d", val.a, val.r, val.g, val.b ));
 }

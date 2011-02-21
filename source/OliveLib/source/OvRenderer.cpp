@@ -14,7 +14,7 @@
 #include "OvMatrix.h"
 //! Temporary include
 #include "OvUtility.h"
-#include "OvStringUtility.h"
+#include "OvUtility.h"
 #include "OvInputManager.h"
 
 OvRTTI_IMPL_ROOT(OvRenderer);
@@ -217,7 +217,8 @@ OvBool			OvRenderer::PresentFrame()
 		return true;
 	}
 
-	OvError(OvFormatString("Failed Present RenderTarget code: %d", (DWORD)hr ));
+	OvString err = OU::string::format("Failed Present RenderTarget code: %d", (DWORD)hr );
+	OvError( err.c_str() );
 	return false;
 }
 

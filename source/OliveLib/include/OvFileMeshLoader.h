@@ -11,7 +11,7 @@ class OvFileMeshLoader : public OvMeshLoaderBase
 public:
 	OvFileMeshLoader();
 	~OvFileMeshLoader();
-	virtual OvResourceSPtr Load( OvDataStream& stream ) override;
+	virtual OvResourceSPtr Load( OvBufferInputStream& bis ) override;
 private:
 	
 	const OvChar*	_readLine();
@@ -24,5 +24,5 @@ private:
 	enum {MAX_READ_BUFFER_SIZE = 256};
 	FILE* m_file;
 	OvString m_readBuffer;
-	OvDataStream* m_data;
+	OvString m_buf;
 };

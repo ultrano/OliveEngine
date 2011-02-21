@@ -1,6 +1,6 @@
 #include "OvObject.h"
 #include "OvObjectManager.h"
-#include "OvStringUtility.h"
+#include "OvUtility.h"
 #include "OvStorage.h"
 #include "OvPropertyAccesser.h"
 #include "OvRegisterableProperties.h"

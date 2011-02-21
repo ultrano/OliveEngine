@@ -24,6 +24,8 @@ public:
 		return !!WriteBytes( (OvByte*)&data[0], size );
 	};
 
+	OvBufferSPtr GetBuffer();
+
 private:
 	OvBufferSPtr m_buffer;
 	OvSize		 m_write_caret;

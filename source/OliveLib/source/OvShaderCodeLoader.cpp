@@ -1,11 +1,13 @@
 #include "OvShaderCodeLoader.h"
 #include "OvShaderCode.h"
-#include "OvDataStream.h"
+#include "OvBufferInputStream.h"
+#include "OvBuffer.h"
 
 OvRTTI_IMPL( OvShaderCodeLoader );
 OvFACTORY_OBJECT_IMPL(OvShaderCodeLoader);
 
-OvResourceSPtr OvShaderCodeLoader::Load( OvDataStream& stream )
+OvResourceSPtr OvShaderCodeLoader::Load( OvBufferInputStream& bis )
 {
-	return OvNew OvShaderCode( stream.Ptr() );
+	OvBufferSPtr buf = bis.GetBuffer();
+	return OvNew OvShaderCode( (const char*)buf->Pointer(), buf->Size() );
 }
