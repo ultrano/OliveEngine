@@ -13,13 +13,12 @@ GL_TEST_CASE_FUNC( buffer_test )
 		OvBufferInputStream bis( buf );
 		OvBufferOutputStream bos( buf );
 
-		OvChar write[] = "테스트이긔";
-		bos.WriteBytes( (OvByte*)write, sizeof( write ) );
+		OvString write_str = "테스트이긔";
+		bos.Write( write_str );
 
-		OvChar read[256] = {0,};
-		bis.ReadBytes( (OvByte*)read, sizeof( read ) );
+		OvString read_str;
+		bis.Read( read_str );
 
-		//bis.
 	}
 	OliveDevice::EngineOff();
 }
