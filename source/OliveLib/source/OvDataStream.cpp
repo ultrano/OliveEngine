@@ -67,10 +67,10 @@ OvUInt OvDataStream::ReadLine( OvString& buf )
 	if ( pos != OvString::npos )
 	{
 		// delimiter 까지 포함시키기 위해 1을 더함
-		size_t sz = 1 + pos - m_read_caret;
+		OvSize sz = 1 + pos - m_read_caret;
 		buf = m_buffer.substr( m_read_caret, sz );
 		m_read_caret += sz;
-		buf = trim( buf );
+		buf = OU::string::trim( buf );
 		return sz;
 	}
 	return 0;
