@@ -17,7 +17,7 @@ OvBufferInputStream::OvBufferInputStream( OvBufferSPtr buffer )
 }
 OvBool OvBufferInputStream::ReadByte( OvByte & read )
 {
-	return ReadBytes( &read, sizeof(OvByte) );
+	return !!ReadBytes( &read, sizeof(OvByte) );
 }
 
 OvSize OvBufferInputStream::ReadBytes( OvByte * dest, OvSize dest_size )
@@ -27,7 +27,7 @@ OvSize OvBufferInputStream::ReadBytes( OvByte * dest, OvSize dest_size )
 		OvSize src_size = m_buffer->Size() - m_read_caret;
 		if ( OvSize cpy_size = min( src_size, dest_size ) )
 		{
-			memcpy( dest, buf, cpy_size );
+			memcpy( dest, buf + m_read_caret, cpy_size );
 			m_read_caret += cpy_size;
 			return cpy_size;
 		}

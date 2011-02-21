@@ -14,6 +14,20 @@ public:
 	virtual OvBool ReadByte( OvByte & read ) override;
 	virtual OvSize ReadBytes( OvByte * dest, OvSize dest_size ) override;
 
+	template<typename T>
+	OvBool	Read( T& data )
+	{
+		return !!ReadBytes( (OvByte*)&data, sizeof(T) );
+	};
+
+	OvBool Read( OvString& data )
+	{
+		OvSize size = 0;
+		Read( size );
+		data.resize( size );
+		return !!ReadBytes( (OvByte*)&data[0], size );
+	};
+
 private:
 
 	OvBufferSPtr m_buffer;
