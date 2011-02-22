@@ -1,3 +1,4 @@
+#pragma once
 #include "OvOutputStream.h"
 
 OvREF_POINTER( OvBuffer );
@@ -10,19 +11,6 @@ public:
 
 	virtual OvBool WriteByte( OvByte write ) override;
 	virtual OvSize WriteBytes( OvByte * src, OvSize write_size ) override;
-
-	template<typename T>
-	OvBool	Write( T& data )
-	{
-		return !!WriteBytes( (OvByte*)&data, sizeof(T) );
-	};
-
-	OvBool Write( OvString& data )
-	{
-		OvSize size = (OvSize)data.size();
-		Write( size );
-		return !!WriteBytes( (OvByte*)&data[0], size );
-	};
 
 	OvBufferSPtr GetBuffer();
 

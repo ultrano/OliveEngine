@@ -1279,6 +1279,18 @@
 							>
 						</File>
 					</Filter>
+					<Filter
+						Name="OvFileOutputStream"
+						>
+						<File
+							RelativePath=".\source\OvFileOutputStream.cpp"
+							>
+						</File>
+						<File
+							RelativePath=".\include\OvFileOutputStream.h"
+							>
+						</File>
+					</Filter>
 				</Filter>
 				<Filter
 					Name="Stream"
@@ -1292,6 +1304,18 @@
 						</File>
 						<File
 							RelativePath=".\include\OvBuffer.h"
+							>
+						</File>
+					</Filter>
+					<Filter
+						Name="OvFile"
+						>
+						<File
+							RelativePath=".\source\OvFile.cpp"
+							>
+						</File>
+						<File
+							RelativePath=".\include\OvFile.h"
 							>
 						</File>
 					</Filter>
@@ -1320,6 +1344,18 @@
 						</File>
 						<File
 							RelativePath=".\include\OvInputStream.h"
+							>
+						</File>
+					</Filter>
+					<Filter
+						Name="OvFileInputStream"
+						>
+						<File
+							RelativePath=".\source\OvFileInputStream.cpp"
+							>
+						</File>
+						<File
+							RelativePath=".\include\OvFileInputStream.h"
 							>
 						</File>
 					</Filter>

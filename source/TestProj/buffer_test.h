@@ -4,6 +4,8 @@
 #include "OvBuffer.h"
 #include "OvBufferInputStream.h"
 #include "OvBufferOutputStream.h"
+#include "OvFileInputStream.h"
+#include "OvFileOutputStream.h"
 
 GL_TEST_CASE_FUNC( buffer_test )
 {
@@ -11,14 +13,23 @@ GL_TEST_CASE_FUNC( buffer_test )
 	{
 		OU::string::format("%d%d",1,2);
 		OvBufferSPtr buf = OvBuffer::CreateBuffer( 1 );
-		OvBufferInputStream bis( buf );
-		OvBufferOutputStream bos( buf );
-
+		OvOutputStreamSPtr ops;
+		OvInputStreamSPtr ips;
 		OvString write_str = "Å×½ºÆ®ÀÌ±á";
-		bos.Write( write_str );
-
 		OvString read_str;
-		bis.Read( read_str );
+
+		//! Buffer Stream
+// 		ops = OvNew OvBufferOutputStream( buf );
+// 		ips = OvNew OvBufferInputStream( buf );
+
+		//! File Stream
+		ops = OvNew OvFileOutputStream( "./test.txt" );
+		ops->Write( write_str );
+		ops = NULL;
+
+		ips = OvNew OvFileInputStream( "./test.txt" );
+		ips->Read( read_str );
+		ips = NULL;
 
 	}
 	OliveDevice::EngineOff();
