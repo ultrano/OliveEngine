@@ -6,11 +6,6 @@ OvFileInputStream::OvFileInputStream( const OvString& file, const OvString& mode
 {
 }
 
-OvBool OvFileInputStream::ReadByte( OvByte & read )
-{
-	return !!ReadBytes( &read, sizeof(OvByte) );
-}
-
 OvSize OvFileInputStream::ReadBytes( OvByte * dest, OvSize dest_size )
 {
 	FILE* file = m_file->GetHandle();

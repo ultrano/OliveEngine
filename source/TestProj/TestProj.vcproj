@@ -204,6 +204,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\object_streaming_test.h"
+				>
+			</File>
+			<File
 				RelativePath=".\physx_case.h"
 				>
 			</File>

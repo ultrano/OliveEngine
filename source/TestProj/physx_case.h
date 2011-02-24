@@ -181,10 +181,12 @@ public:
 			if ( OvIsTypeOf<OvXNode>(xobj) )
 			{
 				OvXObjectSPtr child = NULL;
-				OvXNodeSPtr xnode = xobj;
-				for ( unsigned i = 0 ; child = xnode->GetChildeAt(i) ; ++i )
+				OvObjectSet children;
+				xnode->GetChildrenSet( children );
+
+				for each ( child in children )
 				{
-					Update( child );
+					Update( OvCastTo<OvXObject>(child));
 				}
 			}
 		}
@@ -205,10 +207,12 @@ public:
 			if ( OvIsTypeOf<OvXNode>(xobj) )
 			{
 				OvXObjectSPtr child = NULL;
-				OvXNodeSPtr xnode = xobj;
-				for ( unsigned i = 0 ; child = xnode->GetChildeAt(i) ; ++i )
+				OvObjectSet children;
+				xnode->GetChildrenSet( children );
+
+				for each ( child in children )
 				{
-					Draw( child );
+					Draw( OvCastTo<OvXObject>(child));
 				}
 			}
 		}

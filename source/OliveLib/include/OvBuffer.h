@@ -1,6 +1,8 @@
 #pragma once
 #include "OvRefBase.h"
 #include "OvAutoPtr.h"
+#include "OvBufferInputStream.h"
+#include "OvBufferOutputStream.h"
 
 OvREF_POINTER(OvBuffer);
 class OvBuffer : public OvRefBase

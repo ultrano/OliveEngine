@@ -21,7 +21,7 @@ public:
 	Type_0*				GetRear()const;
 
 	//! check, is it valid
-	operator			OvBool()const;
+	operator			OvInt()const;
 
 	Type_0*				operator ->()const;
 	OvSmartPointer&		operator = ( Type_0* _pt);

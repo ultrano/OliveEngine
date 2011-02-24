@@ -54,9 +54,9 @@ inline Type_0* OvSmartPointer<Type_0>::GetRear()const
 	return (Type_0*)m_pReferenceTarget;
 }
 template<typename Type_0>
-OvSmartPointer<Type_0>::operator OvBool()const
+OvSmartPointer<Type_0>::operator OvInt()const
 {
-	return (m_pReferenceTarget != NULL);
+	return OvInt(m_pReferenceTarget);
 }
 template<typename Type_0>
 inline Type_0*					OvSmartPointer<Type_0>::operator ->()const

@@ -11,7 +11,6 @@ public:
 	OvBufferInputStream( OvBuffer * buffer );
 	OvBufferInputStream( OvBufferSPtr buffer );
 
-	virtual OvBool ReadByte( OvByte & read ) override;
 	virtual OvSize ReadBytes( OvByte * dest, OvSize dest_size ) override;
 
 	OvBufferSPtr GetBuffer();

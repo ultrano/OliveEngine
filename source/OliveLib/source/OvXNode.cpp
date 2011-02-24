@@ -1,15 +1,14 @@
 #include "OvXNode.h"
-#include <list>
-#include <algorithm>
 #include "OvRegisterableProperties.h"
 #include "OliveValue.h"
+#include "OvObjectOutputStream.h"
 using namespace std;
 
 
 OvRTTI_IMPL(OvXNode);
 
 OvPROPERTY_BAG_BEGIN(OvXNode);
-	OvPROPERTY_BAG_REGISTER(OvPropAccesser_object_collector,m_clectrChildCollect);
+	OvPROPERTY_BAG_REGISTER(OvPropAccesser_object_collector,m_children);
 OvPROPERTY_BAG_END(OvXNode);
 
 OvFACTORY_OBJECT_IMPL(OvXNode);
@@ -21,7 +20,7 @@ OvXNode::OvXNode()
 
 OvXNode::~OvXNode()
 {
-	m_clectrChildCollect.Clear();
+	m_children.clear();
 }
 
 void OvXNode::_update_system( OvFloat _fElapse )
@@ -32,18 +31,18 @@ void OvXNode::_update_system( OvFloat _fElapse )
 	//! 업데이트 순서가 엉킬수 있기 때문에
 	//! 업데이트시에 카피본을 뜨고 그걸로 업데이스틑 시행한다.
 
-	OvObjectCollector update_copy = m_clectrChildCollect;
-	for ( unsigned i = 0 ; i < update_copy.Count() ; ++i )
+	OvObjectSet update_copy = m_children;
+	for each( OvObjectSPtr child in update_copy )
 	{
-		OvXObjectSPtr child = update_copy.GetByAt(i);
-		child->Update(_fElapse);
+		OvXObject* xobj = OvCastTo<OvXObject>(child);
+		xobj->Update(_fElapse);
 	}
 }
 
-void OvXNode::AttachChild( OvXObjectSPtr _pObject )
+void OvXNode::AttachChild( OvXObjectSPtr obj )
 {
 
-	if(!_pObject)
+	if(!obj)
 	{
 		return ;
 	}
@@ -53,59 +52,46 @@ void OvXNode::AttachChild( OvXObjectSPtr _pObject )
 	OvXNodeSPtr parentNode = this;
 	for ( ; parentNode ; parentNode = parentNode->GetAttachedNode() )
 	{
-		if ( _pObject == parentNode )
+		if ( obj == parentNode )
 		{
 			return ;
 		}
 	}
 
 	// 차일드오브젝트를 찾는다.
-	if (m_clectrChildCollect.IsCollected(_pObject))
+
+	if ( m_children.find(obj) != m_children.end() )
 	{
 		return ;
 	}
 
 	// 기존 부모가 있다면 그 부모에게 이 객체에 대한 삭제를 요청.
-	OvXNodeSPtr kpParentNode = _pObject->GetAttachedNode();
-	if(kpParentNode)
-		kpParentNode->DettachChild(_pObject);
+	OvXNodeSPtr old_parent = obj->GetAttachedNode();
+	if(old_parent)
+		old_parent->DettachChild(obj);
 
-	m_clectrChildCollect.AddObject(_pObject);
-	_pObject->_set_parent(this);
+	m_children.insert(obj);
+	obj->_set_parent(this);
 }
 
-OvXObjectSPtr	OvXNode::DettachChild(OvXObjectSPtr _pObject)
+OvXObjectSPtr	OvXNode::DettachChild( OvXObjectSPtr obj )
 {
-	if(!_pObject)
+	if(!obj)
 		return NULL;
 
 	// 차일드오브젝트를 찾는다.
-	if (m_clectrChildCollect.IsCollected(_pObject) == false)
+	if ( m_children.find(obj) == m_children.end() )
 		return NULL;
 
-	_pObject->_set_parent(NULL);
-	m_clectrChildCollect.RemoveObject(_pObject);
+	obj->_set_parent(NULL);
+	m_children.erase(obj);
 
-	return _pObject;
+	return obj;
 }
 
 size_t			OvXNode::GetChildCount()
 {
-	return m_clectrChildCollect.Count();
-}
-
-OvXObjectSPtr	OvXNode::GetChildeAt(OvUInt iIndex)
-{
-	if (0 > iIndex)
-	{
-		return NULL;
-	}
-	if (iIndex >= GetChildCount())
-	{
-		return NULL;
-	}
-	
-	return m_clectrChildCollect.GetByAt(iIndex);
+	return m_children.size();
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -122,13 +108,15 @@ void OvSceneNode::UpdateScene( OvFloat elapse )
 {
 	OvXObjectSPtr obj = NULL;
 	OvSceneNode* sc_obj = NULL;
-	OvUInt count = GetChildCount();
-	while ( count-- )
+	OvObjectSet children;
+	if ( GetChildrenSet( children ) )
 	{
-		obj = GetChildeAt( count );
-		if ( sc_obj = OvCastTo<OvSceneNode>( obj ) )
+		for each( obj in children )
 		{
-			sc_obj->SetScene( GetScene() );
+			if ( sc_obj = OvCastTo<OvSceneNode>( obj ) )
+			{
+				sc_obj->SetScene( GetScene() );
+			}
 		}
 	}
 }
@@ -146,3 +134,35 @@ OvScene* OvSceneNode::GetScene()
 {
 	return m_scene;
 }
+
+OvSize OvXNode::GetChildrenSet( OvObjectSet children )
+{
+	children = m_children;
+	return children.size();
+}
+
+void OvXNode::Serialize( OvObjectOutputStream & output )
+{
+	__super::Serialize( output );
+
+	output.Write( m_children.size() );
+
+	for each( OvObjectSPtr obj in m_children )
+	{
+		output.WriteObject( obj );
+	}
+}
+
+void OvXNode::Deserialize( OvObjectInputStream & input )
+{
+	__super::Deserialize( input );
+
+	OvSize children_count = 0;
+	input.Read( children_count );
+
+	while ( children_count-- )
+	{
+		m_children.insert( input.ReadObject() );
+	}
+}
+

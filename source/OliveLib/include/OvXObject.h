@@ -25,6 +25,7 @@ class OvXObject : public OvObjectNex
 {
 	OvRTTI_DECL(OvXObject);
 	OvPROPERTY_BAG_DECL(OvXObject);
+	OvFACTORY_OBJECT_DECL(OvXObject);
 
 	friend class OvXNode;
 	friend class OvXComponent;
@@ -82,10 +83,14 @@ public :
 
 	template<typename Type_0>
 	OvSmartPointer<Type_0>	GetFirstComponent();
-	OvBool				GetComponents( OvObjectCollector& extraComponents );
-	OvXComponentSPtr	RemoveComponent( const OvObjectSPtr component );
-	OvXComponentSPtr	RemoveComponent( const OvObjectID& compoentID );
-	OvXComponentSPtr	RemoveComponent( const OvChar* name );
+	OvBool				GetComponents( OvObjectSet& extraComponents );
+	OvXComponentSPtr	RemoveComponent( const OvObjectSPtr obj );
+	OvXComponentSPtr	RemoveComponent( const OvObjectID& objID );
+	OvXComponentSPtr	RemoveComponent( const OvString& name );
+
+	//! Stream
+	virtual void Serialize( OvObjectOutputStream & output ) override;
+	virtual void Deserialize( OvObjectInputStream & input ) override;
 
 private:
 
@@ -114,7 +119,7 @@ private:
 	//! 이러면 사용할때는 최소한 삭제에 대해서는 보호를 받을수 있게 된다.
 	//! 핸들을 들고 그때그때 find해서 쓰는 방법도 있겠지만, 이는 너무 큰
 	//! 오버해드를 동반한다.(너무 크다)
-	OvXNode*	m_pParent;
+	OvXNode*	m_parent;
 
 	OvSphere	m_cCullingSphere;
 	OvTransform	m_tfLocalTransform;
@@ -123,7 +128,7 @@ private:
 	OvTransform	m_tfWorldTransform;
 	OvMatrix	m_worldBuildMatrix;
 
-	OvObjectCollector	m_extraComponents;
+	OvObjectSet	m_components;
 
 	Ov8SetFlags	m_controlFlags;
 

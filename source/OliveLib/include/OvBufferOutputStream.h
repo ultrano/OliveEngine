@@ -9,7 +9,6 @@ public:
 	OvBufferOutputStream( OvBuffer * buffer );
 	OvBufferOutputStream( OvBufferSPtr buffer );
 
-	virtual OvBool WriteByte( OvByte write ) override;
 	virtual OvSize WriteBytes( OvByte * src, OvSize write_size ) override;
 
 	OvBufferSPtr GetBuffer();

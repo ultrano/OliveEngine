@@ -4,13 +4,16 @@
 #include "OvAutoPtr.h"
 #include "OvPropertyBag.h"
 #include "OvObjectFactory.h"
-#include <map>
-
 #include "OvObjectID.h"
+#include "OvObjectOutputStream.h"
+#include "OvObjectInputStream.h"
 
 class OvStorage;
 class OvObjectProperties;
+
 OvREF_POINTER(OvObject);
+typedef OvSet<OvObjectSPtr> OvObjectSet;
+
 class OvObject : public OvRefBase
 {
 	OvRTTI_DECL(OvObject);
@@ -29,8 +32,8 @@ public:
 	virtual OvObjectSPtr CustomClone();
 
 	//! Stream
-	//virtual void Serialize( OvFile& file );
-	//virtual void Deserialize();
+	virtual void Serialize( OvObjectOutputStream & output );
+	virtual void Deserialize( OvObjectInputStream & input );
 
 	//! ID of Object
 	OvObjectID		GetObjectID();

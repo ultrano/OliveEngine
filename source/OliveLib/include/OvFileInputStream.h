@@ -9,9 +9,8 @@ private:
 	OvFileInputStream();
 public:
 
-	OvFileInputStream( const OvString& file, const OvString& mode = "r+b" );
+	OvFileInputStream( const OvString& file, const OvString& mode = "rb" );
 
-	virtual OvBool ReadByte( OvByte & read ) override;
 	virtual OvSize ReadBytes( OvByte * dest, OvSize dest_size ) override;
 
 	OvBool Open( const OvString& file, const OvString& mode = "r+b" );

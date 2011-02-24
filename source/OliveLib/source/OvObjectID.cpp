@@ -27,11 +27,11 @@ OvObjectID::~OvObjectID()
 }
 
 
-OvBool OvObjectID::operator==(const OvObjectID& idRef){return core == idRef.core;};
-OvBool OvObjectID::operator==(OvObjectID& idRef){return core == idRef.core;};
+// OvBool OvObjectID::operator==(const OvObjectID& idRef){return core == idRef.core;};
+// OvBool OvObjectID::operator==(OvObjectID& idRef){return core == idRef.core;};
 
-OvBool OvObjectID::operator!=(const OvObjectID& idRef){return core != idRef.core;};
-OvBool OvObjectID::operator!=(OvObjectID& idRef){return core != idRef.core;};
+// OvBool OvObjectID::operator!=(const OvObjectID& idRef){return core != idRef.core;};
+// OvBool OvObjectID::operator!=(OvObjectID& idRef){return core != idRef.core;};
 
 OvBool OvObjectID::operator<(const OvObjectID& idRef){return core < idRef.core;};
 OvBool OvObjectID::operator<(OvObjectID& idRef){return core < idRef.core;};

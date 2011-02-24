@@ -11,8 +11,6 @@ class OvCamera : public OvXNode
 	OvRTTI_DECL(OvCamera);
 	OvPROPERTY_BAG_DECL(OvCamera);
 	OvFACTORY_OBJECT_DECL(OvCamera);
-private:
-	OvCamera();
 public:
 
 	enum	eCameraType
@@ -22,6 +20,7 @@ public:
 		eCameraType_Target,
 	};
 
+	OvCamera();
 	~OvCamera();
 
 

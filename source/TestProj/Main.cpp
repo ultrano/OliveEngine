@@ -14,9 +14,9 @@
 #include "thread_test.h"
 #include "container_utility_test.h"
 #include "physx_case.h"
-*/
 #include "buffer_test.h"
-
+*/
+#include "object_streaming_test.h"
 
 
 int	APIENTRY	WinMain(HINSTANCE hi,HINSTANCE,LPSTR,int)

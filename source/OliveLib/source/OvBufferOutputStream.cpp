@@ -15,12 +15,6 @@ OvBufferOutputStream::OvBufferOutputStream( OvBufferSPtr buffer )
 
 }
 
-OvBool OvBufferOutputStream::WriteByte( OvByte write )
-{
-	WriteBytes( &write, sizeof( OvByte ) );
-	return false;
-}
-
 OvSize OvBufferOutputStream::WriteBytes( OvByte * src, OvSize write_size )
 {
 	OvSize src_size = m_buffer->Size() - m_write_caret;

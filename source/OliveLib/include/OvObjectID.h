@@ -24,11 +24,11 @@ public:
 	friend OvBool operator!=(const OvObjectID& idRef0, const OvObjectID& idRef1);
 	friend OvBool operator!=( OvObjectID& idRef0,  OvObjectID& idRef1);
 
-	OvBool operator==(const OvObjectID& idRef);
-	OvBool operator==(OvObjectID& idRef);
+// 	OvBool operator==(const OvObjectID& idRef);
+// 	OvBool operator==(OvObjectID& idRef);
 
-	OvBool operator!=(const OvObjectID& idRef);
-	OvBool operator!=(OvObjectID& idRef);
+// 	OvBool operator!=(const OvObjectID& idRef);
+// 	OvBool operator!=(OvObjectID& idRef);
 
 	friend OvBool operator<(const OvObjectID& idRef0, const OvObjectID& idRef1);
 	OvBool operator<(const OvObjectID& idRef);

@@ -15,22 +15,26 @@ public:
 	OvXNode();
 	virtual ~OvXNode();
 
-	void AttachChild(OvXObjectSPtr _pObject);
+	void AttachChild(OvXObjectSPtr obj);
 
 	// 제대로 지워졌다면, 지워진 객체에 대한 포인터를 리턴한다.
-	OvXObjectSPtr	DettachChild(OvXObjectSPtr _pObject);
+	OvXObjectSPtr	DettachChild(OvXObjectSPtr obj);
 
 	size_t			GetChildCount();
 
-	OvXObjectSPtr	GetChildeAt( OvUInt iIndex);
+	OvSize			GetChildrenSet( OvObjectSet children );
+
+	virtual void Serialize( OvObjectOutputStream & output ) override;
+	virtual void Deserialize( OvObjectInputStream & input ) override;
+
+
 private:
 
 	virtual void	_update_system( OvFloat _fElapse ) override;
 
 private:
 
-
-	OvObjectCollector	m_clectrChildCollect;
+	OvObjectSet	m_children;
 
 };
 

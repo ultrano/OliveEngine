@@ -11,7 +11,6 @@ public:
 
 	OvFileOutputStream( const OvString& file, const OvString& mode = "w+b" );
 
-	virtual OvBool WriteByte( OvByte write ) override;
 	virtual OvSize WriteBytes( OvByte * write_buf, OvSize write_size ) override;
 
 	OvBool Open( const OvString& file, const OvString& mode = "w+b" );

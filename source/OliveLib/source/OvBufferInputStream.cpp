@@ -15,10 +15,6 @@ OvBufferInputStream::OvBufferInputStream( OvBufferSPtr buffer )
 {
 
 }
-OvBool OvBufferInputStream::ReadByte( OvByte & read )
-{
-	return !!ReadBytes( &read, sizeof(OvByte) );
-}
 
 OvSize OvBufferInputStream::ReadBytes( OvByte * dest, OvSize dest_size )
 {

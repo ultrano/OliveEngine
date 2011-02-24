@@ -8,16 +8,17 @@ interface_class OvOutputStream : public OvRefBase
 {
 	OvRTTI_DECL_ROOT(OvOutputStream);
 
-	virtual OvBool WriteByte( OvByte write ) = 0;
+	//! override method
 	virtual OvSize WriteBytes( OvByte * write_buf, OvSize write_size ) = 0;
-
+	//
+	
 	template<typename T>
-	OvBool	Write( T& data )
+	OvBool	Write( const T& data )
 	{
 		return !!WriteBytes( (OvByte*)&data, sizeof(T) );
 	};
 
-	OvBool Write( OvString& data )
+	OvBool Write( const OvString& data )
 	{
 		OvSize size = (OvSize)data.size();
 		Write( size );

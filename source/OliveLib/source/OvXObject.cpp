@@ -8,15 +8,15 @@
 
 OvRTTI_IMPL(OvXObject);
 OvPROPERTY_BAG_BEGIN(OvXObject);
-	OvPROPERTY_BAG_REGISTER( OvPropAccesser_object_pointer, m_pParent );
 	OvPROPERTY_BAG_REGISTER( OvPropAccesser_float3,  m_tfLocalTransform.Scale );
 	OvPROPERTY_BAG_REGISTER( OvPropAccesser_float3,  m_tfLocalTransform.Position );
 	OvPROPERTY_BAG_REGISTER( OvPropAccesser_float4,  m_tfLocalTransform.Quaternion );
-	OvPROPERTY_BAG_REGISTER( OvPropAccesser_object_collector,  m_extraComponents );
 OvPROPERTY_BAG_END(OvXObject);
 
+OvFACTORY_OBJECT_IMPL(OvXObject);
+
 OvXObject::OvXObject()
-:m_pParent(NULL)
+:m_parent(NULL)
 {
 	m_controlFlags.Clear( true );
 }
@@ -59,13 +59,13 @@ void OvXObject::Update(OvFloat _fElapse)
 
 	m_tfWorldTransform = ExtractTransformFromMatrix( m_worldBuildMatrix );
 
-	OvObjectCollector	extraComponents = m_extraComponents;
-	for ( unsigned i = 0 ; i < extraComponents.Count() ; ++i )
+	OvObjectSet	components = m_components;
+	for each( OvObjectSPtr obj in components )
 	{
-		OvXComponentSPtr component = extraComponents.GetByAt( i );
-		if ( component )
+		OvXComponentSPtr comp = OvCastTo<OvXComponent>( obj );
+		if ( comp )
 		{
-			component->Update( _fElapse );
+			comp->Update( _fElapse );
 		}
 	}
 
@@ -199,18 +199,19 @@ OvBool OvXObject::IsLeaf()
 
 void	OvXObject::_set_parent(OvXNodeSPtr _pParentNode)
 {
-	m_pParent = _pParentNode.GetRear();
+	m_parent = _pParentNode.GetRear();
 }
 
 OvXNodeSPtr	OvXObject::GetAttachedNode()
 {
-	return m_pParent;
+	return m_parent;
 }
 
 
-OvBool	OvXObject::GetComponents( OvObjectCollector& extraComponents )
+OvBool	OvXObject::GetComponents( OvObjectSet& components )
 {
-	return extraComponents.AddObject( m_extraComponents );
+	components = m_components;
+	return components.size();
 };
 
 OvBool	OvXObject::_equip_component( OvXComponentSPtr component )
@@ -218,7 +219,8 @@ OvBool	OvXObject::_equip_component( OvXComponentSPtr component )
 	if( component && component->GetTarget() == this )
 	{
 		component->SetUp();
-		return m_extraComponents.AddObject( component );
+		m_components.insert( component );
+		return true;
 	}
 	return false;
 };
@@ -228,7 +230,8 @@ OvBool OvXObject::_remove_component( OvXComponentSPtr component )
 	if( component && component->GetTarget() == this )
 	{
 		component->ShutDown();
-		return m_extraComponents.RemoveObject( component );
+		m_components.erase( component );
+		return true;
 	}
 	return false;
 }
@@ -238,35 +241,86 @@ void OvXObject::_update_system( OvFloat _fElapse )
 
 }
 
-OvXComponentSPtr OvXObject::RemoveComponent( const OvObjectSPtr component )
+OvXComponentSPtr OvXObject::RemoveComponent( const OvObjectSPtr obj )
 {
-	if ( component )
+	if ( OvXComponent* comp = OvCastTo<OvXComponent>( obj ) )
 	{
-		OvXComponentSPtr removedComponent = m_extraComponents.RemoveObject( component );
-		removedComponent->SetTarget( NULL );
-		return removedComponent;
-	}
-	return NULL;
-}
-OvXComponentSPtr OvXObject::RemoveComponent( const OvObjectID& compoentID )
-{
-	OvXComponentSPtr removedComponent = m_extraComponents.RemoveObject( compoentID );
-	removedComponent->SetTarget( NULL );
-	return removedComponent;
-}
-
-OvXComponentSPtr OvXObject::RemoveComponent( const OvChar* name )
-{
-	if ( NULL == name ) return NULL;
-	OvXComponentSPtr removedComponent = NULL;
-	for ( unsigned i = 0 ; i < m_extraComponents.Count() ; ++i )
-	{
-		removedComponent = m_extraComponents.GetByAt( i );
-		if ( removedComponent->GetName() == OvString( name ) )
+		if ( m_components.find( comp ) != m_components.end() )
 		{
-			removedComponent->SetTarget( NULL );
-			return removedComponent;
+			m_components.erase( comp );
+			comp->SetTarget( NULL );
+			return comp;
 		}
 	}
 	return NULL;
+}
+OvXComponentSPtr OvXObject::RemoveComponent( const OvObjectID& objID )
+{
+	for each( OvObjectSPtr obj in m_components )
+	{
+		if ( obj->GetObjectID() == objID )
+		{
+			m_components.erase( obj );
+			return obj;
+		}
+	}
+	return NULL;
+}
+
+OvXComponentSPtr OvXObject::RemoveComponent( const OvString& name )
+{
+	for each( OvObjectSPtr obj in m_components )
+	{
+		OvXComponent* comp = OvCastTo<OvXComponent>( obj );
+		if ( comp->GetName() == name )
+		{
+			m_components.erase( obj );
+			return obj;
+		}
+	}
+	return NULL;
+}
+
+void OvXObject::Serialize( OvObjectOutputStream & output )
+{
+	__super::Serialize( output );
+
+	output.WriteObject( m_parent );
+	output.Write( m_cCullingSphere );
+	output.Write( m_tfLocalTransform );
+	output.Write( m_localBuildMatrix );
+
+	output.Write( m_tfWorldTransform );
+	output.Write( m_worldBuildMatrix );
+
+	output.Write( m_controlFlags );
+
+	output.Write( m_components.size() );
+	for each ( OvObjectSPtr obj in m_components )
+	{
+		output.WriteObject( obj );
+	}
+
+}
+
+void OvXObject::Deserialize( OvObjectInputStream & input )
+{
+	__super::Deserialize( input );
+
+	m_parent = (OvXNode*)input.ReadObject();
+	input.Read( m_cCullingSphere );
+	input.Read( m_tfLocalTransform );
+	input.Read( m_localBuildMatrix );
+
+	input.Read( m_tfWorldTransform );
+	input.Read( m_worldBuildMatrix );
+
+	input.Read( m_controlFlags );
+
+	OvSize comp_count = 0;
+	input.Read( comp_count );
+	while ( comp_count--  )
+	{
+		m_components.insert( input.ReadObject() );
+	}
 }
