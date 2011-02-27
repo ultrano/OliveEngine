@@ -4,15 +4,8 @@
 #include "OvXComponent.h"
 #include "OvObjectCollector.h"
 #include "OvUtility.h"
-#include "OvRegisterableProperties.h"
 
 OvRTTI_IMPL(OvXObject);
-OvPROPERTY_BAG_BEGIN(OvXObject);
-	OvPROPERTY_BAG_REGISTER( OvPropAccesser_float3,  m_tfLocalTransform.Scale );
-	OvPROPERTY_BAG_REGISTER( OvPropAccesser_float3,  m_tfLocalTransform.Position );
-	OvPROPERTY_BAG_REGISTER( OvPropAccesser_float4,  m_tfLocalTransform.Quaternion );
-OvPROPERTY_BAG_END(OvXObject);
-
 OvFACTORY_OBJECT_IMPL(OvXObject);
 
 OvXObject::OvXObject()
@@ -211,7 +204,7 @@ OvXNodeSPtr	OvXObject::GetAttachedNode()
 OvBool	OvXObject::GetComponents( OvObjectSet& components )
 {
 	components = m_components;
-	return components.size();
+	return !!components.size();
 };
 
 OvBool	OvXObject::_equip_component( OvXComponentSPtr component )

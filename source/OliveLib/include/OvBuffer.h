@@ -9,9 +9,13 @@ class OvBuffer : public OvRefBase
 {
 public:
 
-	enum { DEFAULT_BUFFER_INCREMENT = 64 };
+	enum { 
+		DEFAULT_BUFFER_CAPACITY = 256,
+		DEFAULT_BUFFER_INCREMENT = 64 
+	};
 
-	static OvBufferSPtr CreateBuffer( OvSize capacity, OvSize increment = DEFAULT_BUFFER_INCREMENT );
+	static OvBufferSPtr CreateBuffer( OvSize capacity = DEFAULT_BUFFER_CAPACITY
+									, OvSize increment = DEFAULT_BUFFER_INCREMENT );
 
 public:
 
@@ -19,7 +23,7 @@ public:
 	OvSize		Size();
 	OvSize		Increment();
 
-	void		Establish( OvUInt count = 1 );
+	void		Establish( OvUInt times = 1 );
 
 private:
 	OvBuffer();

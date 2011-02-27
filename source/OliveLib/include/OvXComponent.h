@@ -14,7 +14,6 @@ OvREF_POINTER(OvXComponent);
 class OvXComponent : public OvObject
 {
 	OvRTTI_DECL(OvXComponent);
-	OvPROPERTY_BAG_DECL(OvXComponent);
 public:
 
 	OvXComponent();

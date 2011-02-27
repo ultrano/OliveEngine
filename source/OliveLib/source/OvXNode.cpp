@@ -1,15 +1,10 @@
 #include "OvXNode.h"
-#include "OvRegisterableProperties.h"
 #include "OliveValue.h"
 #include "OvObjectOutputStream.h"
 using namespace std;
 
 
 OvRTTI_IMPL(OvXNode);
-
-OvPROPERTY_BAG_BEGIN(OvXNode);
-	OvPROPERTY_BAG_REGISTER(OvPropAccesser_object_collector,m_children);
-OvPROPERTY_BAG_END(OvXNode);
 
 OvFACTORY_OBJECT_IMPL(OvXNode);
 

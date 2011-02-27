@@ -24,7 +24,6 @@ OvREF_POINTER(OvXObject);
 class OvXObject : public OvObjectNex
 {
 	OvRTTI_DECL(OvXObject);
-	OvPROPERTY_BAG_DECL(OvXObject);
 	OvFACTORY_OBJECT_DECL(OvXObject);
 
 	friend class OvXNode;

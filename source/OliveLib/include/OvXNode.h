@@ -7,7 +7,6 @@ class OvStorage;
 class OvXNode : public OvXObject
 {
 	OvRTTI_DECL(OvXNode);
-	OvPROPERTY_BAG_DECL(OvXNode);
 	OvFACTORY_OBJECT_DECL(OvXNode);
 
 public:
@@ -42,7 +41,6 @@ class OvScene;
 class OvSceneNode : public OvXNode
 {
 	OvRTTI_DECL(OvSceneNode);
-	OvPROPERTY_BAG_DECL(OvSceneNode);
 	OvFACTORY_OBJECT_DECL(OvSceneNode);
 	
 	//<! pseudo code

@@ -9,7 +9,6 @@ OvREF_POINTER(OvCamera);
 class OvCamera : public OvXNode
 {
 	OvRTTI_DECL(OvCamera);
-	OvPROPERTY_BAG_DECL(OvCamera);
 	OvFACTORY_OBJECT_DECL(OvCamera);
 public:
 
@@ -53,6 +52,11 @@ public:
 
 	void			SetAspect( OvFloat aspect );
 	OvFloat			GetAspect();
+
+public:
+
+	virtual void Serialize( OvObjectOutputStream & output ) override;
+	virtual void Deserialize( OvObjectInputStream & input ) override;
 
 protected:
 

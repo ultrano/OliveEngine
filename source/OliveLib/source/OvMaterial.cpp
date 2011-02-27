@@ -5,7 +5,6 @@
 #include "OvVertexShader.h"
 #include "OvTexture.h"
 #include "OvResourceManager.h"
-#include "OvRegisterableProperties.h"
 
 OvRTTI_IMPL( OvMaterial );
 

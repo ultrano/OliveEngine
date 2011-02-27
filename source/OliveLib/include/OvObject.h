@@ -2,7 +2,6 @@
 #include "OvUtility.h"
 #include "OvRefBase.h"
 #include "OvAutoPtr.h"
-#include "OvPropertyBag.h"
 #include "OvObjectFactory.h"
 #include "OvObjectID.h"
 #include "OvObjectOutputStream.h"

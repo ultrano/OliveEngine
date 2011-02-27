@@ -1,12 +1,9 @@
-
 #include "include_header.h"
 #include "OliveValue.h"
 #include "OvTexture.h"
 #include "OvResourceManager.h"
 #include "OvShaderCodeIncluder.h"
 #include "OliveDevice.h"
-#include "OvRegisterableProperties.h"
-
 
 GL_TEST_CASE_FUNC( olive_value_streaming_test )
 {

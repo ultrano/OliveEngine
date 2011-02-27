@@ -1,19 +1,9 @@
 #include "OvCamera.h"
 #include "OvTransform.h"
 #include "OvRenderer.h"
-#include "OvRegisterableProperties.h"
 #include <d3dx9.h>
 
 OvRTTI_IMPL(OvCamera);
-OvPROPERTY_BAG_BEGIN(OvCamera);
-	OvPROPERTY_BAG_REGISTER( OvPropAccesser_object_smart_pointer, m_spLookTarget )
-	OvPROPERTY_BAG_REGISTER( OvPropAccesser_integer, m_eCameraType )
-	OvPROPERTY_BAG_REGISTER( OvPropAccesser_float, m_fFOV )
-	OvPROPERTY_BAG_REGISTER( OvPropAccesser_float, m_fNearClip )
-	OvPROPERTY_BAG_REGISTER( OvPropAccesser_float, m_fFarClip )
-	OvPROPERTY_BAG_REGISTER( OvPropAccesser_float, m_aspect )
-OvPROPERTY_BAG_END(OvCamera);
-
 OvFACTORY_OBJECT_IMPL(OvCamera);
 
 OvCamera::OvCamera()
@@ -156,4 +146,34 @@ void			OvCamera::UpdateLookAt()
 		kLookQuat.MakeQuaternion(-kRotAxis,-kRotAngle);
 		SetRotation(kLookQuat);*/
 	}
+}
+
+void OvCamera::Serialize( OvObjectOutputStream & output )
+{
+	__super::Serialize( output );
+
+	output.Write( m_mxViewMatrix );
+	output.Write( m_mxProjectMatrix );
+	output.WriteObject( m_spLookTarget );
+	output.Write( m_eCameraType );
+	output.Write( m_fFOV );
+	output.Write( m_fNearClip );
+	output.Write( m_fFarClip );
+	output.Write( m_aspect );
+
+}
+
+void OvCamera::Deserialize( OvObjectInputStream & input )
+{
+	__super::Deserialize( input );
+
+	input.Read( m_mxViewMatrix );
+	input.Read( m_mxProjectMatrix );
+	m_spLookTarget = OvCastTo<OvXObject>( input.ReadObject() );
+	input.Read( m_eCameraType );
+	input.Read( m_fFOV );
+	input.Read( m_fNearClip );
+	input.Read( m_fFarClip );
+	input.Read( m_aspect );
+
 }

@@ -795,18 +795,6 @@
 					</File>
 				</Filter>
 				<Filter
-					Name="OvObjectProperties"
-					>
-					<File
-						RelativePath=".\source\OvObjectProperties.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\include\OvObjectProperties.h"
-						>
-					</File>
-				</Filter>
-				<Filter
 					Name="OvPoint2"
 					>
 					<File
@@ -849,30 +837,6 @@
 					</File>
 				</Filter>
 				<Filter
-					Name="OvProperty"
-					>
-					<File
-						RelativePath=".\source\OvPropertyAccesser.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\include\OvPropertyAccesser.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="OvPropertyBag"
-					>
-					<File
-						RelativePath=".\source\OvPropertyBag.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\include\OvPropertyBag.h"
-						>
-					</File>
-				</Filter>
-				<Filter
 					Name="OvQuaternion"
 					>
 					<File
@@ -897,30 +861,6 @@
 					</File>
 					<File
 						RelativePath=".\include\OvRefBase.inl"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="OvRegisterableProperties"
-					>
-					<File
-						RelativePath=".\source\OvRegisterableProperties.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\include\OvRegisterableProperties.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="OvAssociatedLinkConnector"
-					>
-					<File
-						RelativePath=".\source\OvAssociatedLinkConnector.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\include\OvAssociatedLinkConnector.h"
 						>
 					</File>
 				</Filter>
@@ -973,18 +913,6 @@
 					</File>
 					<File
 						RelativePath=".\include\OvSmartPointer.inl"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="OvStorage"
-					>
-					<File
-						RelativePath=".\source\OvStorage.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\include\OvStorage.h"
 						>
 					</File>
 				</Filter>

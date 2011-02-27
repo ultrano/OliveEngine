@@ -1,6 +1,8 @@
 #pragma once
 #pragma warning( disable : 4521 )
 #pragma warning( disable : 4522 )
+#pragma warning( disable : 4311 )
+
 #include "OvRefBase.h"
 #define OvREF_POINTER(__class_name)	class __class_name;\
 	typedef OvSmartPointer<__class_name>	__class_name##SPtr;

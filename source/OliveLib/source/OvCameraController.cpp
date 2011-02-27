@@ -2,7 +2,6 @@
 #include "OvInputManager.h"
 #include "OvQuaternion.h"
 #include "OvCamera.h"
-#include "OvRegisterableProperties.h"
 #include <d3dx9.h>
 
 OvRTTI_IMPL(OvCameraController);

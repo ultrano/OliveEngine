@@ -8,7 +8,6 @@ OvREF_POINTER(OvModel);
 class OvModel : public OvXNode
 {
 	OvRTTI_DECL(OvModel);
-	OvPROPERTY_BAG_DECL(OvModel);
 	OvFACTORY_OBJECT_DECL(OvModel);
 public:
 

@@ -11,18 +11,43 @@ GL_TEST_CASE_FUNC( buffer_test )
 {
 	OliveDevice::EngineOn();
 	{
-		OU::string::format("%d%d",1,2);
 		OvBufferSPtr buf = OvBuffer::CreateBuffer( 1 );
 		OvOutputStreamSPtr ops;
 		OvInputStreamSPtr ips;
+
+		//! Buffer Stream
+		OvString write_str = "Å×½ºÆ®ÀÌ±á";
+		OvUInt	wuint = 111;
+		OvFloat	wfloat = 1234.12423;
+		ops = OvNew OvBufferOutputStream( buf );
+		ops->Write( wuint );
+		ops->Write( write_str );
+		ops->Write( wfloat );
+		ops = NULL;
+
+		OvString read_str;
+		OvUInt	ruint = 0;
+		OvFloat	rfloat = 0;
+		ips = OvNew OvBufferInputStream( buf );
+		ips->Read( ruint );
+		ips->Read( read_str );
+		ips->Read( rfloat );
+		ips = NULL;
+
+	}
+	OliveDevice::EngineOff();
+}
+
+GL_TEST_CASE_FUNC( file_buffer_test )
+{
+	OliveDevice::EngineOn();
+	{
 		OvString write_str = "Å×½ºÆ®ÀÌ±á";
 		OvString read_str;
 
-		//! Buffer Stream
-// 		ops = OvNew OvBufferOutputStream( buf );
-// 		ips = OvNew OvBufferInputStream( buf );
+		OvOutputStreamSPtr ops;
+		OvInputStreamSPtr ips;
 
-		//! File Stream
 		ops = OvNew OvFileOutputStream( "./test.txt" );
 		ops->Write( write_str );
 		ops = NULL;
@@ -30,7 +55,6 @@ GL_TEST_CASE_FUNC( buffer_test )
 		ips = OvNew OvFileInputStream( "./test.txt" );
 		ips->Read( read_str );
 		ips = NULL;
-
 	}
 	OliveDevice::EngineOff();
 }

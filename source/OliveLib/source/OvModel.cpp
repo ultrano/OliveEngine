@@ -1,16 +1,10 @@
 #include "OvModel.h"
-#include "OvRegisterableProperties.h"
 #include "OvFileMeshLoader.h"
 #include "OvTextureLoader.h"
 #include "OvResourceManager.h"
 #include "OvShaderManager.h"
 
 OvRTTI_IMPL(OvModel)
-OvPROPERTY_BAG_BEGIN(OvModel)
-	OvPROPERTY_BAG_REGISTER( OvPropAccesser_resource_ticket, m_material )
-	OvPROPERTY_BAG_REGISTER( OvPropAccesser_resource_ticket, m_mesh )
-OvPROPERTY_BAG_END(OvModel)
-
 OvFACTORY_OBJECT_IMPL(OvModel);
 
 OvModel::OvModel()

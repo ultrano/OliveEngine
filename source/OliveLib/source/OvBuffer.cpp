@@ -29,16 +29,19 @@ OvSize OvBuffer::Increment()
 	return m_increment;
 }
 
-void OvBuffer::Establish( OvUInt count )
+void OvBuffer::Establish( OvUInt times )
 {
-	OvSize old_size = m_size;
-	OvSize new_size = m_size + ( m_increment * count );
+	if ( times > 0 )
+	{
+		OvSize old_size = m_size;
+		OvSize new_size = m_size + ( m_increment * times );
 
-	OvByte* old_buf = m_buf.GetRear();
-	OvByte* new_buf = new OvByte[ new_size ];
+		OvByte* old_buf = m_buf.GetRear();
+		OvByte* new_buf = new OvByte[ new_size ];
 
-	memcpy( new_buf, old_buf, old_size );
+		memcpy( new_buf, old_buf, old_size );
 
-	m_size = new_size;
-	m_buf = new_buf;
+		m_size = new_size;
+		m_buf = new_buf;
+	}
 }

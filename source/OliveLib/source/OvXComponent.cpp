@@ -1,13 +1,6 @@
 #include "OvXComponent.h"
 #include "OvXObject.h"
-#include "OvRegisterableProperties.h"
 OvRTTI_IMPL(OvXComponent);
-
-
-OvPROPERTY_BAG_BEGIN(OvXComponent);
-	OvPROPERTY_BAG_REGISTER( OvPropAccesser_object_pointer, m_equippedObject );
-OvPROPERTY_BAG_END(OvXComponent);
-
 
 OvXComponent::OvXComponent()
 :m_equippedObject( NULL )

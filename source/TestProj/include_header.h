@@ -14,7 +14,6 @@
 
 #endif
 #include <windows.h>
-#include "OvStorage.h"
 //
 
 // #include "tinyxml.h"
@@ -27,7 +26,6 @@
 #include "OvSingletonPool.h"
 #include "OvXNode.h"
 #include "OvCamera.h"
-#include "OvObjectProperties.h"
 
 
 #include "OliveValue.h"
