@@ -31,6 +31,14 @@ OvSize OvBuffer::Increment()
 
 void OvBuffer::Establish( OvUInt count )
 {
-	m_size += m_increment * count;
-	m_buf = new OvByte[ m_size ];
+	OvSize old_size = m_size;
+	OvSize new_size = m_size + ( m_increment * count );
+
+	OvByte* old_buf = m_buf.GetRear();
+	OvByte* new_buf = new OvByte[ new_size ];
+
+	memcpy( new_buf, old_buf, old_size );
+
+	m_size = new_size;
+	m_buf = new_buf;
 }
