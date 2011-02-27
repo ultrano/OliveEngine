@@ -1,6 +1,5 @@
 #pragma once
 #include "OvXObject.h"
-#include "OvObjectCollector.h"
 
 OvREF_POINTER(OvXNode);
 class OvStorage;

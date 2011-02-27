@@ -208,10 +208,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\physx_case.h"
-				>
-			</File>
-			<File
 				RelativePath=".\temporary_testing.h"
 				>
 			</File>

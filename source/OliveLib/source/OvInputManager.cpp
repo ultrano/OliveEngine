@@ -46,14 +46,14 @@ OvInputManager::~OvInputManager()
 OvBool OvInputManager::IsStateOfKey( byte dik_key, OvUInt state )
 {
 	OvUInt key = m_keyboard_state[dik_key];
-	OvBool result = (key & state);
+	OvBool result = !!(key & state);
 	return result;
 }
 
 OvBool OvInputManager::IsStateOfMouse( MOUSE_BUTTON button, OvUInt state )
 {
 	OvUInt key = m_mouse_state[button];
-	OvBool result = (key & state);
+	OvBool result = !!(key & state);
 	return result;
 }
 

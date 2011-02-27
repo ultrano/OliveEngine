@@ -401,18 +401,6 @@
 							>
 						</File>
 					</Filter>
-					<Filter
-						Name="OvScene"
-						>
-						<File
-							RelativePath=".\source\OvSingleScene.cpp"
-							>
-						</File>
-						<File
-							RelativePath=".\include\OvSingleScene.h"
-							>
-						</File>
-					</Filter>
 				</Filter>
 				<Filter
 					Name="ResourceFolder"
@@ -747,18 +735,6 @@
 					</File>
 				</Filter>
 				<Filter
-					Name="OvObjectCollector"
-					>
-					<File
-						RelativePath=".\source\OvObjectCollector.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\include\OvObjectCollector.h"
-						>
-					</File>
-				</Filter>
-				<Filter
 					Name="OvObjectFactory"
 					>
 					<File
@@ -767,18 +743,6 @@
 					</File>
 					<File
 						RelativePath=".\include\OvObjectFactory.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="OvObjectID"
-					>
-					<File
-						RelativePath=".\source\OvObjectID.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\include\OvObjectID.h"
 						>
 					</File>
 				</Filter>
@@ -913,26 +877,6 @@
 					</File>
 					<File
 						RelativePath=".\include\OvSmartPointer.inl"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="OvStreamCommon"
-					>
-					<File
-						RelativePath=".\include\OvStreamCommon.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="OvStreamStruct"
-					>
-					<File
-						RelativePath=".\source\OvStreamStruct.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\include\OvStreamStruct.h"
 						>
 					</File>
 				</Filter>
@@ -1081,6 +1025,18 @@
 					</File>
 					<File
 						RelativePath=".\include\OvMemoryPool.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="OvObjectID"
+					>
+					<File
+						RelativePath=".\source\OvObjectID.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\include\OvObjectID.h"
 						>
 					</File>
 				</Filter>

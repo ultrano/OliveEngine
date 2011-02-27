@@ -2,7 +2,6 @@
 #include "OvXNode.h"
 #include "OliveValue.h"
 #include "OvXComponent.h"
-#include "OvObjectCollector.h"
 #include "OvUtility.h"
 
 OvRTTI_IMPL(OvXObject);

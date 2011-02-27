@@ -5,7 +5,6 @@
 #include "OvObjectNex.h"
 #include "OvTransform.h"
 #include "OvSphere.h"
-#include "OvObjectCollector.h"
 #include "OvBitFlags.h"
 
 // OvXObject -> eXtentionObject 
@@ -80,8 +79,6 @@ public :
 	//! Get Parent
 	OvXNodeSPtr			GetAttachedNode();
 
-	template<typename Type_0>
-	OvSmartPointer<Type_0>	GetFirstComponent();
 	OvBool				GetComponents( OvObjectSet& extraComponents );
 	OvXComponentSPtr	RemoveComponent( const OvObjectSPtr obj );
 	OvXComponentSPtr	RemoveComponent( const OvObjectID& objID );
@@ -132,23 +129,3 @@ private:
 	Ov8SetFlags	m_controlFlags;
 
 };
-
-template<typename Type_0>
-OvSmartPointer<Type_0>
-OvXObject::GetFirstComponent()
-{
-	OvObjectCollector extraComponents;
-	if ( GetComponents( extraComponents ) )
-	{
-		OvXComponentSPtr component = NULL;
-		for ( unsigned i = 0 ; i < extraComponents.Count() ; ++i )
-		{
-			component = extraComponents.GetByAt( i );
-			if ( component = OvIsTypeOf<Type_0>( component.GetRear() ) )
-			{
-				return component;
-			}
-		}
-	}
-	return NULL;
-}
