@@ -615,14 +615,6 @@
 					</File>
 				</Filter>
 				<Filter
-					Name="OvConvert"
-					>
-					<File
-						RelativePath=".\include\OvConvert.h"
-						>
-					</File>
-				</Filter>
-				<Filter
 					Name="OvGlobalFunc"
 					>
 					<File
@@ -913,18 +905,6 @@
 					</File>
 				</Filter>
 				<Filter
-					Name="OvValueKeyCollector"
-					>
-					<File
-						RelativePath=".\include\OvValueKeyCollector.h"
-						>
-					</File>
-					<File
-						RelativePath=".\include\OvValueKeyCollector.inl"
-						>
-					</File>
-				</Filter>
-				<Filter
 					Name="OvXComponent"
 					>
 					<File
@@ -933,18 +913,6 @@
 					</File>
 					<File
 						RelativePath=".\include\OvXComponent.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="OvXMLStreamStruct"
-					>
-					<File
-						RelativePath=".\source\OvXMLStreamStruct.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\include\OvXMLStreamStruct.h"
 						>
 					</File>
 				</Filter>
