@@ -10,6 +10,8 @@ interface_class OvInputStream : public OvRefBase
 
 	virtual OvSize ReadBytes( OvByte * dest, OvSize dest_size ) = 0 ;
 
+	virtual OvSize Skip( OvSize skip_size );
+
 	template<typename T>
 	OvBool	Read( T& data )
 	{
