@@ -30,7 +30,7 @@
 
 #include "OliveValue.h"
 
-#include "OvMeshBuilder.h"
+
 #include "OvRenderer.h"
 #include <windows.h>
 #include "OvMesh.h"

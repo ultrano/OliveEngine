@@ -502,18 +502,6 @@
 						</File>
 					</Filter>
 					<Filter
-						Name="OvMeshBuilder"
-						>
-						<File
-							RelativePath=".\source\OvMeshBuilder.cpp"
-							>
-						</File>
-						<File
-							RelativePath=".\include\OvMeshBuilder.h"
-							>
-						</File>
-					</Filter>
-					<Filter
 						Name="OvMesh"
 						>
 						<File
@@ -573,6 +561,18 @@
 							>
 						</File>
 					</Filter>
+				</Filter>
+				<Filter
+					Name="OvUtility_render"
+					>
+					<File
+						RelativePath=".\source\OvUtility_render.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\include\OvUtility_render.h"
+						>
+					</File>
 				</Filter>
 			</Filter>
 			<Filter

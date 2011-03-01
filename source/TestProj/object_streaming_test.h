@@ -5,6 +5,7 @@
 #include "OvBuffer.h"
 #include "OvObject.h"
 #include "OvCamera.h"
+#include "OvUtility_render.h"
 
 GL_TEST_CASE_FUNC( object_file_streaming_test )
 {
@@ -67,6 +68,7 @@ GL_TEST_CASE_FUNC( object_cloning_test )
 	OliveDevice::EngineOff();
 }
 
+#include <d3dx9.h>
 GL_TEST_CASE_FUNC( olive_utility_test )
 {
 	OliveDevice::EngineOn();
@@ -79,6 +81,8 @@ GL_TEST_CASE_FUNC( olive_utility_test )
 		ret = OU::path::GetFileSpec( path );
 
 		path = OU::string::replace( path, "hahasasa", "ultrano");
+
+		D3DVERTEXELEMENT9 ele = OU::d3dx9::VertexElement( 0, 0, "float3", "default", "position", 0 );
 
 	}
 	OliveDevice::EngineOff();
