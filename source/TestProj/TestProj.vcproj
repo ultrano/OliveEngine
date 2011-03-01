@@ -215,6 +215,10 @@
 				RelativePath=".\thread_test.h"
 				>
 			</File>
+			<File
+				RelativePath=".\vertex_make_test.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="PhysxTest"

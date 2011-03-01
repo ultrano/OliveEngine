@@ -17,7 +17,7 @@
 #include "buffer_test.h"
 */
 #include "object_streaming_test.h"
-
+#include "vertex_make_test.h"
 
 int	APIENTRY	WinMain(HINSTANCE hi,HINSTANCE,LPSTR,int)
 {

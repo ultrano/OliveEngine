@@ -24,5 +24,6 @@ interface_class OvOutputStream : public OvRefBase
 		Write( size );
 		return !!WriteBytes( (OvByte*)&data[0], size );
 	};
+	OvBool Write( const OvChar* data){ return Write( OvString(data) ); };
 
 };
