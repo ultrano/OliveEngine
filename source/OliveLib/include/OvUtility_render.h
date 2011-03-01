@@ -57,5 +57,17 @@ namespace OU
 														0~n
 														*/);
 		D3DVERTEXELEMENT9 VertexElementEnd();
+
+		OvSize	VertexElementTypeSize( const OvString& type
+														/* == type ==
+														float1
+														float2
+														float3
+														float4
+														d3dcolor
+														ubyte4
+														short2
+														short4
+														*/);
 	}
 }

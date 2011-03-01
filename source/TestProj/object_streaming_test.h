@@ -82,6 +82,10 @@ GL_TEST_CASE_FUNC( olive_utility_test )
 
 		path = OU::string::replace( path, "hahasasa", "ultrano");
 
+		OvSize sizef3 = OU::d3dx9::VertexElementTypeSize( "float3" );
+		OvSize sizef4 = OU::d3dx9::VertexElementTypeSize( "float4" );
+		OvSize sizea2 = OU::d3dx9::VertexElementTypeSize( "short2" );
+		OvSize sizeb4 = OU::d3dx9::VertexElementTypeSize( "ubyte4" );
 		D3DVERTEXELEMENT9 ele = OU::d3dx9::VertexElement( 0, 0, "float3", "default", "position", 0 );
 
 	}

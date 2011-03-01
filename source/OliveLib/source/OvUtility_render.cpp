@@ -6,6 +6,7 @@ namespace OU
 	namespace d3dx9
 	{
 		typedef OvMap<OvString,OvByte> str_byte_table;
+		typedef OvMap<OvString,OvSize> str_size_table;
 		struct SVEStrConvert
 		{
 			SVEStrConvert()
@@ -44,6 +45,14 @@ namespace OU
 				usage["depth"] = D3DDECLUSAGE_DEPTH;
 				usage["sample"] = D3DDECLUSAGE_SAMPLE;
 
+				typesize["float1"] = sizeof(OvFloat);
+				typesize["float2"] = sizeof(OvFloat) * 2;
+				typesize["float3"] = sizeof(OvFloat) * 3;
+				typesize["float4"] = sizeof(OvFloat) * 4;
+				typesize["d3dcolor"] = sizeof(OvUInt) * 3;
+				typesize["ubyte4"] = sizeof(OvByte) * 4;
+				typesize["short2"] = sizeof(OvShort) * 2;
+				typesize["short4"] = sizeof(OvShort) * 4;
 			}
 			OvUInt FindType( const OvString& str )
 			{
@@ -78,19 +87,33 @@ namespace OU
 				}
 				return itor->second;
 			}
+			OvSize FindTypeSize( const OvString& str )
+			{
+				str_size_table::iterator itor = typesize.find( str );
+				if ( itor == typesize.end() )
+				{
+					//DOTO: 나중에 바꿔주자
+					OvString err = str + " is unknown";
+					throw std::exception( err.c_str() );
+				}
+				return itor->second;
+			}
 			str_byte_table datatype;
 			str_byte_table method;
 			str_byte_table usage;
-		};
 
+			str_size_table typesize;
+
+		};
+		SVEStrConvert& GetConvertTable(){ static SVEStrConvert tables; return tables; };
 		D3DVERTEXELEMENT9 VertexElement( OvShort stream , OvShort offset , const OvString& type , const OvString& method , const OvString& usage , OvByte usageindex )
 		{
-			static SVEStrConvert tables;
+			
 			D3DVERTEXELEMENT9 ret = { stream
 									, offset
-									, tables.FindType( type )
-									, tables.FindMethod( method )
-									, tables.FindUsage( usage )
+									, GetConvertTable().FindType( type )
+									, GetConvertTable().FindMethod( method )
+									, GetConvertTable().FindUsage( usage )
 									, usageindex };
 
 			return ret;
@@ -100,6 +123,11 @@ namespace OU
 		{
 			D3DVERTEXELEMENT9 ret = D3DDECL_END();
 			return ret;
+		}
+
+		OvSize VertexElementTypeSize( const OvString& type /* == type == float1 float2 float3 float4 d3dcolor ubyte4 short2 short4 */ )
+		{
+			return GetConvertTable().FindTypeSize( type );
 		}
 
 	}
