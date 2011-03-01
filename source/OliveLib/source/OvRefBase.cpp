@@ -3,7 +3,6 @@
 OvRTTI_IMPL_ROOT(OvRefBase);
 OvRefBase::OvRefBase():m_dReferenceCount(0)
 {
-	//OvInitSection(m_qSectionKey);
 };
 OvRefBase::~OvRefBase()
 {
@@ -15,17 +14,14 @@ OvRefBase::~OvRefBase()
 		OvAssert( (! (m_dReferenceCount>0 || m_dReferenceCount<0)));
 	}
 
-	//OvDeleteSection(m_qSectionKey);
 };
 OvInt		OvRefBase::IncreaseReferenceCount()
 {
-	//OvTargetSectionLocker kLocker(m_qSectionKey);
 	++m_dReferenceCount;
 	return m_dReferenceCount;
 }
 OvInt		OvRefBase::DecreaseReferenceCount()
 {
-	//OvTargetSectionLocker kLocker(m_qSectionKey);
 	--m_dReferenceCount;
 	if (m_dReferenceCount <= 0)
 	{
@@ -39,7 +35,6 @@ OvInt		OvRefBase::DecreaseReferenceCount()
 
 OvInt		OvRefBase::GetReferenceCount()
 {
-	//OvTargetSectionLocker kLocker(m_qSectionKey);
 	return m_dReferenceCount;
 }
 

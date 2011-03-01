@@ -1,28 +1,5 @@
 #pragma once
 #include <windows.h>
-typedef CRITICAL_SECTION				OvSectionKey;
-#define	OvInitSection(__section_key)	::InitializeCriticalSection(&(__section_key))
-#define OvDeleteSection(__section_key)	::DeleteCriticalSection(&(__section_key))
-#define OvLockSection(__section_key)	::EnterCriticalSection(&(__section_key))
-#define OvUnlockSection(__section_key)	::LeaveCriticalSection(&(__section_key))
-#define OvAutoLockSection()				OvSectionLocker	__kh_auto_lock_Section__
-
-class OvAutoSectionLocker
-{
-public:
-	OvAutoSectionLocker()
-	{
-		OvInitSection(m_qSectionKey);
-		OvLockSection(m_qSectionKey);
-	}
-	~OvAutoSectionLocker()
-	{
-		OvUnlockSection(m_qSectionKey);
-		OvDeleteSection(m_qSectionKey);
-	}
-private:
-	OvSectionKey	m_qSectionKey;
-};
 
 class OvCriticalSection
 {

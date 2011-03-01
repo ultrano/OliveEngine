@@ -815,24 +815,12 @@
 						RelativePath=".\include\OvRefBase.h"
 						>
 					</File>
-					<File
-						RelativePath=".\include\OvRefBase.inl"
-						>
-					</File>
 				</Filter>
 				<Filter
 					Name="OvRTTI"
 					>
 					<File
 						RelativePath=".\include\OvRTTI.h"
-						>
-					</File>
-					<File
-						RelativePath=".\include\OvUtility_RTTI.h"
-						>
-					</File>
-					<File
-						RelativePath=".\include\OvUtility_RTTI_Impl.h"
 						>
 					</File>
 				</Filter>
@@ -903,6 +891,50 @@
 						RelativePath=".\include\OvUtility.h"
 						>
 					</File>
+					<Filter
+						Name="OvUtility_string"
+						>
+						<File
+							RelativePath=".\source\OvUtility_string.cpp"
+							>
+						</File>
+						<File
+							RelativePath=".\include\OvUtility_string.h"
+							>
+						</File>
+					</Filter>
+					<Filter
+						Name="OvUtility_container"
+						>
+						<File
+							RelativePath=".\source\OvUtility_container.cpp"
+							>
+						</File>
+						<File
+							RelativePath=".\include\OvUtility_container.h"
+							>
+						</File>
+					</Filter>
+					<Filter
+						Name="OvUtility_path"
+						>
+						<File
+							RelativePath=".\source\OvUtility_path.cpp"
+							>
+						</File>
+						<File
+							RelativePath=".\include\OvUtility_path.h"
+							>
+						</File>
+					</Filter>
+					<Filter
+						Name="OvUtility_rtti"
+						>
+						<File
+							RelativePath=".\include\OvUtility_rtti.h"
+							>
+						</File>
+					</Filter>
 				</Filter>
 				<Filter
 					Name="OvXComponent"

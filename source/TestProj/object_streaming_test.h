@@ -66,3 +66,20 @@ GL_TEST_CASE_FUNC( object_cloning_test )
 	}
 	OliveDevice::EngineOff();
 }
+
+GL_TEST_CASE_FUNC( olive_utility_test )
+{
+	OliveDevice::EngineOn();
+	{
+		OvString path = "C:\\Documents and Settings\\hahasasa\\My Documents\\Downloads\\UI_Prototype.pdf";
+		OvString ret;
+		ret = OU::path::GetBasePath( path );
+		ret = OU::path::GetExtention( path );
+		ret = OU::path::GetFileName( path );
+		ret = OU::path::GetFileSpec( path );
+
+		path = OU::string::replace( path, "hahasasa", "ultrano");
+
+	}
+	OliveDevice::EngineOff();
+}

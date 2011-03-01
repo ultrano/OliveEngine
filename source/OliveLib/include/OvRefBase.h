@@ -54,7 +54,5 @@ protected:
 	virtual ~OvRefBase();
 private:
 	OvInt	m_dReferenceCount;
-	OvSectionKey	m_qSectionKey;
 };
-#include "OvRefBase.inl"
 
