@@ -17,6 +17,17 @@ OvSize OvFileInputStream::ReadBytes( OvByte * dest, OvSize dest_size )
 	return 0;
 }
 
+OvSize OvFileInputStream::Skip( OvSize skip_size )
+{
+	if ( skip_size > 0 )
+	{
+		FILE* file = m_file->GetHandle();
+		fseek( file, skip_size, SEEK_CUR );
+		return skip_size;
+	}
+	return 0;
+}
+
 OvBool OvFileInputStream::Open( const OvString& file, const OvString& mode /*= "r+b" */ )
 {
 	m_file = OvNew OvFile();

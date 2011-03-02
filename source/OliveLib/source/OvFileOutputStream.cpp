@@ -17,6 +17,17 @@ OvSize OvFileOutputStream::WriteBytes( OvByte * write_buf, OvSize write_size )
 	return 0;
 }
 
+OvSize OvFileOutputStream::Skip( OvSize skip_size )
+{
+	if ( skip_size > 0 )
+	{
+		FILE* file = m_file->GetHandle();
+		fseek( file, skip_size, SEEK_CUR );
+		return skip_size;
+	}
+	return 0;
+}
+
 OvBool OvFileOutputStream::Open( const OvString& file, const OvString& mode /*= "w+b" */ )
 {
 	m_file = OvNew OvFile();

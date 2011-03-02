@@ -9,8 +9,7 @@ interface_class OvInputStream : public OvRefBase
 	OvRTTI_DECL_ROOT(OvInputStream);
 
 	virtual OvSize ReadBytes( OvByte * dest, OvSize dest_size ) = 0 ;
-
-	virtual OvSize Skip( OvSize skip_size );
+	virtual OvSize Skip( OvSize skip_size )	= 0;
 
 	template<typename T>
 	OvBool	Read( T& data )

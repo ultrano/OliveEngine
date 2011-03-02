@@ -48,6 +48,8 @@ void	loadvelement( OvString& tag, OvInputStream& input )
 		OvBufferSPtr buf = OvBuffer::CreateBuffer( bufsize );
 		input.ReadBytes( buf->Pointer(), bufsize );
 		elembuffers.push_back( buf );
+
+		if ( input.Read(tag) && "</element>" == tag ) continue;
 	}
 
 	for each ( const OvMap<OvUInt,OvUInt>::value_type& val in streamsize )
@@ -74,7 +76,6 @@ void	loadvelement( OvString& tag, OvInputStream& input )
 			}
 		}
 	}
-
 }
 void	loadgeom( OvInputStream& input )
 {
@@ -82,6 +83,7 @@ void	loadgeom( OvInputStream& input )
 
 	if ( input.Read(tag) && "<vertices>" == tag )
 	{
+		loadvelement(tag,input);
 	}
 
 	if ( input.Read(tag) && "indices" == tag )
@@ -133,6 +135,7 @@ GL_TEST_CASE_FUNC( vertex_make_test )
 		fos.Close();
 
 		OvFileInputStream fis("./vertex.vdata");
+		loadgeom(fis);
 		fis.Close();
 
 	}

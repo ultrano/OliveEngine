@@ -1,4 +1,5 @@
 #include "OvUtility_render.h"
+#include "OvBuffer.h"
 #include <exception>
 
 namespace OU
@@ -128,6 +129,84 @@ namespace OU
 		OvSize VertexElementTypeSize( const OvString& type /* == type == float1 float2 float3 float4 d3dcolor ubyte4 short2 short4 */ )
 		{
 			return GetConvertTable().FindTypeSize( type );
+		}
+
+		LPDIRECT3DVERTEXBUFFER9 CreateVertexBuffer( LPDIRECT3DDEVICE9 device, OvBufferSPtr buffer )
+		{
+			if ( buffer )
+			{
+				return CreateVertexBuffer( device, buffer->Pointer(), buffer->Size() );
+			}
+			return NULL;
+		}
+
+		LPDIRECT3DVERTEXBUFFER9 CreateVertexBuffer( LPDIRECT3DDEVICE9 device, OvByte* buffer, OvSize bufsize )
+		{
+			if ( device && buffer && bufsize )
+			{
+				LPDIRECT3DVERTEXBUFFER9 vertexStream = NULL;
+				HRESULT hr = device->CreateVertexBuffer
+					( bufsize
+					, 0
+					, 0
+					, D3DPOOL_MANAGED
+					, &vertexStream
+					, NULL
+					);
+				if ( SUCCEEDED(hr) && vertexStream )
+				{
+					void* copyDest = NULL;
+					if ( SUCCEEDED(vertexStream->Lock( 0, bufsize, &copyDest, 0)) && copyDest)
+					{
+						memcpy( copyDest, buffer, bufsize );
+						vertexStream->Unlock();
+						return vertexStream;
+					}
+				}
+			}
+			return NULL;
+		}
+
+		LPDIRECT3DINDEXBUFFER9 CreateIndexBuffer( LPDIRECT3DDEVICE9 device, OvByte* buffer, OvSize bufsize )
+		{
+			if ( device && buffer && bufsize )
+			{
+				LPDIRECT3DINDEXBUFFER9	streamBuffer = NULL;
+				HRESULT hr = device->CreateIndexBuffer
+					( bufsize
+					, 0
+					, D3DFMT_INDEX16
+					, D3DPOOL_MANAGED
+					, &streamBuffer
+					, NULL
+					);
+
+				if ( SUCCEEDED(hr) && streamBuffer )
+				{
+					void* copyDest = NULL;
+					if ( SUCCEEDED(streamBuffer->Lock( 0, bufsize, &copyDest, 0)) && copyDest)
+					{
+						memcpy( copyDest, buffer, bufsize );
+						streamBuffer->Unlock();
+						return streamBuffer;
+					}
+				}
+			}
+			return NULL;
+		}
+
+		LPDIRECT3DVERTEXDECLARATION9 CreateVertexDeclaration( LPDIRECT3DDEVICE9 device, D3DVERTEXELEMENT9* elements )
+		{
+			if ( device && elements )
+			{
+				LPDIRECT3DVERTEXDECLARATION9 vertDecl = NULL;
+				HRESULT hr = device->CreateVertexDeclaration( elements, &vertDecl );
+				if ( SUCCEEDED( hr ) )
+				{
+					return vertDecl;
+				}
+			}
+			return NULL;
 		}
 
 	}

@@ -12,6 +12,7 @@ public:
 	~OvObjectInputStream();
 
 	virtual OvSize ReadBytes( OvByte * dest, OvSize dest_size ) override;
+	virtual OvSize Skip( OvSize skip_size ) override;
 
 	OvObject* ReadObject();
 
