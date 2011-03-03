@@ -2,6 +2,10 @@
 #include "OvUtility.h"
 #include "OvMemObject.h"
 #include "OvSmartPointer.h"
+#include "OvWeakPointer.h"
+#define OvREF_POINTER(__class_name)	class __class_name;\
+	typedef OvSmartPointer<__class_name>	__class_name##SPtr;\
+	typedef OvWeakPointer<__class_name>	__class_name##WPtr;
 
 // 클레스 이름 : OvRefBase
 // 설명 : 
@@ -29,23 +33,18 @@
 //		인자값과같이 생명주기가 짧은곳에는 "클레스이름*"를 대신 사용해도 된다.
 class  OvRefBase : public OvMemObject
 {
+	friend class OvRefCounter;
 	OvRTTI_DECL_ROOT(OvRefBase);
 public:
 	// 일단 생성되면서 카운티을 0으로 맞춘다.
 	OvRefBase();
 
-	// 현재, 사용중인 포인터들의 갯수를 얻어온다.
-	OvInt		GetReferenceCount();
+	OvRefCounter* GetRefCounter();
 
-	// 아래의 함수들은 OvSmartPointer에서 사용하는 함수이지만
-	// 사용자가 원한다면 참조를 올리거나 내릴수 있도록 public으로 선언했다.
-	// (사용자가 직접 사용하길 권장하지 않는다.)
-	OvInt		IncreaseReferenceCount();
-	OvInt		DecreaseReferenceCount();
-
-	// 왠만하면 사용하지 말자.
+private:
+	
 	void	DeleteThis(){OvDelete this;};
-	void	ForcedDeleteThis();
+
 protected:
 
 	// 소멸될때 아직 누군가 사용중이라 카운트가 0이 아닌 상태라면
@@ -53,6 +52,6 @@ protected:
 	// 강제 종료한다. (멀리봤을때 처음 잘못된 삭제가 요청됬을때 잡아주는게 좋다고 생각해서다.)
 	virtual ~OvRefBase();
 private:
-	OvInt	m_dReferenceCount;
+	OvRefCounter*	m_reference_counter;
 };
 

@@ -91,3 +91,19 @@ GL_TEST_CASE_FUNC( olive_utility_test )
 	}
 	OliveDevice::EngineOff();
 }
+
+GL_TEST_CASE_FUNC( smart_weak_referencing_test )
+{
+	OliveDevice::EngineOn();
+	{
+
+		OvXObjectSPtr spxobj = OvNew OvXObject;
+		OvCameraSPtr spcamera = OvNew OvCamera;
+		OvXNodeSPtr spxnode = OvNew OvXNode;
+
+		OvXObjectWPtr wpxobj = spxobj;
+		OvCameraWPtr wpcamera = spxobj;
+		OvXNodeWPtr wpxnode = spxobj;
+	}
+	OliveDevice::EngineOff();
+}

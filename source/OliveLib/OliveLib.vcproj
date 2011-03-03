@@ -1040,6 +1040,30 @@
 						>
 					</File>
 				</Filter>
+				<Filter
+					Name="OvRefCounter"
+					>
+					<File
+						RelativePath=".\source\OvRefCounter.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\include\OvRefCounter.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="OvWeakPointer"
+					>
+					<File
+						RelativePath=".\include\OvWeakPointer.h"
+						>
+					</File>
+					<File
+						RelativePath=".\include\OvWeakPointer.inl"
+						>
+					</File>
+				</Filter>
 			</Filter>
 		</Filter>
 		<Filter
