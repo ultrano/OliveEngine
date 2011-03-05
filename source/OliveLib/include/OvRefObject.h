@@ -2,17 +2,13 @@
 #include "OvUtility.h"
 #include "OvMemObject.h"
 #include "OvSmartPointer.h"
-#include "OvWeakPointer.h"
-#define OvREF_POINTER(__class_name)	class __class_name;\
-	typedef OvSmartPointer<__class_name>	__class_name##SPtr;\
-	typedef OvWeakPointer<__class_name>	__class_name##WPtr;
 
-// 클레스 이름 : OvRefBase
+// 클레스 이름 : OvRefObject
 // 설명 : 
 //		가장 기본이 된다.
 //		Olive에서 사용하는 대부분의 클레스들은 스마트포인터를 이용한 
 //		포인터 참조카운팅 시스템을 사용한다.
-//		그렇기 때문에 OvRefBase를 상속받은 클레스들은
+//		그렇기 때문에 OvRefObject를 상속받은 클레스들은
 //		OvSmartPointerf와 매크로로 만들어진
 //		"클레스이름Ptr"이라는 템플릿 포인터를
 //		사용하길 권장한다. (예, OvXNode는 OvXNodePtr라는 템플리포인터와 한쌍.)
@@ -31,27 +27,31 @@
 //		지역변수로 사용하더라도 그 지역안에 있을때는 삭제되길 바라지 않을시에만 사용하면 된다.
 //		함수의 인자로 쓸때에는 "클레스이름Ptr"와 "클레스이름*" 둘다 사용해도 되지만
 //		인자값과같이 생명주기가 짧은곳에는 "클레스이름*"를 대신 사용해도 된다.
-class  OvRefBase : public OvMemObject
+class  OvRefObject : public OvMemObject
 {
-	friend class OvRefCounter;
-	OvRTTI_DECL_ROOT(OvRefBase);
+	OvRTTI_DECL_ROOT(OvRefObject);
 public:
 	// 일단 생성되면서 카운티을 0으로 맞춘다.
-	OvRefBase();
+	OvRefObject();
 
-	OvRefCounter* GetRefCounter();
+	// 현재, 사용중인 포인터들의 갯수를 얻어온다.
+	OvInt		GetRefCount();
 
-private:
-	
+	// 아래의 함수들은 OvSmartPointer에서 사용하는 함수이지만
+	// 사용자가 원한다면 참조를 올리거나 내릴수 있도록 public으로 선언했다.
+	// (사용자가 직접 사용하길 권장하지 않는다.)
+	OvInt		IncRefCount();
+	OvInt		DecRefCount();
+
+	// 왠만하면 사용하지 말자.
 	void	DeleteThis(){OvDelete this;};
-
 protected:
 
 	// 소멸될때 아직 누군가 사용중이라 카운트가 0이 아닌 상태라면
 	// 잘못된 삭제요청으로 간주하고 에러메세지를 뛰우고 
 	// 강제 종료한다. (멀리봤을때 처음 잘못된 삭제가 요청됬을때 잡아주는게 좋다고 생각해서다.)
-	virtual ~OvRefBase();
+	virtual ~OvRefObject();
 private:
-	OvRefCounter*	m_reference_counter;
+	OvInt	m_ref_count;
 };
 

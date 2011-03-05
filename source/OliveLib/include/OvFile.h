@@ -1,10 +1,10 @@
 #pragma once
-#include "OvRefBase.h"
+#include "OvRefObject.h"
 #include "OvFileInputStream.h"
 #include "OvFileOutputStream.h"
 
 OvREF_POINTER(OvFile);
-class OvFile : public OvRefBase
+class OvFile : public OvRefObject
 {
 public:
 

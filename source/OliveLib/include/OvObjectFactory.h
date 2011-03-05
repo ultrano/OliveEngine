@@ -1,6 +1,6 @@
 #pragma once
 #include "OvMemObject.h"
-#include "OvRefBase.h"
+#include "OvRefObject.h"
 #include "OvSingleton.h"
 #include "OvObjectID.h"
 using namespace std;

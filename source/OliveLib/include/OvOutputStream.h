@@ -1,10 +1,10 @@
 #pragma once
 #include "OvTypeDef.h"
 #include "OvUtility_RTTI.h"
-#include "OvRefBase.h"
+#include "OvRefObject.h"
 
 OvREF_POINTER( OvOutputStream );
-interface_class OvOutputStream : public OvRefBase
+interface_class OvOutputStream : public OvRefObject
 {
 	OvRTTI_DECL_ROOT(OvOutputStream);
 

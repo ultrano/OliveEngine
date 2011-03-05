@@ -805,14 +805,14 @@
 					</File>
 				</Filter>
 				<Filter
-					Name="OvRefBase"
+					Name="OvRefObject"
 					>
 					<File
-						RelativePath=".\source\OvRefBase.cpp"
+						RelativePath=".\source\OvRefObject.cpp"
 						>
 					</File>
 					<File
-						RelativePath=".\include\OvRefBase.h"
+						RelativePath=".\include\OvRefObject.h"
 						>
 					</File>
 				</Filter>
