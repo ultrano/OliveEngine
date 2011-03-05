@@ -1,6 +1,6 @@
 #pragma once
 #include "OvTypeDef.h"
-#include "OvRefBase.h"
+#include "OvRefObject.h"
 #include "OvUtility_RTTI.h"
 #include "OvPoint2.h"
 #include "OvPoint3.h"
@@ -41,7 +41,7 @@ namespace OliveValue
 	//////////////////////////////////////////////////////////////////////////
 
 	OvREF_POINTER(Value);
-	class Value : public OvRefBase
+	class Value : public OvRefObject
 	{
 		friend Value*	Factory(const OvString& valueType);
 		friend class OvObject;

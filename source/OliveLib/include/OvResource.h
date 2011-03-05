@@ -1,9 +1,9 @@
 #pragma once
-#include "OvRefBase.h"
+#include "OvRefObject.h"
 #include "OvBitFlags.h"
 
 OvREF_POINTER(OvResource);
-class OvResource : public OvRefBase
+class OvResource : public OvRefObject
 {
 	OvRTTI_DECL(OvResource);
 public:

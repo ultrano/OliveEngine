@@ -115,7 +115,7 @@ private:
 	//! 이러면 사용할때는 최소한 삭제에 대해서는 보호를 받을수 있게 된다.
 	//! 핸들을 들고 그때그때 find해서 쓰는 방법도 있겠지만, 이는 너무 큰
 	//! 오버해드를 동반한다.(너무 크다)
-	OvXNodeWPtr	m_parent;
+	OvXNode*	m_parent;
 
 	OvSphere	m_cCullingSphere;
 	OvTransform	m_tfLocalTransform;

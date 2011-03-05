@@ -191,7 +191,7 @@ OvBool OvXObject::IsLeaf()
 
 void	OvXObject::_set_parent(OvXNodeSPtr _pParentNode)
 {
-	m_parent = _pParentNode;
+	m_parent = _pParentNode.GetRear();
 }
 
 OvXNodeSPtr	OvXObject::GetAttachedNode()

@@ -1,5 +1,5 @@
 #pragma once
-#include "OvRefBase.h"
+#include "OvRefObject.h"
 #include "OvAutoPtr.h"
 #include "OvObject.h"
 

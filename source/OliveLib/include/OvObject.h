@@ -1,6 +1,6 @@
 #pragma once
 #include "OvUtility.h"
-#include "OvRefBase.h"
+#include "OvRefObject.h"
 #include "OvAutoPtr.h"
 #include "OvObjectFactory.h"
 #include "OvObjectID.h"
@@ -13,7 +13,7 @@ class OvObjectProperties;
 OvREF_POINTER(OvObject);
 typedef OvSet<OvObjectSPtr> OvObjectSet;
 
-class OvObject : public OvRefBase
+class OvObject : public OvRefObject
 {
 	OvRTTI_DECL(OvObject);
 private:

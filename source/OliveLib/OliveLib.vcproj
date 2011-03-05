@@ -805,14 +805,14 @@
 					</File>
 				</Filter>
 				<Filter
-					Name="OvRefBase"
+					Name="OvRefObject"
 					>
 					<File
-						RelativePath=".\source\OvRefBase.cpp"
+						RelativePath=".\source\OvRefObject.cpp"
 						>
 					</File>
 					<File
-						RelativePath=".\include\OvRefBase.h"
+						RelativePath=".\include\OvRefObject.h"
 						>
 					</File>
 				</Filter>
@@ -1037,30 +1037,6 @@
 					</File>
 					<File
 						RelativePath=".\include\OvObjectID.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="OvRefCounter"
-					>
-					<File
-						RelativePath=".\source\OvRefCounter.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\include\OvRefCounter.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="OvWeakPointer"
-					>
-					<File
-						RelativePath=".\include\OvWeakPointer.h"
-						>
-					</File>
-					<File
-						RelativePath=".\include\OvWeakPointer.inl"
 						>
 					</File>
 				</Filter>

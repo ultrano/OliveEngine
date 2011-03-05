@@ -1,9 +1,9 @@
 #pragma once
-#include "OvRefBase.h"
+#include "OvRefObject.h"
 
 OvREF_POINTER(OvResource);
 OvREF_POINTER(OvResourceTicket);
-class OvResourceTicket : public OvRefBase
+class OvResourceTicket : public OvRefObject
 {
 	friend class OvResourceManager;
 public:

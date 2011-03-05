@@ -1,7 +1,7 @@
 #pragma once
 #include "OvUtility.h"
 #include "OvAutoPtr.h"
-#include "OvRefBase.h"
+#include "OvRefObject.h"
 #include "OvSingleton.h"
 #include "OvRenderingCommon.h"
 class OvShaderConstInfo;

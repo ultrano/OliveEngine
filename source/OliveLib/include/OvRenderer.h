@@ -2,7 +2,7 @@
 #include "OvUtility.h"
 #include "OvMemObject.h"
 #include "OvAutoPtr.h"
-#include "OvRefBase.h"
+#include "OvRefObject.h"
 #include "OvSingleton.h"
 #include "OvDevice.h"
 #include "OvColor.h"
