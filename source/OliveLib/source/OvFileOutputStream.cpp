@@ -1,6 +1,15 @@
 #include "OvFileOutputStream.h"
 #include "OvFile.h"
 
+OvFileOutputStream::OvFileOutputStream( OvFileSPtr file )
+: m_file( file )
+{
+	if ( m_file )
+	{
+		m_file->Open();
+	}
+}
+
 OvFileOutputStream::OvFileOutputStream( const OvString& file, const OvString& mode )
 : m_file( OvNew OvFile( file, mode ) )
 {
@@ -17,13 +26,13 @@ OvSize OvFileOutputStream::WriteBytes( OvByte * write_buf, OvSize write_size )
 	return 0;
 }
 
-OvSize OvFileOutputStream::Skip( OvSize skip_size )
+OvSize OvFileOutputStream::Skip( OvSize offset )
 {
-	if ( skip_size > 0 )
+	if ( offset > 0 )
 	{
 		FILE* file = m_file->GetHandle();
-		fseek( file, skip_size, SEEK_CUR );
-		return skip_size;
+		fseek( file, offset, SEEK_CUR );
+		return offset;
 	}
 	return 0;
 }

@@ -12,12 +12,12 @@
 #include "game_controller.h"
 #include "temporary_testing.h"
 #include "thread_test.h"
-#include "container_utility_test.h"
 #include "physx_case.h"
 #include "buffer_test.h"
-#include "vertex_make_test.h"
 */
 #include "object_streaming_test.h"
+#include "vertex_make_test.h"
+#include "utility_test.h"
 
 int	APIENTRY	WinMain(HINSTANCE hi,HINSTANCE,LPSTR,int)
 {

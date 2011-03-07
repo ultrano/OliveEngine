@@ -6,6 +6,7 @@
 OvREF_POINTER(OvFile);
 class OvFile : public OvRefObject
 {
+	OvRTTI_DECL(OvFile);
 public:
 
 	OvFile();
@@ -13,6 +14,7 @@ public:
 	~OvFile();
 
 	OvBool Open( const OvString& file, const OvString& mode );
+	OvBool Open();
 	void   Close();
 
 	OvBool IsExist();
@@ -31,5 +33,6 @@ private:
 
 	FILE* m_file;
 	OvString m_path;
+	OvString m_mode;
 
 };

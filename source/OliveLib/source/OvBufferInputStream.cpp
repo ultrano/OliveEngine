@@ -31,18 +31,22 @@ OvSize OvBufferInputStream::ReadBytes( OvByte * dest, OvSize dest_size )
 	return 0;
 }
 
-OvSize OvBufferInputStream::Skip( OvSize skip_size )
+OvSize OvBufferInputStream::Skip( OvSize offset )
 {
-	if ( skip_size > 0 )
+	OvSize src_size = 0;
+	if ( offset > 0 )
 	{
-		OvSize src_size = m_buffer->Size() - m_read_caret;
-		if ( skip_size = min( src_size, skip_size ) )
-		{
-			m_read_caret += skip_size;
-			return skip_size;
-		}
+		src_size = m_buffer->Size() - m_read_caret;
+		offset = min( src_size, offset );
 	}
-	return 0;
+	else
+	{
+		src_size = -m_read_caret;
+		offset = max( src_size, offset );
+	}
+
+	m_read_caret += offset;
+	return offset;
 }
 
 

@@ -7,6 +7,7 @@
 OvREF_POINTER(OvBuffer);
 class OvBuffer : public OvRefObject
 {
+	OvRTTI_DECL(OvBuffer);
 public:
 
 	enum { 

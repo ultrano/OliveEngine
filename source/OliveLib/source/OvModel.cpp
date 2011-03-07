@@ -1,5 +1,4 @@
 #include "OvModel.h"
-#include "OvFileMeshLoader.h"
 #include "OvTextureLoader.h"
 #include "OvResourceManager.h"
 #include "OvShaderManager.h"
@@ -55,6 +54,6 @@ void	OvModel::Render()
 
 	if ( GetMesh() )
 	{
-		GetMesh()->Rendering();
+		//GetMesh()->Rendering();
 	}
 }

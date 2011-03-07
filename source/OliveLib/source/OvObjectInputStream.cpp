@@ -21,11 +21,11 @@ OvSize OvObjectInputStream::ReadBytes( OvByte * dest, OvSize dest_size )
 	return 0;
 }
 
-OvSize OvObjectInputStream::Skip( OvSize skip_size )
+OvSize OvObjectInputStream::Skip( OvSize offset )
 {
 	if ( m_input )
 	{
-		return m_input->Skip( skip_size );
+		return m_input->Skip( offset );
 	}
 	return 0;
 }

@@ -1,4 +1,5 @@
 #include "OvBuffer.h"
+OvRTTI_IMPL(OvBuffer);
 
 OvBufferSPtr OvBuffer::CreateBuffer( OvSize capacity, OvSize increment )
 {

@@ -21,11 +21,11 @@ OvSize OvObjectOutputStream::WriteBytes( OvByte * write_buf, OvSize write_size )
 	return 0;
 }
 
-OvSize OvObjectOutputStream::Skip( OvSize skip_size )
+OvSize OvObjectOutputStream::Skip( OvSize offset )
 {
 	if ( m_output )
 	{
-		return m_output->Skip( skip_size );
+		return m_output->Skip( offset );
 	}
 	return 0;
 }

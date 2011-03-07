@@ -9,7 +9,15 @@ namespace OU
 {
 	namespace d3dx9
 	{
-
+		D3DPRIMITIVETYPE PrimitiveType( const OvString& type
+														/*
+														pointlist
+														linelist
+														linestrip
+														trianglelist
+														trianglestrip
+														trianglefan
+														*/);
 		D3DVERTEXELEMENT9 VertexElement( OvShort stream
 														/* == stream ==
 														0~n
@@ -77,6 +85,7 @@ namespace OU
 		LPDIRECT3DVERTEXBUFFER9 CreateVertexBuffer( LPDIRECT3DDEVICE9 device, OvBufferSPtr buffer );
 		LPDIRECT3DVERTEXBUFFER9 CreateVertexBuffer( LPDIRECT3DDEVICE9 device, OvByte* buffer, OvSize bufsize );
 
+		LPDIRECT3DINDEXBUFFER9 CreateIndexBuffer( LPDIRECT3DDEVICE9 device, OvBufferSPtr buffer );
 		LPDIRECT3DINDEXBUFFER9 CreateIndexBuffer( LPDIRECT3DDEVICE9 device, OvByte* buffer, OvSize bufsize );
 
 		LPDIRECT3DVERTEXDECLARATION9 CreateVertexDeclaration( LPDIRECT3DDEVICE9 device, D3DVERTEXELEMENT9* elements );

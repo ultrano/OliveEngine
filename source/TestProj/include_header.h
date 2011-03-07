@@ -43,7 +43,6 @@
 #include "OvMessageManager.h"
 
 #include "OvTextureLoader.h"
-#include "OvFileMeshLoader.h"
 #include "OvResourceManager.h"
 #include "OvVertexShader.h"
 #include "OvPixelShader.h"

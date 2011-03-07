@@ -1,14 +1,15 @@
 #include "OvFile.h"
 #include <atlpath.h>
+OvRTTI_IMPL(OvFile);
 
 OvFile::OvFile()
+: m_file( NULL )
 {
 
 }
 
 OvFile::OvFile( const OvString& file, const OvString& mode )
 : m_file( NULL )
-, m_path( file )
 {
 	Open( file, mode );
 }
@@ -20,7 +21,15 @@ OvFile::~OvFile()
 
 OvBool OvFile::Open( const OvString& file, const OvString& mode )
 {
-	fopen_s( &m_file, file.c_str(), mode.c_str() );
+	m_path = file;
+	m_mode = mode;
+	fopen_s( &m_file, m_path.c_str(), m_mode.c_str() );
+	return !!m_file;
+}
+
+OvBool OvFile::Open()
+{
+	fopen_s( &m_file, m_path.c_str(), m_mode.c_str() );
 	return !!m_file;
 }
 

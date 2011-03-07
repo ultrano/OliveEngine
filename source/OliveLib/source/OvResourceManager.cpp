@@ -1,5 +1,4 @@
 #include "OvResourceManager.h"
-#include "OvFileMeshLoader.h"
 #include "OvMesh.h"
 #include "OvTextureLoader.h"
 #include "OvTexture.h"
@@ -17,7 +16,6 @@ OvResourceManager::OvResourceManager()
 	::InitializeCriticalSection( &m_load_section );
 	::InitializeCriticalSection( &m_life_section );
 
-	m_loaderTable[ OvMesh			::GetRTTI() ]	= OvNew OvFileMeshLoader;
 	m_loaderTable[ OvTexture		::GetRTTI() ]	= OvNew OvTextureLoader;
 	m_loaderTable[ OvShaderCode		::GetRTTI() ]	= OvNew OvShaderCodeLoader;
 	m_loaderTable[ OvMaterial		::GetRTTI() ]	= OvNew OvMaterialLoader;

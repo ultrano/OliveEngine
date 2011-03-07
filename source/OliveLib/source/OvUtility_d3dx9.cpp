@@ -1,4 +1,4 @@
-#include "OvUtility_render.h"
+#include "OvUtility_d3dx9.h"
 #include "OvBuffer.h"
 #include <exception>
 
@@ -8,6 +8,7 @@ namespace OU
 	{
 		typedef OvMap<OvString,OvByte> str_byte_table;
 		typedef OvMap<OvString,OvSize> str_size_table;
+		typedef OvMap<OvString,OvUInt> str_uint_table;
 		struct SVEStrConvert
 		{
 			SVEStrConvert()
@@ -54,6 +55,14 @@ namespace OU
 				typesize["ubyte4"] = sizeof(OvByte) * 4;
 				typesize["short2"] = sizeof(OvShort) * 2;
 				typesize["short4"] = sizeof(OvShort) * 4;
+
+				primitivetype["pointlist"]		=	D3DPT_POINTLIST    ;
+				primitivetype["linelist"]		=	D3DPT_LINELIST     ;
+				primitivetype["linestrip"]		=	D3DPT_LINESTRIP    ;
+				primitivetype["trianglelist"]	=	D3DPT_TRIANGLELIST ;
+				primitivetype["trianglestrip"]	=	D3DPT_TRIANGLESTRIP;
+				primitivetype["trianglefan"]	=	D3DPT_TRIANGLEFAN  ;
+
 			}
 			OvUInt FindType( const OvString& str )
 			{
@@ -99,11 +108,24 @@ namespace OU
 				}
 				return itor->second;
 			}
+			OvUInt FindPrimitiveType( const OvString& str )
+			{
+				str_uint_table::iterator itor = primitivetype.find( str );
+				if ( itor == primitivetype.end() )
+				{
+					//DOTO: 나중에 바꿔주자
+					OvString err = str + " is unknown";
+					throw std::exception( err.c_str() );
+				}
+				return itor->second;
+			}
 			str_byte_table datatype;
 			str_byte_table method;
 			str_byte_table usage;
 
 			str_size_table typesize;
+
+			str_uint_table primitivetype;
 
 		};
 		SVEStrConvert& GetConvertTable(){ static SVEStrConvert tables; return tables; };
@@ -167,6 +189,15 @@ namespace OU
 			return NULL;
 		}
 
+		LPDIRECT3DINDEXBUFFER9 CreateIndexBuffer( LPDIRECT3DDEVICE9 device, OvBufferSPtr buffer )
+		{
+			if ( buffer )
+			{
+				return CreateIndexBuffer( device, buffer->Pointer(), buffer->Size() );
+			}
+			return NULL;
+		}
+
 		LPDIRECT3DINDEXBUFFER9 CreateIndexBuffer( LPDIRECT3DDEVICE9 device, OvByte* buffer, OvSize bufsize )
 		{
 			if ( device && buffer && bufsize )
@@ -209,6 +240,10 @@ namespace OU
 			return NULL;
 		}
 
+		D3DPRIMITIVETYPE PrimitiveType( const OvString& type )
+		{
+			return (D3DPRIMITIVETYPE)GetConvertTable().FindPrimitiveType( type );
+		}
 	}
 }
 

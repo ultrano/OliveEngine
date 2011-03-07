@@ -5,7 +5,7 @@
 #include "OvBuffer.h"
 #include "OvObject.h"
 #include "OvCamera.h"
-#include "OvUtility_render.h"
+#include "OvUtility_d3dx9.h"
 
 GL_TEST_CASE_FUNC( object_file_streaming_test )
 {

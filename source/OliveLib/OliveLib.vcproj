@@ -537,40 +537,16 @@
 							>
 						</File>
 					</Filter>
-					<Filter
-						Name="OvMeshLoaderBase"
-						>
-						<File
-							RelativePath=".\source\OvMeshLoaderBase.cpp"
-							>
-						</File>
-						<File
-							RelativePath=".\include\OvMeshLoaderBase.h"
-							>
-						</File>
-					</Filter>
-					<Filter
-						Name="OvFileMeshLoader"
-						>
-						<File
-							RelativePath=".\source\OvFileMeshLoader.cpp"
-							>
-						</File>
-						<File
-							RelativePath=".\include\OvFileMeshLoader.h"
-							>
-						</File>
-					</Filter>
 				</Filter>
 				<Filter
-					Name="OvUtility_render"
+					Name="OvUtility_d3dx9"
 					>
 					<File
-						RelativePath=".\source\OvUtility_render.cpp"
+						RelativePath=".\source\OvUtility_d3dx9.cpp"
 						>
 					</File>
 					<File
-						RelativePath=".\include\OvUtility_render.h"
+						RelativePath=".\include\OvUtility_d3dx9.h"
 						>
 					</File>
 				</Filter>
@@ -1215,6 +1191,18 @@
 							>
 						</File>
 					</Filter>
+					<Filter
+						Name="OvSocket"
+						>
+						<File
+							RelativePath=".\source\OvSocket.cpp"
+							>
+						</File>
+						<File
+							RelativePath=".\include\OvSocket.h"
+							>
+						</File>
+					</Filter>
 				</Filter>
 				<Filter
 					Name="Input"
@@ -1268,6 +1256,18 @@
 						</File>
 					</Filter>
 				</Filter>
+			</Filter>
+			<Filter
+				Name="OvMeshLoad"
+				>
+				<File
+					RelativePath=".\source\_LoadMesh_0_0.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\include\OvMeshLoad.h"
+					>
+				</File>
 			</Filter>
 		</Filter>
 		<Filter

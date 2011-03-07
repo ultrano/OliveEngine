@@ -1,6 +1,7 @@
 
 #include "include_header.h"
 #include "OvUtility.h"
+#include <regex>
 
 GL_TEST_CASE_FUNC( container_utility_test )
 {
@@ -17,4 +18,11 @@ GL_TEST_CASE_FUNC( container_utility_test )
 	list<int> lst = OU::container::convert<list<int>>( vec );
 
 	OU::container::remove( vec, 1 );
+
+}
+
+GL_TEST_CASE_FUNC( string_utility_test )
+{
+	OvString str = "d:\\project_olive\\source\\testproj\\utility_test.h";
+	OvString newstr = OU::string::replace( str, "\\","");
 }

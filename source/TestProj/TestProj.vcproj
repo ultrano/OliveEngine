@@ -196,10 +196,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\container_utility_test.h"
-				>
-			</File>
-			<File
 				RelativePath=".\include_header.h"
 				>
 			</File>
@@ -213,6 +209,10 @@
 			</File>
 			<File
 				RelativePath=".\thread_test.h"
+				>
+			</File>
+			<File
+				RelativePath=".\utility_test.h"
 				>
 			</File>
 			<File
