@@ -62,7 +62,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="d3dx9d.lib d3d9.lib GloryLib.lib OliveLib.lib tinyxmld.lib PhysXLoader.lib NxCooking.lib NxCharacter.lib"
+				AdditionalDependencies="d3dx9d.lib d3d9.lib GloryLib.lib OliveLib.lib tinyxmld.lib PhysXLoader.lib NxCooking.lib NxCharacter.lib ws2_32.lib"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="&quot;$(SolutionDir)SupportLib/vld/lib_d&quot;;&quot;$(SolutionDir)SupportLib/tixml/lib&quot;;&quot;$(SolutionDir)PhysxSDK\lib\Win32&quot;;&quot;$(SolutionDir)SupportLib\lua\lib&quot;;&quot;$(SolutionDir)$(ConfigurationName)&quot;"
 				IgnoreDefaultLibraryNames=""
@@ -139,7 +139,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="d3dx9.lib d3d9.lib GloryLib.lib OliveLib.lib tinyxmld.lib PhysXLoader.lib NxCooking.lib NxCharacter.lib"
+				AdditionalDependencies="d3dx9.lib d3d9.lib GloryLib.lib OliveLib.lib tinyxmld.lib PhysXLoader.lib NxCooking.lib NxCharacter.lib ws2_32.lib"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="&quot;$(SolutionDir)SupportLib/tixml/lib&quot;;&quot;$(SolutionDir)PhysxSDK\lib\Win32&quot;;&quot;$(SolutionDir)SupportLib\lua\lib&quot;;&quot;$(SolutionDir)$(ConfigurationName)&quot;"
 				GenerateDebugInformation="true"
