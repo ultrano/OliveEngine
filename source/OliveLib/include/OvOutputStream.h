@@ -16,14 +16,14 @@ interface_class OvOutputStream : public OvRefObject
 	template<typename T>
 	OvBool	Write( const T& data )
 	{
-		return !!WriteBytes( (OvByte*)&data, sizeof(T) );
+		return (sizeof(T) == WriteBytes( (OvByte*)&data, sizeof(T) ));
 	};
 
 	OvBool Write( const OvString& data )
 	{
 		OvSize size = (OvSize)data.size();
 		Write( size );
-		return !!WriteBytes( (OvByte*)&data[0], size );
+		return (size == WriteBytes( (OvByte*)&data[0], size ));
 	};
 	OvBool Write( const OvChar* data){ return Write( OvString(data) ); };
 

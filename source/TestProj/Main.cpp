@@ -18,7 +18,7 @@
 #include "object_streaming_test.h"
 #include "vertex_make_test.h"
 #include "utility_test.h"
-
+#include "socket_test.h"
 int	APIENTRY	WinMain(HINSTANCE hi,HINSTANCE,LPSTR,int)
 {
 	GL_RUN_ALL_TEST();

@@ -204,6 +204,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\socket_test.h"
+				>
+			</File>
+			<File
 				RelativePath=".\temporary_testing.h"
 				>
 			</File>

@@ -11,10 +11,10 @@ interface_class OvInputStream : public OvRefObject
 	virtual OvSize ReadBytes( OvByte * dest, OvSize dest_size ) = 0 ;
 	virtual OvSize Skip( OvSize offset )	= 0;
 
-	template<typename T>
+	template<typename T >
 	OvBool	Read( T& data )
 	{
-		return !!ReadBytes( (OvByte*)&data, sizeof(T) );
+		return (sizeof(T) == ReadBytes( (OvByte*)&data, sizeof(T) ) );
 	};
 
 	OvBool Read( OvString& data )
@@ -22,7 +22,7 @@ interface_class OvInputStream : public OvRefObject
 		OvSize size = 0;
 		Read( size );
 		data.resize( size );
-		return !!ReadBytes( (OvByte*)&data[0], size );
+		return ( size == ReadBytes( (OvByte*)&data[0], size ) );
 	};
 
 };

@@ -1,11 +1,6 @@
 #pragma once
 #include "OvRefObject.h"
 
-#ifdef _WINSOCK2API_
-#include <winsock2.h>
-#include <Windows.h>
-#endif
-
 OvREF_POINTER(OvSocket);
 class OvSocket : public OvRefObject
 {
@@ -15,7 +10,11 @@ private:
 	~OvSocket();
 public:
 
-	OvSocketSPtr Connect( const string& ip, OvUInt port );
+	static OvSocketSPtr Connect( const string& ip, OvUInt port );
+
+public:
+
+	void	Close();
 
 private:
 	SOCKET m_socket;
