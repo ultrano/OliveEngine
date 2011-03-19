@@ -1,5 +1,5 @@
 #include "OvObjectFactory.h"
-#include "OvXNode.h"
+#include "OvObject.h"
 #include <map>
 using namespace std;
 using namespace Olive;

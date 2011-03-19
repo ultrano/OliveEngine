@@ -31,8 +31,9 @@ struct OvMemoryPoolList ;
 //		
 //		
 //	}
-class  OvMemoryMgr : public OvSingletonBase< OvMemoryMgr >
+class  OvMemoryMgr : public OvSingleton< OvMemoryMgr >
 {
+	OvSINGLETON(OvMemoryMgr);
 #ifdef _DEBUG
 	friend void* OvMemAlloc_Debug(char* ,int ,const size_t);
 	friend void	OvMemFree_Debug(void*);

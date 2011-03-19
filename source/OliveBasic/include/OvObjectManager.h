@@ -1,12 +1,13 @@
 #pragma once
+#include "OvSingleton.h"
 #include "OvUtility.h"
 #include "OvObjectID.h"
-#include "OvSingleton.h"
 #include <map>
 
 
-class OvObjectManager : public OvSingletonBase< OvObjectManager >
+class OvObjectManager : public OvSingleton< OvObjectManager >
 {
+	OvSINGLETON(OvObjectManager);
 	friend class OvObject;
 	typedef std::map<OvObjectID,OvObject*>			object_table;
 

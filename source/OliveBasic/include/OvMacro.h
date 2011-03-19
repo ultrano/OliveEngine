@@ -57,3 +57,6 @@
 //
 #define OvPimple_DESC(ClassName) OvREF_POINTER(OvPimple);OvPimpleSPtr
 #define OvPimple_IMPL(ClassName) class ClassName::OvPimple
+//
+//-------------------------------------------------------------------
+//

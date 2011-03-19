@@ -1,7 +1,6 @@
 #pragma once
 #include "OvMemObject.h"
 #include "OvRefObject.h"
-#include "OvSingleton.h"
 #include "OvObjectID.h"
 using namespace std;
 OvREF_POINTER(OvObject);
