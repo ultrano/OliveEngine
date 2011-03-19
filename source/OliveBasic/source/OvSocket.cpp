@@ -41,3 +41,68 @@ void OvSocket::Close()
 		m_socket = NULL;
 	}
 }
+
+OvSocketSPtr OvSocket::Bind( const OvString& ip, OvUInt port )
+{
+	SOCKET sock = socket( AF_INET, SOCK_STREAM, 0 );
+
+	OvUInt addr = ( ip == "*" )? INADDR_ANY : inet_addr( ip.c_str() );
+	SOCKADDR_IN addr_in;
+	addr_in.sin_family = AF_INET;
+	addr_in.sin_port = htons( port );
+	addr_in.sin_addr.s_addr = addr;
+
+	if ( SOCKET_ERROR == bind( sock, (SOCKADDR*)&addr_in, sizeof(addr_in) ) )
+	{
+		return NULL;
+	}
+
+	if ( SOCKET_ERROR == listen( sock, SOMAXCONN ) )
+	{
+		return NULL;
+	}
+
+	OvSocketSPtr ret = OvNew OvSocket;
+	ret->m_socket = sock;
+	return ret;
+}
+
+OvBool OvSocket::Startup()
+{
+	WSADATA wsa;
+	return ( WSAStartup( MAKEWORD(2,2), &wsa ) == 0 );
+
+}
+
+OvBool OvSocket::Cleanup()
+{
+	return ( WSACleanup() == 0 );
+}
+
+OvBool OvSocket::GetPeerAddr( Address& addr )
+{
+	if ( m_socket != INVALID_SOCKET )
+	{
+		SOCKADDR_IN addr_in;
+		int sz = sizeof( addr_in );
+		getpeername( m_socket, (SOCKADDR*)&addr_in, &sz );
+		addr.ip = inet_ntoa( addr_in.sin_addr );
+		addr.port = ntohs( addr_in.sin_port );
+		return true;
+	}
+	return false;
+}
+
+OvBool OvSocket::GetSockAddr( Address& addr )
+{
+	if ( m_socket != INVALID_SOCKET )
+	{
+		SOCKADDR_IN addr_in;
+		int sz = sizeof( addr_in );
+		getsockname( m_socket, (SOCKADDR*)&addr_in, &sz );
+		addr.ip = inet_ntoa( addr_in.sin_addr );
+		addr.port = ntohs( addr_in.sin_port );
+		return true;
+	}
+	return false;
+}
